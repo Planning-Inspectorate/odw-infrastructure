@@ -99,40 +99,41 @@ odt_back_office_service_bus_name_failover                = "pins-sb-back-office-
 odt_back_office_service_bus_resource_group_name          = "pins-rg-back-office-dev-ukw-001"
 odt_back_office_service_bus_resource_group_name_failover = "pins-rg-back-office-dev-uks-001"
 odt_backoffice_sb_topic_subscriptions = [
+odt_backoffice_sb_topic_subscriptions = [
   {
-    subscription_name = "service-user"
+    subscription_name = "odw-service-user-sub"
     topic_name        = "service-user"
   },
   {
-    subscription_name = "nsip-project"
+    subscription_name = "odw-nsip-project-sub"
     topic_name        = "nsip-project"
   },
   {
-    subscription_name = "nsip-exam-timetable"
+    subscription_name = "odw-nsip-exam-timetable-sub"
     topic_name        = "nsip-exam-timetable"
   },
   {
-    subscription_name = "nsip-document"
+    subscription_name = "odw-nsip-document-sub"
     topic_name        = "nsip-document"
   },
   {
-    subscription_name = "nsip-representation"
+    subscription_name = "odw-nsip-representation-sub"
     topic_name        = "nsip-representation"
   },
   {
-    subscription_name = "nsip-s51-advice"
+    subscription_name = "odw-nsip-s51-advice-sub"
     topic_name        = "nsip-s51-advice"
   },
   {
-    subscription_name = "nsip-project-update"
+    subscription_name = "odw-nsip-project-update-sub"
     topic_name        = "nsip-project-update"
   },
   {
-    subscription_name = "nsip-subscription"
+    subscription_name = "odw-nsip-subscription-sub"
     topic_name        = "nsip-subscription"
   },
   {
-    subscription_name = "folder"
+    subscription_name = "odw-folder-sub"
     topic_name        = "folder"
   }
 ]
