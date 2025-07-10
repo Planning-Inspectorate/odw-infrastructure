@@ -99,7 +99,6 @@ odt_back_office_service_bus_name_failover                = "pins-sb-back-office-
 odt_back_office_service_bus_resource_group_name          = "pins-rg-back-office-dev-ukw-001"
 odt_back_office_service_bus_resource_group_name_failover = "pins-rg-back-office-dev-uks-001"
 odt_backoffice_sb_topic_subscriptions = [
-odt_backoffice_sb_topic_subscriptions = [
   {
     subscription_name = "odw-service-user-sub"
     topic_name        = "service-user"
@@ -170,37 +169,37 @@ service_bus_topics_and_subscriptions = [
   {
     name = "service-user"
     subscriptions = {
-      "service-user" = {},
+      "odw-service-user-sub" = {}
     }
   },
   {
     name = "nsip-project"
     subscriptions = {
-      "nsip-project" = {},
+      "odw-nsip-project-sub" = {}
     }
   },
   {
     name = "nsip-exam-timetable"
     subscriptions = {
-      "nsip-exam-timetable" = {},
+      "odw-nsip-exam-timetable-sub" = {}
     }
   },
   {
     name = "nsip-document"
     subscriptions = {
-      "nsip-document" = {},
+      "odw-nsip-document-sub" = {}
     }
   },
   {
     name = "nsip-representation"
     subscriptions = {
-      "nsip-representation" = {},
+      "odw-nsip-representation-sub" = {}
     }
   },
   {
     name = "nsip-s51-advice"
     subscriptions = {
-      "nsip-s51-advice" = {},
+      "odw-nsip-s51-advice-sub" = {},
     }
   }
 ]
