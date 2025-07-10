@@ -1,0 +1,17 @@
+parameters:
+  agentPool: ''
+  env: ''
+
+##
+# Run tests relevant to specific environments
+##
+stages:
+- stage: RunTests
+  displayName: 'Run tests in the ${{ parameters.env }} environment'
+  condition: |
+    not(or(failed(), canceled()))
+  jobs:
+  - template: ${{variables['System.DefaultWorkingDirectory']}}/pipelines/jobs/run-synapse-smoketests.yaml
+    parameters:
+      agentPool: ${{ parameters.agentPool }}
+      env: ${{ parameters.env }}
