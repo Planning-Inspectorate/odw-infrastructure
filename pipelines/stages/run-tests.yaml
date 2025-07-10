@@ -11,7 +11,7 @@ stages:
   condition: |
     not(or(failed(), canceled()))
   jobs:
-  - template: ${{variables['System.DefaultWorkingDirectory']}}/pipelines/jobs/run-synapse-smoketests.yaml
+  - template: ${{variables['System.DefaultWorkingDirectory']}}/pipelines/jobs/run-smoketests.yaml
     parameters:
       agentPool: ${{ parameters.agentPool }}
       env: ${{ parameters.env }}

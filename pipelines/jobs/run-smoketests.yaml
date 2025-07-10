@@ -3,10 +3,10 @@ parameters:
   env: ''
 
 ##
-# Run Synapse smoke tests
+# Run smoke tests
 ##
 jobs:
-- job: RunSynapseSmokeTestsJob
+- job: RunSmokeTestsJob
   pool: ${{ parameters.agentPool }}
   steps:
   - checkout: self
