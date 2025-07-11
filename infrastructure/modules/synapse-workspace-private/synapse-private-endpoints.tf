@@ -247,3 +247,28 @@ resource "azurerm_synapse_managed_private_endpoint" "synapse_mpe_purview_event_h
     time_sleep.firewall_delay
   ]
 }
+
+
+resource "azurerm_synapse_managed_private_endpoint" "synapse_sql" {
+  name                 = "synapse-ws-sql--pins-synw-odw-${var.environment}-${module.azure_region.location_short}"
+  synapse_workspace_id = azurerm_synapse_workspace.synapse.id
+  target_resource_id   = azurerm_synapse_workspace.synapse.id
+  subresource_name     = "sql"
+
+  depends_on = [
+    azurerm_synapse_workspace.synapse,
+    time_sleep.firewall_delay
+  ]
+}
+
+resource "azurerm_synapse_managed_private_endpoint" "synapse_sqlondemand" {
+  name                 = "synapse-ws-sqlOnDemand--pins-synw-odw-${var.environment}-${module.azure_region.location_short}"
+  synapse_workspace_id = azurerm_synapse_workspace.synapse.id
+  target_resource_id   = azurerm_synapse_workspace.synapse.id
+  subresource_name     = "sqlOnDemand"
+
+  depends_on = [
+    azurerm_synapse_workspace.synapse,
+    time_sleep.firewall_delay
+  ]
+}
