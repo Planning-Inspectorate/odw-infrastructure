@@ -6,8 +6,7 @@ alert_threshold_data_lake_capacity_bytes = 10995116277760 # 10TiB
 apim_enabled         = false
 apim_publisher_email = "alex.delany@planninginspectorate.gov.uk"
 apim_publisher_name  = "Alex Delany"
-apim_sku_name        = "Developer_1"
-
+apim_sku_name        = "Developer_1
 bastion_host_enabled = false
 bastion_vm_username  = "basadmin"
 bastion_vm_size      = "Standard_F2s_v2"
@@ -221,8 +220,6 @@ sql_pool_collation = "SQL_Latin1_General_CP1_CI_AS"
 sql_pool_enabled   = false
 sql_pool_sku_name  = "DW100c"
 
-sql_server_administrator_username = "sqladmin"
-sql_server_enabled                = false
 
 synapse_aad_administrator = {
   username  = "pins-odw-data-preprod-syn-ws-sqladmins"

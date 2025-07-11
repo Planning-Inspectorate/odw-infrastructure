@@ -208,8 +208,6 @@ The below tables outline the steps in each stage of the `Terraform CD` pipeline:
 | <a name="module_synapse_network_failover"></a> [synapse\_network\_failover](#module\_synapse\_network\_failover) | ./modules/synapse-network | n/a |
 | <a name="module_synapse_shir"></a> [synapse\_shir](#module\_synapse\_shir) | ./modules/synapse-shir | n/a |
 | <a name="module_synapse_shir_failover"></a> [synapse\_shir\_failover](#module\_synapse\_shir\_failover) | ./modules/synapse-shir | n/a |
-| <a name="module_synapse_sql_server"></a> [synapse\_sql\_server](#module\_synapse\_sql\_server) | ./modules/synapse-sql-server | n/a |
-| <a name="module_synapse_sql_server_failover"></a> [synapse\_sql\_server\_failover](#module\_synapse\_sql\_server\_failover) | ./modules/synapse-sql-server | n/a |
 | <a name="module_synapse_workspace_private"></a> [synapse\_workspace\_private](#module\_synapse\_workspace\_private) | ./modules/synapse-workspace-private | n/a |
 | <a name="module_synapse_workspace_private_failover"></a> [synapse\_workspace\_private\_failover](#module\_synapse\_workspace\_private\_failover) | ./modules/synapse-workspace-private | n/a |
 
@@ -319,11 +317,9 @@ The below tables outline the steps in each stage of the `Terraform CD` pipeline:
 | <a name="input_spark_pool_preview_version"></a> [spark\_pool\_preview\_version](#input\_spark\_pool\_preview\_version) | The version of Spark running on the Synapse-linked preview Spark pool | `string` | `"3.3"` | no |
 | <a name="input_spark_pool_timeout_minutes"></a> [spark\_pool\_timeout\_minutes](#input\_spark\_pool\_timeout\_minutes) | The time buffer in minutes to wait before the Spark pool is paused due to inactivity | `number` | `15` | no |
 | <a name="input_spark_pool_version"></a> [spark\_pool\_version](#input\_spark\_pool\_version) | The version of Spark running on the Synapse-linked Spark pool | `string` | `"2.4"` | no |
-| <a name="input_sql_pool_collation"></a> [sql\_pool\_collation](#input\_sql\_pool\_collation) | The collation of the Synapse-linked dedicated SQL pool | `string` | `"SQL_Latin1_General_CP1_CI_AS"` | no |
+| <a name="input_sql_pool_collaon"></a> [sql\_pool\_collation](#input\_sql\_pool\_collation) | The collation of the Synapse-linked dedicated SQL pool | `string` | `"SQL_Latin1_General_CP1_CI_AS"` | no |
 | <a name="input_sql_pool_enabled"></a> [sql\_pool\_enabled](#input\_sql\_pool\_enabled) | Determines whether a Synapse-linked dedicated SQL pool should be deployed | `bool` | `false` | no |
 | <a name="input_sql_pool_sku_name"></a> [sql\_pool\_sku\_name](#input\_sql\_pool\_sku\_name) | The SKU of the Synapse-linked dedicated SQL pool | `string` | `"DW100c"` | no |
-| <a name="input_sql_server_administrator_username"></a> [sql\_server\_administrator\_username](#input\_sql\_server\_administrator\_username) | The SQL administrator username for the SQL Server | `string` | `"sqladmin"` | no |
-| <a name="input_sql_server_enabled"></a> [sql\_server\_enabled](#input\_sql\_server\_enabled) | Determins whether a SQL Server should be deployed | `string` | `false` | no |
 | <a name="input_synapse_aad_administrator"></a> [synapse\_aad\_administrator](#input\_synapse\_aad\_administrator) | A map describing the username and Azure AD object ID for the Syanapse administrator account | `map(string)` | n/a | yes |
 | <a name="input_synapse_data_exfiltration_enabled"></a> [synapse\_data\_exfiltration\_enabled](#input\_synapse\_data\_exfiltration\_enabled) | Determines whether the Synapse Workspace should have data exfiltration protection enabled | `bool` | `false` | no |
 | <a name="input_synapse_role_assignments"></a> [synapse\_role\_assignments](#input\_synapse\_role\_assignments) | An object mapping RBAC roles to principal IDs for the Synapse Workspace | `map(list(string))` | `{}` | no |
