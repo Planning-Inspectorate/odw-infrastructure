@@ -18,8 +18,8 @@ resources:
   repositories:
   - repository: odw-common
     type: github
-    name: planning-inspectorate/odw-common
-    endpoint: planning-inspectorate
+    name: Planning-Inspectorate/odw-common
+    endpoint: Planning-Inspectorate
     ref: main
 
 variables:
