@@ -16,6 +16,8 @@ resource "azurerm_private_endpoint" "data_lake" {
     subresource_names              = ["dfs"]
   }
 
+
+
   tags = local.tags
 }
 
@@ -42,6 +44,29 @@ resource "azurerm_private_endpoint" "tooling_data_lake" {
     is_manual_connection           = false
     private_connection_resource_id = azurerm_storage_account.synapse.id
     subresource_names              = [each.key]
+  }
+
+  tags = local.tags
+}
+
+#Make this conditional if storage account redundacy in RAGRS
+resource "azurerm_private_endpoint" "data_lake_failover" {
+  count               = var.data_lake_replication_type == "RAGRS" ? 1 : 0
+  name                = "pins-pe-${azurerm_storage_account.synapse.name}-failover"
+  resource_group_name = var.network_resource_group_name
+  location            = var.location
+  subnet_id           = var.vnet_subnet_ids[var.synapse_private_endpoint_subnet_name]
+
+  private_dns_zone_group {
+    name                 = "dataLakeDnsZone"
+    private_dns_zone_ids = [var.data_lake_private_endpoint_dns_zone_id]
+  }
+
+  private_service_connection {
+    name                           = "dataLakeDfsFailover"
+    is_manual_connection           = false
+    private_connection_resource_id = azurerm_storage_account.synapse.id
+    subresource_names              = ["dfs"]
   }
 
   tags = local.tags
