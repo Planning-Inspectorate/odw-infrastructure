@@ -28,8 +28,16 @@ trigger:
   include:
   - main
 
-variables:
+# Import the core repository
+resources:
+  repositories:
+  - repository: odw-common
+    type: github
+    name: planning-inspectorate/odw-common
+    endpoint: planning-inspectorate
+    ref: main
 
+variables:
 - name: variableGroupName
   ${{ if eq(parameters.env, 'prod') }}:
     value: "Terraform Prod"
@@ -46,7 +54,7 @@ variables:
 - group: ${{ variables.variableGroupName }}
 
 stages:
-- template: stages/wait-for-approval.yaml
+- template: pipeline/stages/wait-for-approval.yaml@odw-common
 
 - template: stages/deploy-infrastructure.yaml
   parameters:
