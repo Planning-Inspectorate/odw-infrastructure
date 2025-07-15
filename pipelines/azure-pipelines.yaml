@@ -54,7 +54,7 @@ variables:
 - group: ${{ variables.variableGroupName }}
 
 stages:
-- template: $(Build.SourcesDirectory)/odw-common/pipeline/stages/wait-for-approval.yaml
+- template: pipeline/stages/wait-for-approval.yaml@odw-common
 
 - template: stages/deploy-infrastructure.yaml
   parameters:
