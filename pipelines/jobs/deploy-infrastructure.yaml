@@ -30,7 +30,7 @@ jobs:
       workingDirectory: infrastructure/configuration/firewall-rules
   
   # Login to Azure using Terraform service principal
-  - template: ${{variables['System.DefaultWorkingDirectory']}}/pipeline/steps/azure-login.yaml@odw-common
+  - template: ${{variables['System.DefaultWorkingDirectory']}}/pipelines/steps/azure-login.yaml@odw-common
 
   # Run terraform init
   - template: ${{variables['System.DefaultWorkingDirectory']}}/pipelines/steps/terraform-init.yaml

@@ -71,7 +71,7 @@ stages:
         displayName: 'Checkout'
 
       # Login to Azure using Terraform service principal
-      - template: pipeline/steps/azure-login.yaml@odw-common
+      - template: pipelines/steps/azure-login.yaml@odw-common
 
       # Build Azure DevOps agent image
       - template: steps/devops-agent-build.yaml
@@ -98,7 +98,7 @@ stages:
         displayName: 'Checkout'
 
       # Login to Azure using Terraform service principal
-      - template: pipeline/steps/azure-login.yaml@odw-common
+      - template: pipelines/steps/azure-login.yaml@odw-common
 
       # Run Terraform init
       - template: steps/terraform-init.yaml
@@ -132,7 +132,7 @@ stages:
               displayName: 'Checkout'
 
             # Login to Azure using Terraform service principal
-            - template: pipeline/steps/azure-login.yaml@odw-common
+            - template: pipelines/steps/azure-login.yaml@odw-common
 
             # Run Terraform init
             - template: steps/terraform-init.yaml
