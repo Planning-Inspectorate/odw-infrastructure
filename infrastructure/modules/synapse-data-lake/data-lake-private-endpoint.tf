@@ -65,7 +65,7 @@ resource "azurerm_private_endpoint" "data_lake_failover" {
   private_service_connection {
     name                           = "dataLakeDfsFailover"
     is_manual_connection           = false
-    private_connection_resource_id = azurerm_storage_account.synapse.id
+    private_connection_resource_id = "${azurerm_storage_account.synapse.id}-secondary"
     subresource_names              = ["dfs"]
   }
 
