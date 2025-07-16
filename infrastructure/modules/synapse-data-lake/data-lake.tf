@@ -62,6 +62,22 @@ resource "azurerm_storage_account" "synapse" {
   tags = local.tags
 }
 
+output "secondary_blob_endpoint" {
+  value = data.azurerm_storage_account.primary.secondary_blob_endpoint
+}
+
+output "secondary_dfs_endpoint" {
+  value = data.azurerm_storage_account.primary.secondary_dfs_endpoint
+}
+
+output "secondary_queue_endpoint" {
+  value = data.azurerm_storage_account.primary.secondary_queue_endpoint
+}
+
+output "secondary_table_endpoint" {
+  value = data.azurerm_storage_account.primary.secondary_table_endpoint
+}
+
 resource "azurerm_storage_data_lake_gen2_filesystem" "synapse" {
   name               = "synapse"
   storage_account_id = azurerm_storage_account.synapse.id
