@@ -75,7 +75,7 @@ output "secondary_queue_endpoint" {
 }
 
 output "secondary_table_endpoint" {
-  value = azurerm_storage_account.primary.secondary_table_endpoint
+  value = azurerm_storage_account.synapse.secondary_table_endpoint
 }
 
 resource "azurerm_storage_data_lake_gen2_filesystem" "synapse" {
