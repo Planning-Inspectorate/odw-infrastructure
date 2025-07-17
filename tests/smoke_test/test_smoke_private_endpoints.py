@@ -24,7 +24,10 @@ class TestSmokePrivateEndpoints(TestCase):
     PURVIEW_STORAGE_ID = TEST_CONFIG["PURVIEW_STORAGE_ID"]
     _ENDPOINT_CACHE = dict()
 
-    def validate_private_endpoint(self, all_endpoints: List[Dict[str, Any]], endpoint_name: str):        
+    def validate_private_endpoint(self, all_endpoints: List[Dict[str, Any]], endpoint_name: str):
+        names = [x["name"] for x in all_endpoints]
+        print(f"Looking for: '{endpoint_name}'")
+        print(json.dumps(names, indent=4))  
         relevant_private_endpoints = [
             x
             for x in all_endpoints
@@ -39,6 +42,7 @@ class TestSmokePrivateEndpoints(TestCase):
 
     def validate_managed_private_endpoint(self, all_endpoints: List[Dict[str, Any]], endpoint_name: str):
         names = [x["name"] for x in all_endpoints]
+        print(f"Looking for: '{endpoint_name}'")
         print(json.dumps(names, indent=4))
         relevant_private_endpoints = [
             x
