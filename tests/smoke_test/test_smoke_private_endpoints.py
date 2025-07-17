@@ -146,11 +146,11 @@ class TestSmokePrivateEndpoints(TestCase):
         ]
     )
     def test_odw_synapse_private_endpoints(self, endpoint_name: str):
-        all_endpoints = self.get_all_endpoints(
-            SynapsePrivateLinkHubsPrivateEndpointManager,
-            f"pins-rg-network-odw-{self.ENV}-uks",
-            f"pinsplsynwsodw{self.ENV}uks"
-        )
+        all_endpoints = SynapsePrivateLinkHubsPrivateEndpointManager(
+            f"pinsplsynwsodw{self.ENV}uks",
+            self.SUBSCRIPTION_ID,
+            f"pins-rg-network-odw-{self.ENV}-uks"
+        ).get_all()
         self.validate_private_endpoint(all_endpoints, endpoint_name)
 
     @pytest.mark.parametrize(
