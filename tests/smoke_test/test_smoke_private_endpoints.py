@@ -25,7 +25,7 @@ class TestSmokePrivateEndpoints(TestCase):
     _ENDPOINT_CACHE = dict()
 
     def validate_private_endpoint(self, all_endpoints: List[Dict[str, Any]], endpoint_name: str):
-        names = [x["name"] for x in all_endpoints]
+        names = [x.get("properties", dict()).get("privateEndpoint", dict()).get("id", "") for x in all_endpoints]
         print(f"Looking for: '{endpoint_name}'")
         print(json.dumps(names, indent=4))  
         relevant_private_endpoints = [
