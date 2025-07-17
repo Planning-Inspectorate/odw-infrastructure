@@ -56,14 +56,14 @@ variables:
 stages:
 - template: pipelines/stages/wait-for-approval.yaml@odw-common
 
-- template: stages/deploy-infrastructure.yaml
-  parameters:
-    agentPool: ${{ variables.agentPool }}
-    env: ${{ parameters.env }}
-    armServiceConnectionName: "Azure Devops Pipelines - ODW ${{ upper(parameters.env) }} - Infrastructure"
-    failoverDeployment: ${{ parameters.failoverDeployment }}
-    outputsFileName: "tfoutputs.json"
-    runTerraformApply: ${{ parameters.runTerraformApply }}
+#- template: stages/deploy-infrastructure.yaml
+#  parameters:
+#    agentPool: ${{ variables.agentPool }}
+#    env: ${{ parameters.env }}
+#    armServiceConnectionName: "Azure Devops Pipelines - ODW ${{ upper(parameters.env) }} - Infrastructure"
+#    failoverDeployment: ${{ parameters.failoverDeployment }}
+#    outputsFileName: "tfoutputs.json"
+#    runTerraformApply: ${{ parameters.runTerraformApply }}
 
 - ${{ if eq(parameters.runTerraformApply, true) }}:
   - template: stages/run-tests.yaml
