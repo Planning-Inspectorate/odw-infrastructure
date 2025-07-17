@@ -48,7 +48,11 @@ class TestSmokePrivateEndpoints(TestCase):
         assert relevant_private_endpoints, f"Could not find any managed private endpoints ending with name '{endpoint_name}'"
         assert len(relevant_private_endpoints) == 1, f"Expected a single managed private endpoint with name ending with {endpoint_name}"
         approval_state = relevant_private_endpoints[0].get("properties", dict()).get("connectionState", dict()).get("status", None)
-        assert approval_state == "Approved", f"Expected managed private endpoint approval state to be 'Approved' but was '{approval_state}'"
+        approval_error_message = (
+            f"Expected managed private endpoint approval state to be 'Approved' but was '{approval_state}'."
+            f" If this is a Purview private endpoint, please approve this via the Purview Deployment pipeline"
+        )
+        assert approval_state == "Approved", approval_error_message
 
     def get_all_endpoints(
             self,
