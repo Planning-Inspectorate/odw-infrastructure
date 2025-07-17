@@ -4,7 +4,6 @@ from pipelines.scripts.private_endpoint.synapse_private_endpoint_manager import 
 from pipelines.scripts.private_endpoint.synapse_private_link_hubs_private_endpoint_manager import SynapsePrivateLinkHubsPrivateEndpointManager
 from pipelines.scripts.private_endpoint.key_vault_private_endpoint_manager import KeyVaultPrivateEndpointManager
 from pipelines.scripts.private_endpoint.service_bus_private_endpoint_manager import ServiceBusPrivateEndpointManager
-from pipelines.scripts.private_endpoint.sql_server_private_endpoint_manager import SSQLServerPrivateEndpointManager
 from pipelines.scripts.private_endpoint.synapse_managed_private_endpoint_manager import SynapseManagedPrivateEndpointManager
 from pipelines.scripts.util import Util
 from tests.util.config import TEST_CONFIG
@@ -12,8 +11,6 @@ from tests.util.test_case import TestCase
 from typing import Type, List, Dict, Any
 import traceback
 import pytest
-import json
-import os
 
 
 class TestSmokePrivateEndpoints(TestCase):
