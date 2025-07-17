@@ -6,13 +6,14 @@ from pipelines.scripts.private_endpoint.key_vault_private_endpoint_manager impor
 from pipelines.scripts.private_endpoint.service_bus_private_endpoint_manager import ServiceBusPrivateEndpointManager
 from pipelines.scripts.private_endpoint.sql_server_private_endpoint_manager import SSQLServerPrivateEndpointManager
 from pipelines.scripts.private_endpoint.synapse_managed_private_endpoint_manager import SynapseManagedPrivateEndpointManager
-from tests.util.conftest_util import ConftestUtil
+from pipelines.scripts.util import Util
 from tests.util.config import TEST_CONFIG
 from tests.util.test_case import TestCase
 from typing import Type, List, Dict, Any
 import traceback
 import pytest
 import json
+import os
 
 
 class TestSmokePrivateEndpoints(TestCase):
@@ -22,6 +23,7 @@ class TestSmokePrivateEndpoints(TestCase):
     DATA_LAKE_FAILOVER_STORAGE = TEST_CONFIG["DATA_LAKE_FAILOVER_STORAGE"]
     PURVIEW_EVENT_HUB_ID = TEST_CONFIG["PURVIEW_EVENT_HUB_ID"]
     PURVIEW_STORAGE_ID = TEST_CONFIG["PURVIEW_STORAGE_ID"]
+    ODT_SUBSCRIPTION_ID = TEST_CONFIG["ODT_SUBSCRIPTION_ID"]
     _ENDPOINT_CACHE = dict()
 
     def validate_private_endpoint(self, all_endpoints: List[Dict[str, Any]], endpoint_name: str):
@@ -82,12 +84,23 @@ class TestSmokePrivateEndpoints(TestCase):
 
     @pytest.mark.skipif(ENV == "dev", reason="Dev environment does not have this private endpoint")
     def test_odt_backoffice_private_endpoints(self):
-        all_endpoints = self.get_all_endpoints(
-            ServiceBusPrivateEndpointManager,
-            f"pins-rg-appeals-bo-{self.ENV}",
-            f"pins-sb-appeals-bo-{self.ENV}"
-        )
-        self.validate_private_endpoint(all_endpoints, f"pins-pe-appeals-backoffice-sb-odw-{self.ENV}-uks")
+        # Note: This test must temporarily switch subscriptions. For this reason, the smoke tests must run in series
+        initial_subscription = Util.get_subscription()
+        Util.set_subscription(self.ODT_SUBSCRIPTION_ID)
+        test_exception = None
+        try:
+            all_endpoints = self.get_all_endpoints(
+                ServiceBusPrivateEndpointManager,
+                f"pins-rg-appeals-bo-{self.ENV}",
+                f"pins-sb-appeals-bo-{self.ENV}"
+            )
+            self.validate_private_endpoint(all_endpoints, f"pins-pe-appeals-backoffice-sb-odw-{self.ENV}-uks")
+        except Exception as e:
+            test_exception = e
+        finally:
+            Util.set_subscription(initial_subscription)
+        if test_exception:
+            raise test_exception
 
     @pytest.mark.parametrize(
         "endpoint_name",
@@ -104,7 +117,7 @@ class TestSmokePrivateEndpoints(TestCase):
     def test_odw_datalake_private_endpoints(self, endpoint_name: str):
         all_endpoints = self.get_all_endpoints(StoragePrivateEndpointManager, f"pins-rg-data-odw-{self.ENV}-uks", self.DATA_LAKE_STORAGE)
         self.validate_private_endpoint(all_endpoints, endpoint_name)
-    
+
     @pytest.mark.parametrize(
         "endpoint_name",
         [

@@ -17,6 +17,7 @@ TEST_CONFIG = {
         "SUBSCRIPTION_ID",
         "PURVIEW_ID",
         "PURVIEW_EVENT_HUB_ID",
-        "PURVIEW_STORAGE_ID"
+        "PURVIEW_STORAGE_ID",
+        "ODT_SUBSCRIPTION_ID"
     ]
 }
