@@ -44,6 +44,8 @@ class TestSmokePrivateEndpoints(TestCase):
         ]
         assert relevant_private_endpoints, f"Could not find any managed private endpoints ending with name '{endpoint_name}'"
         assert len(relevant_private_endpoints) == 1, f"Expected a single managed private endpoint with name ending with {endpoint_name}"
+        provisioning_state = relevant_private_endpoints[0].get("properties", dict()).get("provisioningState", None)
+        assert provisioning_state == "Succeeded", f"Expected managed private endpoint provisioning state to be 'Succeeded' but was '{provisioning_state}'"
         approval_state = relevant_private_endpoints[0].get("properties", dict()).get("connectionState", dict()).get("status", None)
         approval_error_message = (
             f"Expected managed private endpoint approval state to be 'Approved' but was '{approval_state}'."
