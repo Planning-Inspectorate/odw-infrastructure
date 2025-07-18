@@ -35,7 +35,7 @@ steps:
   - script: |
       echo "Planning Terraform deployment..."
       echo "##[command]terraform plan -var-file=./environments/${{ parameters.environment }}.tfvars -input=false -out=${{ parameters.planFileName }}"
-      refreshTFState=$(( ${{ parameters.refreshTFState }} == true ? '-refresh-only' : '' ))
+      refreshTFState=$(( "${{ parameters.refreshTFState }}" == true ? '-refresh-only' : '' ))
       echo 'refreshTFState'
       echo $refreshTFState
       terraform plan \
