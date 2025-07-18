@@ -25,8 +25,14 @@ steps:
   - script: |
       echo "Deploying Terraform..."
       echo "##[command]terraform apply -input=false ${{ parameters.planFilePath }}"
+      if [[ "${{ lower(parameters.refreshTFState) }}" == "true" ]]; then
+        refreshTFState="-refresh-only"
+      else
+        refreshTFState=""
+      fi
       terraform apply \
-        -input=false ${{ parameters.planFilePath }}
+        -input=false ${{ parameters.planFilePath }} \
+        $refreshTFState
     condition: ne(variables['skipApply'], 'true')
     displayName: 'Terraform Apply'
     workingDirectory: ${{ parameters.workingDirectory }}

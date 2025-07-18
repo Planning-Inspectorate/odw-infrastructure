@@ -50,7 +50,8 @@ steps:
         -var "purview_event_hub_id"=$(PURVIEW_EVENT_HUB_ID) \
         -var "purview_msi_id"=$(PURVIEW_MSI_ID) \
         -input=false \
-        -out=${{ parameters.planFileName }}
+        -out=${{ parameters.planFileName }} \
+        $refreshTFState
     displayName: 'Terraform Plan'
     workingDirectory: ${{ parameters.workingDirectory }}
     env:
