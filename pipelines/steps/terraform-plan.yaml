@@ -38,7 +38,7 @@ steps:
       refreshTFState=$(( "${{ lower(parameters.refreshTFState) }}" == "true" ? "-refresh-only" : "" ))
       echo 'refreshTFState'
       echo $refreshTFState
-      echo "${{ lower(parameters.refreshTFState) }}
+      echo "${{ lower(parameters.refreshTFState) }}"
       echo "true"
       terraform plan \
         -var-file=./environments/${{ parameters.environment }}.tfvars \
