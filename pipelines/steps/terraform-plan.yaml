@@ -40,10 +40,6 @@ steps:
       else
         refreshTFState=""
       fi
-      echo 'refreshTFState'
-      echo $refreshTFState
-      echo "${{ lower(parameters.refreshTFState) }}"
-      echo "true"
       terraform plan \
         -var-file=./environments/${{ parameters.environment }}.tfvars \
         -var "failover_deployment=${{ lower(parameters.failoverDeployment) }}" \
