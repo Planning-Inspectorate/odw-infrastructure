@@ -28,11 +28,18 @@ parameters:
     default: tfplan
   - name: workingDirectory
     type: string
+  - name: refreshTFState
+    type: boolean
 
 steps:
   - script: |
+      if [[ "${{ lower(parameters.refreshTFState) }}" == "true" ]]; then
+        refreshTFState="-refresh-only"
+      else
+        refreshTFState=""
+      fi
       echo "Planning Terraform deployment..."
-      echo "##[command]terraform plan -var-file=./environments/${{ parameters.environment }}.tfvars -input=false -out=${{ parameters.planFileName }}"
+      echo "##[command]terraform plan -var-file=./environments/${{ parameters.environment }}.tfvars -input=false -out=${{ parameters.planFileName }} $refreshTFState"
       terraform plan \
         -var-file=./environments/${{ parameters.environment }}.tfvars \
         -var "failover_deployment=${{ lower(parameters.failoverDeployment) }}" \
@@ -43,7 +50,8 @@ steps:
         -var "purview_event_hub_id"=$(PURVIEW_EVENT_HUB_ID) \
         -var "purview_msi_id"=$(PURVIEW_MSI_ID) \
         -input=false \
-        -out=${{ parameters.planFileName }}
+        -out=${{ parameters.planFileName }} \
+        $refreshTFState
     displayName: 'Terraform Plan'
     workingDirectory: ${{ parameters.workingDirectory }}
     env:
