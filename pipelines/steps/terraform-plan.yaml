@@ -35,7 +35,11 @@ steps:
   - script: |
       echo "Planning Terraform deployment..."
       echo "##[command]terraform plan -var-file=./environments/${{ parameters.environment }}.tfvars -input=false -out=${{ parameters.planFileName }}"
-      refreshTFState=$(( "${{ lower(parameters.refreshTFState) }}" == "true" ? "-refresh-only" : "" ))
+      if [[ "${{ lower(parameters.refreshTFState) }}" == "true" ]]; then
+        refreshTFState="-refresh-only"
+      else
+        refreshTFState=""
+      fi
       echo 'refreshTFState'
       echo $refreshTFState
       echo "${{ lower(parameters.refreshTFState) }}"
