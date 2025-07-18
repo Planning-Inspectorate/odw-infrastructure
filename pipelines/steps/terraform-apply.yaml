@@ -23,13 +23,13 @@ parameters:
 
 steps:
   - script: |
-      echo "Deploying Terraform..."
-      echo "##[command]terraform apply -input=false ${{ parameters.planFilePath }}"
       if [[ "${{ lower(parameters.refreshTFState) }}" == "true" ]]; then
         refreshTFState="-refresh-only"
       else
         refreshTFState=""
       fi
+      echo "Deploying Terraform..."
+      echo "##[command]terraform apply -input=false ${{ parameters.planFilePath }} $refreshTFState"
       terraform apply \
         -input=false ${{ parameters.planFilePath }} \
         $refreshTFState

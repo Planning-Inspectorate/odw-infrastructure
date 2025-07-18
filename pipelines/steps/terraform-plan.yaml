@@ -33,13 +33,13 @@ parameters:
 
 steps:
   - script: |
-      echo "Planning Terraform deployment..."
-      echo "##[command]terraform plan -var-file=./environments/${{ parameters.environment }}.tfvars -input=false -out=${{ parameters.planFileName }}"
       if [[ "${{ lower(parameters.refreshTFState) }}" == "true" ]]; then
         refreshTFState="-refresh-only"
       else
         refreshTFState=""
       fi
+      echo "Planning Terraform deployment..."
+      echo "##[command]terraform plan -var-file=./environments/${{ parameters.environment }}.tfvars -input=false -out=${{ parameters.planFileName }} $refreshTFState"
       terraform plan \
         -var-file=./environments/${{ parameters.environment }}.tfvars \
         -var "failover_deployment=${{ lower(parameters.failoverDeployment) }}" \
