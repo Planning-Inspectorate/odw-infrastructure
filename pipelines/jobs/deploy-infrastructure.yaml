@@ -5,6 +5,7 @@ parameters:
   failoverDeployment: false
   outputsFileName: ''
   runTerraformApply: false
+  refreshTFState: false
 
 
 ##
@@ -66,6 +67,7 @@ jobs:
       failoverDeployment: ${{ parameters.failoverDeployment }}
       planFileName: tfplan
       workingDirectory: infrastructure
+      refreshTFState: ${{ parameters.refreshTFState }}
   
   # Only deploy infrastructure if specifically requested
   ###
@@ -100,6 +102,7 @@ jobs:
         environment: ${{ parameters.env }}
         planFilePath: tfplan
         workingDirectory: infrastructure
+        refreshTFState: ${{ parameters.refreshTFState }}
     
     # Get Terraform outputs
     - template: ${{variables['System.DefaultWorkingDirectory']}}/pipelines/steps/terraform-outputs.yaml

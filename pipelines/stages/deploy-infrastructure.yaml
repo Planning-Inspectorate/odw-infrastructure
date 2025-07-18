@@ -5,6 +5,7 @@ parameters:
   failoverDeployment: false
   outputsFileName: ''
   runTerraformApply: false
+  refreshTFState: false
 
 ##
 # Deploy Infrastructure only if a modification has been detected in the codebase
@@ -22,3 +23,4 @@ stages:
       failoverDeployment: ${{ parameters.failoverDeployment }}
       outputsFileName: ${{ parameters.outputsFileName }}
       runTerraformApply: ${{ parameters.runTerraformApply }}
+      refreshTFState: ${{ parameters.refreshTFState }}

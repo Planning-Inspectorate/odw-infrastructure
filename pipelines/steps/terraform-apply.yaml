@@ -18,6 +18,8 @@ parameters:
     type: string
   - name: workingDirectory
     type: string
+  - name: refreshTFState
+    type: boolean
 
 steps:
   - script: |
