@@ -17,6 +17,11 @@ parameters:
 - name: runTerraformApply
   type: boolean
   default: false
+# If the plan and apply commands should be run with the -refresh-only flag
+# https://developer.hashicorp.com/terraform/cli/commands/refresh
+- name: refreshTFState
+  type: boolean
+  default: false
 
 # Run when Pull Request raised to the main branch
 pr:
@@ -64,6 +69,7 @@ stages:
     failoverDeployment: ${{ parameters.failoverDeployment }}
     outputsFileName: "tfoutputs.json"
     runTerraformApply: ${{ parameters.runTerraformApply }}
+    refreshTFState: ${{ parameters.refreshTFState }}
 
 - ${{ if eq(parameters.runTerraformApply, true) }}:
   - template: stages/run-tests.yaml

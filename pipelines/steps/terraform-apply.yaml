@@ -18,13 +18,21 @@ parameters:
     type: string
   - name: workingDirectory
     type: string
+  - name: refreshTFState
+    type: boolean
 
 steps:
   - script: |
+      if [[ "${{ lower(parameters.refreshTFState) }}" == "true" ]]; then
+        refreshTFState="-refresh-only"
+      else
+        refreshTFState=""
+      fi
       echo "Deploying Terraform..."
-      echo "##[command]terraform apply -input=false ${{ parameters.planFilePath }}"
+      echo "##[command]terraform apply -input=false ${{ parameters.planFilePath }} $refreshTFState"
       terraform apply \
-        -input=false ${{ parameters.planFilePath }}
+        -input=false ${{ parameters.planFilePath }} \
+        $refreshTFState
     condition: ne(variables['skipApply'], 'true')
     displayName: 'Terraform Apply'
     workingDirectory: ${{ parameters.workingDirectory }}
