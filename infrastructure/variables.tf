@@ -169,6 +169,11 @@ variable "location" {
   type        = string
 }
 
+variable "datalake_location" {
+  description = "The short-format Azure region into which the Azure storage account will be deployed"
+  type        = string
+}
+
 variable "logic_app_enabled" {
   default     = false
   description = "Determines whether the resources for the App Service Plan, Storage Account and Logic App Standard should be deployed"
