@@ -14,7 +14,7 @@ resource "azurerm_storage_account" "synapse" {
   #checkov:skip=CKV2_AZURE_33: Private Endpoint is not enabled as networking is controlled by Firewall
   name                             = replace("pins-st-${local.resource_suffix}-${random_string.unique_id.id}", "-", "")
   resource_group_name              = var.resource_group_name
-  location                         = var.location
+  location                         = "UK West"
   account_tier                     = var.data_lake_account_tier
   account_replication_type         = var.data_lake_replication_type
   account_kind                     = "StorageV2"
