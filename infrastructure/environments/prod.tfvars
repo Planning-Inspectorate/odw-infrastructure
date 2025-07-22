@@ -282,7 +282,7 @@ vnet_subnets = [
     service_delegation = []
   },
   {
-    "name" : "ComputeSubnet"
+    "name" : "ComputeSubnet",
     "new_bits" : 2 # /26
     service_endpoints  = ["Microsoft.Storage", "Microsoft.KeyVault"]
     service_delegation = []

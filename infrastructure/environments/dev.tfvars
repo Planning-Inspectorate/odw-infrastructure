@@ -283,7 +283,7 @@ vnet_subnets = [
     private_endpoint_network_policies = "Disabled"
   },
   {
-    "name" : "ComputeSubnet"
+    "name" : "ComputeSubnet",
     "new_bits" : 2 # /26
     service_endpoints  = ["Microsoft.Storage", "Microsoft.KeyVault"]
     service_delegation = []
