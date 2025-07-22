@@ -36,7 +36,8 @@ data_lake_storage_containers = [
   "odw-harmonised",
   "odw-config",
   "odw-curated-migration", # This container seems to be manually created in the other envs. This should be reviewed
-  "odw-config-db"          # This container seems to be manually created in the other envs. This should be reviewed
+  "odw-config-db",          # This container seems to be manually created in the other envs. This should be reviewed
+  "logging"
 ]
 
 devops_agent_pool_resource_group_name          = "pins-rg-devops-odw-build-uks"
