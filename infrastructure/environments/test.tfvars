@@ -34,7 +34,8 @@ data_lake_storage_containers = [
   "odw-raw",
   "odw-standardised",
   "odw-harmonised",
-  "odw-config"
+  "odw-config",
+  "logging"
 ]
 
 devops_agent_pool_resource_group_name          = "pins-rg-devops-odw-test-uks"
