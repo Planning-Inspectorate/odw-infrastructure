@@ -74,7 +74,7 @@ horizon_integration_config = {
   }
 }
 
-location          = "uk-south"
+location = "uk-south"
 
 logic_app_enabled = false
 
