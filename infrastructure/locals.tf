@@ -1,6 +1,5 @@
 locals {
   location          = var.location
-  datalake_location = var.datalake_location
   service_name      = "odw"
 
   # no IP exceptions

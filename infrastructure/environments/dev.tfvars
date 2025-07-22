@@ -75,7 +75,7 @@ horizon_integration_config = {
 }
 
 location          = "uk-south"
-datalake_location = "uk-south"
+
 logic_app_enabled = false
 
 key_vault_role_assignments = {
