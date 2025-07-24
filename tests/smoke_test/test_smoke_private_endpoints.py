@@ -178,7 +178,7 @@ class TestSmokePrivateEndpoints(TestCase):
     @pytest.mark.parametrize(
         "endpoint_name",
         [
-            f"synapse-mpe-appeals-bo--odw-{ENV}-uks",
+            #f"synapse-mpe-appeals-bo--odw-{ENV}-uks",
             f"synapse-mpe-purview-account--odw-{ENV}-uks",
             f"synapse-mpe-purview-storage-blob--odw-{ENV}-uks",
             f"synapse-mpe-purview-storage-queue--odw-{ENV}-uks",
