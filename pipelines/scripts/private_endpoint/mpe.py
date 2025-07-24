@@ -44,15 +44,15 @@ class MPE():
 
 mpe = {
     "properties": {
-        "privateLinkResourceId": "/subscriptions/12806449-ae7c-4754-b104-65bcdc7b28c8/resourceGroups/pins-rg-data-odw-build-uks/providers/Microsoft.Storage/storageAccounts/pinsstodwbuildukslu4d8k",
+        "privateLinkResourceId": "/subscriptions/12806449-ae7c-4754-b104-65bcdc7b28c8/resourceGroups/pins-rg-data-odw-build-ukw/providers/Microsoft.Storage/storageAccounts/pinsstodwbuildukwcvhlo0",
         "groupId": "dfs"
     }
 }
 print("running deletion code")
-#import json
-#eps = MPE("pins-synw-odw-build-uks").get("synapse-st-dfs--pinsstodwbuildukslu4d8k")
-#print(json.dumps(eps, indent=4))
-#print("got endpoint, posting now")
-#resp = MPE("pins-synw-odw-build-uks").create("synapse-st-dfs--pinsstodwbuildukslu4d8k", mpe)
-#print("finished post")
-#print(json.dumps(resp, indent=4))
+import json
+eps = MPE("pins-synw-odw-build-uks").get("synapse-st-dfs--pinsstodwbuildukwcvhlo0")
+print(json.dumps(eps, indent=4))
+print("got endpoint, posting now")
+resp = MPE("pins-synw-odw-build-uks").create("synapse-st-dfs--pinsstodwbuildukwcvhlo0", mpe)
+print("finished post")
+print(json.dumps(resp, indent=4))
