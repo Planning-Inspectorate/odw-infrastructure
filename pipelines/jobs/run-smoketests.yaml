@@ -20,5 +20,5 @@ jobs:
       export CREDENTIAL_NAME="${{ format('https://dev.azuresynapse.net/.default', lower(parameters.env)) }}"
       echo $SYNAPSE_ENDPOINT 
       echo $CREDENTIAL_NAME
-      python3 -m pytest $(Build.SourcesDirectory)/tests/smoke_test -vv -rP
+      python3 $(Build.SourcesDirectory)/pipelines/scripts/private_endpoint/mpe.py -vv -rP
     displayName: 'pytest'
