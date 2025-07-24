@@ -79,7 +79,7 @@ class TestSmokePrivateEndpoints(TestCase):
             assert not raised_exception, exception_message
         return self._ENDPOINT_CACHE[key]
 
-    @pytest.mark.skipif(ENV == "dev", reason="Dev environment does not have this private endpoint")
+    @pytest.mark.skipif(ENV == "dev" or ENV == "build", reason="Dev environment does not have this private endpoint")
     def test_odt_backoffice_private_endpoints(self):
         # Note: This test must temporarily switch subscriptions. For this reason, the smoke tests must run in series
         initial_subscription = Util.get_subscription()
