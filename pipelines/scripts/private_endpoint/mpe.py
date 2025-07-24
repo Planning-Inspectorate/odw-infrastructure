@@ -49,10 +49,10 @@ mpe = {
     }
 }
 print("running deletion code")
-import json
-eps = MPE("pins-synw-odw-build-uks").get("synapse-st-dfs--pinsstodwbuildukslu4d8k")
-print(json.dumps(eps, indent=4))
-print("got endpoint, posting now")
-resp = MPE("pins-synw-odw-build-uks").create("synapse-st-dfs--pinsstodwbuildukslu4d8k", mpe)
-print("finished post")
-print(json.dumps(resp, indent=4))
+#import json
+#eps = MPE("pins-synw-odw-build-uks").get("synapse-st-dfs--pinsstodwbuildukslu4d8k")
+#print(json.dumps(eps, indent=4))
+#print("got endpoint, posting now")
+#resp = MPE("pins-synw-odw-build-uks").create("synapse-st-dfs--pinsstodwbuildukslu4d8k", mpe)
+#print("finished post")
+#print(json.dumps(resp, indent=4))
