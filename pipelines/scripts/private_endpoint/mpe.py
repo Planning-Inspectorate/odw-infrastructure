@@ -53,6 +53,6 @@ import json
 eps = MPE("pins-synw-odw-build-uks").get("synapse-st-dfs--pinsstodwbuildukwcvhlo0")
 print(json.dumps(eps, indent=4))
 print("got endpoint, posting now")
-resp = MPE("pins-synw-odw-build-uks").create("synapse-st-dfs--pinsstodwbuildukwcvhlo0", eps)
+resp = MPE("pins-synw-odw-build-uks").create("synapse-st-dfs--pinsstodwbuildukwcvhlo0", mpe)
 print("finished post")
 print(json.dumps(resp, indent=4))
