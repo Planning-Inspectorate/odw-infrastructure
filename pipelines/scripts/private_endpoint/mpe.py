@@ -50,7 +50,7 @@ mpe = {
 }
 print("running deletion code")
 import json
-eps = MPE("pins-synw-odw-build-uks").get("synapse-st-dfs--pinsstodwbuildukwcvhlo0")
+eps = MPE("pins-synw-odw-build-uks").delete("synapse-st-dfs--pinsstodwbuildukwcvhlo0")
 print(json.dumps(eps, indent=4))
 print("got endpoint, posting now")
 resp = MPE("pins-synw-odw-build-uks").create("synapse-st-dfs--pinsstodwbuildukwcvhlo0", mpe)
