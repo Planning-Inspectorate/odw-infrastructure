@@ -48,6 +48,7 @@ mpe = {
         "groupId": "dfs"
     }
 }
+print("running deletion code")
 import json
 eps = MPE("pins-synw-odw-build-uks").get("synapse-st-dfs--pinsstodwbuildukslu4d8k")
 print(json.dumps(eps, indent=4))
