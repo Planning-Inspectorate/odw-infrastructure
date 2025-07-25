@@ -155,7 +155,7 @@ class TestSmokePrivateEndpoints(TestCase):
             f"pins-pe-syn-ws-tooling-odw-{ENV}-uks"
         ]
     )
-    def test_odw_synapse_private_endpoints(self, endpoint_name: str):
+    def test_odw_synapse_private_link_hub_endpoints(self, endpoint_name: str):
         all_endpoints = SynapsePrivateLinkHubsPrivateEndpointManager(
             f"pinsplsynwsodw{self.ENV}uks",
             self.SUBSCRIPTION_ID,
