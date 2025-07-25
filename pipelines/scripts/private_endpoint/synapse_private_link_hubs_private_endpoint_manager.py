@@ -1,7 +1,6 @@
 from pipelines.scripts.private_endpoint.managed_private_endpoint_manager import ManagedPrivateEndpointManager
+from azure.identity import AzureCliCredential
 import requests
-import json
-import os
 
 class SynapsePrivateLinkHubsPrivateEndpointManager(ManagedPrivateEndpointManager):
     """
@@ -20,7 +19,7 @@ class SynapsePrivateLinkHubsPrivateEndpointManager(ManagedPrivateEndpointManager
     @classmethod
     def _get_token(cls) -> str:
         if not (cls._token):
-            cls._token = json.loads(os.popen("az account get-access-token --output json").read())["accessToken"]
+            cls._token = AzureCliCredential().get_token("https://management.azure.com/.default").token
         return cls._token
     
 
