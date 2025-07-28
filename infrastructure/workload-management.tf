@@ -71,7 +71,7 @@ module "synapse_management_failover" {
   location            = module.azure_region.paired_location.location_cli
   service_name        = local.service_name
 
-  data_lake_account_id                   = module.synapse_data_lake_failover.data_lake_account_id
+  data_lake_account_id                   = module.synapse_data_lake.data_lake_account_id
   link_purview                           = false # Not supported in the UK West region
   devops_agent_subnet_name               = module.synapse_network_failover.devops_agent_subnet_name
   firewall_allowed_ip_addresses          = local.firewall_allowed_ip_addresses
