@@ -50,7 +50,7 @@ module "synapse_sql_server_failover" {
 
   devops_agent_subnet_name          = module.synapse_network_failover.devops_agent_subnet_name
   firewall_allowed_ip_addresses     = local.firewall_allowed_ip_addresses
-  key_vault_id                      = module.synapse_data_lake_failover.key_vault_id
+  key_vault_id                      = module.synapse_data_lake.key_vault_id
   sql_server_aad_administrator      = var.synapse_aad_administrator
   sql_server_administrator_username = var.sql_server_administrator_username
   synapse_workspace_id              = module.synapse_workspace_private_failover[0].synapse_workspace_id
