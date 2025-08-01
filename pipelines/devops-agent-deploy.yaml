@@ -156,3 +156,4 @@ stages:
                 environment: ${{ variables.environment }}
                 planFilePath: ${{ variables.planFileName }}
                 workingDirectory: infrastructure
+                refreshTFState: false
