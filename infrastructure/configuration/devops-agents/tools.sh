@@ -55,6 +55,9 @@ sudo apt-get install -y --no-install-recommends \
 ## Requirements for the tests
 sudo python3 -m pip install -r tests_requirements.txt
 
+# Install Poetry
+python3 -m pip install -U poetry==2.1.3
+
 # Terraform
 curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add -
 sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
