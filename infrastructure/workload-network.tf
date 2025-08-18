@@ -197,6 +197,13 @@ data "azurerm_private_dns_zone" "tooling_synapse" {
   provider = azurerm.tooling
 }
 
+data "azurerm_private_dns_zone" "tooling_synapse_sql" {
+  name                = "privatelink.sql.azuresynapse.net"
+  resource_group_name = var.tooling_config.network_rg
+
+  provider = azurerm.tooling
+}
+
 data "azurerm_private_dns_zone" "tooling_synapse_dev" {
   name                = "privatelink.dev.azuresynapse.net"
   resource_group_name = var.tooling_config.network_rg

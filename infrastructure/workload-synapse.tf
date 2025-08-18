@@ -43,6 +43,7 @@ module "synapse_workspace_private" {
   tooling_config = {
     synapse_private_dns_zone_id     = data.azurerm_private_dns_zone.tooling_synapse.id
     synapse_dev_private_dns_zone_id = data.azurerm_private_dns_zone.tooling_synapse_dev.id
+    synapse_sql_private_dns_zone_id = data.azurerm_private_dns_zone.tooling_synapse_sql.id
   }
 
   create_service_bus_resources           = var.create_service_bus_resources
@@ -103,6 +104,7 @@ module "synapse_workspace_private_failover" {
   tooling_config = {
     synapse_private_dns_zone_id     = data.azurerm_private_dns_zone.tooling_synapse.id
     synapse_dev_private_dns_zone_id = data.azurerm_private_dns_zone.tooling_synapse_dev.id
+    synapse_sql_private_dns_zone_id = data.azurerm_private_dns_zone.tooling_synapse_sql.id
   }
 
   tags = local.tags
