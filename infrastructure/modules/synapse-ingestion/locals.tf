@@ -20,7 +20,7 @@ locals {
 
   service_bus_topic_subscriptions_defaults = {
     status                                    = "Active"
-    max_delivery_count                        = 1
+    max_delivery_count                        = 20
     auto_delete_on_idle                       = "P10675199DT2H48M5.4775807S"
     default_message_ttl                       = "P14D"
     lock_duration                             = "PT1M"
