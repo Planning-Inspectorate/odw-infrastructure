@@ -28,6 +28,7 @@ sudo apt-get install -y --no-install-recommends \
   libxss1 \
   libxtst6 \
   lsb-release \
+  openjdk-11-jdk \
   software-properties-common \
   unzip \
   wget \
