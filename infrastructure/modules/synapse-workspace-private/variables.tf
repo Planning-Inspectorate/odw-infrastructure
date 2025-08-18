@@ -233,5 +233,6 @@ variable "tooling_config" {
   type = object({
     synapse_private_dns_zone_id     = string
     synapse_dev_private_dns_zone_id = string
+    synapse_sql_private_dns_zone_id = string
   })
 }
