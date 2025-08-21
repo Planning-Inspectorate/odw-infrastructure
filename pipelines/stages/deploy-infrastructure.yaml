@@ -24,3 +24,4 @@ stages:
       outputsFileName: ${{ parameters.outputsFileName }}
       runTerraformApply: ${{ parameters.runTerraformApply }}
       refreshTFState: ${{ parameters.refreshTFState }}
+      runTerraformImport: ${{ parameters.runTerraformImport }}
