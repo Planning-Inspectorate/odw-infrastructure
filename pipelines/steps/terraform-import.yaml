@@ -1,0 +1,20 @@
+parameters:
+  - name: workingDirectory
+    type: string
+    default: infrastructure
+
+steps:
+  - script: |
+      echo "Importing pre-existing containers..."
+
+      terraform import 'module.synapse_data_lake.azurerm_storage_container.synapse["insights-logs-builtinsqlreqsended"]' 'https://pinsstodwdevuks9h80mb.blob.core.windows.net/insights-logs-builtinsqlreqsended'
+      terraform import 'module.synapse_data_lake.azurerm_storage_container.synapse["logging"]' 'https://pinsstodwdevuks9h80mb.blob.core.windows.net/logging'
+      terraform import 'module.synapse_data_lake.azurerm_storage_container.synapse["odw-config-db"]' 'https://pinsstodwdevuks9h80mb.blob.core.windows.net/odw-config-db'
+      terraform import 'module.synapse_data_lake.azurerm_storage_container.synapse["odw-curated-migration"]' 'https://pinsstodwdevuks9h80mb.blob.core.windows.net/odw-curated-migration'
+      terraform import 'module.synapse_data_lake.azurerm_storage_container.synapse["odw-standardised-delta"]' 'https://pinsstodwdevuks9h80mb.blob.core.windows.net/odw-standardised-delta'
+      terraform import 'module.synapse_data_lake.azurerm_storage_container.synapse["s51-advice-backup"]' 'https://pinsstodwdevuks9h80mb.blob.core.windows.net/s51-advice-backup'
+      terraform import 'module.synapse_data_lake.azurerm_storage_container.synapse["saphrsdata-to-odw"]' 'https://pinsstodwdevuks9h80mb.blob.core.windows.net/saphrsdata-to-odw'
+      terraform import 'module.synapse_data_lake.azurerm_storage_container.synapse["synapse"]' 'https://pinsstodwdevuks9h80mb.blob.core.windows.net/synapse'
+
+    displayName: 'Terraform Import Existing Containers'
+    workingDirectory: ${{ parameters.workingDirectory }}

@@ -12,6 +12,10 @@ parameters:
     displayName: 'Failover Deployment'
     type: boolean
     default: false
+  - name: runTerraformImport
+    displayName: Run Terraform Import
+    type: boolean
+    default: false
 
 # Import the core repository
 resources:
@@ -105,6 +109,12 @@ stages:
         parameters:
           environment: ${{ variables.environment }}
           workingDirectory: infrastructure
+
+      # Run Terraform import for existing resources
+      - ${{ if eq(parameters.runTerraformImport, true) }}:
+          - template: steps/terraform-import.yaml
+            parameters:
+              workingDirectory: infrastructure
 
       # Run targetted Terraform plan to deploy VNET and resource group
       - template: steps/devops-agent-plan.yaml
