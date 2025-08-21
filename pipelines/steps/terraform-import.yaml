@@ -1,30 +1,37 @@
 steps:
   - script: |
-      set -e
-      echo "Importing pre-existing containers..."
+      set -euo pipefail
 
-      echo "Importing: insights-logs-builtinsqlreqsended"
-      terraform import 'module.synapse_data_lake.azurerm_storage_container.synapse["insights-logs-builtinsqlreqsended"]' '/subscriptions/12806449-ae7c-4754-b104-65bcdc7b28c8/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstodwdevuks9h80mb/blobServices/default/containers/insights-logs-builtinsqlreqsended'
+      echo "Starting Terraform Import for Existing Containers..."
+      echo "----------------------------------------------------"
+      echo "Subscription  : ff442a29-fc06-4a13-8e3e-65fd5da513b3"
+      echo "Resource Group: pins-rg-data-odw-dev-uks"
+      echo "Storage Acct  : pinsstodwdevuks9h80mb"
+      echo "----------------------------------------------------"
+      echo ""
 
-      echo "Importing: logging"
-      terraform import 'module.synapse_data_lake.azurerm_storage_container.synapse["logging"]' '/subscriptions/12806449-ae7c-4754-b104-65bcdc7b28c8/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstodwdevuks9h80mb/blobServices/default/containers/logging'
+      containers=(
+        "insights-logs-builtinsqlreqsended"
+        "logging"
+        "odw-config-db"
+        "odw-curated-migration"
+        "odw-standardised-delta"
+        "s51-advice-backup"
+        "saphrsdata-to-odw"
+        "synapse"
+      )
 
-      echo "Importing: odw-config-db"
-      terraform import 'module.synapse_data_lake.azurerm_storage_container.synapse["odw-config-db"]' '/subscriptions/12806449-ae7c-4754-b104-65bcdc7b28c8/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstodwdevuks9h80mb/blobServices/default/containers/odw-config-db'
+      for container in "${containers[@]}"; do
+        echo "Importing container: $container"
 
-      echo "Importing: odw-curated-migration"
-      terraform import 'module.synapse_data_lake.azurerm_storage_container.synapse["odw-curated-migration"]' '/subscriptions/12806449-ae7c-4754-b104-65bcdc7b28c8/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstodwdevuks9h80mb/blobServices/default/containers/odw-curated-migration'
+        terraform import \
+          "module.synapse_data_lake.azurerm_storage_container.synapse[\"$container\"]" \
+          "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstodwdevuks9h80mb/blobServices/default/containers/$container"
 
-      echo "Importing: odw-standardised-delta"
-      terraform import 'module.synapse_data_lake.azurerm_storage_container.synapse["odw-standardised-delta"]' '/subscriptions/12806449-ae7c-4754-b104-65bcdc7b28c8/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstodwdevuks9h80mb/blobServices/default/containers/odw-standardised-delta'
+        echo "Imported: $container"
+        echo "------------------------------------------------------"
+      done
 
-      echo "Importing: s51-advice-backup"
-      terraform import 'module.synapse_data_lake.azurerm_storage_container.synapse["s51-advice-backup"]' '/subscriptions/12806449-ae7c-4754-b104-65bcdc7b28c8/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstodwdevuks9h80mb/blobServices/default/containers/s51-advice-backup'
-
-      echo "Importing: saphrsdata-to-odw"
-      terraform import 'module.synapse_data_lake.azurerm_storage_container.synapse["saphrsdata-to-odw"]' '/subscriptions/12806449-ae7c-4754-b104-65bcdc7b28c8/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstodwdevuks9h80mb/blobServices/default/containers/saphrsdata-to-odw'
-
-      echo "Importing: synapse"
-      terraform import 'module.synapse_data_lake.azurerm_storage_container.synapse["synapse"]' '/subscriptions/12806449-ae7c-4754-b104-65bcdc7b28c8/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstodwdevuks9h80mb/blobServices/default/containers/synapse'
+      echo "All containers imported successfully."
     displayName: 'Terraform Import Existing Containers'
     workingDirectory: ${{ parameters.workingDirectory }}
