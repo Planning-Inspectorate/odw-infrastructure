@@ -6,6 +6,7 @@ parameters:
   outputsFileName: ''
   runTerraformApply: false
   refreshTFState: false
+  runTerraformImport: false
 
 ##
 # Deploy Infrastructure only if a modification has been detected in the codebase
