@@ -6,6 +6,7 @@ parameters:
   outputsFileName: ''
   runTerraformApply: false
   refreshTFState: false
+  runTerraformImport: false
 
 
 ##
