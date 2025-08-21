@@ -71,6 +71,7 @@ stages:
     armServiceConnectionName: "Azure Devops Pipelines - ODW ${{ upper(parameters.env) }} - Infrastructure"
     failoverDeployment: ${{ parameters.failoverDeployment }}
     outputsFileName: "tfoutputs.json"
+    runTerraformImport: ${{ parameters.runTerraformImport }}
     runTerraformApply: ${{ parameters.runTerraformApply }}
     refreshTFState: ${{ parameters.refreshTFState }}
 
