@@ -24,14 +24,15 @@ steps:
       for container in "${containers[@]}"; do
         echo "Importing container: $container"
 
-        terraform import \
+        timeout 60 terraform import \
           "module.synapse_data_lake.azurerm_storage_container.synapse[\"$container\"]" \
-          "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstodwdevuks9h80mb/blobServices/default/containers/$container"
+          "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstodwdevuks9h80mb/blobServices/default/containers/$container" \
+        && echo "Successfully imported: $container" \
+        || echo "Failed to import: $container (timeout or error)"
 
-        echo "Imported: $container"
         echo "------------------------------------------------------"
       done
 
-      echo "All containers imported successfully."
+      echo "All imports attempts finished"
     displayName: 'Terraform Import Existing Containers'
     workingDirectory: ${{ parameters.workingDirectory }}
