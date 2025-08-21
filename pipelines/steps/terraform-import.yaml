@@ -4,9 +4,9 @@ steps:
 
       echo "Starting Terraform Import for Existing Containers..."
       echo "----------------------------------------------------"
-      echo "Subscription  : ff442a29-fc06-4a13-8e3e-65fd5da513b3"
-      echo "Resource Group: pins-rg-data-odw-dev-uks"
-      echo "Storage Acct  : pinsstodwdevuks9h80mb"
+      echo "Subscription  : $SUBSCRIPTION_ID"
+      echo "Resource Group: pins-rg-data-odw-${ENV}-uks"
+      echo "Storage Acct  : ${DATA_LAKE_STORAGE}"
       echo "----------------------------------------------------"
       echo ""
 
@@ -26,8 +26,8 @@ steps:
 
         timeout 60 terraform import \
           "module.synapse_data_lake.azurerm_storage_container.synapse[\"$container\"]" \
-          "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstodwdevuks9h80mb/blobServices/default/containers/$container" \
-        && echo "Successfully imported: $container" \
+          "/subscriptions/${SUBSCRIPTION_ID}/resourceGroups/pins-rg-data-odw-${ENV}-uks/providers/Microsoft.Storage/storageAccounts/${DATA_LAKE_STORAGE}/blobServices/default/containers/$container" \
+        && echo "Imported: $container" \
         || echo "Failed to import: $container (timeout or error)"
 
         echo "------------------------------------------------------"
