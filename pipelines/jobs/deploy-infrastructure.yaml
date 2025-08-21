@@ -39,6 +39,12 @@ jobs:
       environment: ${{ parameters.env }}
       workingDirectory: infrastructure
 
+    # Run Terraform import
+  - ${{ if eq(parameters.runTerraformImport, true) }}:
+      - template: ${{variables['System.DefaultWorkingDirectory']}}/pipelines/steps/terraform-import.yaml
+        parameters:
+          workingDirectory: infrastructure
+
   # Run Terraform format
   - template: ${{variables['System.DefaultWorkingDirectory']}}/pipelines/steps/terraform-format.yaml
     parameters:
