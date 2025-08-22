@@ -32,3 +32,8 @@ output "key_vault_uri" {
   description = "The URI of the Key Vault"
   value       = azurerm_key_vault.synapse.vault_uri
 }
+
+output "storage_account_name" {
+  value = azurerm_storage_account.synapse.name
+}
+
