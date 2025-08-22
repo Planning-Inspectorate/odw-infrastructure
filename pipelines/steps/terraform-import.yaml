@@ -22,13 +22,27 @@ steps:
       )
 
       for container in "${containers[@]}"; do
-        echo "Importing container: $container"
+        echo "Checking existence of container: $container"
+        
+        exists=$(az storage container show \
+          --name "$container" \
+          --account-name "$DATA_LAKE_STORAGE" \
+          --auth-mode login \
+          --query "name" \
+          --output tsv || echo "")
 
-        timeout 60 terraform import \
-          "module.synapse_data_lake.azurerm_storage_container.synapse[\"$container\"]" \
-          "/subscriptions/${SUBSCRIPTION_ID}/resourceGroups/pins-rg-data-odw-${ENV}-uks/providers/Microsoft.Storage/storageAccounts/${DATA_LAKE_STORAGE}/blobServices/default/containers/$container" \
-        && echo "Imported: $container" \
-        || echo "Failed to import: $container (timeout or error)"
+        if [[ -z "$exists" ]]; then
+          echo "Skipping import — container does not exist or access denied: $container"
+        else
+          echo "Container exists: $container"
+          echo "Importing container: $container"
+
+          timeout 60 terraform import \
+            "module.synapse_data_lake.azurerm_storage_container.synapse[\"$container\"]" \
+            "/subscriptions/${SUBSCRIPTION_ID}/resourceGroups/pins-rg-data-odw-${ENV}-uks/providers/Microsoft.Storage/storageAccounts/${DATA_LAKE_STORAGE}/blobServices/default/containers/$container" \
+          && echo "Imported: $container" \
+          || echo "Failed to import: $container (timeout or error)"
+        fi
 
         echo "------------------------------------------------------"
       done
