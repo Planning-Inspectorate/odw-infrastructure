@@ -79,10 +79,3 @@ resource "azurerm_storage_container" "synapse" {
     azurerm_storage_data_lake_gen2_filesystem.synapse
   ]
 }
-
-import {
-  for_each = var.containers_to_add
-  to       = azurerm_storage_container.synapse[each.key]
-  id       = each.value
-}
-
