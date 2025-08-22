@@ -36,4 +36,3 @@ output "key_vault_uri" {
 output "storage_account_name" {
   value = azurerm_storage_account.synapse.name
 }
-
