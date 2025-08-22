@@ -133,6 +133,8 @@ import {
 }
 
 resource "azurerm_storage_container" "synapse" {
+    # checkov:skip=CKV2_AZURE_21 reason="Blob logging is managed at the storage account level, not container level"
+
   for_each = toset([
     "insights-logs-builtinsqlreqsended",
     "logging",
