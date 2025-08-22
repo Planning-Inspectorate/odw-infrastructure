@@ -1,26 +1,26 @@
 output "data_lake_account_id" {
   description = "The ID of the Data Lake Storage Account"
-  value       = var.failover_deployment ? module.synapse_data_lake_failover.data_lake_account_id : module.synapse_data_lake.data_lake_account_id
+  value       = var.failover_deployment ? module.synapse_data_lake.data_lake_account_id : module.synapse_data_lake.data_lake_account_id
 }
 
 output "data_lake_account_id_failover" {
   description = "The ID of the Data Lake Storage Account used for backup and failover"
-  value       = var.failover_deployment ? module.synapse_data_lake.data_lake_account_id : module.synapse_data_lake_failover.data_lake_account_id
+  value       = var.failover_deployment ? module.synapse_data_lake.data_lake_account_id : module.synapse_data_lake.data_lake_account_id
 }
 
 output "data_lake_account_name" {
   description = "The name of the Data Lake Storage Account"
-  value       = var.failover_deployment ? module.synapse_data_lake_failover.data_lake_account_name : module.synapse_data_lake.data_lake_account_name
+  value       = var.failover_deployment ? module.synapse_data_lake.data_lake_account_name : module.synapse_data_lake.data_lake_account_name
 }
 
 output "data_lake_dfs_endpoint" {
   description = "The DFS endpoint URL of the Data Lake Storage Account"
-  value       = var.failover_deployment ? module.synapse_data_lake_failover.data_lake_dfs_endpoint : module.synapse_data_lake.data_lake_dfs_endpoint
+  value       = var.failover_deployment ? module.synapse_data_lake.data_lake_dfs_endpoint : module.synapse_data_lake.data_lake_dfs_endpoint
 }
 
 output "data_lake_dfs_endpoint_failover" {
   description = "The DFS endpoint URL of the Data Lake Storage Account used for backup and failover"
-  value       = var.failover_deployment ? module.synapse_data_lake.data_lake_dfs_endpoint : module.synapse_data_lake_failover.data_lake_dfs_endpoint
+  value       = var.failover_deployment ? module.synapse_data_lake.data_lake_dfs_endpoint : module.synapse_data_lake.data_lake_dfs_endpoint
 }
 
 output "data_resource_group_name" {
@@ -35,7 +35,7 @@ output "devops_agent_pool_resource_group_name" {
 
 output "key_vault_uri" {
   description = "The URI of the Key Vault"
-  value       = var.failover_deployment ? module.synapse_data_lake_failover.key_vault_uri : module.synapse_data_lake.key_vault_uri
+  value       = var.failover_deployment ? module.synapse_data_lake.key_vault_uri : module.synapse_data_lake.key_vault_uri
 }
 
 output "service_bus_namespace_name" {

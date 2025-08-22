@@ -7,9 +7,9 @@ module "synapse_workspace_private" {
   service_name        = local.service_name
 
   data_lake_account_id                  = module.synapse_data_lake.data_lake_account_id
-  data_lake_account_id_failover         = module.synapse_data_lake_failover.data_lake_account_id
+  data_lake_account_id_failover         = module.synapse_data_lake.data_lake_account_id
   data_lake_account_name                = module.synapse_data_lake.data_lake_account_name
-  data_lake_account_name_failover       = module.synapse_data_lake_failover.data_lake_account_name
+  data_lake_account_name_failover       = module.synapse_data_lake.data_lake_account_name
   data_lake_filesystem_id               = module.synapse_data_lake.data_lake_filesystem_id
   firewall_allowed_ip_addresses         = local.firewall_allowed_ip_addresses
   key_vault_id                          = module.synapse_data_lake.key_vault_id
@@ -67,14 +67,14 @@ module "synapse_workspace_private_failover" {
   location            = module.azure_region.paired_location.location_cli
   service_name        = local.service_name
 
-  data_lake_account_id                  = module.synapse_data_lake_failover.data_lake_account_id
+  data_lake_account_id                  = module.synapse_data_lake.data_lake_account_id
   data_lake_account_id_failover         = module.synapse_data_lake.data_lake_account_id
-  data_lake_account_name                = module.synapse_data_lake_failover.data_lake_account_name
+  data_lake_account_name                = module.synapse_data_lake.data_lake_account_name
   data_lake_account_name_failover       = module.synapse_data_lake.data_lake_account_name
-  data_lake_filesystem_id               = module.synapse_data_lake_failover.data_lake_filesystem_id
+  data_lake_filesystem_id               = module.synapse_data_lake.data_lake_filesystem_id
   firewall_allowed_ip_addresses         = local.firewall_allowed_ip_addresses
-  key_vault_id                          = module.synapse_data_lake_failover.key_vault_id
-  key_vault_name                        = module.synapse_data_lake_failover.key_vault_name
+  key_vault_id                          = module.synapse_data_lake.key_vault_id
+  key_vault_name                        = module.synapse_data_lake.key_vault_name
   network_resource_group_name           = azurerm_resource_group.network_failover.name
   purview_id                            = var.link_purview_account ? var.purview_id : null
   purview_storage_id                    = var.link_purview_account ? var.purview_storage_id : null
