@@ -96,7 +96,7 @@ resource "azurerm_storage_container" "synapse" {
   for_each = var.containers_to_add
 
   name                  = each.key
-  storage_account_name  = module.synapse_data_lake.storage_account_name
+  storage_account_name  = "pinsstoddwdevuks9h80mb"
   container_access_type = "private"
 }
 
