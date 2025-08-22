@@ -92,6 +92,14 @@ module "synapse_data_lake_failover" {
   }
 }
 
+resource "azurerm_storage_container" "synapse" {
+  for_each = var.containers_to_add
+
+  name                  = each.key
+  storage_account_name  = module.synapse_data_lake.storage_account_name
+  container_access_type = "private"
+}
+
 import {
   for_each = var.containers_to_add
   to       = azurerm_storage_container.synapse[each.key]
