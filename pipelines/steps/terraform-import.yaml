@@ -2,6 +2,9 @@ steps:
   - script: |
       set -euo pipefail
 
+      export TF_LOG=DEBUG
+      export TF_LOG_PATH="terraform-debug.log"
+
       echo "Starting Terraform Import for Existing Containers..."
       echo "----------------------------------------------------"
       echo "Subscription  : $SUBSCRIPTION_ID"
@@ -37,11 +40,19 @@ steps:
           echo "Container exists: $container"
           echo "Importing container: $container"
 
-          timeout 60 terraform import \
-            "module.synapse_data_lake.azurerm_storage_container.synapse[\"$container\"]" \
-            "/subscriptions/${SUBSCRIPTION_ID}/resourceGroups/pins-rg-data-odw-${ENV}-uks/providers/Microsoft.Storage/storageAccounts/${DATA_LAKE_STORAGE}/blobServices/default/containers/$container" \
+          tf_target="module.synapse_data_lake.azurerm_storage_container.synapse[\"$container\"]"
+          tf_id="/subscriptions/${SUBSCRIPTION_ID}/resourceGroups/pins-rg-data-odw-${ENV}-uks/providers/Microsoft.Storage/storageAccounts/${DATA_LAKE_STORAGE}/blobServices/default/containers/$container"
+
+          echo "Running command: terraform import \"$tf_target\" \"$tf_id\""
+          echo ""
+
+          timeout 90 terraform import "$tf_target" "$tf_id" > "import-$container.log" 2>&1 \
           && echo "Imported: $container" \
-          || echo "Failed to import: $container (timeout or error)"
+          || { 
+            echo "Failed to import: $container (timeout or error)"
+            echo "Check logs: import-$container.log"
+            tail -n 10 "import-$container.log"
+          }
         fi
 
         echo "------------------------------------------------------"
