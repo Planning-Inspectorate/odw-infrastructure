@@ -592,9 +592,3 @@ variable "purview_event_hub_id" {
   type        = string
   default     = null
 }
-
-variable "containers_to_add" {
-  description = "Manually created containers to be imported into state"
-  type        = map(string)
-  default     = {}
-}
