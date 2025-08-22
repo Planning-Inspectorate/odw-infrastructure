@@ -149,3 +149,9 @@ variable "external_resource_links_enabled" {
   description = "If connections and links to resources outside of the ODW should be made"
   type        = bool
 }
+
+variable "containers_to_add" {
+  description = "Manually created containers to be imported into state"
+  type        = map(string)
+  default     = {}
+}
