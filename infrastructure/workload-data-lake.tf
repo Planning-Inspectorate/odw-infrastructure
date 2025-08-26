@@ -175,40 +175,40 @@ resource "azurerm_role_assignment" "ado_blob_reader" {
 
 import {
   to = azurerm_storage_container.synapse_insights
-  id = "pinsstoddwdevuks9h80mb/insights-logs-builtinsqlreqsended"
+  id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/insights-logs-builtinsqlreqsended"
 }
 
 import {
   to = azurerm_storage_container.synapse_logging
-  id = "pinsstoddwdevuks9h80mb/logging"
+  id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/logging"
 }
 
 import {
   to = azurerm_storage_container.synapse_odw_config
-  id = "pinsstoddwdevuks9h80mb/odw-config-db"
+  id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/odw-config-db"
 }
 
 import {
   to = azurerm_storage_container.synapse_odw_curated
-  id = "pinsstoddwdevuks9h80mb/odw-curated-migration"
+  id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/odw-curated-migration"
 }
 
 import {
   to = azurerm_storage_container.synapse_odw_standardised
-  id = "pinsstoddwdevuks9h80mb/odw-standardised-delta"
+  id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/odw-standardised-delta"
 }
 
 import {
   to = azurerm_storage_container.synapse_backup
-  id = "pinsstoddwdevuks9h80mb/s51-advice-backup"
+  id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/s51-advice-backup"
 }
 
 import {
   to = azurerm_storage_container.synapse_saph
-  id = "pinsstoddwdevuks9h80mb/saphrsdata-to-odw"
+  id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/saphrsdata-to-odw"
 }
 
 import {
   to = azurerm_storage_container.synapse_synapse
-  id = "pinsstoddwdevuks9h80mb/synapse"
+  id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/synapse"
 }
