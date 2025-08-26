@@ -92,6 +92,30 @@ module "synapse_data_lake_failover" {
   }
 }
 
+resource "azurerm_storage_container" "synapse" {
+  # checkov:skip=CKV2_AZURE_21 reason="Blob logging is managed at the storage account level, not container level"
+  for_each = toset([
+    "insights-logs-builtinsqlreqsended",
+    "logging",
+    "odw-config-db",
+    "odw-curated-migration",
+    "odw-standardised-delta",
+    "s51-advice-backup",
+    "saphrsdata-to-odw",
+    "synapse"
+  ])
+
+  name                  = each.key
+  storage_account_name  = "pinsstoddwdevuks9h80mb"
+  container_access_type = "private"
+}
+
+resource "azurerm_role_assignment" "ado_blob_reader" {
+  scope                = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstoddwdevuks9h80mb"
+  role_definition_name = "Storage Blob Data Reader"
+  principal_id         = "9d7c0f07-9839-4928-8927-bfc19f9f6bd2"
+}
+
 import {
   to = azurerm_storage_container.synapse["insights-logs-builtinsqlreqsended"]
   id = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstoddwdevuks9h80mb/blobServices/default/containers/insights-logs-builtinsqlreqsended"
@@ -130,28 +154,4 @@ import {
 import {
   to = azurerm_storage_container.synapse["synapse"]
   id = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstoddwdevuks9h80mb/blobServices/default/containers/synapse"
-}
-
-resource "azurerm_storage_container" "synapse" {
-  # checkov:skip=CKV2_AZURE_21 reason="Blob logging is managed at the storage account level, not container level"
-  for_each = toset([
-    "insights-logs-builtinsqlreqsended",
-    "logging",
-    "odw-config-db",
-    "odw-curated-migration",
-    "odw-standardised-delta",
-    "s51-advice-backup",
-    "saphrsdata-to-odw",
-    "synapse"
-  ])
-
-  name                  = each.key
-  storage_account_name  = "pinsstoddwdevuks9h80mb"
-  container_access_type = "private"
-}
-
-resource "azurerm_role_assignment" "ado_blob_reader" {
-  scope                = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstoddwdevuks9h80mb"
-  role_definition_name = "Storage Blob Data Reader"
-  principal_id         = "9d7c0f07-9839-4928-8927-bfc19f9f6bd2"
 }
