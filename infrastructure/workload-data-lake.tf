@@ -117,41 +117,41 @@ resource "azurerm_role_assignment" "ado_blob_reader" {
 }
 
 import {
-  to = module.synapse_data_lake.azurerm_storage_container.synapse["insights-logs-builtinsqlreqsended"]
+  to = azurerm_storage_container.synapse["insights-logs-builtinsqlreqsended"]
   id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/insights-logs-builtinsqlreqsended"
 }
 
 import {
-  to = module.synapse_data_lake.azurerm_storage_container.synapse["logging"]
+  to = azurerm_storage_container.synapse["logging"]
   id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/logging"
 }
 
 import {
-  to = module.synapse_data_lake.azurerm_storage_container.synapse["odw-config-db"]
+  to = azurerm_storage_container.synapse["odw-config-db"]
   id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/odw-config-db"
 }
 
 import {
-  to = module.synapse_data_lake.azurerm_storage_container.synapse["odw-curated-migration"]
+  to = azurerm_storage_container.synapse["odw-curated-migration"]
   id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/odw-curated-migration"
 }
 
 import {
-  to = module.synapse_data_lake.azurerm_storage_container.synapse["odw-standardised-delta"]
+  to = azurerm_storage_container.synapse["odw-standardised-delta"]
   id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/odw-standardised-delta"
 }
 
 import {
-  to = module.synapse_data_lake.azurerm_storage_container.synapse["s51-advice-backup"]
+  to = azurerm_storage_container.synapse["s51-advice-backup"]
   id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/s51-advice-backup"
 }
 
 import {
-  to = module.synapse_data_lake.azurerm_storage_container.synapse["saphrsdata-to-odw"]
+  to = azurerm_storage_container.synapse["saphrsdata-to-odw"]
   id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/saphrsdata-to-odw"
 }
 
 import {
-  to = module.synapse_data_lake.azurerm_storage_container.synapse["synapse"]
+  to = azurerm_storage_container.synapse["synapse"]
   id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/synapse"
 }
