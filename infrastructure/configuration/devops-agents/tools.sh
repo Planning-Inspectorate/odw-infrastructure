@@ -82,7 +82,7 @@ curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 sudo curl -fsSL https://aka.ms/install-azd.sh | bash
 
 # Microsoft SQL Server ODBC Driver 18
-echo "Installing Microsoft SQL Server ODBC Driver 18..."
+echo "Installing Microsoft SQL Server ODBC Driver 18"
 curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
 echo "deb [arch=amd64,arm64,armhf] https://packages.microsoft.com/ubuntu/$(lsb_release -rs)/prod $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/mssql-release.list
 sudo apt-get update
