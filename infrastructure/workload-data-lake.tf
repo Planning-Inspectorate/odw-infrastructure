@@ -110,48 +110,56 @@ module "synapse_data_lake_failover" {
 #  container_access_type = "private"
 #}
 
+# checkov:skip=CKV2_AZURE_21 reason="Blob service logging is set at the storage account level, not container level"
 resource "azurerm_storage_container" "synapse_insights" {
   name                  = "insights-logs-builtinsqlreqsended"
   storage_account_name  = "pinsstoddwdevuks9h80mb"
   container_access_type = "private"
 }
 
+# checkov:skip=CKV2_AZURE_21 reason="Blob service logging is set at the storage account level, not container level"
 resource "azurerm_storage_container" "synapse_logging" {
   name                  = "logging"
   storage_account_name  = "pinsstoddwdevuks9h80mb"
   container_access_type = "private"
 }
 
+# checkov:skip=CKV2_AZURE_21 reason="Blob service logging is set at the storage account level, not container level"
 resource "azurerm_storage_container" "synapse_odw_config" {
   name                  = "odw-config-db"
   storage_account_name  = "pinsstoddwdevuks9h80mb"
   container_access_type = "private"
 }
 
+# checkov:skip=CKV2_AZURE_21 reason="Blob service logging is set at the storage account level, not container level"
 resource "azurerm_storage_container" "synapse_odw_curated" {
   name                  = "odw-curated-migration"
   storage_account_name  = "pinsstoddwdevuks9h80mb"
   container_access_type = "private"
 }
 
+# checkov:skip=CKV2_AZURE_21 reason="Blob service logging is set at the storage account level, not container level"
 resource "azurerm_storage_container" "synapse_odw_standardised" {
   name                  = "odw-standardised-delta"
   storage_account_name  = "pinsstoddwdevuks9h80mb"
   container_access_type = "private"
 }
 
+# checkov:skip=CKV2_AZURE_21 reason="Blob service logging is set at the storage account level, not container level"
 resource "azurerm_storage_container" "synapse_backup" {
   name                  = "s51-advice-backup"
   storage_account_name  = "pinsstoddwdevuks9h80mb"
   container_access_type = "private"
 }
 
+# checkov:skip=CKV2_AZURE_21 reason="Blob service logging is set at the storage account level, not container level"
 resource "azurerm_storage_container" "synapse_saph" {
   name                  = "saphrsdata-to-odw"
   storage_account_name  = "pinsstoddwdevuks9h80mb"
   container_access_type = "private"
 }
 
+# checkov:skip=CKV2_AZURE_21 reason="Blob service logging is set at the storage account level, not container level"
 resource "azurerm_storage_container" "synapse_synapse" {
   name                  = "synapse"
   storage_account_name  = "pinsstoddwdevuks9h80mb"
