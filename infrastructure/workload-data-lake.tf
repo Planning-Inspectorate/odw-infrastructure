@@ -92,23 +92,72 @@ module "synapse_data_lake_failover" {
   }
 }
 
-resource "azurerm_storage_container" "synapse" {
-  # checkov:skip=CKV2_AZURE_21 reason="Blob logging is managed at the storage account level, not container level"
-  for_each = toset([
-    "insights-logs-builtinsqlreqsended",
-    "logging",
-    "odw-config-db",
-    "odw-curated-migration",
-    "odw-standardised-delta",
-    "s51-advice-backup",
-    "saphrsdata-to-odw",
-    "synapse"
-  ])
+#resource "azurerm_storage_container" "synapse" {
+#  # checkov:skip=CKV2_AZURE_21 reason="Blob logging is managed at the storage account level, not container level"
+#  for_each = toset([
+#    "insights-logs-builtinsqlreqsended",
+#    "logging",
+#    "odw-config-db",
+#    "odw-curated-migration",
+#    "odw-standardised-delta",
+#    "s51-advice-backup",
+#    "saphrsdata-to-odw",
+#    "synapse"
+#  ])
+#
+#  name                  = each.key
+#  storage_account_name  = "pinsstoddwdevuks9h80mb"
+#  container_access_type = "private"
+#}
 
-  name                  = each.key
+resource "azurerm_storage_container" "synapse_insights" {
+  name                  = "insights-logs-builtinsqlreqsended"
   storage_account_name  = "pinsstoddwdevuks9h80mb"
   container_access_type = "private"
 }
+
+resource "azurerm_storage_container" "synapse_logging" {
+  name                  = "logging"
+  storage_account_name  = "pinsstoddwdevuks9h80mb"
+  container_access_type = "private"
+}
+
+resource "azurerm_storage_container" "synapse_odw_config" {
+  name                  = "odw-config-db"
+  storage_account_name  = "pinsstoddwdevuks9h80mb"
+  container_access_type = "private"
+}
+
+resource "azurerm_storage_container" "synapse_odw_curated" {
+  name                  = "odw-curated-migration"
+  storage_account_name  = "pinsstoddwdevuks9h80mb"
+  container_access_type = "private"
+}
+
+resource "azurerm_storage_container" "synapse_odw_standardised" {
+  name                  = "odw-standardised-delta"
+  storage_account_name  = "pinsstoddwdevuks9h80mb"
+  container_access_type = "private"
+}
+
+resource "azurerm_storage_container" "synapse_backup" {
+  name                  = "s51-advice-backup"
+  storage_account_name  = "pinsstoddwdevuks9h80mb"
+  container_access_type = "private"
+}
+
+resource "azurerm_storage_container" "synapse_saph" {
+  name                  = "saphrsdata-to-odw"
+  storage_account_name  = "pinsstoddwdevuks9h80mb"
+  container_access_type = "private"
+}
+
+resource "azurerm_storage_container" "synapse_synapse" {
+  name                  = "synapse"
+  storage_account_name  = "pinsstoddwdevuks9h80mb"
+  container_access_type = "private"
+}
+
 
 resource "azurerm_role_assignment" "ado_blob_reader" {
   scope                = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstoddwdevuks9h80mb"
@@ -117,41 +166,41 @@ resource "azurerm_role_assignment" "ado_blob_reader" {
 }
 
 import {
-  to = azurerm_storage_container.synapse["insights-logs-builtinsqlreqsended"]
+  to = azurerm_storage_container.synapse_insights
   id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/insights-logs-builtinsqlreqsended"
 }
 
 import {
-  to = azurerm_storage_container.synapse["logging"]
+  to = azurerm_storage_container.synapse_logging
   id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/logging"
 }
 
 import {
-  to = azurerm_storage_container.synapse["odw-config-db"]
+  to = azurerm_storage_container.synapse_odw_config
   id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/odw-config-db"
 }
 
 import {
-  to = azurerm_storage_container.synapse["odw-curated-migration"]
+  to = azurerm_storage_container.synapse_odw_curated
   id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/odw-curated-migration"
 }
 
 import {
-  to = azurerm_storage_container.synapse["odw-standardised-delta"]
+  to = azurerm_storage_container.synapse_odw_standardised
   id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/odw-standardised-delta"
 }
 
 import {
-  to = azurerm_storage_container.synapse["s51-advice-backup"]
+  to = azurerm_storage_container.synapse_backup
   id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/s51-advice-backup"
 }
 
 import {
-  to = azurerm_storage_container.synapse["saphrsdata-to-odw"]
+  to = azurerm_storage_container.synapse_saph
   id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/saphrsdata-to-odw"
 }
 
 import {
-  to = azurerm_storage_container.synapse["synapse"]
+  to = azurerm_storage_container.synapse_synapse
   id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/synapse"
 }
