@@ -14,7 +14,6 @@ sudo apt-get install -y --no-install-recommends \
   apt-transport-https \
   build-essential \
   ca-certificates \
-  unixodbc-dev \
   curl \
   gnupg \
   jq \
@@ -87,8 +86,9 @@ echo "Installing Microsoft SQL Server ODBC Driver 18..."
 curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
 echo "deb [arch=amd64,arm64,armhf] https://packages.microsoft.com/ubuntu/$(lsb_release -rs)/prod $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/mssql-release.list
 sudo apt-get update
-sudo ACCEPT_EULA=Y apt-get install -y msodbcsql18
-echo "ODBC Driver 18 installation completed"
+# Install ODBC driver and development headers together
+sudo ACCEPT_EULA=Y apt-get install -y msodbcsql18 unixodbc-dev
+echo "ODBC Driver 18 and development headers installation completed"
 
 # .NET Core and PowerShell
 wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
