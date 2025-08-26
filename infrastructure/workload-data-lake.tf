@@ -110,50 +110,57 @@ module "synapse_data_lake_failover" {
 #  container_access_type = "private"
 #}
 
-# checkov:skip=CKV2_AZURE_21 reason="Blob service logging is set at the storage account level, not container level"
 resource "azurerm_storage_container" "synapse_insights" {
+  # checkov:skip=CKV2_AZURE_21 reason="Blob service logging is set at the storage account level, not container level"
   name                  = "insights-logs-builtinsqlreqsended"
   storage_account_name  = "pinsstoddwdevuks9h80mb"
   container_access_type = "private"
 }
-# checkov:skip=CKV2_AZURE_21 reason="Blob service logging is set at the storage account level, not container level"
+
 resource "azurerm_storage_container" "synapse_logging" {
+  # checkov:skip=CKV2_AZURE_21 reason="Blob service logging is set at the storage account level, not container level"
   name                  = "logging"
   storage_account_name  = "pinsstoddwdevuks9h80mb"
   container_access_type = "private"
 }
-# checkov:skip=CKV2_AZURE_21 reason="Blob service logging is set at the storage account level, not container level"
+
 resource "azurerm_storage_container" "synapse_odw_config" {
+  # checkov:skip=CKV2_AZURE_21 reason="Blob service logging is set at the storage account level, not container level"
   name                  = "odw-config-db"
   storage_account_name  = "pinsstoddwdevuks9h80mb"
   container_access_type = "private"
 }
-# checkov:skip=CKV2_AZURE_21 reason="Blob service logging is set at the storage account level, not container level"
+
 resource "azurerm_storage_container" "synapse_odw_curated" {
+  # checkov:skip=CKV2_AZURE_21 reason="Blob service logging is set at the storage account level, not container level"
   name                  = "odw-curated-migration"
   storage_account_name  = "pinsstoddwdevuks9h80mb"
   container_access_type = "private"
 }
-# checkov:skip=CKV2_AZURE_21 reason="Blob service logging is set at the storage account level, not container level"
+
 resource "azurerm_storage_container" "synapse_odw_standardised" {
+  # checkov:skip=CKV2_AZURE_21 reason="Blob service logging is set at the storage account level, not container level"
   name                  = "odw-standardised-delta"
   storage_account_name  = "pinsstoddwdevuks9h80mb"
   container_access_type = "private"
 }
-# checkov:skip=CKV2_AZURE_21 reason="Blob service logging is set at the storage account level, not container level"
+
 resource "azurerm_storage_container" "synapse_backup" {
+  # checkov:skip=CKV2_AZURE_21 reason="Blob service logging is set at the storage account level, not container level"
   name                  = "s51-advice-backup"
   storage_account_name  = "pinsstoddwdevuks9h80mb"
   container_access_type = "private"
 }
-# checkov:skip=CKV2_AZURE_21 reason="Blob service logging is set at the storage account level, not container level"
+
 resource "azurerm_storage_container" "synapse_saph" {
+  # checkov:skip=CKV2_AZURE_21 reason="Blob service logging is set at the storage account level, not container level"
   name                  = "saphrsdata-to-odw"
   storage_account_name  = "pinsstoddwdevuks9h80mb"
   container_access_type = "private"
 }
-# checkov:skip=CKV2_AZURE_21 reason="Blob service logging is set at the storage account level, not container level"
+
 resource "azurerm_storage_container" "synapse_synapse" {
+  # checkov:skip=CKV2_AZURE_21 reason="Blob service logging is set at the storage account level, not container level"
   name                  = "synapse"
   storage_account_name  = "pinsstoddwdevuks9h80mb"
   container_access_type = "private"
@@ -168,40 +175,40 @@ resource "azurerm_role_assignment" "ado_blob_reader" {
 
 import {
   to = azurerm_storage_container.synapse_insights
-  id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/insights-logs-builtinsqlreqsended"
+  id = "pinsstoddwdevuks9h80mb/insights-logs-builtinsqlreqsended"
 }
 
 import {
   to = azurerm_storage_container.synapse_logging
-  id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/logging"
+  id = "pinsstoddwdevuks9h80mb/logging"
 }
 
 import {
   to = azurerm_storage_container.synapse_odw_config
-  id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/odw-config-db"
+  id = "pinsstoddwdevuks9h80mb/odw-config-db"
 }
 
 import {
   to = azurerm_storage_container.synapse_odw_curated
-  id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/odw-curated-migration"
+  id = "pinsstoddwdevuks9h80mb/odw-curated-migration"
 }
 
 import {
   to = azurerm_storage_container.synapse_odw_standardised
-  id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/odw-standardised-delta"
+  id = "pinsstoddwdevuks9h80mb/odw-standardised-delta"
 }
 
 import {
   to = azurerm_storage_container.synapse_backup
-  id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/s51-advice-backup"
+  id = "pinsstoddwdevuks9h80mb/s51-advice-backup"
 }
 
 import {
   to = azurerm_storage_container.synapse_saph
-  id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/saphrsdata-to-odw"
+  id = "pinsstoddwdevuks9h80mb/saphrsdata-to-odw"
 }
 
 import {
   to = azurerm_storage_container.synapse_synapse
-  id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/synapse"
+  id = "pinsstoddwdevuks9h80mb/synapse"
 }
