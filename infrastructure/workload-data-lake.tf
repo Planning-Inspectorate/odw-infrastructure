@@ -170,13 +170,13 @@ resource "azurerm_storage_container" "synapse_synapse" {
 resource "azurerm_role_assignment" "ado_blob_reader" {
   scope                = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstoddwdevuks9h80mb"
   role_definition_name = "Storage Blob Data Reader"
-  principal_id         = "9d7c0f07-9839-4928-8927-bfc19f9f6bd2"
+  principal_id         = "2a302373-df67-4c1e-91a1-f6301b87f42b"
 }
 
 resource "azurerm_role_assignment" "ado_storage_reader_management_plane" {
   scope                = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstoddwdevuks9h80mb"
   role_definition_name = "Reader"
-  principal_id         = "9d7c0f07-9839-4928-8927-bfc19f9f6bd2"
+  principal_id         = "2a302373-df67-4c1e-91a1-f6301b87f42b"
 }
 
 import {
