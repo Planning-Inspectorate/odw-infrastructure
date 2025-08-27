@@ -175,40 +175,40 @@ resource "azurerm_role_assignment" "ado_blob_reader" {
 
 import {
   to = azurerm_storage_container.synapse_insights
-  id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/insights-logs-builtinsqlreqsended"
+  id = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstoddwdevuks9h80mb/blobServices/default/containers/insights-logs-builtinsqlreqsended"
 }
 
 import {
   to = azurerm_storage_container.synapse_logging
-  id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/logging"
+  id = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstoddwdevuks9h80mb/blobServices/default/containers/logging"
 }
 
 import {
   to = azurerm_storage_container.synapse_odw_config
-  id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/odw-config-db"
+  id = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstoddwdevuks9h80mb/blobServices/default/containers/odw-config-db"
 }
 
 import {
   to = azurerm_storage_container.synapse_odw_curated
-  id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/odw-curated-migration"
+  id = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstoddwdevuks9h80mb/blobServices/default/containers/odw-curated-migration"
 }
 
 import {
   to = azurerm_storage_container.synapse_odw_standardised
-  id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/odw-standardised-delta"
+  id = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstoddwdevuks9h80mb/blobServices/default/containers/odw-standardised-delta"
 }
 
 import {
   to = azurerm_storage_container.synapse_backup
-  id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/s51-advice-backup"
+  id = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstoddwdevuks9h80mb/blobServices/default/containers/s51-advice-backup"
 }
 
 import {
   to = azurerm_storage_container.synapse_saph
-  id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/saphrsdata-to-odw"
+  id = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstoddwdevuks9h80mb/blobServices/default/containers/saphrsdata-to-odw"
 }
 
 import {
   to = azurerm_storage_container.synapse_synapse
-  id = "https://pinsstoddwdevuks9h80mb.blob.core.windows.net/synapse"
+  id = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstoddwdevuks9h80mb/blobServices/default/containers/synapse"
 }
