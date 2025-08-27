@@ -34,15 +34,7 @@ data_lake_storage_containers = [
   "odw-raw",
   "odw-standardised",
   "odw-harmonised",
-  "odw-config",
-  "insights-logs-builtinsqlreqsended",
-  "logging",
-  "odw-config-db",
-  "odw-curated-migration",
-  "odw-standardised-delta",
-  "s51-advice-backup",
-  "saphrspdata-to-odw",
-  "synapse"
+  "odw-config"
 ]
 
 devops_agent_pool_resource_group_name          = "pins-rg-devops-odw-dev-uks"
