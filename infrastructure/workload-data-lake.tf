@@ -92,171 +92,44 @@ module "synapse_data_lake_failover" {
   }
 }
 
-#resource "azurerm_storage_container" "synapse" {
-#  # checkov:skip=CKV2_AZURE_21 reason="Blob logging is managed at the storage account level, not container level"
-#  for_each = toset([
-#    "insights-logs-builtinsqlreqsended",
-#    "logging",
-#    "odw-config-db",
-#    "odw-curated-migration",
-#    "odw-standardised-delta",
-#    "s51-advice-backup",
-#    "saphrsdata-to-odw",
-#    "synapse"
-#  ])
-#
-#  name                  = each.key
-#  storage_account_name  = "pinsstoddwdevuks9h80mb"
-#  container_access_type = "private"
-#}
-
-#resource "azurerm_storage_container" "synapse_insights" {
-#  # checkov:skip=CKV2_AZURE_21 reason="Blob service logging is set at the storage account level, not container level"
-#  name                  = "insights-logs-builtinsqlreqsended"
-#  storage_account_name  = "pinsstoddwdevuks9h80mb"
-#  container_access_type = "private"
-#}
-#
-#resource "azurerm_storage_container" "synapse_logging" {
-#  # checkov:skip=CKV2_AZURE_21 reason="Blob service logging is set at the storage account level, not container level"
-#  name                  = "logging"
-#  storage_account_name  = "pinsstoddwdevuks9h80mb"
-#  container_access_type = "private"
-#}
-#
-#resource "azurerm_storage_container" "synapse_odw_config" {
-#  # checkov:skip=CKV2_AZURE_21 reason="Blob service logging is set at the storage account level, not container level"
-#  name                  = "odw-config-db"
-#  storage_account_name  = "pinsstoddwdevuks9h80mb"
-#  container_access_type = "private"
-#}
-#
-#resource "azurerm_storage_container" "synapse_odw_curated" {
-#  # checkov:skip=CKV2_AZURE_21 reason="Blob service logging is set at the storage account level, not container level"
-#  name                  = "odw-curated-migration"
-#  storage_account_name  = "pinsstoddwdevuks9h80mb"
-#  container_access_type = "private"
-#}
-#
-#resource "azurerm_storage_container" "synapse_odw_standardised" {
-#  # checkov:skip=CKV2_AZURE_21 reason="Blob service logging is set at the storage account level, not container level"
-#  name                  = "odw-standardised-delta"
-#  storage_account_name  = "pinsstoddwdevuks9h80mb"
-#  container_access_type = "private"
-#}
-#
-#resource "azurerm_storage_container" "synapse_backup" {
-#  # checkov:skip=CKV2_AZURE_21 reason="Blob service logging is set at the storage account level, not container level"
-#  name                  = "s51-advice-backup"
-#  storage_account_name  = "pinsstoddwdevuks9h80mb"
-#  container_access_type = "private"
-#}
-#
-#resource "azurerm_storage_container" "synapse_saph" {
-#  # checkov:skip=CKV2_AZURE_21 reason="Blob service logging is set at the storage account level, not container level"
-#  name                  = "saphrspdata-to-odw"
-#  storage_account_name  = "pinsstoddwdevuks9h80mb"
-#  container_access_type = "private"
-#}
-#
-#resource "azurerm_storage_container" "synapse_synapse" {
-#  # checkov:skip=CKV2_AZURE_21 reason="Blob service logging is set at the storage account level, not container level"
-#  name                  = "synapse"
-#  storage_account_name  = "pinsstoddwdevuks9h80mb"
-#  container_access_type = "private"
-#}
-#
-#
-#resource "azurerm_role_assignment" "ado_blob_reader" {
-#  scope                = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstoddwdevuks9h80mb"
-#  role_definition_name = "Storage Blob Data Reader"
-#  principal_id         = "2a302373-df67-4c1e-91a1-f6301b87f42b"
-#}
-#
-#resource "azurerm_role_assignment" "ado_storage_reader_management_plane" {
-#  scope                = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstoddwdevuks9h80mb"
-#  role_definition_name = "Reader"
-#  principal_id         = "2a302373-df67-4c1e-91a1-f6301b87f42b"
-#}
-#
-#import {
-#  to = azurerm_storage_container.synapse_insights
-#  id = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstoddwdevuks9h80mb/blobServices/default/containers/insights-logs-builtinsqlreqsended"
-#}
-#
-#import {
-#  to = azurerm_storage_container.synapse_logging
-#  id = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstoddwdevuks9h80mb/blobServices/default/containers/logging"
-#}
-#
-#import {
-#  to = azurerm_storage_container.synapse_odw_config
-#  id = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstoddwdevuks9h80mb/blobServices/default/containers/odw-config-db"
-#}
-#
-#import {
-#  to = azurerm_storage_container.synapse_odw_curated
-#  id = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstoddwdevuks9h80mb/blobServices/default/containers/odw-curated-migration"
-#}
-#
-#import {
-#  to = azurerm_storage_container.synapse_odw_standardised
-#  id = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstoddwdevuks9h80mb/blobServices/default/containers/odw-standardised-delta"
-#}
-#
-#import {
-#  to = azurerm_storage_container.synapse_backup
-#  id = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstoddwdevuks9h80mb/blobServices/default/containers/s51-advice-backup"
-#}
-#
-#import {
-#  to = azurerm_storage_container.synapse_saph
-#  id = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstodwdevuks9h80mb/blobServices/default/containers/saphrspdata-to-odw"
-#}
-#
-#import {
-#  to = azurerm_storage_container.synapse_synapse
-#  id = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstoddwdevuks9h80mb/blobServices/default/containers/synapse"
-#}
-
 import {
   to = module.synapse_data_lake.azurerm_storage_container.synapse["insights-logs-builtinsqlreqsended"]
-  id = "https://pinsstodwdevuks9h80mb.blob.core.windows.net/insights-logs-builtinsqlreqsended"
+  id = "https://pinsstodwdevukwdvzrjm.blob.core.windows.net/insights-logs-builtinsqlreqsended"
 }
 
 import {
   to = module.synapse_data_lake.azurerm_storage_container.synapse["logging"]
-  id = "https://pinsstodwdevuks9h80mb.blob.core.windows.net/logging"
+  id = "https://pinsstodwdevukwdvzrjm.blob.core.windows.net/logging"
 }
 
 import {
   to = module.synapse_data_lake.azurerm_storage_container.synapse["odw-config-db"]
-  id = "https://pinsstodwdevuks9h80mb.blob.core.windows.net/odw-config-db"
+  id = "https://pinsstodwdevukwdvzrjm.blob.core.windows.net/odw-config-db"
 }
 
 import {
   to = module.synapse_data_lake.azurerm_storage_container.synapse["odw-curated-migration"]
-  id = "https://pinsstodwdevuks9h80mb.blob.core.windows.net/odw-curated-migration"
+  id = "https://pinsstodwdevukwdvzrjm.blob.core.windows.net/odw-curated-migration"
 }
 
 import {
   to = module.synapse_data_lake.azurerm_storage_container.synapse["odw-standardised-delta"]
-  id = "https://pinsstodwdevuks9h80mb.blob.core.windows.net/odw-standardised-delta"
+  id = "https://pinsstodwdevukwdvzrjm.blob.core.windows.net/odw-standardised-delta"
 }
 
 import {
   to = module.synapse_data_lake.azurerm_storage_container.synapse["s51-advice-backup"]
-  id = "https://pinsstodwdevuks9h80mb.blob.core.windows.net/s51-advice-backup"
+  id = "https://pinsstodwdevukwdvzrjm.blob.core.windows.net/s51-advice-backup"
 }
 
 import {
   to = module.synapse_data_lake.azurerm_storage_container.synapse["saphrspdata-to-odw"]
-  id = "https://pinsstodwdevuks9h80mb.blob.core.windows.net/saphrspdata-to-odw"
+  id = "https://pinsstodwdevukwdvzrjm.blob.core.windows.net/saphrspdata-to-odw"
 }
 
 import {
   to = module.synapse_data_lake.azurerm_storage_container.synapse["synapse"]
-  id = "https://pinsstodwdevuks9h80mb.blob.core.windows.net/synapse"
+  id = "https://pinsstodwdevukwdvzrjm.blob.core.windows.net/synapse"
 }
 
 
