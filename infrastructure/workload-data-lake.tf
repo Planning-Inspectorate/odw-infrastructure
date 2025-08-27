@@ -220,42 +220,43 @@ module "synapse_data_lake_failover" {
 #}
 
 import {
-  to = module.synapse_data_lake.azurerm_storage_container.synapse["insights-logs-builtinsqlreqsended"]
+  to = module.synapse_data_lake_failover.azurerm_storage_container.synapse["insights-logs-builtinsqlreqsended"]
   id = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstodwdevukwdvzrjm/blobServices/default/containers/insights-logs-builtinsqlreqsended"
 }
 
 import {
-  to = module.synapse_data_lake.azurerm_storage_container.synapse["logging"]
+  to = module.synapse_data_lake_failover.azurerm_storage_container.synapse["logging"]
   id = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstodwdevukwdvzrjm/blobServices/default/containers/logging"
 }
 
 import {
-  to = module.synapse_data_lake.azurerm_storage_container.synapse["odw-config-db"]
+  to = module.synapse_data_lake_failover.azurerm_storage_container.synapse["odw-config-db"]
   id = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstodwdevukwdvzrjm/blobServices/default/containers/odw-config-db"
 }
 
 import {
-  to = module.synapse_data_lake.azurerm_storage_container.synapse["odw-curated-migration"]
+  to = module.synapse_data_lake_failover.azurerm_storage_container.synapse["odw-curated-migration"]
   id = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstodwdevukwdvzrjm/blobServices/default/containers/odw-curated-migration"
 }
 
 import {
-  to = module.synapse_data_lake.azurerm_storage_container.synapse["odw-standardised-delta"]
+  to = module.synapse_data_lake_failover.azurerm_storage_container.synapse["odw-standardised-delta"]
   id = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstodwdevukwdvzrjm/blobServices/default/containers/odw-standardised-delta"
 }
 
 import {
-  to = module.synapse_data_lake.azurerm_storage_container.synapse["s51-advice-backup"]
+  to = module.synapse_data_lake_failover.azurerm_storage_container.synapse["s51-advice-backup"]
   id = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstodwdevukwdvzrjm/blobServices/default/containers/s51-advice-backup"
 }
 
 import {
-  to = module.synapse_data_lake.azurerm_storage_container.synapse["saphrspdata-to-odw"]
+  to = module.synapse_data_lake_failover.azurerm_storage_container.synapse["saphrspdata-to-odw"]
   id = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstodwdevukwdvzrjm/blobServices/default/containers/saphrspdata-to-odw"
 }
 
 import {
-  to = module.synapse_data_lake.azurerm_storage_container.synapse["synapse"]
+  to = module.synapse_data_lake_failover.azurerm_storage_container.synapse["synapse"]
   id = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstodwdevukwdvzrjm/blobServices/default/containers/synapse"
 }
+
 
