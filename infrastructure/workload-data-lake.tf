@@ -122,10 +122,10 @@ import {
   id = "https://pinsstodwdevukwdvzrjm.blob.core.windows.net/s51-advice-backup"
 }
 
-import {
-  to = module.synapse_data_lake_failover.azurerm_storage_container.synapse["saphrspdata-to-odw"]
-  id = "https://pinsstodwdevukwdvzrjm.blob.core.windows.net/saphrspdata-to-odw"
-}
+#import {
+#  to = module.synapse_data_lake_failover.azurerm_storage_container.synapse["saphrspdata-to-odw"]
+#  id = "https://pinsstodwdevukwdvzrjm.blob.core.windows.net/saphrspdata-to-odw"
+#}
 
 import {
   to = module.synapse_data_lake_failover.azurerm_storage_container.synapse["synapse"]
