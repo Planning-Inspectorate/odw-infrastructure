@@ -154,7 +154,7 @@ resource "azurerm_storage_container" "synapse_backup" {
 
 resource "azurerm_storage_container" "synapse_saph" {
   # checkov:skip=CKV2_AZURE_21 reason="Blob service logging is set at the storage account level, not container level"
-  name                  = "saphrsdata-to-odw"
+  name                  = "saphrspdata-to-odw"
   storage_account_name  = "pinsstoddwdevuks9h80mb"
   container_access_type = "private"
 }
@@ -211,7 +211,7 @@ import {
 
 import {
   to = azurerm_storage_container.synapse_saph
-  id = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstoddwdevuks9h80mb/blobServices/default/containers/saphrsdata-to-odw"
+  id = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinsstodwdevuks9h80mb/blobServices/default/containers/saphrspdata-to-odw"
 }
 
 import {
