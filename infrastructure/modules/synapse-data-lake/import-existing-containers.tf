@@ -46,10 +46,3 @@ resource "azurerm_storage_container" "saphrspdata_to_odw" {
   storage_account_name  = azurerm_storage_account.synapse.name
   container_access_type = "private"
 }
-
-resource "azurerm_storage_container" "synapse" {
-  # checkov:skip=CKV2_AZURE_21 reason="Blob service logging is set at the storage account level, not container level"
-  name                  = "synapse"
-  storage_account_name  = azurerm_storage_account.synapse.name
-  container_access_type = "private"
-}
