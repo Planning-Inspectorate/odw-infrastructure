@@ -34,6 +34,6 @@ import {
 }
 
 import {
-  to = module.synapse_data_lake.azurerm_storage_container.synapse
+  to = module.synapse_data_lake.azurerm_storage_container.synapse["synapse"]
   id = "https://pinsstodwdevuks9h80mb.blob.core.windows.net/synapse"
 }
