@@ -79,9 +79,3 @@ resource "azurerm_storage_container" "synapse" {
     azurerm_storage_data_lake_gen2_filesystem.synapse
   ]
 }
-
-import {
-  for_each = toset(var.data_lake_storage_containers)
-  to = azurerm_storage_container.synapse[each.key]
-  id = "https://${azurerm_storage_account.synapse.name}.blob.core.windows.net/${each.key}"
-}
