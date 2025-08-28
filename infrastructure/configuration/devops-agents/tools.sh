@@ -55,6 +55,9 @@ sudo apt-get install -y --no-install-recommends \
 ## Requirements for the tests
 sudo python3 -m pip install -r tests/requirements.txt
 
+# Install pyodbc for ODBC database connectivity
+sudo python3 -m pip install pyodbc
+
 # Install Poetry
 python3 -m pip install -U poetry==2.1.3
 
