@@ -92,44 +92,4 @@ module "synapse_data_lake_failover" {
   }
 }
 
-import {
-  to = module.synapse_data_lake.azurerm_storage_container.synapse["insights-logs-builtinsqlreqsended"]
-  id = "https://pinsstodwdevuks9h80mb.blob.core.windows.net/insights-logs-builtinsqlreqsended"
-}
-
-import {
-  to = module.synapse_data_lake.azurerm_storage_container.synapse["logging"]
-  id = "https://pinsstodwdevuks9h80mb.blob.core.windows.net/logging"
-}
-
-import {
-  to = module.synapse_data_lake.azurerm_storage_container.synapse["odw-config-db"]
-  id = "https://pinsstodwdevuks9h80mb.blob.core.windows.net/odw-config-db"
-}
-
-import {
-  to = module.synapse_data_lake.azurerm_storage_container.synapse["odw-curated-migration"]
-  id = "https://pinsstodwdevuks9h80mb.blob.core.windows.net/odw-curated-migration"
-}
-
-import {
-  to = module.synapse_data_lake.azurerm_storage_container.synapse["odw-standardised-delta"]
-  id = "https://pinsstodwdevuks9h80mb.blob.core.windows.net/odw-standardised-delta"
-}
-
-import {
-  to = module.synapse_data_lake.azurerm_storage_container.synapse["s51-advice-backup"]
-  id = "https://pinsstodwdevuks9h80mb.blob.core.windows.net/s51-advice-backup"
-}
-
-import {
-  to = module.synapse_data_lake.azurerm_storage_container.synapse["saphrspdata-to-odw"]
-  id = "https://pinsstodwdevuks9h80mb.blob.core.windows.net/saphrspdata-to-odw"
-}
-
-import {
-  to = module.synapse_data_lake.azurerm_storage_container.synapse["synapse"]
-  id = "https://pinsstodwdevuks9h80mb.blob.core.windows.net/synapse"
-}
-
 
