@@ -58,9 +58,6 @@ sudo python3 -m pip install -r tests_requirements.txt
 # Install Poetry
 python3 -m pip install -U poetry==2.1.3
 
-# Install pyodbc for ODBC database connectivity
-python3 -m pip install pyodbc
-
 # Terraform
 curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add -
 sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
