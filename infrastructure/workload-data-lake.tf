@@ -94,7 +94,7 @@ module "synapse_data_lake_failover" {
 
 
 import {
-  for_each = toset(var.data_lake_storage_containers)
+  for_each = toset(var.data_lake_storage_containers_to_import)
   to       = module.synapse_data_lake.azurerm_storage_container.synapse[each.key]
-  id       = "https://${module.synapse_data_lake.azurerm_storage_account.synapse.name}.blob.core.windows.net/${each.key}"
+  id       = "https://${module.synapse_data_lake.data_lake_account_name}.blob.core.windows.net/${each.key}"
 }

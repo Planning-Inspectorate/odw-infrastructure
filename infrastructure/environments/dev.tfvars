@@ -35,6 +35,9 @@ data_lake_storage_containers = [
   "odw-standardised",
   "odw-harmonised",
   "odw-config",
+]
+
+data_lake_storage_containers_to_import = [
   "insights-logs-builtinsqlreqsended",
   "logging",
   "odw-config-db",
