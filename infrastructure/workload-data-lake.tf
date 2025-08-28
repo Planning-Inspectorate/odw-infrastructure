@@ -26,7 +26,7 @@ module "synapse_data_lake" {
   data_lake_replication_type             = var.data_lake_replication_type
   data_lake_retention_days               = var.data_lake_retention_days
   data_lake_role_assignments             = var.data_lake_role_assignments
-  data_lake_storage_containers           = var.data_lake_storage_containers
+  data_lake_storage_containers           = concat(var.data_lake_storage_containers, var.data_lake_storage_containers_to_import)
   devops_agent_subnet_name               = module.synapse_network.devops_agent_subnet_name
   firewall_allowed_ip_addresses          = local.firewall_allowed_ip_addresses
   function_app_principal_ids             = local.function_app_identity
