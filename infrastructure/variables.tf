@@ -81,7 +81,7 @@ variable "data_lake_storage_containers" {
 }
 
 variable "data_lake_storage_containers_to_import" {
-  default     = ["default"]
+  default     = []
   description = "A list of container names to be imported into the Synapse data lake Storage Account"
   type        = list(string)
 }
