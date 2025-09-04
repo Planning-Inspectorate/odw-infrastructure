@@ -598,3 +598,9 @@ variable "purview_event_hub_id" {
   type        = string
   default     = null
 }
+
+variable "purview_unified_catalog_storage" {
+  description = "The id of the storage account used for Purview's Unified Catalog"
+  type        = string
+  default     = null
+}

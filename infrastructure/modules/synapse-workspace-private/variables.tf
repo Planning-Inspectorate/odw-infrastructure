@@ -75,6 +75,11 @@ variable "purview_event_hub_id" {
   type        = string
 }
 
+variable "purview_unified_catalog_storage" {
+  description = "The ID of the storage account used for Purview' Unified Catalog"
+  type        = string
+}
+
 variable "resource_group_name" {
   description = "The name of the resource group into which resources will be deployed"
   type        = string
