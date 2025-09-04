@@ -80,6 +80,12 @@ variable "data_lake_storage_containers" {
   type        = list(string)
 }
 
+variable "data_lake_storage_containers_to_import" {
+  default     = []
+  description = "A list of container names to be imported into the Synapse data lake Storage Account"
+  type        = list(string)
+}
+
 variable "deploy_agent_pool" {
   default     = true
   description = "A switch to determine whether the devops agent pool should be deployed"
