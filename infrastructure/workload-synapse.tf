@@ -80,6 +80,7 @@ module "synapse_workspace_private_failover" {
   purview_id                            = var.link_purview_account ? var.purview_id : null
   purview_storage_id                    = var.link_purview_account ? var.purview_storage_id : null
   purview_event_hub_id                  = var.link_purview_account ? var.purview_event_hub_id : null
+  purview_unified_catalog_storage       = var.link_purview_account ? var.purview_unified_catalog_storage : null
   spark_pool_enabled                    = var.spark_pool_enabled
   spark_pool_max_node_count             = var.spark_pool_max_node_count
   spark_pool_min_node_count             = var.spark_pool_min_node_count
