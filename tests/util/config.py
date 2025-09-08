@@ -13,7 +13,6 @@ TEST_CONFIG = {
     for k in [
         "ENV",
         "DATA_LAKE_STORAGE",
-        "DATA_LAKE_FAILOVER_STORAGE",
         "SUBSCRIPTION_ID",
         "PURVIEW_ID",
         "PURVIEW_EVENT_HUB_ID",
