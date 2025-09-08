@@ -17,7 +17,6 @@ class TestSmokePrivateEndpoints(TestCase):
     SUBSCRIPTION_ID = TEST_CONFIG["SUBSCRIPTION_ID"]
     ENV = TEST_CONFIG["ENV"].lower()
     DATA_LAKE_STORAGE = TEST_CONFIG["DATA_LAKE_STORAGE"]
-    DATA_LAKE_FAILOVER_STORAGE = TEST_CONFIG["DATA_LAKE_FAILOVER_STORAGE"]
     PURVIEW_EVENT_HUB_ID = TEST_CONFIG["PURVIEW_EVENT_HUB_ID"]
     PURVIEW_STORAGE_ID = TEST_CONFIG["PURVIEW_STORAGE_ID"]
     ODT_SUBSCRIPTION_ID = TEST_CONFIG["ODT_SUBSCRIPTION_ID"]
@@ -167,7 +166,6 @@ class TestSmokePrivateEndpoints(TestCase):
         "endpoint_name",
         [
             f"synapse-st-dfs--{DATA_LAKE_STORAGE}",
-            f"synapse-st-dfs--{DATA_LAKE_FAILOVER_STORAGE}",
             f"synapse-mpe-kv--odw-{ENV}-uks"
         ]
     )
