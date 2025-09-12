@@ -64,7 +64,7 @@ resource "azurerm_synapse_spark_pool" "synapse34" {
 
     content {
       content  = var.spark_pool_preview_requirements
-      filename = "requirements-preview.txt"
+      filename = "requirements.txt"
     }
   }
 
