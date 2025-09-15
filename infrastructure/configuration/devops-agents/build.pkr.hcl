@@ -12,7 +12,6 @@ source "azure-arm" "azure-agents" {
     Project          = "tooling"
     CreatedBy        = "packer"
     TerraformVersion = "1.12.2"
-    pythonVersion    = "3.7"
   }
 
   client_id       = var.client_id
