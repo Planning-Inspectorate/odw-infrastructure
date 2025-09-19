@@ -5,11 +5,11 @@ resource "azurerm_monitor_diagnostic_setting" "data_lake" {
 
   metric {
     category = "Capacity"
-    enabled  = true
+    enabled  = false
   }
 
   metric {
     category = "Transaction"
-    enabled  = true
+    enabled  = false
   }
 }
