@@ -30,7 +30,7 @@ steps:
       fi
       echo "Deploying Terraform..."
       echo "##[command]terraform apply $refreshTFState -input=false ${{ parameters.planFilePath }}"
-      terraform apply \
+      terraform apply -auto-approve \
         $refreshTFState \
         -input=false ${{ parameters.planFilePath }}
     condition: ne(variables['skipApply'], 'true')
