@@ -32,7 +32,8 @@ steps:
       echo "##[command]terraform apply $refreshTFState -input=false ${{ parameters.planFilePath }}"
       terraform apply \
         $refreshTFState \
-        -input=false ${{ parameters.planFilePath }}
+        -input=false ${{ parameters.planFilePath }} \
+        -auto-approve
     condition: ne(variables['skipApply'], 'true')
     displayName: 'Terraform Apply'
     workingDirectory: ${{ parameters.workingDirectory }}
