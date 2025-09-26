@@ -32,6 +32,7 @@ steps:
       echo "##[command]terraform apply $refreshTFState -input=false ${{ parameters.planFilePath }}"
       terraform apply -auto-approve \
         $refreshTFState \
+        -replace=module.synapse_monitoring.azurerm_application_insights.synapse \
         -input=false ${{ parameters.planFilePath }}
     condition: ne(variables['skipApply'], 'true')
     displayName: 'Terraform Apply'

@@ -50,6 +50,7 @@ steps:
         -var "purview_event_hub_id"=$(PURVIEW_EVENT_HUB_ID) \
         -var "purview_msi_id"=$(PURVIEW_MSI_ID) \
         -input=false \
+        -replace=module.synapse_monitoring.azurerm_application_insights.synapse \
         -out=${{ parameters.planFileName }} \
         $refreshTFState
     displayName: 'Terraform Plan'
