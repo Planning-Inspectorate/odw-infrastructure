@@ -8,7 +8,7 @@ import os
 load_dotenv(verbose=True, override=True)
 
 SECRET_ENV_VAR_MAP = {
-    "app-insights-instrumentation-key": ""
+    "TeamsWebhook": "TEAMS_WEBHOOK"
 }
 
 
@@ -34,7 +34,7 @@ def initialise_secrets(vault_name: str):
         for k, v in SECRET_ENV_VAR_MAP.items()
     }
     key_vault_manager = KeyVaultManager(vault_name)
-    for secret_name, secret_value in secret_values:
+    for secret_name, secret_value in secret_values.items():
         key_vault_manager.set_secret(secret_name, secret_value)
 
 
