@@ -133,6 +133,12 @@ jobs:
         - $(data_lake_account_id)
         - $(data_lake_account_id_failover)
     
+    # Add keyvault secrets defined in env variables
+    - template: ${{variables['System.DefaultWorkingDirectory']}}/pipelines/steps/add-keyvault-secrets.yaml
+      parameters:
+        env: ${{ parameters.env }}
+        pythonVersion: 3
+    
     # Approve all pending managed private endpoints
   - template: ${{variables['System.DefaultWorkingDirectory']}}/pipelines/steps/approve-odw-private-endpoints.yaml
     parameters:
