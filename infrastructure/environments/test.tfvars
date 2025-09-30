@@ -18,7 +18,7 @@ bastion_vm_image = {
   version   = "latest"
 }
 
-daily_log_cap = 0.2
+daily_log_cap = 5 # temporary cap while issues are resolved
 
 data_lake_account_tier     = "Standard"
 data_lake_replication_type = "GRS"
