@@ -50,6 +50,11 @@ variable "bastion_vm_size" {
   type        = string
 }
 
+variable "daily_log_cap" {
+  description = "The daily log cap in GB"
+  type        = number
+}
+
 variable "data_lake_account_tier" {
   default     = "Standard"
   description = "The tier of the Synapse data lake Storage Account"

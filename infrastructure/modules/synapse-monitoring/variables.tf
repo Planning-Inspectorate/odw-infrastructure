@@ -51,6 +51,11 @@ variable "location" {
   type        = string
 }
 
+variable "daily_log_cap" {
+  description = "The daily log cap in GB"
+  type        = number
+}
+
 variable "log_retention_days" {
   default     = 30
   description = "The number of days to retain logs in the Log Analytics Workspace"
