@@ -19,7 +19,6 @@ class KeyVaultManager():
 
     def set_secret(self, secret_name: str, secret_value: str) -> None:
         self.secret_client.set_secret(secret_name, secret_value)
-        return print(f"{secret_name} created")
 
 
 def get_env_variable(variable_name: str) -> str:
