@@ -27,6 +27,7 @@ module "synapse_monitoring" {
   alert_scope_service_health               = var.alert_scope_service_health
   alert_threshold_data_lake_capacity_bytes = var.alert_threshold_data_lake_capacity_bytes
   data_lake_account_id                     = module.synapse_data_lake.data_lake_account_id
+  daily_log_cap                            = var.daily_log_cap
   function_app_ids                         = local.function_app_ids
   key_vault_id                             = module.synapse_data_lake.key_vault_id
   service_bus_namespace_id                 = module.synapse_ingestion.service_bus_namespace_id
@@ -55,6 +56,7 @@ module "synapse_monitoring_failover" {
   alert_scope_service_health               = var.alert_scope_service_health
   alert_threshold_data_lake_capacity_bytes = var.alert_threshold_data_lake_capacity_bytes
   data_lake_account_id                     = module.synapse_data_lake.data_lake_account_id
+  daily_log_cap                            = var.daily_log_cap
   function_app_ids                         = local.function_app_ids
   key_vault_id                             = module.synapse_data_lake.key_vault_id
   service_bus_namespace_id                 = module.synapse_ingestion_failover[0].service_bus_namespace_id

@@ -18,6 +18,8 @@ bastion_vm_image = {
   version   = "latest"
 }
 
+daily_log_cap = 0.2
+
 data_lake_account_tier     = "Standard"
 data_lake_replication_type = "GRS"
 data_lake_retention_days   = 7
