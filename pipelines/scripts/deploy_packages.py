@@ -9,6 +9,16 @@ import os
 import json
 
 
+"""
+Module for managing the packages deployed to a Synapse workspace, and binding to spark pools.
+Note this does not affect the `ODW Package`, which is managed by the `odw-synapse-workspace` repository
+
+Example usage
+
+`python3 pipelines/scripts/deploy_packages.py -e dev -d`  # Which would deploy to the dev environment
+`pipelines/scripts/deploy_packages.py -e dev`  # Which would only validate the config, instead of deploying to Synapse
+"""
+
 logging.basicConfig(level=logging.INFO)
 
 
