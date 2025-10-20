@@ -30,11 +30,7 @@ class ODWPackageDeployer():
         Return all workspace packages that are not the ODW package (this is managed by a different repository)
         """
         packages = self.workspace_manager.get_workspace_packages()
-        odw_packages = [package for package in packages if not package["name"].startswith("odw")]
-        return sorted(
-            odw_packages,
-            key=lambda package: datetime.strptime(package["properties"]["uploadedTimestamp"].replace("+00:00", "")[:-8], "%Y-%m-%dT%H:%M:%S")
-        )
+        return [package for package in packages if not package["name"].startswith("odw")]
     
     def get_non_odw_spark_pool_custom_libraries(self, spark_pool: Dict[str, Any]) -> List[Dict[str, Any]]:
         """
@@ -62,7 +58,7 @@ class ODWPackageDeployer():
         local_workspace_file_names = self.get_local_workspace_packages()
         return local_workspace_file_names.difference(live_workspace_file_names)
 
-    def get_workspace_packages_to_remove(self):
+    def get_workspace_packages_to_remove(self) -> Set[str]:
         """
         Identify packages that exist in the live workspace that do not exist locally
         """
@@ -71,7 +67,7 @@ class ODWPackageDeployer():
         local_workspace_file_names = self.get_local_workspace_packages()
         return live_workspace_file_names.difference(local_workspace_file_names)
     
-    def get_spark_pool_packages_to_keep(self, spark_pool_packages: List[Dict[str, Any]]) -> List[str, Any]:
+    def get_spark_pool_packages_to_keep(self, spark_pool_packages: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """
         Return a list of custom libraries assigned to the spark pool that should be kept
 
@@ -95,7 +91,7 @@ class ODWPackageDeployer():
         ]
         return odw_packages + non_odw_packages_to_keep
     
-    def get_spark_pool_packages_to_add(self, spark_pool_packages: List[Dict[str, Any]]) -> List[str, Any]:
+    def get_spark_pool_packages_to_add(self, spark_pool_packages: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """
         Generate a new list of packages that should be added from the local config to the live spark pool package list
         """
@@ -110,7 +106,7 @@ class ODWPackageDeployer():
                 "type": "whl" if package.endswith("whl") else "jar"
             }
             for package in expected_packages
-            if package in package_names
+            if package not in package_names
         ]
 
     def generate_new_spark_pool_json(self, spark_pool_name: str) -> Union[Dict[str, Any], None]:
@@ -124,7 +120,7 @@ class ODWPackageDeployer():
         modified = False
         if self._is_spark_pool_requirements_modified(spark_pool_name, spark_pool):
             modified = True
-            requirements_file_name = self.SPARK_POOL_REQUIREMENTS_MAP[spark_pool]
+            requirements_file_name = self.SPARK_POOL_REQUIREMENTS_MAP[spark_pool_name]
             with open(f"infrastructure/configuration/spark-pool/{requirements_file_name}", "r") as f:
                 requirements_file_content = f.read()
             spark_pool["properties"]["libraryRequirements"] = {
@@ -153,7 +149,7 @@ class ODWPackageDeployer():
             requirements_file_content = f.read()
         if "properties" not in spark_pool:
             raise ValueError(f"'properties' attribute is expected on the spark pool with name '{spark_pool}, but was missing")
-        library_requirements = spark_pool.get().get("libraryRequirements", dict())
+        library_requirements = spark_pool.get("properties").get("libraryRequirements", dict())
         expected_library_requirements = {
             "filename": requirements_file_name,
             "content": requirements_file_content
@@ -163,7 +159,7 @@ class ODWPackageDeployer():
             for k, v in library_requirements.items()
             if k in expected_library_requirements
         }
-        return library_requirements == library_requirements_cleaned
+        return expected_library_requirements != library_requirements_cleaned
 
     def _is_spark_pool_custom_libraries_modified(self, spark_pool: Dict[str, Any]) -> bool:
         """
@@ -178,7 +174,7 @@ class ODWPackageDeployer():
             for package in custom_libraries
         }
         expected_custom_library_names = self.get_local_workspace_packages()
-        assert custom_library_names == expected_custom_library_names
+        return custom_library_names != expected_custom_library_names
 
     def upload_requirements_file(self):
         """
@@ -187,16 +183,18 @@ class ODWPackageDeployer():
         # TODO use the above functions to upload new packages like TF does
         
 
+if __name__ == "__main__":
+    workspace_name = f"pins-synw-odw-dev-uks"
+    subscription = CONFIG["SUBSCRIPTION_ID"]
+    resource_group = f"pins-rg-data-odw-dev-uks"
+    synapse_workspace_manager = SynapseWorkspaceManager(workspace_name, subscription, resource_group)
+    d = ODWPackageDeployer(synapse_workspace_manager, "dev")
+    pool = synapse_workspace_manager.get_spark_pool("pinssynspodwpr")
+    resp = d.get_non_odw_spark_pool_custom_libraries(pool)
 
-workspace_name = f"pins-synw-odw-dev-uks"
-subscription = CONFIG["SUBSCRIPTION_ID"]
-resource_group = f"pins-rg-data-odw-dev-uks"
-synapse_workspace_manager = SynapseWorkspaceManager(workspace_name, subscription, resource_group)
-d = ODWPackageDeployer(synapse_workspace_manager)
-
-pool = synapse_workspace_manager.get_spark_pool("pinssynspodwpr")
-import json
-print(json.dumps(pool, indent=4))
+    import json
+    print(json.dumps(pool, indent=4))
+    print(json.dumps(resp, indent=4))
 #if __name__ == "__main__":
 #    parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 #    parser.add_argument("-e", "--env", required=True, help="The environment to target")
