@@ -217,14 +217,14 @@ def test__odw_package_deployer__get_spark_pool_packages_to_add():
     expected_return_value = [
         {
             "name": "new-python-package.whl",
-            "path": f"pins-synw-odw-mock_env-uks/libraries/new-python-package.whl",
+            "path": "pins-synw-odw-mock_env-uks/libraries/new-python-package.whl",
             "containerName": "prep",
             "uploadedTimestamp": "0001-01-01T00:00:00+00:00",
             "type": "whl"
         },
         {
             "name": "new-java-package.jar",
-            "path": f"pins-synw-odw-mock_env-uks/libraries/new-java-package.jar",
+            "path": "pins-synw-odw-mock_env-uks/libraries/new-java-package.jar",
             "containerName": "prep",
             "uploadedTimestamp": "0001-01-01T00:00:00+00:00",
             "type": "jar"
