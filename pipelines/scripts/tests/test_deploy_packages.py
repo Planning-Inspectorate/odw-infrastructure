@@ -481,3 +481,105 @@ def test__odw_package_deployer__is_spark_pool_custom_libraries_modified__unmodif
     with mock.patch.object(ODWPackageDeployer, "get_non_odw_spark_pool_custom_libraries", return_value=mock_custom_libraries):
         with mock.patch.object(ODWPackageDeployer, "get_local_workspace_packages", return_value=mock_local_package_names):
             assert not package_deployer._is_spark_pool_custom_libraries_modified(mock_spark_pool)
+
+
+def test__odw_package_deployer__update_packages__deployment_false():
+    package_deployer = create_odw_package_deployer()
+    mock_packages_to_add = {"a.whl", "b.jar"}
+    mock_packages_to_remove = {"c.jar"}
+    mock_requirements_map = {
+        "test_pool_a": "reqs_a.txt",
+        "test_pool_b": "reqs_b.txt"
+    }
+    spark_pool_side_effects = [
+        {
+            "name": "test_pool_a",
+            "properties": {}
+        },
+        {
+            "name": "test_pool_b",
+            "properties": {}
+        }
+    ]
+    with mock.patch.object(ODWPackageDeployer, "get_workspace_packages_to_add", return_value=mock_packages_to_add):
+        with mock.patch.object(ODWPackageDeployer, "get_workspace_packages_to_remove", return_value=mock_packages_to_remove):
+            with mock.patch.object(ODWPackageDeployer, "generate_new_spark_pool_json", side_effect=spark_pool_side_effects):
+                with mock.patch(
+                    "pipelines.scripts.deploy_packages.ODWPackageDeployer.SPARK_POOL_REQUIREMENTS_MAP",
+                    mock_requirements_map
+                ):
+                    with mock.patch.object(SynapseWorkspaceManager, "upload_workspace_package", return_value=None):
+                        with mock.patch.object(SynapseWorkspaceManager, "update_spark_pool", return_value=None):
+                            with mock.patch.object(SynapseWorkspaceManager, "remove_workspace_package", return_value=None):
+                                package_deployer.update_packages(False)
+                                ODWPackageDeployer.get_workspace_packages_to_add.assert_called_once()
+                                ODWPackageDeployer.get_workspace_packages_to_remove.assert_called_once()
+                                ODWPackageDeployer.generate_new_spark_pool_json.assert_has_calls(
+                                    [
+                                        mock.call("test_pool_a"),
+                                        mock.call("test_pool_b")
+                                    ]
+                                )
+                                assert not SynapseWorkspaceManager.upload_workspace_package.called
+                                assert not SynapseWorkspaceManager.update_spark_pool.called
+                                assert not SynapseWorkspaceManager.remove_workspace_package.called
+
+
+def test__odw_package_deployer__update_packages__deployment_true():
+    package_deployer = create_odw_package_deployer()
+    mock_packages_to_add = {"a.whl", "b.jar"}
+    mock_packages_to_remove = {"c.jar"}
+    mock_requirements_map = {
+        "test_pool_a": "reqs_a.txt",
+        "test_pool_b": "reqs_b.txt",
+        "test_pool_c": "reqs_b.txt"
+    }
+    spark_pool_side_effects = [
+        {
+            "name": "test_pool_a",
+            "properties": {}
+        },
+        {
+            "name": "test_pool_b",
+            "properties": {}
+        },
+        None
+    ]
+    with mock.patch.object(ODWPackageDeployer, "get_workspace_packages_to_add", return_value=mock_packages_to_add):
+        with mock.patch.object(ODWPackageDeployer, "get_workspace_packages_to_remove", return_value=mock_packages_to_remove):
+            with mock.patch.object(ODWPackageDeployer, "generate_new_spark_pool_json", side_effect=spark_pool_side_effects):
+                with mock.patch(
+                    "pipelines.scripts.deploy_packages.ODWPackageDeployer.SPARK_POOL_REQUIREMENTS_MAP",
+                    mock_requirements_map
+                ):
+                    with mock.patch.object(SynapseWorkspaceManager, "upload_workspace_package", return_value=None):
+                        with mock.patch.object(SynapseWorkspaceManager, "update_spark_pool", return_value=None):
+                            with mock.patch.object(SynapseWorkspaceManager, "remove_workspace_package", return_value=None):
+                                package_deployer.update_packages(True)
+                                ODWPackageDeployer.get_workspace_packages_to_add.assert_called_once()
+                                ODWPackageDeployer.get_workspace_packages_to_remove.assert_called_once()
+                                ODWPackageDeployer.generate_new_spark_pool_json.assert_has_calls(
+                                    [
+                                        mock.call("test_pool_a"),
+                                        mock.call("test_pool_b")
+                                    ]
+                                )
+                                SynapseWorkspaceManager.upload_workspace_package.assert_has_calls(
+                                    [
+                                        mock.call("infrastructure/configuration/workspace-packages/a.whl"),
+                                        mock.call("infrastructure/configuration/workspace-packages/b.jar")
+                                    ],
+                                    any_order=True
+                                )
+                                SynapseWorkspaceManager.update_spark_pool.assert_has_calls(
+                                    [
+                                        mock.call(spark_pool_side_effects[0]["name"], spark_pool_side_effects[0]),
+                                        mock.call(spark_pool_side_effects[1]["name"], spark_pool_side_effects[1])
+                                    ],
+                                    any_order=True
+                                )
+                                SynapseWorkspaceManager.remove_workspace_package.assert_has_calls(
+                                    [
+                                        mock.call("c.jar")
+                                    ]
+                                )

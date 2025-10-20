@@ -209,14 +209,14 @@ class ODWPackageDeployer():
             # Add new packages to the workspace
             for package in workspace_packages_to_add:
                 logging.info(f"Uploading package '{package}' to the workspace")
-                synapse_workspace_manager.upload_workspace_package(f"infrastructure/configuration/workspace-packages/{package}")
+                self.workspace_manager.upload_workspace_package(f"infrastructure/configuration/workspace-packages/{package}")
             # Update spark pools. Note this is a very slow operation, so it is done in parallel for all pools
             with ThreadPoolExecutor() as tpe:
                 # Update all relevant spark pools in parallel to boost performance
                 [
                     thread_response
                     for thread_response in tpe.map(
-                        synapse_workspace_manager.update_spark_pool,
+                        self.workspace_manager.update_spark_pool,
                         new_spark_pool_map.keys(),
                         new_spark_pool_map.values()
                     )
@@ -224,7 +224,7 @@ class ODWPackageDeployer():
                 ]
             # Remove workspace packages that are not defined in the configuration
             for package in workspace_packages_to_remove:
-                synapse_workspace_manager.remove_workspace_package(package)
+                self.workspace_manager.remove_workspace_package(package)
 
 
 if __name__ == "__main__":
