@@ -245,6 +245,14 @@ class ODWPackageDeployer():
             for package in workspace_packages_to_remove:
                 self.workspace_manager.remove_workspace_package(package)
 
+if __name__ == "__main__":
+    workspace_name = f"pins-synw-odw-dev-uks"
+    subscription = CONFIG["SUBSCRIPTION_ID"]
+    resource_group = f"pins-rg-data-odw-dev-uks"
+    synapse_workspace_manager = SynapseWorkspaceManager(workspace_name, subscription, resource_group)
+    d = ODWPackageDeployer(synapse_workspace_manager, "dev")
+    pool = synapse_workspace_manager.get_spark_pool("pinssynspodwpr")
+    resp = d.get_non_odw_spark_pool_custom_libraries(pool)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
