@@ -37,6 +37,9 @@ class ODWPackageDeployer():
         )
     
     def get_non_odw_spark_pool_custom_libraries(self, spark_pool: Dict[str, Any]) -> List[Dict[str, Any]]:
+        """
+        Return all custom liraries that are not for the odw package
+        """
         custom_libraries = spark_pool["properties"].get("customLibraries", [])
         return [
             package
@@ -119,7 +122,7 @@ class ODWPackageDeployer():
         """
         spark_pool = self.workspace_manager.get_spark_pool(spark_pool_name)
         modified = False
-        if self._is_spark_pool_requirements_modified(spark_pool):
+        if self._is_spark_pool_requirements_modified(spark_pool_name, spark_pool):
             modified = True
             requirements_file_name = self.SPARK_POOL_REQUIREMENTS_MAP[spark_pool]
             with open(f"infrastructure/configuration/spark-pool/{requirements_file_name}", "r") as f:
@@ -138,10 +141,14 @@ class ODWPackageDeployer():
             return spark_pool
         return None
 
-    def _is_spark_pool_requirements_modified(self, spark_pool: Dict[str, Any]) -> bool:
-        if spark_pool not in self.SPARK_POOL_REQUIREMENTS_MAP:
+    def _is_spark_pool_requirements_modified(self, spark_pool_name: str, spark_pool: Dict[str, Any]) -> bool:
+        """
+        Return True if the `libraryRequirements` property of the given spark pool is different to the local configuration,
+        False otherwise
+        """
+        if spark_pool_name not in self.SPARK_POOL_REQUIREMENTS_MAP:
             return False
-        requirements_file_name = self.SPARK_POOL_REQUIREMENTS_MAP[spark_pool]
+        requirements_file_name = self.SPARK_POOL_REQUIREMENTS_MAP[spark_pool_name]
         with open(f"infrastructure/configuration/spark-pool/{requirements_file_name}", "r") as f:
             requirements_file_content = f.read()
         if "properties" not in spark_pool:
@@ -159,6 +166,10 @@ class ODWPackageDeployer():
         return library_requirements == library_requirements_cleaned
 
     def _is_spark_pool_custom_libraries_modified(self, spark_pool: Dict[str, Any]) -> bool:
+        """
+        Return True if the `customLibraries` property of the given spark pool is different to the local configuration,
+        False otherwise
+        """
         if "properties" not in spark_pool:
             raise ValueError(f"'properties' attribute is expected on the spark pool with name '{spark_pool}, but was missing")
         custom_libraries = self.get_non_odw_spark_pool_custom_libraries(spark_pool)
