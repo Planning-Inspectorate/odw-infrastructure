@@ -1,12 +1,12 @@
 from odw_common.util.synapse_workspace_manager import SynapseWorkspaceManager
-from odw_common.util.exceptions import ConcurrentWheelUploadException
-from concurrent.futures import ThreadPoolExecutor
 from pipelines.scripts.config import CONFIG
 import argparse
 from typing import List, Dict, Any, Set, Union
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 import logging
 import os
+import json
 
 
 logging.basicConfig(level=logging.INFO)
@@ -18,8 +18,11 @@ class ODWPackageDeployer():
     """
     SPARK_POOL_REQUIREMENTS_MAP = {
         "pinssynspodwpr": "requirements-preview.txt",
-        "pinssynspodw34": "requirements.txt"
+        "pinssynspodw34": "requirements-preview.txt"
     }
+    """
+    Map of spark pools to their associated requirements.txt files
+    """
 
     def __init__(self, workspace_manager: SynapseWorkspaceManager, env: str):
         self.workspace_manager = workspace_manager
@@ -47,7 +50,12 @@ class ODWPackageDeployer():
         """
         Return the names of the packages that are defined in the local configuration
         """
-        return set(os.listdir("infrastructure/configuration/workspace-packages"))
+        allowed_extensions = ["whl", "jar"]
+        return set(
+            x
+            for x in os.listdir("infrastructure/configuration/workspace-packages")
+            if any(x.endswith(y) for y in allowed_extensions)
+        )
 
     def get_workspace_packages_to_add(self) -> Set[str]:
         """
@@ -159,6 +167,7 @@ class ODWPackageDeployer():
             for k, v in library_requirements.items()
             if k in expected_library_requirements
         }
+        library_requirements_cleaned["content"] = library_requirements_cleaned["content"].replace("\r", "")
         return expected_library_requirements != library_requirements_cleaned
 
     def _is_spark_pool_custom_libraries_modified(self, spark_pool: Dict[str, Any]) -> bool:
@@ -176,30 +185,58 @@ class ODWPackageDeployer():
         expected_custom_library_names = self.get_local_workspace_packages()
         return custom_library_names != expected_custom_library_names
 
-    def upload_requirements_file(self):
+    def update_packages(self, deploy: bool):
         """
             Update spark pool packages
+
+            1. Add new packages (.whl and .jar files) to the workspace
+            2. Update package and requirements.txt assignments to the spark pools
+            3. Remove packages no longer referenced by the local config
         """
-        # TODO use the above functions to upload new packages like TF does
-        
+        logging.info("Applying package settings as defined in 'infrastructure/configuration/'")
+        # Preprocessing
+        workspace_packages_to_add = self.get_workspace_packages_to_add()
+        workspace_packages_to_remove = self.get_workspace_packages_to_remove()
+        new_spark_pool_map = dict()
+        for spark_pool_name in self.SPARK_POOL_REQUIREMENTS_MAP.keys():
+            new_spark_pool_json = self.generate_new_spark_pool_json(spark_pool_name)
+            if new_spark_pool_json:
+                new_spark_pool_map[spark_pool_name] = new_spark_pool_json
+        logging.info(f"The following packages will be added to the workspace: {json.dumps(list(workspace_packages_to_add), indent=4)}")
+        logging.info(f"The following packages will be removed from the workspace: {json.dumps(list(workspace_packages_to_remove), indent=4)}")
+        logging.info(f"The following spark pools will be updated: {json.dumps(new_spark_pool_map, indent=4)}")
+        if deploy:
+            # Add new packages to the workspace
+            for package in workspace_packages_to_add:
+                logging.info(f"Uploading package '{package}' to the workspace")
+                synapse_workspace_manager.upload_workspace_package(f"infrastructure/configuration/workspace-packages/{package}")
+            # Update spark pools. Note this is a very slow operation, so it is done in parallel for all pools
+            with ThreadPoolExecutor() as tpe:
+                # Update all relevant spark pools in parallel to boost performance
+                [
+                    thread_response
+                    for thread_response in tpe.map(
+                        synapse_workspace_manager.update_spark_pool,
+                        new_spark_pool_map.keys(),
+                        new_spark_pool_map.values()
+                    )
+                    if thread_response
+                ]
+            # Remove workspace packages that are not defined in the configuration
+            for package in workspace_packages_to_remove:
+                synapse_workspace_manager.remove_workspace_package(package)
+
 
 if __name__ == "__main__":
-    workspace_name = f"pins-synw-odw-dev-uks"
+    parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument("-e", "--env", required=True, help="The environment to target")
+    parser.add_argument("-d", "--deploy", action=argparse.BooleanOptionalAction, default=False)
+    args = parser.parse_args()
+    env = args.env
+    deploy = args.deploy
+    workspace_name = f"pins-synw-odw-{env}-uks"
     subscription = CONFIG["SUBSCRIPTION_ID"]
-    resource_group = f"pins-rg-data-odw-dev-uks"
+    resource_group = f"pins-rg-data-odw-{env}-uks"
     synapse_workspace_manager = SynapseWorkspaceManager(workspace_name, subscription, resource_group)
-    d = ODWPackageDeployer(synapse_workspace_manager, "dev")
-    pool = synapse_workspace_manager.get_spark_pool("pinssynspodwpr")
-    resp = d.get_non_odw_spark_pool_custom_libraries(pool)
-
-    import json
-    print(json.dumps(pool, indent=4))
-    print(json.dumps(resp, indent=4))
-#if __name__ == "__main__":
-#    parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-#    parser.add_argument("-e", "--env", required=True, help="The environment to target")
-#    parser.add_argument("-wn", "--new_wheel_name", required=True, help="The name of the new odw wheel to deploy")
-#    args = parser.parse_args()
-#    env = args.env
-#    new_wheel_name = args.new_wheel_name
-#    ODWPackageDeployer().upload_new_wheel(env, new_wheel_name)
+    package_deployer = ODWPackageDeployer(synapse_workspace_manager, env)
+    package_deployer.update_packages(deploy)
