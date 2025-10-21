@@ -19,7 +19,7 @@ steps:
       export CREDENTIAL_NAME="${{ format('https://dev.azuresynapse.net/.default', lower(parameters.env)) }}"
       echo $SYNAPSE_ENDPOINT 
       echo $CREDENTIAL_NAME
-      python3 -m pip install "git+ssh://git@github.com/Planning-Inspectorate/odw-common.git@THEODW-1783-commonCode"
+      python3 -m pip install "git+https://github.com/Planning-Inspectorate/odw-common.git@THEODW-1783-commonCode"
       python3 python3 pipelines/scripts/deploy_packages.py -e dev $deployFlag
     displayName: 'Deploy Packages To Synapse'
     name: DeploySynapsePackages
