@@ -116,13 +116,6 @@ jobs:
         multiStageVariables: false
         outputsFileName: ${{ parameters.outputsFileName }}
         workingDirectory: infrastructure
-    
-    # Deploy packages to Synapse workspace and bind to spark pools
-    - template: ${{variables['System.DefaultWorkingDirectory']}}/pipelines/steps/deploy-synapse-packages.yaml
-      parameters:
-        env: ${{ parameters.env }}
-        pythonVersion: 3
-        deploy: ${{ parameters.runTerraformApply }}
 
     # Approve the data lake managed private endpoint if it has been reinstated
     - template: ${{variables['System.DefaultWorkingDirectory']}}/pipelines/steps/azure-private-endpoint-approval.yaml
@@ -139,6 +132,13 @@ jobs:
         resourceIds:
         - $(data_lake_account_id)
         - $(data_lake_account_id_failover)
+  
+  # Deploy packages to Synapse workspace and bind to spark pools
+  - template: ${{variables['System.DefaultWorkingDirectory']}}/pipelines/steps/deploy-synapse-packages.yaml
+    parameters:
+      env: ${{ parameters.env }}
+      pythonVersion: 3
+      deploy: ${{ parameters.runTerraformApply }}
     
     # Add keyvault secrets defined in env variables
     - template: ${{variables['System.DefaultWorkingDirectory']}}/pipelines/steps/add-keyvault-secrets.yaml
