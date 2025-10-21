@@ -21,6 +21,6 @@ steps:
       echo $CREDENTIAL_NAME
       export PYTHONPATH="${PYTHONPATH}:/./"
       python3 -m pip install "git+https://github.com/Planning-Inspectorate/odw-common.git@THEODW-1783-commonCode"
-      python3 pipelines/scripts/deploy_packages.py -e dev $deployFlag
+      python3 pipelines/scripts/deploy_packages.py -e ${{ parameters.env }} $deployFlag
     displayName: 'Deploy Packages To Synapse'
     name: DeploySynapsePackages
