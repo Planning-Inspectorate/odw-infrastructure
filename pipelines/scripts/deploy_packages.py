@@ -60,10 +60,13 @@ class ODWPackageDeployer():
         """
         Return the names of the packages that are defined in the local configuration
         """
+        package_path = "infrastructure/configuration/workspace-packages"
+        if not os.path.exists(package_path):
+            return set()
         allowed_extensions = ["whl", "jar"]
         return set(
             x
-            for x in os.listdir("infrastructure/configuration/workspace-packages")
+            for x in os.listdir(package_path)
             if any(x.endswith(y) for y in allowed_extensions)
         )
 
