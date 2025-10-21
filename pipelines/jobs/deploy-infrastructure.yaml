@@ -110,7 +110,7 @@ jobs:
         outputsFileName: ${{ parameters.outputsFileName }}
         workingDirectory: infrastructure
     
-    # Get Terraform outputs
+    # Deploy packages to Synapse workspace and bind to spark pools
     - template: ${{variables['System.DefaultWorkingDirectory']}}/pipelines/steps/deploy-synapse-packages.yaml
       parameters:
         env: ${{ parameters.env }}
