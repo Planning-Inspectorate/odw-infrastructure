@@ -9,7 +9,7 @@ parameters:
 steps:
   - script: |
       deployFlag=""
-      if [[ "${{ lowr(parameters.deploy) }}" == "true" ]]; then
+      if [[ "${{ lower(parameters.deploy) }}" == "true" ]]; then
         deployFlag="-d"
       fi
       export PATH="$PATH:/home/AzDevOps/.local/bin/"
