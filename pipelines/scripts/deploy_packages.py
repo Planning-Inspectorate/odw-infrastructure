@@ -163,13 +163,19 @@ class ODWPackageDeployer():
         Return True if the `libraryRequirements` property of the given spark pool is different to the local configuration,
         False otherwise
         """
+        if "properties" not in spark_pool:
+            raise ValueError(f"'properties' attribute is expected on the spark pool with name '{spark_pool}, but was missing")
         if spark_pool_name not in self.SPARK_POOL_REQUIREMENTS_MAP:
+            # If there are no local requirements, but requirements are defined in the workspace, there there is a modification
+            if "libraryRequirements" in spark_pool.get("properties"):
+                return True
+            # If there are no local requirements and not requirements in the workspace, then there is no modification
             return False
+        if "libraryRequirements" not in spark_pool.get("properties"):
+            return True
         requirements_file_name = self.SPARK_POOL_REQUIREMENTS_MAP[spark_pool_name]
         with open(f"infrastructure/configuration/spark-pool/{requirements_file_name}", "r") as f:
             requirements_file_content = f.read()
-        if "properties" not in spark_pool:
-            raise ValueError(f"'properties' attribute is expected on the spark pool with name '{spark_pool}, but was missing")
         library_requirements = spark_pool.get("properties").get("libraryRequirements", dict())
         expected_library_requirements = {
             "filename": requirements_file_name,

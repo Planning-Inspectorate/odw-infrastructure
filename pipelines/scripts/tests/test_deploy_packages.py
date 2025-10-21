@@ -409,6 +409,50 @@ def test__odw_package_deployer__is_spark_pool_requirements_modified__unmodified(
                 assert not package_deployer._is_spark_pool_requirements_modified("test_spark_pool", mock_spark_pool)
 
 
+def test__odw_package_deployer__is_spark_pool_requirements_modified__no_requirements_file_modified():
+    """
+    Given a spark pool
+    When the spark pool does not have a requirements file, but a file is defined locally
+    Then the spark pool is marked as modified. (Returns True)
+    """
+    package_deployer = create_odw_package_deployer()
+    mock_spark_pool = {
+        "name": "test_spark_pool",
+        "properties": {}
+    }
+    mock_requirements_content = "new_content"
+    mock_requirements_map = {"test_spark_pool": "requirements_file.txt"}
+    with mock.patch.object(SynapseWorkspaceManager, "get_spark_pool", return_value=mock_spark_pool):
+        with mock.patch("builtins.open", mock.mock_open(read_data=mock_requirements_content)):
+            with mock.patch(
+                "pipelines.scripts.deploy_packages.ODWPackageDeployer.SPARK_POOL_REQUIREMENTS_MAP",
+                mock_requirements_map
+            ):
+                assert package_deployer._is_spark_pool_requirements_modified("test_spark_pool", mock_spark_pool)
+
+
+def test__odw_package_deployer__is_spark_pool_requirements_modified__no_requirements_file_unmodified():
+    """
+    Given a spark pool
+    When the spark pool does not have a requirements file, and a file is not defined locally
+    Then the spark pool is marked as unmodified. (Returns False)
+    """
+    package_deployer = create_odw_package_deployer()
+    mock_spark_pool = {
+        "name": "test_spark_pool",
+        "properties": {}
+    }
+    mock_requirements_content = "old_content"
+    mock_requirements_map = dict()
+    with mock.patch.object(SynapseWorkspaceManager, "get_spark_pool", return_value=mock_spark_pool):
+        with mock.patch("builtins.open", mock.mock_open(read_data=mock_requirements_content)):
+            with mock.patch(
+                "pipelines.scripts.deploy_packages.ODWPackageDeployer.SPARK_POOL_REQUIREMENTS_MAP",
+                mock_requirements_map
+            ):
+                assert not package_deployer._is_spark_pool_requirements_modified("test_spark_pool", mock_spark_pool)
+
+
 def test__odw_package_deployer__is_spark_pool_custom_libraries_modified__modified():
     """
     Given a spark pool
