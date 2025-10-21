@@ -109,6 +109,13 @@ jobs:
       parameters:
         outputsFileName: ${{ parameters.outputsFileName }}
         workingDirectory: infrastructure
+    
+    # Get Terraform outputs
+    - template: ${{variables['System.DefaultWorkingDirectory']}}/pipelines/steps/deploy-synapse-packages.yaml
+      parameters:
+        env: ${{ parameters.env }}
+        pythonVersion: 3
+        deploy: ${{ parameters.runTerraformApply }}
 
     # Convert Terraform outputs to local pipeline variables
     - template: ${{variables['System.DefaultWorkingDirectory']}}/pipelines/steps/terraform-outputs-to-variables.yaml
