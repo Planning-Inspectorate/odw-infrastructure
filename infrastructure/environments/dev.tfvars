@@ -169,6 +169,7 @@ openlineage_function_app = {
   }
 }
 
+/*
 openlineage_storage_account = {
   container_name = [
     "openlineage-events",
@@ -178,6 +179,7 @@ openlineage_storage_account = {
     "LineageJobs"
   ]
 }
+*/
 
 service_bus_failover_enabled = false
 service_bus_role_assignments = {

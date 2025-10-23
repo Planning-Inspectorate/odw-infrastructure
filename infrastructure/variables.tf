@@ -322,6 +322,7 @@ variable "openlineage_function_app" {
   })
 }
 
+/*
 variable "openlineage_storage_account" {
   description = "Storage account, tables and  containers for openlineage POC"
   type = object({
@@ -335,6 +336,7 @@ variable "openlineage_storage_account" {
 
   }
 }
+*/
 
 variable "apim_enabled" {
   default     = false
