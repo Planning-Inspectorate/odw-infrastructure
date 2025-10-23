@@ -180,6 +180,7 @@ openlineage_storage_account = {
 }
 
 service_bus_failover_enabled = false
+service_bus_premium_enabled  = true
 service_bus_role_assignments = {
   "Azure Service Bus Data Owner" = {
     groups = ["pins-odw-dev-administrators"]
