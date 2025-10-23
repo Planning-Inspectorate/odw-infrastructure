@@ -84,6 +84,9 @@ module "storage_account_failover" {
   ]
 }
 
+/*
+Commenting out because the current configuration is broken, and we may need something like this if the PoC goes ahead
+
 module "storage_account_openlineage" {
   count = var.openlineage_function_app.enabled ? 1 : 0
 
@@ -109,6 +112,7 @@ module "storage_account_openlineage" {
     }
   ]
 }
+*/
 
 module "function_app" {
   for_each = {
