@@ -236,6 +236,12 @@ variable "odt_back_office_service_bus_resource_group_name_failover" {
   type        = string
 }
 
+variable "service_bus_premium_enabled" {
+  type        = bool
+  default     = false
+  description = "Provision the primary Service Bus as Premium without implying a failover namespace"
+}
+
 variable "odt_backoffice_sb_topic_subscriptions" {
   default     = {}
   type        = any
