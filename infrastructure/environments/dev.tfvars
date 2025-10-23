@@ -157,6 +157,7 @@ odt_appeals_back_office = {
   service_bus_name    = "pins-sb-appeals-bo-dev"
 }
 
+/*
 # openlineage POC
 openlineage_function_app = {
   enabled               = true
@@ -178,6 +179,7 @@ openlineage_storage_account = {
     "LineageJobs"
   ]
 }
+*/
 
 service_bus_failover_enabled = false
 service_bus_role_assignments = {
