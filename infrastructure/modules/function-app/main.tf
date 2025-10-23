@@ -85,8 +85,4 @@ resource "azurerm_linux_function_app" "function" {
     type         = length(var.identity_ids) == 0 ? "SystemAssigned" : "UserAssigned"
     identity_ids = length(var.identity_ids) == 0 ? null : var.identity_ids
   }
-
-  lifecycle {
-    ignore_changes = [public_network_access_enabled]
-  }
 }
