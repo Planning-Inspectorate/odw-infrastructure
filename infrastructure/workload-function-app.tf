@@ -162,56 +162,6 @@ module "function_app_failover" {
   servicebus_namespace       = var.odt_back_office_service_bus_name
 }
 
-module "function_app_openlineage_receiver" {
-  count = var.openlineage_function_app.enabled ? 1 : 0
-
-  source = "./modules/function-app"
-
-  resource_group_name          = azurerm_resource_group.function_app[0].name
-  function_app_name            = var.openlineage_function_app.function_app_receiver
-  service_name                 = local.service_name
-  service_plan_id              = module.service_plan[0].id
-  environment                  = var.environment
-  location                     = module.azure_region.location_cli
-  tags                         = local.tags
-  synapse_vnet_subnet_names    = module.synapse_network.vnet_subnets
-  app_settings                 = null
-  site_config                  = var.openlineage_function_app.site_config
-  application_insights_key     = azurerm_application_insights.function_app_insights["fnapp01"].instrumentation_key
-  file_share_name              = "pins-${var.openlineage_function_app.function_app_receiver}-${local.resource_suffix}"
-  servicebus_namespace         = var.odt_back_office_service_bus_name
-  servicebus_namespace_appeals = var.odt_appeals_back_office.service_bus_name
-  message_storage_account      = var.message_storage_account
-  message_storage_container    = var.message_storage_container
-  storage_account_name         = module.storage_account_openlineage[0].storage_name
-  storage_account_access_key   = module.storage_account_openlineage[0].primary_access_key
-}
-
-module "function_app_openlineage_parser" {
-  count = var.openlineage_function_app.enabled ? 1 : 0
-
-  source = "./modules/function-app"
-
-  resource_group_name          = azurerm_resource_group.function_app[0].name
-  function_app_name            = var.openlineage_function_app.function_app_parser
-  service_name                 = local.service_name
-  service_plan_id              = module.service_plan[0].id
-  environment                  = var.environment
-  location                     = module.azure_region.location_cli
-  tags                         = local.tags
-  synapse_vnet_subnet_names    = module.synapse_network.vnet_subnets
-  app_settings                 = null
-  site_config                  = var.openlineage_function_app.site_config
-  application_insights_key     = azurerm_application_insights.function_app_insights["fnapp01"].instrumentation_key
-  file_share_name              = "pins-${var.openlineage_function_app.function_app_parser}-${local.resource_suffix}"
-  servicebus_namespace         = var.odt_back_office_service_bus_name
-  servicebus_namespace_appeals = var.odt_appeals_back_office.service_bus_name
-  message_storage_account      = var.message_storage_account
-  message_storage_container    = var.message_storage_container
-  storage_account_name         = module.storage_account_openlineage[0].storage_name
-  storage_account_access_key   = module.storage_account_openlineage[0].primary_access_key
-}
-
 resource "azurerm_role_assignment" "odt_servicebus_namespace" {
   for_each = {
     for function_app in var.function_app : function_app.name => function_app if var.function_app_enabled == true && var.external_resource_links_enabled
