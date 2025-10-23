@@ -157,6 +157,7 @@ odt_appeals_back_office = {
   service_bus_name    = "pins-sb-appeals-bo-dev"
 }
 
+/*
 # openlineage POC
 openlineage_function_app = {
   enabled               = true
@@ -169,7 +170,6 @@ openlineage_function_app = {
   }
 }
 
-/*
 openlineage_storage_account = {
   container_name = [
     "openlineage-events",
