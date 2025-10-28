@@ -30,6 +30,12 @@ variable "service_bus_failover_enabled" {
   type        = bool
 }
 
+variable "service_bus_premium_enabled" {
+  description = "Provision the primary Service Bus as Premium without implying a failover namespace"
+  type        = bool
+  default     = false
+}
+
 variable "service_bus_role_assignments" {
   default     = {}
   type        = any
