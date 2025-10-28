@@ -98,6 +98,16 @@ module "storage_account_openlineage" {
   network_rule_virtual_network_subnet_ids = concat([module.synapse_network.vnet_subnets[local.functionapp_subnet_name], module.synapse_network.vnet_subnets[local.compute_subnet_name]])
   container_name                          = var.openlineage_storage_account.container_name
   tables                                  = var.openlineage_storage_account.tables
+  shares = [
+    {
+      name  = "${var.openlineage_function_app.function_app_receiver}"
+      quota = 5120
+    },
+    {
+      name  = "${var.openlineage_function_app.function_app_parser}"
+      quota = 5120
+    }
+  ]
 }
 
 module "function_app" {
