@@ -6,8 +6,8 @@ resource "azurerm_servicebus_namespace" "synapse" {
   name                         = "pins-sb-${local.resource_suffix}-${random_string.unique_id.id}"
   location                     = var.location
   resource_group_name          = var.resource_group_name
-  sku                          = var.service_bus_failover_enabled ? "Premium" : "Standard"
-  capacity                     = var.service_bus_failover_enabled ? 1 : 0
+  sku                          = var.service_bus_premium_enabled ? "Premium" : "Standard"
+  capacity                     = var.service_bus_premium_enabled ? 1 : 0
   premium_messaging_partitions = var.service_bus_failover_enabled ? 1 : null
   minimum_tls_version          = "1.2"
   local_auth_enabled           = true
