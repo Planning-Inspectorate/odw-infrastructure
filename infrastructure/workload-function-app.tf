@@ -100,11 +100,11 @@ module "storage_account_openlineage" {
   tables                                  = var.openlineage_storage_account.tables
   shares = [
     {
-      name  = "${var.openlineage_function_app.function_app_receiver}"
+      name  = var.openlineage_function_app.function_app_receiver
       quota = 5120
     },
     {
-      name  = "${var.openlineage_function_app.function_app_parser}"
+      name  = var.openlineage_function_app.function_app_parser
       quota = 5120
     }
   ]
