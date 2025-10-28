@@ -5,20 +5,20 @@
 azure-servicebus==7.13.0
 
 # Logging
-azure-monitor-opentelemetry==1.6.7
+azure-monitor-opentelemetry==1.8.1
 
 # Open telemetry
-opentelemetry-instrumentation==0.58b0
-opentelemetry-instrumentation-asgi==0.58b0
-opentelemetry-instrumentation-dbapi==0.58b0
-opentelemetry-instrumentation-django==0.58b0
-opentelemetry-instrumentation-fastapi==0.58b0
-opentelemetry-instrumentation-flask==0.58b0
-opentelemetry-instrumentation-psycopg2==0.58b0
-opentelemetry-instrumentation-requests==0.58b0
-opentelemetry-instrumentation-urllib==0.58b0
-opentelemetry-instrumentation-urllib3==0.58b0
-opentelemetry-instrumentation-wsgi==0.58b0
+#opentelemetry-instrumentation==0.58b0
+#opentelemetry-instrumentation-asgi==0.58b0
+#opentelemetry-instrumentation-dbapi==0.58b0
+#opentelemetry-instrumentation-django==0.58b0
+#opentelemetry-instrumentation-fastapi==0.58b0
+#opentelemetry-instrumentation-flask==0.58b0
+#opentelemetry-instrumentation-psycopg2==0.58b0
+#opentelemetry-instrumentation-requests==0.58b0
+#opentelemetry-instrumentation-urllib==0.58b0
+#opentelemetry-instrumentation-urllib3==0.58b0
+#opentelemetry-instrumentation-wsgi==0.58b0
 
 # Retry
 tenacity==9.0.0
