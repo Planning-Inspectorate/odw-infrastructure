@@ -311,7 +311,7 @@ variable "odt_subscription_id" {
   description = "The subscription ID of the ODT subscription"
   type        = string
 }
-
+/*
 variable "openlineage_function_app" {
   default = {
     enabled               = false
@@ -341,6 +341,7 @@ variable "openlineage_storage_account" {
 
   }
 }
+*/
 
 variable "apim_enabled" {
   default     = false
