@@ -157,28 +157,6 @@ odt_appeals_back_office = {
   service_bus_name    = "pins-sb-appeals-bo-dev"
 }
 
-# openlineage POC
-openlineage_function_app = {
-  enabled               = true
-  function_app_receiver = "oljsonreceiver"
-  function_app_parser   = "oljsonparser"
-  site_config = {
-    application_stack = {
-      python_version = "3.11"
-    }
-  }
-}
-
-openlineage_storage_account = {
-  container_name = [
-    "openlineage-events",
-    "openlineage-badpayloads"
-  ]
-  tables = [
-    "LineageJobs"
-  ]
-}
-
 service_bus_failover_enabled = false
 service_bus_premium_enabled  = true
 service_bus_role_assignments = {
