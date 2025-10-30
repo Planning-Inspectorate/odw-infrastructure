@@ -36,7 +36,8 @@ data_lake_storage_containers = [
   "odw-raw",
   "odw-standardised",
   "odw-harmonised",
-  "odw-config"
+  "odw-config",
+  "odw-meta-db"
 ]
 
 data_lake_storage_containers_to_import = [
