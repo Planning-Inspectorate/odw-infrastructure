@@ -18,13 +18,8 @@ resource "azurerm_synapse_spark_pool" "synapse_preview" {
     min_node_count = var.spark_pool_min_node_count
   }
 
-  dynamic "library_requirement" {
-    for_each = var.spark_pool_preview_requirements != null ? [1] : []
-
-    content {
-      content  = var.spark_pool_preview_requirements
-      filename = "requirements-preview.txt"
-    }
+  lifecycle {
+    ignore_changes = [library_requirement]
   }
 
   spark_config {
@@ -59,13 +54,8 @@ resource "azurerm_synapse_spark_pool" "synapse34" {
     min_node_count = var.spark_pool_min_node_count
   }
 
-  dynamic "library_requirement" {
-    for_each = var.spark_pool_requirements != null ? [1] : []
-
-    content {
-      content  = var.spark_pool_preview_requirements
-      filename = "requirements-preview.txt"
-    }
+  lifecycle {
+    ignore_changes = [library_requirement]
   }
 
   spark_config {

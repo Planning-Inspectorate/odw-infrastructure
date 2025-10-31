@@ -1,0 +1,26 @@
+parameters:
+  env: ''
+  pythonVersion: ''
+  deploy: false
+
+##
+# Deploy packages to the Synapse workspace and bind them to the spark pools
+##
+steps:
+  - script: |
+      deployFlag=""
+      if [[ "${{ lower(parameters.deploy) }}" == "true" ]]; then
+        deployFlag="-d"
+      fi
+      export PATH="$PATH:/home/AzDevOps/.local/bin/"
+      sudo apt-get install unixodbc-dev
+      sudo curl -fsSL https://aka.ms/install-azd.sh | bash
+      export SYNAPSE_ENDPOINT="${{ format('https://pins-synw-odw-{0}-uks.dev.azuresynapse.net/', lower(parameters.env)) }}"
+      export CREDENTIAL_NAME="${{ format('https://dev.azuresynapse.net/.default', lower(parameters.env)) }}"
+      echo $SYNAPSE_ENDPOINT 
+      echo $CREDENTIAL_NAME
+      export PYTHONPATH="${PYTHONPATH}:/./"
+      python3 -m pip install "git+https://github.com/Planning-Inspectorate/odw-common.git@main"
+      python3 pipelines/scripts/deploy_packages.py -e ${{ parameters.env }} $deployFlag
+    displayName: 'Deploy Packages To Synapse'
+    name: DeploySynapsePackages
