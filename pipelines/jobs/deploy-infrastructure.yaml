@@ -26,5 +26,5 @@ jobs:
   
   - script: |
       export PATH="$PATH:/home/AzDevOps/.local/bin/"
-      python3 -m pytest $(Build.SourcesDirectory)/pipelines/scripts/test_script.py
+      python3 $(Build.SourcesDirectory)/pipelines/scripts/test_script.py
     displayName: 'test script'
