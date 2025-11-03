@@ -105,3 +105,6 @@ pwsh -c "& {Get-Module -ListAvailable}"
 
 # Sysprep
 /usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync
+
+# ODW Common
+python3 -m pip install --force-reinstall "git+https://github.com/Planning-Inspectorate/odw-common.git@main"
