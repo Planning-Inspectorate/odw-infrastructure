@@ -8,6 +8,7 @@ steps:
       set -x
       python${{ parameters.pythonVersion }} --version
       export PYTHONPATH="${PYTHONPATH}:/./"
+      python${{ parameters.pythonVersion }} -m pip install "git+https://github.com/Planning-Inspectorate/odw-common.git@main"
       python${{ parameters.pythonVersion }} $(System.DefaultWorkingDirectory)/pipelines/scripts/approve_private_endpoints.py --env "${{ parameters.env }}"
       if [ $? -eq 1 ]; then
           echo "##vso[task.logissue type=error]approve_private_endpoints.py failed"
