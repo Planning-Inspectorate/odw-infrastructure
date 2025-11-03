@@ -67,6 +67,9 @@ sudo apt-get install -y terraform=1.13.3-1
 python3 -m pip install --force-reinstall packaging==21
 python3 -m pip install -U checkov==3.2.405
 
+# ODW Common
+python3 -m pip install --force-reinstall "git+https://github.com/Planning-Inspectorate/odw-common.git@feat/main"
+
 # TFLint
 curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
 
