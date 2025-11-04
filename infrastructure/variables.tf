@@ -314,8 +314,8 @@ variable "odt_subscription_id" {
 
 variable "open_lineage_enabled" {
   description = "Whether or not to enable the resources used for Open Lineage"
-  type = bool
-  default = false
+  type        = bool
+  default     = false
 }
 
 /*
