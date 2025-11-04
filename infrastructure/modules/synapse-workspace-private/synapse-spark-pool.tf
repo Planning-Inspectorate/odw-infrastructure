@@ -26,6 +26,12 @@ resource "azurerm_synapse_spark_pool" "synapse_preview" {
     content  = <<-EOT
       spark.executorEnv.dataLakeAccountName ${var.data_lake_account_name}
       spark.executorEnv.keyVaultName ${var.key_vault_name}
+      spark.extraListeners io.openlineage.spark.agent.OpenLineageSparkListener
+      spark.openlineage.transport.type http
+      spark.openlineage.transport.url ${var.open_lineage_receiver_function_key}
+      spark.openlineage.namespace  ${azurerm_synapse_workspace.synapse.name}
+      spark.openlineage.emit.start.run.events true
+      spark.openlineage.disabled false
       EOT
     filename = "configuration.txt"
   }
