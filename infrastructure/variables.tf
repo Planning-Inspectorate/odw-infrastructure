@@ -311,6 +311,13 @@ variable "odt_subscription_id" {
   description = "The subscription ID of the ODT subscription"
   type        = string
 }
+
+variable "open_lineage_enabled" {
+  description = "Whether or not to enable the resources used for Open Lineage"
+  type = bool
+  default = false
+}
+
 /*
 variable "openlineage_function_app" {
   default = {
