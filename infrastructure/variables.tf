@@ -312,11 +312,10 @@ variable "odt_subscription_id" {
   type        = string
 }
 
-variable "open_lineage_receiver_function_key" {
-  # Note: When the OL PoC is completed, this MUST be replaced by a direct reference to the function app resource in Terraform
-  description = "The function app key for the open lineage receiver"
-  type = string
-  default = ""
+variable "open_lineage_enabled" {
+  description = "Whether or not to enable the resources used for Open Lineage"
+  type        = bool
+  default     = false
 }
 
 /*

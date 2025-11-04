@@ -1,3 +1,9 @@
+data "azurerm_function_app_host_keys" "ol_receiver" {
+  count               = var.open_lineage_enabled ? 1 : 0
+  name                = "pins-oljsonreceiver-odw-${var.environment}-uks"
+  resource_group_name = "pins-rg-function-app-odw-${var.environment}-uks"
+}
+
 module "synapse_workspace_private" {
   source = "./modules/synapse-workspace-private"
 
@@ -49,7 +55,7 @@ module "synapse_workspace_private" {
   create_service_bus_resources           = var.create_service_bus_resources
   odt_appeals_back_office_service_bus_id = var.odt_appeals_back_office.service_bus_enabled && var.external_resource_links_enabled ? local.odt_appeals_back_office_service_bus_id : null
 
-  open_lineage_receiver_function_key = var.open_lineage_receiver_function_key
+  open_lineage_receiver_function_key = var.open_lineage_enabled ? data.azurerm_function_app_host_keys.ol_receiver[0].default_function_key : ""
 
   tags = local.tags
 
@@ -111,7 +117,7 @@ module "synapse_workspace_private_failover" {
 
   tags = local.tags
 
-  open_lineage_receiver_function_key = var.open_lineage_receiver_function_key
+  open_lineage_receiver_function_key = var.open_lineage_enabled ? data.azurerm_function_app_host_keys.ol_receiver[0].default_function_key : ""
 
   providers = {
     azurerm     = azurerm,
