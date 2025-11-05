@@ -5,7 +5,7 @@ from pipelines.scripts.private_endpoint.synapse_private_link_hubs_private_endpoi
 from odw_common.private_endpoint.key_vault_private_endpoint_manager import KeyVaultPrivateEndpointManager
 from odw_common.private_endpoint.service_bus_private_endpoint_manager import ServiceBusPrivateEndpointManager
 from pipelines.scripts.private_endpoint.synapse_managed_private_endpoint_manager import SynapseManagedPrivateEndpointManager
-from pipelines.scripts.util import Util
+from odw_common.util.util import Util
 from tests.util.config import TEST_CONFIG
 from tests.util.test_case import TestCase
 from typing import Type, List, Dict, Any
