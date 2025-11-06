@@ -125,12 +125,18 @@ resource "azurerm_private_endpoint" "tooling_open_lineage_storage" {
   subnet_id           = var.vnet_subnet_ids["FunctionAppSubnet"]
 
   private_dns_zone_group {
-    name                 = "storageOpenlineagePrivateDnsZone${each.key}"
-    private_dns_zone_ids = [var.tooling_config.storage_private_dns_zone_id[each.key]]
+    name = "storageOpenlineagePrivateDnsZone"
+    private_dns_zone_ids = [
+      var.tooling_config.storage_private_dns_zone_id["blob"],
+      var.tooling_config.storage_private_dns_zone_id["file"],
+      var.tooling_config.storage_private_dns_zone_id["queue"],
+      var.tooling_config.storage_private_dns_zone_id["table"],
+      var.tooling_config.storage_private_dns_zone_id["web"]
+    ]
   }
 
   private_service_connection {
-    name                           = "storagePrivateServiceConnection${each.key}"
+    name                           = "storageOpenLineagePrivateServiceConnection"
     is_manual_connection           = false
     private_connection_resource_id = module.storage_account_openlineage[0].storage_account_idid
     subresource_names              = ["blob", "file", "queue", "table", "web"]
