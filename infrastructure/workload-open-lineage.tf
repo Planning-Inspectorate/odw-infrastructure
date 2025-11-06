@@ -54,7 +54,7 @@ module "open_lineage_receiver_service_plan" {
   source = "./modules/service-plan"
 
   resource_group_name = azurerm_resource_group.open_lineage_resource_group[0].name
-  service_name        = local.service_name
+  service_name        = "${local.service_name}-ol"
   environment         = var.environment
   location            = module.azure_region.location_cli
   tags                = local.tags
