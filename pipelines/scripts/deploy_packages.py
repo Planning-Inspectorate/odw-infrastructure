@@ -7,6 +7,7 @@ from datetime import datetime
 import logging
 import os
 import json
+import subprocess
 
 
 """
@@ -37,6 +38,15 @@ class ODWPackageDeployer():
     def __init__(self, workspace_manager: SynapseWorkspaceManager, env: str):
         self.workspace_manager = workspace_manager
         self.env = env
+
+    def extract_jar_files(self):
+        """
+        Extract jar files using build.gradle
+        """
+        build_comand = "gradle build -p infrastructure/configuration/workspace-packages"
+        subprocess.check_output(build_comand.split(" "))
+        unpack_command = "gradle extractJarFiles -p infrastructure/configuration/workspace-packages"
+        subprocess.check_output(unpack_command.split(" "))
 
     def get_non_odw_workspace_packages(self) -> List[Dict[str, Any]]:
         """
@@ -214,6 +224,7 @@ class ODWPackageDeployer():
         """
         logging.info("Applying package settings as defined in 'infrastructure/configuration/'")
         # Preprocessing
+        self.extract_jar_files()
         workspace_packages_to_add = self.get_workspace_packages_to_add()
         workspace_packages_to_remove = self.get_workspace_packages_to_remove()
         new_spark_pool_map = dict()

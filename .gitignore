@@ -204,3 +204,5 @@ workspace_copy/**
 **.env
 
 **test-output.xml
+
+**.gradle/
