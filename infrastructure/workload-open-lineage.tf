@@ -1,6 +1,8 @@
+/*
 data "azuread_group" "odw_data_engineers" {
   display_name = "pins-odw-preprod-dataengineers"
 }
+*/
 
 
 resource "azurerm_resource_group" "open_lineage_resource_group" {
@@ -96,14 +98,14 @@ resource "azurerm_role_assignment" "open_lineage_storage_contributors" {
   count                = var.open_lineage_enabled ? 1 : 0
   scope                = module.storage_account_openlineage[0].storage_id
   role_definition_name = "Contributor"
-  principal_id         = data.azuread_group.odw_data_engineers.object_id
+  principal_id         = "7c906e1b-ffbb-44d3-89a1-6772b9c9c148"
 }
 
 resource "azurerm_role_assignment" "open_lineage_storage_blob_data_contributors" {
   count                = var.open_lineage_enabled ? 1 : 0
   scope                = module.storage_account_openlineage[0].storage_id
   role_definition_name = "Storage Blob Data Contributor"
-  principal_id         = data.azuread_group.odw_data_engineers.object_id
+  principal_id         = "7c906e1b-ffbb-44d3-89a1-6772b9c9c148"
 }
 
 
@@ -111,7 +113,7 @@ resource "azurerm_role_assignment" "open_lineage_receiver_contributors" {
   count                = var.open_lineage_enabled ? 1 : 0
   scope                = module.open_lineage_receiver_function_app[0].id
   role_definition_name = "Contributor"
-  principal_id         = data.azuread_group.odw_data_engineers.object_id
+  principal_id         = "7c906e1b-ffbb-44d3-89a1-6772b9c9c148"
 }
 
 
