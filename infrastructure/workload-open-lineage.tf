@@ -1,5 +1,5 @@
 data "azuread_group" "odw_data_engineers" {
-  display_name = "pins-odw-dev-dataengineers"
+  display_name = "pins-odw-preprod-dataengineers"
 }
 
 
