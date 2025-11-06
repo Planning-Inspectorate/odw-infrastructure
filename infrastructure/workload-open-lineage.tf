@@ -73,7 +73,7 @@ module "open_lineage_receiver_function_app" {
   environment                = var.environment
   location                   = module.azure_region.location_cli
   tags                       = local.tags
-  application_insights_key   = azurerm_application_insights.open_lineage_insights["oljsonreceiver"].instrumentation_key
+  application_insights_key   = azurerm_application_insights.open_lineage_insights[0].instrumentation_key
   synapse_vnet_subnet_names  = module.synapse_network.vnet_subnets
   app_settings               = null
   connection_strings         = []
@@ -83,8 +83,8 @@ module "open_lineage_receiver_function_app" {
     }
   }
   file_share_name              = "pins-oljsonreceiver-${local.resource_suffix}"
-  servicebus_namespace         = null
-  servicebus_namespace_appeals = null
+  servicebus_namespace         = var.odt_back_office_service_bus_name
+  servicebus_namespace_appeals = var.odt_appeals_back_office.service_bus_name
   message_storage_account      = var.message_storage_account
   message_storage_container    = var.message_storage_container
 }
