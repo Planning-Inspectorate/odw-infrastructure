@@ -308,3 +308,5 @@ link_purview_account = false
 run_shir_setup_script = true
 
 create_service_bus_resources = false
+
+open_lineage_enabled = true

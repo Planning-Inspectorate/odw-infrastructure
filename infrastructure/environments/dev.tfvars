@@ -158,7 +158,7 @@ odt_appeals_back_office = {
   service_bus_name    = "pins-sb-appeals-bo-dev"
 }
 
-open_lineage_enabled = true
+#open_lineage_enabled = true
 
 /*
 # openlineage POC
