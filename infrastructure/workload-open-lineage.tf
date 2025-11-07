@@ -64,7 +64,7 @@ module "open_lineage_receiver_service_plan" {
 
 resource "azurerm_linux_function_app" "open_lineage_receiver_function_app" {
   count               = var.open_lineage_enabled ? 1 : 0
-  name                = "pins-oljsonreceiver-odw--${var.environment}-uks"
+  name                = "pins-oljsonreceiver-odw-${var.environment}-uks"
   resource_group_name = azurerm_resource_group.open_lineage_resource_group[0].name
   location            = module.azure_region.location_cli
 
@@ -74,7 +74,7 @@ resource "azurerm_linux_function_app" "open_lineage_receiver_function_app" {
   tags                       = local.tags
   app_settings = {
     "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING" = "DefaultEndpointsProtocol=https;AccountName=${module.storage_account_openlineage[0].storage_name};AccountKey=${module.storage_account_openlineage[0].primary_access_key};EndpointSuffix=core.windows.net"
-    "WEBSITE_CONTENTSHARE"                     = "pins-oljsonreceiver-odw--${var.environment}-uks",
+    "WEBSITE_CONTENTSHARE"                     = "pins-oljsonreceiver-odw-${var.environment}-uks",
     "SCM_DO_BUILD_DURING_DEPLOYMENT"           = "true"
   }
 
