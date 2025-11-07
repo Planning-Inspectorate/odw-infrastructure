@@ -111,11 +111,11 @@ resource "azurerm_role_assignment" "open_lineage_function_app_contributors" {
   for_each = {
     # A map of function_app => user object id
     for val in setproduct(local.open_lineage_function_app_names, var.odw_contributors) :
-    val[0] => val[1]
+    "${val[0]}-${val[1]}" => val
   }
-  scope                = azurerm_linux_function_app.open_lineage_function_app[each.key].id
+  scope                = azurerm_linux_function_app.open_lineage_function_app[each.value[0]].id
   role_definition_name = "Contributor"
-  principal_id         = each.value
+  principal_id         = each.value[1]
 }
 
 
