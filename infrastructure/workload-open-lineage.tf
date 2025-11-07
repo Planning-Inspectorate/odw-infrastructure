@@ -73,7 +73,9 @@ resource "azurerm_linux_function_app" "open_lineage_receiver_function_app" {
   service_plan_id            = module.open_lineage_receiver_service_plan[0].id
   tags                       = local.tags
   app_settings = {
-    "SCM_DO_BUILD_DURING_DEPLOYMENT" = "true"
+    "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING" = "DefaultEndpointsProtocol=https;AccountName=${module.storage_account_openlineage[0].storage_name};AccountKey=${module.storage_account_openlineage[0].primary_access_key};EndpointSuffix=core.windows.net"
+    "WEBSITE_CONTENTSHARE"                     = "pins-oljsonreceiver-odw--${var.environment}-uks",
+    "SCM_DO_BUILD_DURING_DEPLOYMENT"           = "true"
   }
 
   site_config {
