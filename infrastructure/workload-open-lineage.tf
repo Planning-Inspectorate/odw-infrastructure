@@ -111,7 +111,7 @@ resource "azurerm_role_assignment" "open_lineage_function_app_contributors" {
   for_each = {
     # A map of function_app => user object id
     for val in setproduct(local.open_lineage_function_app_names, var.odw_contributors) :
-    val[0] => val[2]
+    val[0] => val[1]
   }
   scope                = azurerm_linux_function_app.open_lineage_function_app[each.key].id
   role_definition_name = "Contributor"
