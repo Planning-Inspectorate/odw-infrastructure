@@ -63,7 +63,7 @@ module "open_lineage_receiver_service_plan" {
 
 
 resource "azurerm_linux_function_app" "open_lineage_receiver_function_app" {
-  count = var.open_lineage_enabled ? 1 : 0
+  count               = var.open_lineage_enabled ? 1 : 0
   name                = "pins-oljsonreceiver-odw--${var.environment}-uks"
   resource_group_name = azurerm_resource_group.open_lineage_resource_group[0].name
   location            = module.azure_region.location_cli
@@ -73,11 +73,11 @@ resource "azurerm_linux_function_app" "open_lineage_receiver_function_app" {
   service_plan_id            = module.open_lineage_receiver_service_plan[0].id
   tags                       = local.tags
   app_settings = {
-      "SCM_DO_BUILD_DURING_DEPLOYMENT"              = "true"
-    }
+    "SCM_DO_BUILD_DURING_DEPLOYMENT" = "true"
+  }
 
   site_config {
-    always_on = true
+    always_on                = true
     application_insights_key = azurerm_application_insights.open_lineage_insights[0].instrumentation_key
     application_stack {
       python_version = "3.11"
