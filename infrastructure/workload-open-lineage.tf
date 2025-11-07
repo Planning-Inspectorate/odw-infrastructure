@@ -4,6 +4,9 @@ data "azuread_group" "odw_data_engineers" {
 }
 */
 
+locals {
+  open_lineage_function_app_names = toset(var.open_lineage_enabled ? ["oljsonreceiver", "oljsonparser"] : [])
+}
 
 resource "azurerm_resource_group" "open_lineage_resource_group" {
   count    = var.open_lineage_enabled ? 1 : 0
@@ -13,7 +16,7 @@ resource "azurerm_resource_group" "open_lineage_resource_group" {
 
 
 resource "azurerm_application_insights" "open_lineage_insights" {
-  for_each            = var.open_lineage_enabled ? toset(["oljsonreceiver", "oljsonsender"]) : toset([])
+  for_each = local.open_lineage_function_app_names
 
   name                = "pins-${each.key}-${local.resource_suffix}-app-insights"
   location            = module.azure_region.location_cli
@@ -63,7 +66,7 @@ module "open_lineage_service_plan" {
 
 
 resource "azurerm_linux_function_app" "open_lineage_function_app" {
-  for_each            = var.open_lineage_enabled ? toset(["oljsonreceiver", "oljsonsender"]) : toset([])
+  for_each            = local.open_lineage_function_app_names
   name                = "pins-${each.key}-odw-${var.environment}-uks"
   resource_group_name = azurerm_resource_group.open_lineage_resource_group[0].name
   location            = module.azure_region.location_cli
@@ -106,7 +109,7 @@ resource "azurerm_role_assignment" "open_lineage_storage_blob_data_contributors"
 
 
 resource "azurerm_role_assignment" "open_lineage_function_app_contributors" {
-  for_each            = var.open_lineage_enabled ? toset(["oljsonreceiver", "oljsonsender"]) : toset([])
+  for_each             = local.open_lineage_function_app_names
   scope                = azurerm_linux_function_app.open_lineage_function_app[each.key].id
   role_definition_name = "Contributor"
   principal_id         = "7c906e1b-ffbb-44d3-89a1-6772b9c9c148"
