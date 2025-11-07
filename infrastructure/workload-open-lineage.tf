@@ -62,33 +62,27 @@ module "open_lineage_receiver_service_plan" {
 
 
 
-module "open_lineage_receiver_function_app" {
-  count  = var.open_lineage_enabled ? 1 : 0
-  source = "./modules/function-app"
+resource "azurerm_linux_function_app" "open_lineage_receiver_function_app" {
+  count = var.open_lineage_enabled ? 1 : 0
+  name                = "pins-oljsonreceiver-odw--${var.environment}-uks"
+  resource_group_name = azurerm_resource_group.open_lineage_resource_group[0].name
+  location            = module.azure_region.location_cli
 
-  resource_group_name        = azurerm_resource_group.open_lineage_resource_group[0].name
-  function_app_name          = "oljsonreceiver"
-  service_name               = local.service_name
-  service_plan_id            = module.open_lineage_receiver_service_plan[0].id
   storage_account_name       = module.storage_account_openlineage[0].storage_name
   storage_account_access_key = module.storage_account_openlineage[0].primary_access_key
-  environment                = var.environment
-  location                   = module.azure_region.location_cli
+  service_plan_id            = module.open_lineage_receiver_service_plan[0].id
   tags                       = local.tags
-  application_insights_key   = azurerm_application_insights.open_lineage_insights[0].instrumentation_key
-  synapse_vnet_subnet_names  = module.synapse_network.vnet_subnets
-  app_settings               = null
-  connection_strings         = []
-  site_config = {
-    application_stack = {
+  app_settings = {
+      "SCM_DO_BUILD_DURING_DEPLOYMENT"              = "true"
+    }
+
+  site_config {
+    always_on = true
+    application_insights_key = azurerm_application_insights.open_lineage_insights[0].instrumentation_key
+    application_stack {
       python_version = "3.11"
     }
   }
-  file_share_name              = "pins-oljsonreceiver-${local.resource_suffix}"
-  servicebus_namespace         = var.odt_back_office_service_bus_name
-  servicebus_namespace_appeals = var.odt_appeals_back_office.service_bus_name
-  message_storage_account      = var.message_storage_account
-  message_storage_container    = var.message_storage_container
 }
 
 
@@ -111,7 +105,7 @@ resource "azurerm_role_assignment" "open_lineage_storage_blob_data_contributors"
 
 resource "azurerm_role_assignment" "open_lineage_receiver_contributors" {
   count                = var.open_lineage_enabled ? 1 : 0
-  scope                = module.open_lineage_receiver_function_app[0].id
+  scope                = azurerm_linux_function_app.open_lineage_receiver_function_app[0].id
   role_definition_name = "Contributor"
   principal_id         = "7c906e1b-ffbb-44d3-89a1-6772b9c9c148"
 }
