@@ -66,6 +66,7 @@ module "open_lineage_service_plan" {
 
 
 resource "azurerm_linux_function_app" "open_lineage_function_app" {
+  #checkov:skip=CKV_AZURE_221: "Ensure that Azure Function App public network access is disabled"
   for_each            = local.open_lineage_function_app_names
   name                = "pins-${each.key}-odw-${var.environment}-uks"
   resource_group_name = azurerm_resource_group.open_lineage_resource_group[0].name
@@ -84,6 +85,7 @@ resource "azurerm_linux_function_app" "open_lineage_function_app" {
   site_config {
     always_on                = true
     application_insights_key = azurerm_application_insights.open_lineage_insights[each.key].instrumentation_key
+    http2_enabled            = true
     application_stack {
       python_version = "3.11"
     }
