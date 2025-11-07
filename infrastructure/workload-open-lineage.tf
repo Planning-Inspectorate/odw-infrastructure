@@ -13,9 +13,9 @@ resource "azurerm_resource_group" "open_lineage_resource_group" {
 
 
 resource "azurerm_application_insights" "open_lineage_insights" {
-  count = var.open_lineage_enabled ? 1 : 0
+  for_each            = var.open_lineage_enabled ? toset(["oljsonreceiver", "oljsonsender"]) : toset([])
 
-  name                = "pins-oljsonreceiver-${local.resource_suffix}-app-insights"
+  name                = "pins-${each.key}-${local.resource_suffix}-app-insights"
   location            = module.azure_region.location_cli
   resource_group_name = azurerm_resource_group.monitoring.name
   application_type    = "web"
@@ -48,7 +48,7 @@ module "storage_account_openlineage" {
   shares = []
 }
 
-module "open_lineage_receiver_service_plan" {
+module "open_lineage_service_plan" {
   count = var.open_lineage_enabled ? 1 : 0
 
   source = "./modules/service-plan"
@@ -62,25 +62,25 @@ module "open_lineage_receiver_service_plan" {
 
 
 
-resource "azurerm_linux_function_app" "open_lineage_receiver_function_app" {
-  count               = var.open_lineage_enabled ? 1 : 0
-  name                = "pins-oljsonreceiver-odw-${var.environment}-uks"
+resource "azurerm_linux_function_app" "open_lineage_function_app" {
+  for_each            = var.open_lineage_enabled ? toset(["oljsonreceiver", "oljsonsender"]) : toset([])
+  name                = "pins-${each.key}-odw-${var.environment}-uks"
   resource_group_name = azurerm_resource_group.open_lineage_resource_group[0].name
   location            = module.azure_region.location_cli
 
   storage_account_name       = module.storage_account_openlineage[0].storage_name
   storage_account_access_key = module.storage_account_openlineage[0].primary_access_key
-  service_plan_id            = module.open_lineage_receiver_service_plan[0].id
+  service_plan_id            = module.open_lineage_service_plan[0].id
   tags                       = local.tags
   app_settings = {
     "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING" = "DefaultEndpointsProtocol=https;AccountName=${module.storage_account_openlineage[0].storage_name};AccountKey=${module.storage_account_openlineage[0].primary_access_key};EndpointSuffix=core.windows.net"
-    "WEBSITE_CONTENTSHARE"                     = "pins-oljsonreceiver-odw-${var.environment}-uks",
+    "WEBSITE_CONTENTSHARE"                     = "pins-${each.key}-odw-${var.environment}-uks",
     "SCM_DO_BUILD_DURING_DEPLOYMENT"           = "true"
   }
 
   site_config {
     always_on                = true
-    application_insights_key = azurerm_application_insights.open_lineage_insights[0].instrumentation_key
+    application_insights_key = azurerm_application_insights.open_lineage_insights[each.key].instrumentation_key
     application_stack {
       python_version = "3.11"
     }
@@ -105,9 +105,9 @@ resource "azurerm_role_assignment" "open_lineage_storage_blob_data_contributors"
 }
 
 
-resource "azurerm_role_assignment" "open_lineage_receiver_contributors" {
-  count                = var.open_lineage_enabled ? 1 : 0
-  scope                = azurerm_linux_function_app.open_lineage_receiver_function_app[0].id
+resource "azurerm_role_assignment" "open_lineage_function_app_contributors" {
+  for_each            = var.open_lineage_enabled ? toset(["oljsonreceiver", "oljsonsender"]) : toset([])
+  scope                = azurerm_linux_function_app.open_lineage_function_app[each.key].id
   role_definition_name = "Contributor"
   principal_id         = "7c906e1b-ffbb-44d3-89a1-6772b9c9c148"
 }
