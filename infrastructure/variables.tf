@@ -647,3 +647,9 @@ variable "purview_event_hub_id" {
   type        = string
   default     = null
 }
+
+variable "odw_contributors" {
+  description = "Who should be granted contributor access to resources"
+  type        = list(string)
+  default     = []
+}

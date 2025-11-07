@@ -307,3 +307,9 @@ external_resource_links_enabled = true
 link_purview_account = true
 
 run_shir_setup_script = false
+
+odw_contributors = [
+  "1fa42635-5dc3-43bc-b5da-77578f3dabb7", # pins-odw-prod-administrators
+  "5c56c7a0-6845-43e7-877c-c8dd527107a3", # pins-odw-prod-dataengineers
+  "0cad1989-27de-4242-a06b-7cad373497e7"  # Azure DevOps Pipelines - ODW Prod - Infrastructure
+]

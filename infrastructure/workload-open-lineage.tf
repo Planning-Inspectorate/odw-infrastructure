@@ -1,12 +1,7 @@
-/*
-data "azuread_group" "odw_data_engineers" {
-  display_name = "pins-odw-preprod-dataengineers"
-}
-*/
-
 locals {
   open_lineage_function_app_names = toset(var.open_lineage_enabled ? ["oljsonreceiver", "oljsonparser"] : [])
 }
+
 
 resource "azurerm_resource_group" "open_lineage_resource_group" {
   count    = var.open_lineage_enabled ? 1 : 0
@@ -98,14 +93,14 @@ resource "azurerm_linux_function_app" "open_lineage_function_app" {
 
 # Role assignments
 resource "azurerm_role_assignment" "open_lineage_storage_contributors" {
-  count                = var.open_lineage_enabled ? 1 : 0
+  count                = toset(var.open_lineage_enabled ? var.odw_contributors : [])
   scope                = module.storage_account_openlineage[0].storage_id
   role_definition_name = "Contributor"
   principal_id         = "7c906e1b-ffbb-44d3-89a1-6772b9c9c148"
 }
 
 resource "azurerm_role_assignment" "open_lineage_storage_blob_data_contributors" {
-  count                = var.open_lineage_enabled ? 1 : 0
+  count                = toset(var.open_lineage_enabled ? var.odw_contributors : [])
   scope                = module.storage_account_openlineage[0].storage_id
   role_definition_name = "Storage Blob Data Contributor"
   principal_id         = "7c906e1b-ffbb-44d3-89a1-6772b9c9c148"
@@ -113,10 +108,14 @@ resource "azurerm_role_assignment" "open_lineage_storage_blob_data_contributors"
 
 
 resource "azurerm_role_assignment" "open_lineage_function_app_contributors" {
-  for_each             = local.open_lineage_function_app_names
+  for_each = {
+    # A map of function_app => user object id
+    for val in setproduct(local.open_lineage_function_app_names, var.odw_contributors) :
+    val[0] => val[2]
+  }
   scope                = azurerm_linux_function_app.open_lineage_function_app[each.key].id
   role_definition_name = "Contributor"
-  principal_id         = "7c906e1b-ffbb-44d3-89a1-6772b9c9c148"
+  principal_id         = each.value
 }
 
 
