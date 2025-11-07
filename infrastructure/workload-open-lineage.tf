@@ -93,14 +93,14 @@ resource "azurerm_linux_function_app" "open_lineage_function_app" {
 
 # Role assignments
 resource "azurerm_role_assignment" "open_lineage_storage_contributors" {
-  count                = toset(var.open_lineage_enabled ? var.odw_contributors : [])
+  for_each             = toset(var.open_lineage_enabled ? var.odw_contributors : [])
   scope                = module.storage_account_openlineage[0].storage_id
   role_definition_name = "Contributor"
   principal_id         = "7c906e1b-ffbb-44d3-89a1-6772b9c9c148"
 }
 
 resource "azurerm_role_assignment" "open_lineage_storage_blob_data_contributors" {
-  count                = toset(var.open_lineage_enabled ? var.odw_contributors : [])
+  for_each             = toset(var.open_lineage_enabled ? var.odw_contributors : [])
   scope                = module.storage_account_openlineage[0].storage_id
   role_definition_name = "Storage Blob Data Contributor"
   principal_id         = "7c906e1b-ffbb-44d3-89a1-6772b9c9c148"
