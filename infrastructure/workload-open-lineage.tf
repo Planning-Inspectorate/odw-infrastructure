@@ -71,7 +71,7 @@ resource "azurerm_linux_function_app" "open_lineage_function_app" {
   storage_account_access_key = module.storage_account_openlineage[0].primary_access_key
   service_plan_id            = module.open_lineage_service_plan[0].id
   https_only                 = true
-  zip_deploy_file            = "${path.module}/configuration/open-lineage/${each.key}3.zip"
+  zip_deploy_file            = "${path.module}/configuration/open-lineage/${each.key}4.zip"
   tags                       = local.tags
   app_settings = {
     "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING" = "DefaultEndpointsProtocol=https;AccountName=${module.storage_account_openlineage[0].storage_name};AccountKey=${module.storage_account_openlineage[0].primary_access_key};EndpointSuffix=core.windows.net"
