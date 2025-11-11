@@ -119,7 +119,6 @@ resource "azurerm_role_assignment" "open_lineage_function_app_contributors" {
 }
 
 
-/*
 # Private endpoints
 resource "azurerm_private_endpoint" "tooling_open_lineage_storage" {
   count = var.open_lineage_enabled ? 1 : 0
@@ -149,4 +148,3 @@ resource "azurerm_private_endpoint" "tooling_open_lineage_storage" {
 
   tags = local.tags
 }
-*/
