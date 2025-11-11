@@ -77,6 +77,7 @@ resource "azurerm_linux_function_app" "open_lineage_function_app" {
     "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING" = "DefaultEndpointsProtocol=https;AccountName=${module.storage_account_openlineage[0].storage_name};AccountKey=${module.storage_account_openlineage[0].primary_access_key};EndpointSuffix=core.windows.net"
     "WEBSITE_CONTENTSHARE"                     = "pins-${each.key}-odw-${var.environment}-uks",
     "SCM_DO_BUILD_DURING_DEPLOYMENT"           = "true"
+    "WEBSITE_RUN_FROM_PACKAGE"                 = "true"
   }
 
   site_config {
