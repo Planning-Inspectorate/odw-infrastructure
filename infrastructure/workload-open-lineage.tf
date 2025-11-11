@@ -126,7 +126,7 @@ resource "azurerm_private_endpoint" "tooling_open_lineage_storage" {
   name                = "pins-pe-st-open-lineage-tooling-${local.resource_suffix}"
   resource_group_name = "pins-rg-network-odw-${var.environment}-uks"
   location            = module.azure_region.location_cli
-  subnet_id           = module.synapse_network.vnet_subnets["FunctionAppSubnet"]
+  subnet_id           = module.synapse_network.vnet_subnets["SynapseEndpointSubnet"]
 
   private_dns_zone_group {
     name = "storageOpenlineagePrivateDnsZone"
