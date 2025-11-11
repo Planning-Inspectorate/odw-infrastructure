@@ -131,18 +131,18 @@ resource "azurerm_private_endpoint" "tooling_open_lineage_storage" {
   private_dns_zone_group {
     name = "storageOpenlineagePrivateDnsZone"
     private_dns_zone_ids = [
-      var.tooling_config.storage_private_dns_zone_id["blob"],
-      var.tooling_config.storage_private_dns_zone_id["file"],
-      var.tooling_config.storage_private_dns_zone_id["queue"],
-      var.tooling_config.storage_private_dns_zone_id["table"],
-      var.tooling_config.storage_private_dns_zone_id["web"]
+      local.tooling_storage_dns_zone_ids["blob"],
+      local.tooling_storage_dns_zone_ids["file"],
+      local.tooling_storage_dns_zone_ids["queue"],
+      local.tooling_storage_dns_zone_ids["table"],
+      local.tooling_storage_dns_zone_ids["web"]
     ]
   }
 
   private_service_connection {
     name                           = "storageOpenLineagePrivateServiceConnection"
     is_manual_connection           = false
-    private_connection_resource_id = module.storage_account_openlineage[0].storage_account_idid
+    private_connection_resource_id = module.storage_account_openlineage[0].storage_account_id
     subresource_names              = ["blob", "file", "queue", "table", "web"]
   }
 
