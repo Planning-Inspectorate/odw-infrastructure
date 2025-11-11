@@ -76,7 +76,20 @@ resource "azurerm_linux_function_app" "open_lineage_function_app" {
   app_settings = {
     "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING" = "DefaultEndpointsProtocol=https;AccountName=${module.storage_account_openlineage[0].storage_name};AccountKey=${module.storage_account_openlineage[0].primary_access_key};EndpointSuffix=core.windows.net"
     "WEBSITE_CONTENTSHARE"                     = "pins-${each.key}-odw-${var.environment}-uks",
-    "SCM_DO_BUILD_DURING_DEPLOYMENT"           = "true"
+    "SCM_DO_BUILD_DURING_DEPLOYMENT"           = "true",
+    "WEBSITE_RUN_FROM_PACKAGE"                 = 1,
+    "STORAGE_CONNECTION"                       = "DefaultEndpointsProtocol=https;AccountName=${module.storage_account_openlineage[0].storage_name};AccountKey=${module.storage_account_openlineage[0].primary_access_key};EndpointSuffix=core.windows.net",
+    "EVENTS_CONTAINER"                         = "openlineage-events",
+    "DEADLETTER_CONTAINER"                     = "openlineage-deadletter",
+    "TABLE_NAME"                               = "LineageJobs",
+    "ALLOWED_EVENT_TYPES"                      = "COMPLETE",
+    "ALLOW_SQL_ONLY"                           = "true",
+    "MAX_CONTENT_LENGTH"                       = 8388608,
+    "WRITE_TABLE"                              = "true",
+    "PURVIEW_NAME"                             = "",
+    "TENANT_ID"                                = "",
+    "CLIENT_ID"                                = "",
+    "CLIENT_SECRET"                            = ""
   }
 
   site_config {
