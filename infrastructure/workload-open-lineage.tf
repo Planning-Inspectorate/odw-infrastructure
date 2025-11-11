@@ -142,7 +142,7 @@ resource "azurerm_private_endpoint" "tooling_open_lineage_storage" {
   private_service_connection {
     name                           = "storageOpenLineagePrivateServiceConnection"
     is_manual_connection           = false
-    private_connection_resource_id = module.storage_account_openlineage[0].storage_account_id
+    private_connection_resource_id = module.storage_account_openlineage[0].storage_id
     subresource_names              = ["blob", "file", "queue", "table", "web"]
   }
 
