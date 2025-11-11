@@ -121,7 +121,7 @@ resource "azurerm_role_assignment" "open_lineage_function_app_contributors" {
 
 # Private endpoints
 resource "azurerm_private_endpoint" "tooling_open_lineage_storage" {
-  count = var.open_lineage_enabled ? 1 : 0
+  for_each = toset(var.open_lineage_enabled ? ["blob", "file", "queue", "table", "web"] : [])
 
   name                = "pins-pe-st-open-lineage-tooling-${local.resource_suffix}"
   resource_group_name = "pins-rg-network-odw-${var.environment}-uks"
@@ -131,11 +131,7 @@ resource "azurerm_private_endpoint" "tooling_open_lineage_storage" {
   private_dns_zone_group {
     name = "storageOpenlineagePrivateDnsZone"
     private_dns_zone_ids = [
-      local.tooling_storage_dns_zone_ids["blob"],
-      local.tooling_storage_dns_zone_ids["file"],
-      local.tooling_storage_dns_zone_ids["queue"],
-      local.tooling_storage_dns_zone_ids["table"],
-      local.tooling_storage_dns_zone_ids["web"]
+      local.tooling_storage_dns_zone_ids[each.key]
     ]
   }
 
@@ -143,7 +139,7 @@ resource "azurerm_private_endpoint" "tooling_open_lineage_storage" {
     name                           = "storageOpenLineagePrivateServiceConnection"
     is_manual_connection           = false
     private_connection_resource_id = module.storage_account_openlineage[0].storage_id
-    subresource_names              = ["blob", "file", "queue", "table", "web"]
+    subresource_names              = [each.key]
   }
 
   tags = local.tags
