@@ -123,7 +123,7 @@ resource "azurerm_role_assignment" "open_lineage_function_app_contributors" {
 resource "azurerm_private_endpoint" "tooling_open_lineage_storage" {
   for_each = toset(var.open_lineage_enabled ? ["blob", "file", "queue", "table", "web"] : [])
 
-  name                = "pins-pe-st-open-lineage-tooling-${local.resource_suffix}"
+  name                = "pins-pe-st-open-lineage-${each.key}-tooling-${local.resource_suffix}"
   resource_group_name = "pins-rg-network-odw-${var.environment}-uks"
   location            = module.azure_region.location_cli
   subnet_id           = module.synapse_network.vnet_subnets["ComputeSubnet"]
