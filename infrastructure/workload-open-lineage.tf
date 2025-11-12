@@ -136,12 +136,23 @@ resource "azurerm_role_assignment" "open_lineage_function_app_contributors" {
   principal_id         = each.value[1]
 }
 
-#resource "azurerm_role_assignment" "open_lineage_function_app_storage_contributors" {
-#  for_each             = azurerm_linux_function_app.open_lineage_function_app
-#  scope                = module.storage_account_openlineage[0].storage_id
-#  role_definition_name = "Storage Blob Data Contributor"
-#  principal_id         = each.value.identity[0].principal_id
-#}
+resource "azurerm_role_assignment" "open_lineage_function_app_website_contributors" {
+  for_each = {
+    # A map of function_app => user object id
+    for val in setproduct(local.open_lineage_function_app_names, var.odw_contributors) :
+    "${val[0]}-${val[1]}" => val
+  }
+  scope                = azurerm_linux_function_app.open_lineage_function_app[each.value[0]].id
+  role_definition_name = "Website contributor"
+  principal_id         = each.value[1]
+}
+
+resource "azurerm_role_assignment" "open_lineage_function_app_storage_contributors" {
+  for_each             = azurerm_linux_function_app.open_lineage_function_app
+  scope                = module.storage_account_openlineage[0].storage_id
+  role_definition_name = "Storage Blob Data Contributor"
+  principal_id         = each.value.identity[0].principal_id
+}
 
 
 
