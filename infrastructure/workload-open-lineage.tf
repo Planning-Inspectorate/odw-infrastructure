@@ -131,6 +131,14 @@ resource "azurerm_role_assignment" "open_lineage_function_app_contributors" {
   principal_id         = each.value[1]
 }
 
+resource "azurerm_role_assignment" "open_lineage_function_app_storage_contributors" {
+  for_each             = azurerm_linux_function_app.open_lineage_function_app
+  scope                = module.storage_account_openlineage[0].storage_id
+  role_definition_name = "Storage Blob Data Contributor"
+  principal_id         = each.value.identity[0].principal_id
+}
+
+
 
 # Private endpoints
 resource "azurerm_private_endpoint" "tooling_open_lineage_storage" {
