@@ -71,13 +71,25 @@ resource "azurerm_linux_function_app" "open_lineage_function_app" {
   storage_account_access_key = module.storage_account_openlineage[0].primary_access_key
   service_plan_id            = module.open_lineage_service_plan[0].id
   https_only                 = true
-  zip_deploy_file            = "${path.module}/configuration/open-lineage/${each.key}5.zip"
+  zip_deploy_file            = "${path.module}/configuration/open-lineage/${each.key}.zip"
   tags                       = local.tags
   app_settings = {
     "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING" = "DefaultEndpointsProtocol=https;AccountName=${module.storage_account_openlineage[0].storage_name};AccountKey=${module.storage_account_openlineage[0].primary_access_key};EndpointSuffix=core.windows.net"
     "WEBSITE_CONTENTSHARE"                     = "pins-${each.key}-odw-${var.environment}-uks",
-    "SCM_DO_BUILD_DURING_DEPLOYMENT"           = "true"
-    "WEBSITE_RUN_FROM_PACKAGE"                 = 1
+    "SCM_DO_BUILD_DURING_DEPLOYMENT"           = "true",
+    "WEBSITE_RUN_FROM_PACKAGE"                 = 1,
+    "STORAGE_CONNECTION"                       = "DefaultEndpointsProtocol=https;AccountName=${module.storage_account_openlineage[0].storage_name};AccountKey=${module.storage_account_openlineage[0].primary_access_key};EndpointSuffix=core.windows.net",
+    "EVENTS_CONTAINER"                         = "openlineage-events",
+    "DEADLETTER_CONTAINER"                     = "openlineage-deadletter",
+    "TABLE_NAME"                               = "LineageJobs",
+    "ALLOWED_EVENT_TYPES"                      = "COMPLETE",
+    "ALLOW_SQL_ONLY"                           = "true",
+    "MAX_CONTENT_LENGTH"                       = 8388608,
+    "WRITE_TABLE"                              = "true",
+    "PURVIEW_NAME"                             = "",
+    "TENANT_ID"                                = "",
+    "CLIENT_ID"                                = "",
+    "CLIENT_SECRET"                            = ""
   }
 
   site_config {
@@ -87,12 +99,11 @@ resource "azurerm_linux_function_app" "open_lineage_function_app" {
     application_stack {
       python_version = "3.11"
     }
-    cors {
-      allowed_origins = [
-        "https://portal.azure.com",
-      ]
-      support_credentials = true
-    }
+  }
+
+  identity {
+    type         = "SystemAssigned"
+    identity_ids = null
   }
 }
 
@@ -125,35 +136,20 @@ resource "azurerm_role_assignment" "open_lineage_function_app_contributors" {
   principal_id         = each.value[1]
 }
 
-
-/*
-# Private endpoints
-resource "azurerm_private_endpoint" "tooling_open_lineage_storage" {
-  count = var.open_lineage_enabled ? 1 : 0
-
-  name                = "pins-pe-st-open-lineage-tooling-${local.resource_suffix}"
-  resource_group_name = "pins-rg-network-odw-${var.environment}-uks"
-  location            = var.location
-  subnet_id           = var.vnet_subnet_ids["FunctionAppSubnet"]
-
-  private_dns_zone_group {
-    name = "storageOpenlineagePrivateDnsZone"
-    private_dns_zone_ids = [
-      var.tooling_config.storage_private_dns_zone_id["blob"],
-      var.tooling_config.storage_private_dns_zone_id["file"],
-      var.tooling_config.storage_private_dns_zone_id["queue"],
-      var.tooling_config.storage_private_dns_zone_id["table"],
-      var.tooling_config.storage_private_dns_zone_id["web"]
-    ]
+resource "azurerm_role_assignment" "open_lineage_function_app_website_contributors" {
+  for_each = {
+    # A map of function_app => user object id
+    for val in setproduct(local.open_lineage_function_app_names, var.odw_contributors) :
+    "${val[0]}-${val[1]}" => val
   }
-
-  private_service_connection {
-    name                           = "storageOpenLineagePrivateServiceConnection"
-    is_manual_connection           = false
-    private_connection_resource_id = module.storage_account_openlineage[0].storage_account_idid
-    subresource_names              = ["blob", "file", "queue", "table", "web"]
-  }
-
-  tags = local.tags
+  scope                = azurerm_linux_function_app.open_lineage_function_app[each.value[0]].id
+  role_definition_name = "Website contributor"
+  principal_id         = each.value[1]
 }
-*/
+
+resource "azurerm_role_assignment" "open_lineage_function_app_storage_contributors" {
+  for_each             = azurerm_linux_function_app.open_lineage_function_app
+  scope                = module.storage_account_openlineage[0].storage_id
+  role_definition_name = "Storage Blob Data Contributor"
+  principal_id         = each.value.identity[0].principal_id
+}
