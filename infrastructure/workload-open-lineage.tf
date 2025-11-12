@@ -99,6 +99,10 @@ resource "azurerm_linux_function_app" "open_lineage_function_app" {
     application_stack {
       python_version = "3.11"
     }
+    cors {
+      allowed_origins     = ["https://portal.azure.com"]
+      support_credentials = false
+    }
   }
 
   identity {
