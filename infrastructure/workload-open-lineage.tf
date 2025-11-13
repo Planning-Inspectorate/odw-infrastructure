@@ -87,7 +87,7 @@ resource "azurerm_linux_function_app" "open_lineage_function_app" {
     "MAX_CONTENT_LENGTH"                       = 8388608,
     "WRITE_TABLE"                              = "true",
     "PURVIEW_NAME"                             = "",
-    "CLIENT_ID"                                = azurerm_linux_function_app.open_lineage_function_app.identity[0].principal_id
+    "CLIENT_ID"                                = azurerm_linux_function_app.open_lineage_function_app[each.key].identity[0].principal_id
   }
 
   site_config {
