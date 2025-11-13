@@ -86,10 +86,8 @@ resource "azurerm_linux_function_app" "open_lineage_function_app" {
     "ALLOW_SQL_ONLY"                           = "true",
     "MAX_CONTENT_LENGTH"                       = 8388608,
     "WRITE_TABLE"                              = "true",
-    "PURVIEW_NAME"                             = "",
-    "TENANT_ID"                                = "",
-    "CLIENT_ID"                                = "",
-    "CLIENT_SECRET"                            = ""
+    "PURVIEW_NAME"                             = "pins-pview",
+    "CLIENT_ID"                                = azurerm_linux_function_app.open_lineage_function_app.identity[0].principal_id
   }
 
   site_config {
