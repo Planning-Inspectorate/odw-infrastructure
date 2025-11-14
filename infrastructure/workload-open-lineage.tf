@@ -166,6 +166,7 @@ resource "azurerm_role_assignment" "open_lineage_function_app_storage_contributo
 
 
 # Private endpoints
+/*
 resource "azurerm_private_endpoint" "open_lineage_storage" {
   for_each = var.open_lineage_enabled ? {
     "blob" : azurerm_private_dns_zone.blob.id,
@@ -218,3 +219,4 @@ resource "azurerm_private_endpoint" "tooling_open_lineage_storage" {
 
   tags = local.tags
 }
+*/
