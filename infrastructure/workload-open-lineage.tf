@@ -156,12 +156,12 @@ resource "azurerm_role_assignment" "open_lineage_function_app_storage_contributo
 }
 
 # Note: Purview RBAC is managed within the Purview Portal, which is done manually
-resource "azurerm_role_assignment" "open_lineage_parser_function_app_purview_contributor" {
-  count                = var.open_lineage_enabled ? 1 : 0
-  scope                = var.purview_id
-  role_definition_name = "Contributor"
-  principal_id         = azurerm_linux_function_app.open_lineage_function_app["oljsonparser"].identity[0].principal_id
-}
+#resource "azurerm_role_assignment" "open_lineage_parser_function_app_purview_contributor" {
+#  count                = var.open_lineage_enabled ? 1 : 0
+#  scope                = var.purview_id
+#  role_definition_name = "Contributor"
+#  principal_id         = azurerm_linux_function_app.open_lineage_function_app["oljsonparser"].identity[0].principal_id
+#}
 
 
 
