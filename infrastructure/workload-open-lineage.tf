@@ -166,6 +166,34 @@ resource "azurerm_role_assignment" "open_lineage_function_app_storage_contributo
 
 
 # Private endpoints
+resource "azurerm_private_endpoint" "open_lineage_storage" {
+  for_each = var.open_lineage_enabled ? {
+    "blob" : azurerm_private_dns_zone.blob.id,
+    "table" : azurerm_private_dns_zone.table.id,
+  } : {}
+
+  name                = "pins-pe-st-open-lineage-${each.key}-${local.resource_suffix}"
+  resource_group_name = "pins-rg-network-odw-${var.environment}-uks"
+  location            = module.azure_region.location_cli
+  subnet_id           = module.synapse_network.vnet_subnets["ComputeSubnet"]
+
+  private_dns_zone_group {
+    name = "storageOpenlineagePrivateDnsZone"
+    private_dns_zone_ids = [
+      each.value
+    ]
+  }
+
+  private_service_connection {
+    name                           = "storageOpenLineagePrivateServiceConnection"
+    is_manual_connection           = false
+    private_connection_resource_id = module.storage_account_openlineage[0].storage_id
+    subresource_names              = [each.key]
+  }
+
+  tags = local.tags
+}
+
 resource "azurerm_private_endpoint" "tooling_open_lineage_storage" {
   for_each = toset(var.open_lineage_enabled ? ["blob", "file", "queue", "table", "web"] : [])
 
@@ -175,14 +203,14 @@ resource "azurerm_private_endpoint" "tooling_open_lineage_storage" {
   subnet_id           = module.synapse_network.vnet_subnets["ComputeSubnet"]
 
   private_dns_zone_group {
-    name = "storageOpenlineagePrivateDnsZone"
+    name = "storageToolingOpenlineagePrivateDnsZone"
     private_dns_zone_ids = [
       local.tooling_storage_dns_zone_ids[each.key]
     ]
   }
 
   private_service_connection {
-    name                           = "storageOpenLineagePrivateServiceConnection"
+    name                           = "storageToolingOpenLineagePrivateServiceConnection"
     is_manual_connection           = false
     private_connection_resource_id = module.storage_account_openlineage[0].storage_id
     subresource_names              = [each.key]
