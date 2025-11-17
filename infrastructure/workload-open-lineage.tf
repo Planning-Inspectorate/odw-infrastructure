@@ -93,6 +93,7 @@ resource "azurerm_linux_function_app" "open_lineage_function_app" {
     always_on                = true
     application_insights_key = azurerm_application_insights.open_lineage_insights[each.key].instrumentation_key
     http2_enabled            = true
+    vnet_route_all_enabled   = true
     application_stack {
       python_version = "3.11"
     }
