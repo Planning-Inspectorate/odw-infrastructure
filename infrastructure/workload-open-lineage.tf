@@ -88,6 +88,7 @@ resource "azurerm_linux_function_app" "open_lineage_function_app" {
     "PURVIEW_NAME"                             = "pins-pview",
     "WEBSITE_CONTENTOVERVNET"                  = 1
   }
+  virtual_network_subnet_id = module.synapse_network.vnet_subnets[local.compute_subnet_name]
 
   site_config {
     always_on                = true
