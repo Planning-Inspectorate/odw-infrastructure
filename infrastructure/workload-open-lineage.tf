@@ -86,7 +86,7 @@ resource "azurerm_linux_function_app" "open_lineage_function_app" {
     "MAX_CONTENT_LENGTH"                       = 8388608,
     "WRITE_TABLE"                              = "true",
     "PURVIEW_NAME"                             = "pins-pview",
-    "WEBSITE_CONTENTOVERVNET"                  = "true"
+    "WEBSITE_CONTENTOVERVNET"                  = 1
   }
 
   site_config {
