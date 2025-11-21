@@ -12,6 +12,15 @@ steps:
       if [[ "${{ lower(parameters.deploy) }}" == "true" ]]; then
         deployFlag="-d"
       fi
+      # Note: Ideally sdkman is pre-installed on the ADO VM. The ADO pipeline uses a different profile to the one used by
+      #       Packer, which means that sdkman can't be found when running this step, and makes this approach tricky.
+      #       Testing pre-installing is time consuming, and to save time sdkman has been installed directly in the step.
+      #       We should move the installation to tools.sh when we have time. (The installation of sdkman/gradle is < 10s)
+      curl -s "https://get.sdkman.io?ci=true" | bash
+      source "$HOME/.sdkman/bin/sdkman-init.sh"
+      sdk version
+      sdk install gradle 9.2.0
+      gradle --version
       export PATH="$PATH:/home/AzDevOps/.local/bin/"
       sudo apt-get install unixodbc-dev
       sudo curl -fsSL https://aka.ms/install-azd.sh | bash
@@ -20,6 +29,6 @@ steps:
       echo $SYNAPSE_ENDPOINT 
       echo $CREDENTIAL_NAME
       export PYTHONPATH="${PYTHONPATH}:/./"
-      python3 pipelines/scripts/deploy_packages.py -e ${{ parameters.env }} $deployFlag
+      python3 $(Build.SourcesDirectory)/pipelines/scripts/deploy_packages.py -e ${{ parameters.env }} $deployFlag
     displayName: 'Deploy Packages To Synapse'
     name: DeploySynapsePackages
