@@ -212,6 +212,12 @@ service_bus_topics_and_subscriptions = [
       "odw-nsip-s51-advice-sub" = {},
     }
   },
+  {
+    name = "pins-inspector"
+    subscriptions = {
+      "pins-inspector-odw-sub" = {}
+    }
+  }
 ]
 
 spark_pool_enabled         = true

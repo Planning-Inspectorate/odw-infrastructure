@@ -240,6 +240,12 @@ service_bus_topics_and_subscriptions = [
     subscriptions = {
       "odw-nsip-s51-advice-sub" = {},
     }
+  },
+  {
+    name = "pins-inspector"
+    subscriptions = {
+      "pins-inspector-odw-sub" = {}
+    }
   }
 ]
 
