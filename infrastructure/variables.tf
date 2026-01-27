@@ -169,6 +169,14 @@ variable "horizon_integration_config" {
   })
 }
 
+#Evangelos new variables Horizon migration
+variable "horizon_migration" {
+  description = "Configuration for Horizon data migration"
+  type = object({
+    rg           = string
+    service_name = string
+  })
+}
 variable "key_vault_role_assignments" {
   default     = {}
   description = "An object mapping RBAC roles to principal IDs for Key Vault"
