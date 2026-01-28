@@ -176,7 +176,9 @@ variable "horizon_migration" {
     rg           = string
     service_name = string
   })
+  default = null
 }
+
 variable "key_vault_role_assignments" {
   default     = {}
   description = "An object mapping RBAC roles to principal IDs for Key Vault"
