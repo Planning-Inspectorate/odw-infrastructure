@@ -173,8 +173,9 @@ variable "horizon_integration_config" {
 variable "horizon_migration" {
   description = "Configuration for Horizon data migration"
   type = object({
-    rg           = string
-    service_name = string
+    rg             = string
+    service_name   = string
+    container_name = list(string)
   })
   default = null
 }

@@ -1,7 +1,7 @@
 #Evangelos - Added for Horizon Migration Function App Storage Account
 module "storage_account_horizon_migration" {
 
-  count = var.horizon_migration ? 1 : 0
+  count = var.horizon_migration != null ? 1 : 0
 
   source = "./modules/storage-account"
 
@@ -10,7 +10,7 @@ module "storage_account_horizon_migration" {
   environment         = var.environment
   location            = module.azure_region.location_cli
   tags                = local.tags
-
+  container_name      = var.horizon_migration.container_name
 }
 
 
