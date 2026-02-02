@@ -83,7 +83,7 @@ horizon_integration_config = {
 #Evagelos new horizon migration storage account
 horizon_migration = {
   rg             = "pins-rg-data-odw-prod-uks"
-  service_name   = "odwmpesc"
+  service_name   = "mpesc"
   container_name = ["mpesc"]
 }
 
