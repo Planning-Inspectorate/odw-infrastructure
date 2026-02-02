@@ -62,6 +62,7 @@ module "storage_account" {
   ]
 }
 
+
 module "storage_account_failover" {
   for_each = {
     for function_app in var.function_app : function_app.name => function_app if var.function_app_enabled && var.failover_deployment == true
