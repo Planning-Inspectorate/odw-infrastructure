@@ -57,7 +57,7 @@ variable "daily_log_cap" {
 }
 
 variable "log_retention_days" {
-  default     = 30
+  default     = 1
   description = "The number of days to retain logs in the Log Analytics Workspace"
   type        = number
 }
