@@ -69,6 +69,8 @@ resource "azurerm_synapse_spark_pool" "synapse34" {
   }
 
   tags = local.tags
+}
+
 
 resource "azurerm_synapse_spark_pool" "synapse35" {
   #checkov:skip=CKV_AZURE_242: Ensure isolated compute is enabled for Synapse Spark pools (checkov v3)
