@@ -47,7 +47,8 @@ def approve_private_endpoints(env: str):
         sql_server_private_endpoint_manager = SSQLServerPrivateEndpointManager()
         sql_server_private_endpoint_manager.approve_all(
             f"pins-rg-sqlserver-odw-{env}-uks",
-            f"sql-odw-{env}-uks"
+            f"sql-odw-{env}-uks",
+            ENDPOINTS_TO_EXCLUDE
         )
     except Exception as e:
         logging.info(f"Failed to approve SQL Server private endpoint with the following errr: {e}")
