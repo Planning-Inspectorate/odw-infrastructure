@@ -49,7 +49,8 @@ def approve_private_endpoints(env: str):
             f"pins-rg-sqlserver-odw-{env}-uks",
             f"sql-odw-{env}-uks"
         )
-    except Exception:
+    except Exception as e:
+        logging.info(f"Failed to approve SQL Server private endpoint with the following errr: {e}")
         pass
     # Approve pending Synapse MPEs pointing to the Appeals Back Office service bus
     # Switch to the appeals bo subscription
