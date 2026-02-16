@@ -7,7 +7,6 @@ from odw_common.util.util import Util
 import argparse
 import logging
 import os
-import json
 
 
 logging.basicConfig(level=logging.INFO)
@@ -24,12 +23,6 @@ def approve_private_endpoints(env: str):
     """
     initial_subscription = Util.get_subscription()
     synapse_private_endpoint_manager = SynapsePrivateEndpointManager()
-    all_synapse_pes = synapse_private_endpoint_manager.get_all(
-        f"pins-rg-data-odw-{env}-uks",
-        f"pins-synw-odw-{env}-uks",
-    )
-    print("all synapse private endpoints")
-    print(json.dumps(all_synapse_pes, indent=4))
     synapse_private_endpoint_manager.approve_all(
         f"pins-rg-data-odw-{env}-uks",
         f"pins-synw-odw-{env}-uks",
@@ -55,6 +48,17 @@ def approve_private_endpoints(env: str):
         sql_server_private_endpoint_manager.approve_all(
             f"pins-rg-sqlserver-odw-{env}-uks",
             f"sql-odw-{env}-uks",
+            ENDPOINTS_TO_EXCLUDE
+        )
+    except Exception as e:
+        logging.info(f"Failed to approve SQL Server private endpoint with the following errr: {e}")
+        pass
+    # The sql server exists in dev but may roll out to other envs, so just attempt to approve it if available
+    try:
+        sql_server_private_endpoint_manager = SSQLServerPrivateEndpointManager()
+        sql_server_private_endpoint_manager.approve_all(
+            f"pins-rg-peas-{env}",
+            f"pins-sql-peas-primary-{env}",
             ENDPOINTS_TO_EXCLUDE
         )
     except Exception as e:
