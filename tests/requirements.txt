@@ -7,6 +7,7 @@ azure-storage-file-datalake
 azure-synapse
 azure-synapse-artifacts >0.19.0
 azure-mgmt-resource
+azure-servicebus==7.14.3
 pyodbc
 pandas
 pyarrow
