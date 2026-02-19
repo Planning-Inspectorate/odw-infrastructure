@@ -11,7 +11,7 @@ resource "azurerm_servicebus_namespace" "synapse" {
   premium_messaging_partitions  = var.service_bus_premium_enabled ? 1 : null
   minimum_tls_version           = "1.2"
   local_auth_enabled            = true
-  public_network_access_enabled = var.service_bus_premium_enabled
+  public_network_access_enabled = !var.service_bus_premium_enabled
 
   identity {
     type = "SystemAssigned"
