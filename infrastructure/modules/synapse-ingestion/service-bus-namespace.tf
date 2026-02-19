@@ -3,14 +3,14 @@ resource "azurerm_servicebus_namespace" "synapse" {
   #checkov:skip=CKV_AZURE_201: Microsoft managed keys are acceptable
   #checkov:skip=CKV_AZURE_203: Azure Service Bus Local Authentication should be enabled
   #checkov:skip=CKV_AZURE_204: Public access should be enabled
-  name                         = "pins-sb-${local.resource_suffix}-${random_string.unique_id.id}"
-  location                     = var.location
-  resource_group_name          = var.resource_group_name
-  sku                          = var.service_bus_premium_enabled ? "Premium" : "Standard"
-  capacity                     = var.service_bus_premium_enabled ? 1 : 0
-  premium_messaging_partitions = var.service_bus_premium_enabled ? 1 : null
-  minimum_tls_version          = "1.2"
-  local_auth_enabled           = true
+  name                          = "pins-sb-${local.resource_suffix}-${random_string.unique_id.id}"
+  location                      = var.location
+  resource_group_name           = var.resource_group_name
+  sku                           = var.service_bus_premium_enabled ? "Premium" : "Standard"
+  capacity                      = var.service_bus_premium_enabled ? 1 : 0
+  premium_messaging_partitions  = var.service_bus_premium_enabled ? 1 : null
+  minimum_tls_version           = "1.2"
+  local_auth_enabled            = true
   public_network_access_enabled = var.service_bus_premium_enabled
 
   identity {
