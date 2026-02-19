@@ -224,3 +224,20 @@ data "azurerm_private_dns_zone" "tooling_storage" {
   provider = azurerm.tooling
 }
 
+
+data "azurerm_private_dns_zone" "tooling_servicebus" {
+  name                = "privatelink.servicebus.windows.net"
+  resource_group_name = azurerm_resource_group.network_global.name
+
+  tags = local.tags
+}
+
+
+resource "azurerm_private_dns_zone_virtual_network_link" "tooling_servicebus" {
+  name                  = "servicebus-${module.synapse_network.vnet_name}"
+  resource_group_name   = azurerm_resource_group.network_global.name
+  private_dns_zone_name = data.azurerm_private_dns_zone.tooling_servicebus.name
+  virtual_network_id    = module.synapse_network.vnet_id
+
+  tags = local.tags
+}
