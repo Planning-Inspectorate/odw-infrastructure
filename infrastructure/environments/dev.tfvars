@@ -195,7 +195,7 @@ service_bus_role_assignments = {
     groups = ["pins-odw-dev-administrators"]
   }
   "Azure Service Bus Data Reader" = {
-    groups = ["875e931a-ee45-425e-acde-1ec24a8a290d"] # "Azure DevOps Pipelines - ODW - Infrastructure DEV"
+    service_principals = ["875e931a-ee45-425e-acde-1ec24a8a290d"] # "Azure DevOps Pipelines - ODW - Infrastructure DEV"
   }
 }
 
