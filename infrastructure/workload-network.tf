@@ -227,7 +227,7 @@ data "azurerm_private_dns_zone" "tooling_storage" {
 
 data "azurerm_private_dns_zone" "tooling_servicebus" {
   name                = "privatelink.servicebus.windows.net"
-  resource_group_name = azurerm_resource_group.network_global.name
+  resource_group_name = var.tooling_config.network_rg
 
   provider = azurerm.tooling
 }
