@@ -45,3 +45,9 @@ resource "azurerm_role_assignment" "service_bus_subscription_role_assignments" {
   role_definition_name = each.value.role_definition_name
   principal_id         = each.value.principal_id
 }
+
+resource "azurerm_role_assignment" "synapse_pri_service_bus_rx" {
+  scope                = azurerm_servicebus_namespace.synapse.id
+  role_definition_name = "Azure Service Bus Data Receiver"
+  principal_id         = data.azurerm_client_config.current.object_id
+}

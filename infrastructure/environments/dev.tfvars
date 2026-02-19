@@ -194,9 +194,6 @@ service_bus_role_assignments = {
   "Azure Service Bus Data Owner" = {
     groups = ["pins-odw-dev-administrators"]
   }
-  "Azure Service Bus Data Receiver" = {
-    service_principals = ["Azure DevOps Pipelines - ODW - Infrastructure DEV"]
-  }
 }
 
 service_bus_topics_and_subscriptions = [
