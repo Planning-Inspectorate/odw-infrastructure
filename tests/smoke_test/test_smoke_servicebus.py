@@ -74,7 +74,12 @@ def generate_test_cases() -> List[Tuple[str, str, str]]:
         )
         test_case = generate_test_case_tuple(mgmt_client, namespace, resource_group)
         test_cases.append(test_case)
-    return test_cases
+    mising_test_cases = [
+        (x, ValueError(), ValueError())
+        for x in RELEVANT_SERVICE_BUSES
+        if not any(x in y for y in service_bus_namespaces)
+    ]
+    return test_cases + mising_test_cases
 
 
 class TestSmokeServiceBus(TestCase):
@@ -141,5 +146,11 @@ class TestSmokeServiceBus(TestCase):
         if not (topic_name or subscription_name):
             assert False, (
                 f"No topics and subscriptions could be used to test connectivity for service bus '{service_bus_name}'"
+            )
+        if isinstance(topic_name, ValueError) or isinstance(
+            subscription_name, ValueError
+        ):
+            assert False, (
+                f"No servce bus could be found with name containing '{service_bus_name}', but this was expected to be found"
             )
         self.check_service_bus(service_bus_name, topic_name, subscription_name)
