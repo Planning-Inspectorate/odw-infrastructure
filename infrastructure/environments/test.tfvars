@@ -163,60 +163,8 @@ service_bus_role_assignments = {
 
 service_bus_topics_and_subscriptions = [
   {
-    name = "employee"
-    subscriptions = {
-      "employee"        = {},
-      "employee-verify" = {}
-    }
-  },
-  {
-    name = "zendesk"
-    subscriptions = {
-      "zendesk"        = {},
-      "zendesk-verify" = {}
-    }
-  },
-  {
-    name = "service-user"
-    subscriptions = {
-      "odw-service-user-sub" = {}
-    }
-  },
-  {
-    name = "nsip-project"
-    subscriptions = {
-      "odw-nsip-project-sub" = {}
-    }
-  },
-  {
-    name = "nsip-exam-timetable"
-    subscriptions = {
-      "odw-nsip-exam-timetable-sub" = {}
-    }
-  },
-  {
-    name = "nsip-document"
-    subscriptions = {
-      "odw-nsip-document-sub" = {}
-    }
-  },
-  {
-    name = "nsip-representation"
-    subscriptions = {
-      "odw-nsip-representation-sub" = {}
-    }
-  },
-  {
-    name = "nsip-s51-advice"
-    subscriptions = {
-      "odw-nsip-s51-advice-sub" = {},
-    }
-  },
-  {
     name = "pins-inspector"
-    subscriptions = {
-      "pins-inspector-odw-sub" = {}
-    }
+    subscriptions = {}
   }
 ]
 
