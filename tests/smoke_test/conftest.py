@@ -1,6 +1,9 @@
 from tests.util.conftest_util import ConftestUtil
+from dotenv import load_dotenv
 import pytest
 
+
+load_dotenv()
 
 def pytest_addoption(parser):
     # input location at landing zone
