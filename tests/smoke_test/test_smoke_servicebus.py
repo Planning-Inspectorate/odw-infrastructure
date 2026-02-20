@@ -10,7 +10,12 @@ import pytest
 from typing import List, Tuple
 
 
-RELEVANT_SERVICE_BUSES = {"pins-sb-appeals-bo-", "pins-sb-odw-"}
+RELEVANT_SERVICE_BUS_MAP = {
+    "BUILD": {"pins-sb-odw-"},
+    "DEV": {"pins-sb-appeals-bo-", "pins-sb-odw-"},
+    "TEST": {"pins-sb-appeals-bo-", "pins-sb-odw-"},
+    "PROD": {"pins-sb-appeals-bo-", "pins-sb-odw-"},
+}
 
 
 def generate_test_case_tuple(
@@ -43,6 +48,14 @@ def generate_test_cases() -> List[Tuple[str, str, str]]:
     Generate a test case for each service bus that the ODW needs to connect to.
     Each test case has the form <service_bus_name, topic_name, subscription_name>.
     """
+    env = os.environ.get("ENV", None)
+    if not env:
+        raise RuntimeError("Expected an 'ENV' environment variable is defined")
+    relevant_service_buses = RELEVANT_SERVICE_BUS_MAP.get(env.upper(), None)
+    if relevant_service_buses is None:
+        raise RuntimeError(
+            f"No relevant service buses defined for environment '{env}'. Please review this test"
+        )
     odw_subscription_id = os.environ.get("SUBSCRIPTION_ID", None)
     if not odw_subscription_id:
         raise RuntimeError("No 'SUBSCRIPTION_ID' environment variable is defined")
@@ -60,7 +73,7 @@ def generate_test_cases() -> List[Tuple[str, str, str]]:
     ]
     # Ensure only service buses that match RELEVANT_SERVICE_BUSES are included
     service_bus_namespaces = [
-        x for x in service_bus_namespaces if any(y in x for y in RELEVANT_SERVICE_BUSES)
+        x for x in service_bus_namespaces if any(y in x for y in relevant_service_buses)
     ]
     test_cases = []
     for service_bus_id in service_bus_namespaces:
@@ -76,7 +89,7 @@ def generate_test_cases() -> List[Tuple[str, str, str]]:
         test_cases.append(test_case)
     mising_test_cases = [
         (x, ValueError(), ValueError())
-        for x in RELEVANT_SERVICE_BUSES
+        for x in relevant_service_buses
         if not any(x in y for y in service_bus_namespaces)
     ]
     return test_cases + mising_test_cases
