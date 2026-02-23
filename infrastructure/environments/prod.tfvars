@@ -168,7 +168,7 @@ service_bus_role_assignments = {
 
 service_bus_topics_and_subscriptions = [
   {
-    name = "pins-inspector"
+    name          = "pins-inspector"
     subscriptions = {}
   }
 ]
