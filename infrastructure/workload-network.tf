@@ -72,6 +72,13 @@ resource "azurerm_private_dns_zone" "synapse" {
   tags = local.tags
 }
 
+resource "azurerm_private_dns_zone" "servicebus" {
+  name                = "privatelink.servicebus.windows.net"
+  resource_group_name = azurerm_resource_group.network_global.name
+
+  tags = local.tags
+}
+
 resource "azurerm_private_dns_zone_virtual_network_link" "data_lake" {
   name                  = "dfs-${module.synapse_network.vnet_name}"
   resource_group_name   = azurerm_resource_group.network_global.name
