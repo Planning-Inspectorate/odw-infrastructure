@@ -12,3 +12,5 @@ data "azuread_service_principal" "service_principals" {
   count        = length(local.service_principal_names)
   display_name = local.service_principal_names[count.index]
 }
+
+data "azurerm_client_config" "current" {}
