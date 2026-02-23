@@ -133,6 +133,15 @@ resource "azurerm_private_dns_zone_virtual_network_link" "synapse_failover" {
   tags = local.tags
 }
 
+resource "azurerm_private_dns_zone_virtual_network_link" "servicebus" {
+  name                  = "sb-${module.synapse_network.vnet_name}"
+  resource_group_name   = azurerm_resource_group.network_global.name
+  private_dns_zone_name = azurerm_private_dns_zone.servicebus.name
+  virtual_network_id    = module.synapse_network.vnet_id
+
+  tags = local.tags
+}
+
 resource "azurerm_virtual_network_peering" "pri_sec" {
   name                      = "peer-${module.synapse_network.vnet_name}-${module.synapse_network_failover.vnet_name}"
   resource_group_name       = azurerm_resource_group.network.name
