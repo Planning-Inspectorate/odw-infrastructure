@@ -31,6 +31,7 @@ module "synapse_network" {
   network_watcher_enabled = var.network_watcher_enabled
   vnet_base_cidr_block    = var.vnet_base_cidr_block
   vnet_subnets            = var.vnet_subnets
+  tooling_config          = var.tooling_config
 
   tags = local.tags
 }
@@ -47,6 +48,7 @@ module "synapse_network_failover" {
   network_watcher_enabled = var.network_watcher_enabled
   vnet_base_cidr_block    = var.vnet_base_cidr_block_failover
   vnet_subnets            = var.vnet_subnets
+  tooling_config          = var.tooling_config
 
   tags = local.tags
 }

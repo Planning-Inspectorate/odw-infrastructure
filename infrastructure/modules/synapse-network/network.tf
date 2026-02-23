@@ -12,6 +12,7 @@ resource "azurerm_virtual_network" "synapse" {
   location            = var.location
   resource_group_name = var.resource_group_name
   address_space       = [var.vnet_base_cidr_block]
+  dns_servers         = [data.azurerm_private_dns_resolver_inbound_endpoint.ip_configurations.private_ip_address]
 
   tags = local.tags
 }

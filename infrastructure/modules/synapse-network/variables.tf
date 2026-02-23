@@ -104,3 +104,12 @@ variable "tags" {
   description = "A collection of tags to assign to taggable resources"
   type        = map(string)
 }
+
+variable "tooling_config" {
+  description = "The configuration for the Tooling subscription, for VNET links"
+  type = object({
+    network_rg      = string
+    network_name    = string
+    subscription_id = string
+  })
+}
