@@ -52,7 +52,7 @@ module "odt_backoffice_sb_failover" {
   service_name                                 = local.service_name
   odt_backoffice_sb_topic_subscriptions        = var.odt_backoffice_sb_topic_subscriptions
   odt_back_office_service_bus_id               = local.odt_back_office_service_bus_id
-  odt_back_office_private_endpoint_dns_zone_id = (var.environment != "dev" ? azurerm_private_dns_zone.servicebus.id : null)
+  odt_back_office_private_endpoint_dns_zone_id = (var.environment != "dev" ? azurerm_private_dns_zone.servicebus_failover.id : null)
   synapse_private_endpoint_subnet_name         = local.synapse_subnet_name
   synapse_private_endpoint_vnet_subnets        = module.synapse_network_failover.vnet_subnets
   synapse_workspace_failover_principal_id      = try(module.synapse_workspace_private_failover.synapse_workspace_principal_id, null)

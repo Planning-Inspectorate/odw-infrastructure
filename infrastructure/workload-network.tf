@@ -79,6 +79,13 @@ resource "azurerm_private_dns_zone" "servicebus" {
   tags = local.tags
 }
 
+resource "azurerm_private_dns_zone" "servicebus_failover" {
+  name                = "privatelink.servicebus.windows.net"
+  resource_group_name = azurerm_resource_group.network_failover.name
+
+  tags = local.tags
+}
+
 resource "azurerm_private_dns_zone_virtual_network_link" "data_lake" {
   name                  = "dfs-${module.synapse_network.vnet_name}"
   resource_group_name   = azurerm_resource_group.network_global.name
@@ -138,6 +145,15 @@ resource "azurerm_private_dns_zone_virtual_network_link" "servicebus" {
   resource_group_name   = azurerm_resource_group.network_global.name
   private_dns_zone_name = azurerm_private_dns_zone.servicebus.name
   virtual_network_id    = module.synapse_network.vnet_id
+
+  tags = local.tags
+}
+
+resource "azurerm_private_dns_zone_virtual_network_link" "servicebus_failover" {
+  name                  = "sb-${module.synapse_network.vnet_name}"
+  resource_group_name   = azurerm_resource_group.network_failover.name
+  private_dns_zone_name = azurerm_private_dns_zone.servicebus_failover.name
+  virtual_network_id    = module.synapse_network_failover.vnet_id
 
   tags = local.tags
 }
