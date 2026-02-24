@@ -248,7 +248,7 @@ resource "azurerm_application_insights" "function_app_insights" {
   location            = module.azure_region.location_cli
   resource_group_name = azurerm_resource_group.monitoring.name
   application_type    = "web"
-  retention_in_days   = 30
+  retention_in_days   = 1
   workspace_id        = module.synapse_monitoring.log_analytics_workspace_id
 
   tags = local.tags
