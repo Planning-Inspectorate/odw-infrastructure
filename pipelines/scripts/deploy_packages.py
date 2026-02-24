@@ -161,7 +161,7 @@ class ODWPackageDeployer():
             }
         if self._is_spark_pool_custom_libraries_modified(spark_pool):
             modified = True
-            packages = spark_pool["properties"]["customLibraries"]
+            packages = spark_pool["properties"].get("customLibraries", [])
             new_packages = self.get_spark_pool_packages_to_keep(packages) + self.get_spark_pool_packages_to_add(packages)
             spark_pool["properties"]["customLibraries"] = new_packages
         if modified:
