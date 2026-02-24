@@ -156,6 +156,12 @@ variable "new_spark_pool_version" {
   type        = string
 }
 
+variable "latest_spark_pool_version" {
+  default     = "3.2"
+  description = "The version of Spark running on the new Synapse-linked Spark pool"
+  type        = string
+}
+
 variable "sql_pool_collation" {
   default     = "SQL_Latin1_General_CP1_CI_AS"
   description = "The collation of the Synapse-linked dedicated SQL pool"
@@ -228,6 +234,7 @@ variable "tenant_id" {
   type        = string
 }
 
+
 variable "tooling_config" {
   description = "Config for the tooling subscription dns zones"
   type = object({
@@ -236,3 +243,4 @@ variable "tooling_config" {
     synapse_sql_private_dns_zone_id = string
   })
 }
+
