@@ -118,7 +118,7 @@ class TestSmokeServiceBus(TestCase):
                     topic_name, subscription
                 )
                 async with receiver:
-                    new_messages = await receiver.peek_messages(max_message_count=500)
+                    new_messages = await receiver.peek_messages(max_message_count=1)
                     all_messages = new_messages
                     while new_messages:
                         from_seq_num = new_messages[-1].sequence_number + 1
