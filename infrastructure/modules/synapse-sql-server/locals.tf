@@ -13,7 +13,7 @@ locals {
     }
   )
 
-    # ODW env -> which MPESC/PEAS SQL env to target
+  # ODW env -> which MPESC/PEAS SQL env to target
   mpesc_target_env = {
     dev  = "dev"
     prod = "training" # ODW prod connects to MPESC staging/training
@@ -25,5 +25,5 @@ locals {
   }
 
   mpesc_sql_target_resource_id = local.mpesc_sql_server_ids[local.mpesc_target_env[var.environment]]
-  
+
 }
