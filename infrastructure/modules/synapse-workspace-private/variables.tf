@@ -155,10 +155,9 @@ variable "new_spark_pool_version" {
   description = "The version of Spark running on the new Synapse-linked Spark pool"
   type        = string
 }
-
 variable "latest_spark_pool_version" {
   default     = "3.2"
-  description = "The version of Spark running on the new Synapse-linked Spark pool"
+  description = "The version of Spark running on the latest Synapse-linked Spark pool"
   type        = string
 }
 
