@@ -61,7 +61,7 @@ python3 -m pip install -U poetry==2.1.3
 # Terraform
 curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add -
 sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-sudo apt-get install -y terraform=1.14.0-1
+sudo apt-get install -y terraform=1.14.4-1
 
 # Checkov
 python3 -m pip install --force-reinstall packaging==21
