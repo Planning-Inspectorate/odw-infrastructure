@@ -34,7 +34,7 @@ resource "azurerm_synapse_spark_pool" "synapse_preview" {
 
 }
 
-resource "azurerm_synapse_spark_pool" "main" {
+resource "azurerm_synapse_spark_pool" "pinssynspodwmain" {
   #checkov:skip=CKV_AZURE_242: Ensure isolated compute is enabled for Synapse Spark pools (checkov v3)
   count = var.spark_pool_enabled ? 1 : 0
 
