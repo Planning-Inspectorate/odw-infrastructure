@@ -34,11 +34,11 @@ resource "azurerm_synapse_spark_pool" "synapse_preview" {
 
 }
 
-resource "azurerm_synapse_spark_pool" "synapse34" {
+resource "azurerm_synapse_spark_pool" "pinssynspodwmain" {
   #checkov:skip=CKV_AZURE_242: Ensure isolated compute is enabled for Synapse Spark pools (checkov v3)
   count = var.spark_pool_enabled ? 1 : 0
 
-  name                           = "pinssynspodw34"
+  name                           = "pinssynspodw35"
   synapse_workspace_id           = azurerm_synapse_workspace.synapse.id
   node_size_family               = "MemoryOptimized"
   node_size                      = var.spark_pool_node_size
@@ -70,3 +70,5 @@ resource "azurerm_synapse_spark_pool" "synapse34" {
 
   tags = local.tags
 }
+
+
