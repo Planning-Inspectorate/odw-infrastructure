@@ -100,3 +100,18 @@ moved {
   from = module.odt_appeals_back_office_sb[0].azurerm_role_assignment.topics_to_send["/subscriptions/d1d6c393-2fe3-40af-ac27-f5b6bad36735/resourceGroups/pins-rg-appeals-bo-prod/providers/Microsoft.ServiceBus/namespaces/pins-sb-appeals-bo-prod/topics/listed-building"]
   to   = module.odt_appeals_back_office_sb[0].azurerm_role_assignment.topics_to_send["0"]
 }
+
+
+resource "azurerm_role_assignment" "appeals_vnet_odw_ado_network_contributor" {
+  count                = var.environment != "build" ? 1 : 0
+  scope                = data.azurerm_virtual_network.appeals.id
+  role_definition_name = "Network Contributor"
+  principal_id         = data.azurerm_client_config.current.object_id
+}
+
+resource "azurerm_role_assignment" "backoffice_vnet_odw_ado_network_contributor" {
+  count                = var.environment != "build" ? 1 : 0
+  scope                = data.azurerm_virtual_network.backoffice.id
+  role_definition_name = "Network Contributor"
+  principal_id         = data.azurerm_client_config.current.object_id
+}
