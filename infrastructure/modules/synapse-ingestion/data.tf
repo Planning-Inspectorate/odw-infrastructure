@@ -1,3 +1,5 @@
+data "azurerm_client_config" "current" {}
+
 data "azuread_group" "groups" {
   count        = length(local.group_names)
   display_name = local.group_names[count.index]
