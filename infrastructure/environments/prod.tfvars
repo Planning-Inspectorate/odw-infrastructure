@@ -153,9 +153,10 @@ odt_backoffice_sb_topic_subscriptions = [
 
 ## Appeals Back Office
 odt_appeals_back_office = {
-  resource_group_name = "pins-rg-appeals-bo-prod"
-  service_bus_enabled = true
-  service_bus_name    = "pins-sb-appeals-bo-prod"
+  resource_group_name  = "pins-rg-appeals-bo-prod"
+  service_bus_enabled  = true
+  service_bus_name     = "pins-sb-appeals-bo-prod"
+  virtual_network_name = "pins-vnet-appeals-bo-prod"
 }
 
 service_bus_failover_enabled = false

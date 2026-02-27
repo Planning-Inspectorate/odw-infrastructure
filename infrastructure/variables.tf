@@ -284,9 +284,10 @@ variable "odt_backoffice_sb_topic_subscriptions" {
 variable "odt_appeals_back_office" {
   description = "Appeals Back Office configuration"
   type = object({
-    resource_group_name = string
-    service_bus_enabled = bool
-    service_bus_name    = string
+    resource_group_name  = string
+    service_bus_enabled  = bool
+    service_bus_name     = string
+    virtual_network_name = string
   })
 }
 

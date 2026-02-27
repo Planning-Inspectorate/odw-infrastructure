@@ -159,6 +159,18 @@ data "azurerm_virtual_network" "tooling" {
   provider = azurerm.tooling
 }
 
+data "azurerm_virtual_network" "appeals" {
+  count               = var.environment != "build"
+  name                = var.odt_appeals_back_office.virtual_network_name
+  resource_group_name = var.odt_appeals_back_office.resource_group_name
+}
+
+data "azurerm_virtual_network" "backoffice" {
+  count               = var.environment != "build"
+  name                = "pins-vnet-common-${var.environment}-ukw-001"
+  resource_group_name = "pins-rg-common-${var.environment}-ukw-001"
+}
+
 resource "azurerm_virtual_network_peering" "odw_to_tooling" {
   name                      = "pins-peer-${local.service_name}-to-tooling-${var.environment}"
   resource_group_name       = azurerm_resource_group.network.name
@@ -189,6 +201,38 @@ resource "azurerm_virtual_network_peering" "tooling_to_odw_failover" {
   remote_virtual_network_id = module.synapse_network_failover.vnet_id
 
   provider = azurerm.tooling
+}
+
+resource "azurerm_virtual_network_peering" "odw_to_appeals" {
+  count                     = var.environment != "build"
+  name                      = "pins-peer-${local.service_name}-to-appeals-${var.environment}"
+  resource_group_name       = azurerm_resource_group.network.name
+  virtual_network_name      = module.synapse_network.vnet_name
+  remote_virtual_network_id = data.azurerm_virtual_network.appeals.id
+}
+
+resource "azurerm_virtual_network_peering" "appeals_to_odw" {
+  count                     = var.environment != "build"
+  name                      = "pins-peer-appeals-to-${local.service_name}-${var.environment}"
+  resource_group_name       = var.odt_appeals_back_office.resource_group_name
+  virtual_network_name      = data.azurerm_virtual_network.appeals.name
+  remote_virtual_network_id = module.synapse_network.vnet_id
+}
+
+resource "azurerm_virtual_network_peering" "odw_to_backoffice" {
+  count                     = var.environment != "build"
+  name                      = "pins-peer-${local.service_name}-backoffice-${var.environment}"
+  resource_group_name       = azurerm_resource_group.network.name
+  virtual_network_name      = module.synapse_network.vnet_name
+  remote_virtual_network_id = data.azurerm_virtual_network.backoffice.id
+}
+
+resource "azurerm_virtual_network_peering" "backoffice_to_odw" {
+  count                     = var.environment != "build"
+  name                      = "pins-peer-backoffice-to-${local.service_name}-${var.environment}"
+  resource_group_name       = "pins-rg-common-${var.environment}-ukw-001"
+  virtual_network_name      = data.azurerm_virtual_network.backoffice.name
+  remote_virtual_network_id = module.synapse_network.vnet_id
 }
 
 # network links to tooling
