@@ -107,6 +107,7 @@ resource "azurerm_role_assignment" "appeals_vnet_odw_ado_network_contributor" {
   scope                = data.azurerm_virtual_network.appeals.id
   role_definition_name = "Network Contributor"
   principal_id         = data.azurerm_client_config.current.object_id
+  provider             = azurerm.odt
 }
 
 resource "azurerm_role_assignment" "backoffice_vnet_odw_ado_network_contributor" {
@@ -114,4 +115,5 @@ resource "azurerm_role_assignment" "backoffice_vnet_odw_ado_network_contributor"
   scope                = data.azurerm_virtual_network.backoffice.id
   role_definition_name = "Network Contributor"
   principal_id         = data.azurerm_client_config.current.object_id
+  provider             = azurerm.odt
 }
