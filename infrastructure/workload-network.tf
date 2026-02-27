@@ -208,14 +208,14 @@ resource "azurerm_virtual_network_peering" "odw_to_appeals" {
   name                      = "pins-peer-${local.service_name}-to-appeals-${var.environment}"
   resource_group_name       = azurerm_resource_group.network.name
   virtual_network_name      = module.synapse_network.vnet_name
-  remote_virtual_network_id = data.azurerm_virtual_network.appeals.id
+  remote_virtual_network_id = data.azurerm_virtual_network.appeals[0].id
 }
 
 resource "azurerm_virtual_network_peering" "appeals_to_odw" {
   count                     = var.environment != "build" ? 1 : 0
   name                      = "pins-peer-appeals-to-${local.service_name}-${var.environment}"
   resource_group_name       = var.odt_appeals_back_office.resource_group_name
-  virtual_network_name      = data.azurerm_virtual_network.appeals.name
+  virtual_network_name      = data.azurerm_virtual_network.appeals[0].name
   remote_virtual_network_id = module.synapse_network.vnet_id
 }
 
@@ -224,14 +224,14 @@ resource "azurerm_virtual_network_peering" "odw_to_backoffice" {
   name                      = "pins-peer-${local.service_name}-backoffice-${var.environment}"
   resource_group_name       = azurerm_resource_group.network.name
   virtual_network_name      = module.synapse_network.vnet_name
-  remote_virtual_network_id = data.azurerm_virtual_network.backoffice.id
+  remote_virtual_network_id = data.azurerm_virtual_network.backoffice[0].id
 }
 
 resource "azurerm_virtual_network_peering" "backoffice_to_odw" {
   count                     = var.environment != "build" ? 1 : 0
   name                      = "pins-peer-backoffice-to-${local.service_name}-${var.environment}"
   resource_group_name       = "pins-rg-common-${var.environment}-ukw-001"
-  virtual_network_name      = data.azurerm_virtual_network.backoffice.name
+  virtual_network_name      = data.azurerm_virtual_network.backoffice[0].name
   remote_virtual_network_id = module.synapse_network.vnet_id
 }
 
