@@ -104,7 +104,7 @@ moved {
 
 resource "azurerm_role_assignment" "appeals_vnet_odw_ado_network_contributor" {
   count                = var.environment != "build" ? 1 : 0
-  scope                = data.azurerm_virtual_network.appeals.id
+  scope                = data.azurerm_virtual_network.appeals[0].id
   role_definition_name = "Network Contributor"
   principal_id         = data.azurerm_client_config.current.object_id
   provider             = azurerm.odt
@@ -112,7 +112,7 @@ resource "azurerm_role_assignment" "appeals_vnet_odw_ado_network_contributor" {
 
 resource "azurerm_role_assignment" "backoffice_vnet_odw_ado_network_contributor" {
   count                = var.environment != "build" ? 1 : 0
-  scope                = data.azurerm_virtual_network.backoffice.id
+  scope                = data.azurerm_virtual_network.backoffice[0].id
   role_definition_name = "Network Contributor"
   principal_id         = data.azurerm_client_config.current.object_id
   provider             = azurerm.odt
