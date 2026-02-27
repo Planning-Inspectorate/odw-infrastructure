@@ -163,12 +163,14 @@ data "azurerm_virtual_network" "appeals" {
   count               = var.environment != "build" ? 1 : 0
   name                = var.odt_appeals_back_office.virtual_network_name
   resource_group_name = var.odt_appeals_back_office.resource_group_name
+  provider            = azurerm.odt
 }
 
 data "azurerm_virtual_network" "backoffice" {
   count               = var.environment != "build" ? 1 : 0
   name                = "pins-vnet-common-${var.environment}-ukw-001"
   resource_group_name = "pins-rg-common-${var.environment}-ukw-001"
+  provider            = azurerm.odt
 }
 
 resource "azurerm_virtual_network_peering" "odw_to_tooling" {
@@ -217,6 +219,7 @@ resource "azurerm_virtual_network_peering" "appeals_to_odw" {
   resource_group_name       = var.odt_appeals_back_office.resource_group_name
   virtual_network_name      = data.azurerm_virtual_network.appeals[0].name
   remote_virtual_network_id = module.synapse_network.vnet_id
+  provider                  = azurerm.odt
 }
 
 resource "azurerm_virtual_network_peering" "odw_to_backoffice" {
@@ -233,6 +236,7 @@ resource "azurerm_virtual_network_peering" "backoffice_to_odw" {
   resource_group_name       = "pins-rg-common-${var.environment}-ukw-001"
   virtual_network_name      = data.azurerm_virtual_network.backoffice[0].name
   remote_virtual_network_id = module.synapse_network.vnet_id
+  provider                  = azurerm.odt
 }
 
 # network links to tooling
