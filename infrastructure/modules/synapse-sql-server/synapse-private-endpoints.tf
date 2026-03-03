@@ -5,9 +5,12 @@ resource "azurerm_synapse_managed_private_endpoint" "data_lake" {
   subresource_name     = "sqlServer"
 }
 
+
 resource "azurerm_synapse_managed_private_endpoint" "cbos_sql" {
-  name                 = "synapse-cbos-sqlserver-${var.environment}-peas"
+  for_each = local.cbos_sql_mpe
+
+  name                 = each.value.name
   synapse_workspace_id = var.synapse_workspace_id
-  target_resource_id   = local.mpesc_sql_target_resource_id
+  target_resource_id   = each.value.target_resource_id
   subresource_name     = "sqlServer"
 }
