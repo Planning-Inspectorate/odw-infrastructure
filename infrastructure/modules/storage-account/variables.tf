@@ -202,3 +202,26 @@ variable "soft_delete_retention_policy" {
   description = "Is soft delete enabled for containers and blobs?"
   default     = false
 }
+
+variable "tooling_config" {
+  description = "Config for the tooling subscription dns zones"
+  type = object({
+    storage_private_dns_zone_id = map(string)
+  })
+}
+
+variable "network_resource_group_name" {
+  description = "The name of the resource group into which private endpoints will be deployed"
+  type        = string
+}
+
+variable "vnet_subnet_ids" {
+  description = "A map of subnet names and IDs comprising the linked Virtual Network"
+  type        = map(string)
+}
+
+variable "synapse_private_endpoint_subnet_name" {
+  default     = "SynapseEndpointSubnet"
+  description = "The name of the subnet into which private endpoints should be deployed"
+  type        = string
+}

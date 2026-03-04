@@ -60,6 +60,12 @@ module "storage_account" {
       quota = 5120
     }
   ]
+  tooling_config = {
+    storage_private_dns_zone_id = local.tooling_storage_dns_zone_ids
+  }
+  network_resource_group_name          = azurerm_resource_group.network.name
+  vnet_subnet_ids                      = module.synapse_network_failover.vnet_subnets
+  synapse_private_endpoint_subnet_name = module.synapse_network.synapse_private_endpoint_subnet_name
 }
 
 
@@ -83,6 +89,12 @@ module "storage_account_failover" {
       quota = 5120
     }
   ]
+  tooling_config = {
+    storage_private_dns_zone_id = local.tooling_storage_dns_zone_ids
+  }
+  network_resource_group_name          = azurerm_resource_group.network_failover.name
+  vnet_subnet_ids                      = module.synapse_network.vnet_subnets
+  synapse_private_endpoint_subnet_name = module.synapse_network.synapse_private_endpoint_subnet_name
 }
 
 /*
