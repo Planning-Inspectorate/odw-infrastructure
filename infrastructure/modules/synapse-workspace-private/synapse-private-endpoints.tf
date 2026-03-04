@@ -134,6 +134,15 @@ resource "azurerm_synapse_managed_private_endpoint" "synapse_mpe_appeals_bo_sb" 
   ]
 }
 
+resource "azurerm_synapse_managed_private_endpoint" "mpesc_storage" {
+  count                = var.mpesc_storage_account_id != null ? 1 : 0
+  name                 = "synapse-st-blob--${var.data_lake_account_name}"
+  synapse_workspace_id = azurerm_synapse_workspace.synapse.id
+  target_resource_id   = var.mpesc_storage_account_id
+  subresource_name     = "blob"
+}
+
+
 # private endpoints in tooling
 
 resource "azurerm_private_endpoint" "synapse_development_tooling" {

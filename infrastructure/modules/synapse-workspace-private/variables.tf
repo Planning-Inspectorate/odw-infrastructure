@@ -236,3 +236,8 @@ variable "tooling_config" {
     synapse_sql_private_dns_zone_id = string
   })
 }
+
+variable "mpesc_storage_account_id" {
+  description = "The ID of the MPESC blob storage account"
+  type        = string
+}

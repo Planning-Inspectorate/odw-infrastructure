@@ -48,6 +48,7 @@ module "synapse_workspace_private" {
 
   create_service_bus_resources           = var.create_service_bus_resources
   odt_appeals_back_office_service_bus_id = var.odt_appeals_back_office.service_bus_enabled && var.external_resource_links_enabled ? local.odt_appeals_back_office_service_bus_id : null
+  mpesc_storage_account_id               = module.storage_account_horizon_migration.storage_id
 
   tags = local.tags
 
@@ -107,7 +108,8 @@ module "synapse_workspace_private_failover" {
     synapse_sql_private_dns_zone_id = data.azurerm_private_dns_zone.tooling_synapse_sql.id
   }
 
-  tags = local.tags
+  tags                     = local.tags
+  mpesc_storage_account_id = null
 
   providers = {
     azurerm     = azurerm,
