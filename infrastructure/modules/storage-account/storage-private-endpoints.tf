@@ -6,7 +6,7 @@ locals {
 resource "azurerm_private_endpoint" "storage" {
   for_each = toset(local.storage_zones)
 
-  name                = "pins-pe-${each.key}-tooling-${local.resource_suffix}${random_string.unique_id.id}"
+  name                = "pins-pe-${each.key}-tooling-${local.resource_suffix}-${random_string.unique_id.id}"
   resource_group_name = var.network_resource_group_name
   location            = var.location
   subnet_id           = var.vnet_subnet_ids[var.synapse_private_endpoint_subnet_name]
