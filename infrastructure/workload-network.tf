@@ -127,8 +127,8 @@ resource "azurerm_private_dns_zone_virtual_network_link" "synapse_failover" {
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "blob_odw_to_tooling" {
-  name                  = "blob-${module.synapse_network.vnet_name}"
-  resource_group_name   = azurerm_resource_group.network_global.name
+  name                  = "pins-vnetlink-blob-${local.resource_suffix}-${module.synapse_network.vnet_name}"
+  resource_group_name   = var.tooling_config.network_rg
   private_dns_zone_name = data.azurerm_private_dns_zone.tooling_storage["blob"].name
   virtual_network_id    = module.synapse_network.vnet_id
 
