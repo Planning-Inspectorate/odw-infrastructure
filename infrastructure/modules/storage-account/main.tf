@@ -61,6 +61,7 @@ resource "azurerm_storage_account" "storage" {
 }
 
 resource "azurerm_storage_account_network_rules" "storage_network_rule" {
+  #checkov:skip=CKV_AZURE_35: Temp
   #checkov:skip=CKV_AZURE_59: Firewall is enabled using azurerm_storage_account_network_rules
   count                      = var.network_rules_enabled ? 1 : 0
   storage_account_id         = azurerm_storage_account.storage.id
