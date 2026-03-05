@@ -20,6 +20,7 @@ module "storage_account_horizon_migration" {
   synapse_private_endpoint_subnet_name = module.synapse_network.synapse_private_endpoint_subnet_name
   synapse_msi_id                       = module.synapse_workspace_private.synapse_workspace_principal_id
   dlg2fs                               = ["synapse"]
+  network_default_action               = "Allow"
 }
 
 
