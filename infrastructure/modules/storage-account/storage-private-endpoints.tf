@@ -1,6 +1,6 @@
 # private endpoints in tooling
 locals {
-  storage_zones = ["blob"]
+  storage_zones = ["blob", "table"]
 }
 
 resource "azurerm_private_endpoint" "storage" {
