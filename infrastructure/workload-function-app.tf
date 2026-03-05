@@ -66,6 +66,7 @@ module "storage_account" {
   network_resource_group_name          = azurerm_resource_group.network.name
   vnet_subnet_ids                      = module.synapse_network.vnet_subnets
   synapse_private_endpoint_subnet_name = module.synapse_network.synapse_private_endpoint_subnet_name
+  synapse_msi_id                       = module.synapse_workspace_private.synapse_workspace_principal_id
 }
 
 
@@ -95,6 +96,7 @@ module "storage_account_failover" {
   network_resource_group_name          = azurerm_resource_group.network_failover.name
   vnet_subnet_ids                      = module.synapse_network_failover.vnet_subnets
   synapse_private_endpoint_subnet_name = module.synapse_network.synapse_private_endpoint_subnet_name
+  synapse_msi_id                       = module.synapse_workspace_private_failover.synapse_workspace_principal_id
 }
 
 /*

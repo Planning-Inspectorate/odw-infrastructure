@@ -225,3 +225,8 @@ variable "synapse_private_endpoint_subnet_name" {
   description = "The name of the subnet into which private endpoints should be deployed"
   type        = string
 }
+
+variable "synapse_msi_id" {
+  description = "The ID of the Synapse Managed System Identity"
+  type        = string
+}
