@@ -19,6 +19,7 @@ module "storage_account_horizon_migration" {
   vnet_subnet_ids                      = module.synapse_network.vnet_subnets
   synapse_private_endpoint_subnet_name = module.synapse_network.synapse_private_endpoint_subnet_name
   synapse_msi_id                       = module.synapse_workspace_private.synapse_workspace_principal_id
+  dlg2fs                               = ["synapse"]
 }
 
 
