@@ -260,3 +260,12 @@ resource "azurerm_synapse_managed_private_endpoint" "synapse_mpe_purview_event_h
     time_sleep.firewall_delay
   ]
 }
+
+resource "azurerm_synapse_managed_private_endpoint" "cbos_sql" {
+  for_each = local.cbos_sql_mpe
+
+  name                 = each.value.name
+  synapse_workspace_id = azurerm_synapse_workspace.synapse.id
+  target_resource_id   = each.value.target_resource_id
+  subresource_name     = "sqlServer"
+}
