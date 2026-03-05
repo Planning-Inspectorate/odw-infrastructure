@@ -120,3 +120,19 @@ variable "tags" {
   description = "A collection of tags to assign to taggable resources"
   type        = map(string)
 }
+
+variable "synapse_private_endpoint_vnet_subnets" {
+  description = "A map of subnet names and IDs comprising the linked Virtual Network for private endpoint deployment"
+  type        = map(string)
+}
+
+variable "synapse_private_endpoint_subnet_name" {
+  default     = "SynapseEndpointSubnet"
+  description = "The name of the subnet into which Synapse private endpoints should be deployed"
+  type        = string
+}
+
+variable "servicebus_dns_zone_id" {
+  description = "The ID of the private DNS zone for the service bus"
+  type        = string
+}

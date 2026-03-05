@@ -27,6 +27,9 @@ module "synapse_ingestion" {
   service_bus_topics_and_subscriptions    = var.service_bus_topics_and_subscriptions
   synapse_workspace_failover_principal_id = try(module.synapse_workspace_private_failover.synapse_workspace_principal_id, null)
   synapse_workspace_principal_id          = module.synapse_workspace_private.synapse_workspace_principal_id
+  synapse_private_endpoint_vnet_subnets   = module.synapse_network.vnet_subnets
+  synapse_private_endpoint_subnet_name    = local.synapse_subnet_name
+  servicebus_dns_zone_id                  = azurerm_private_dns_zone.servicebus.id
 
   tags = local.tags
 }
@@ -48,6 +51,9 @@ module "synapse_ingestion_failover" {
   service_bus_topics_and_subscriptions    = var.service_bus_topics_and_subscriptions
   synapse_workspace_failover_principal_id = try(module.synapse_workspace_private_failover.synapse_workspace_principal_id, null)
   synapse_workspace_principal_id          = module.synapse_workspace_private.synapse_workspace_principal_id
+  synapse_private_endpoint_vnet_subnets   = module.synapse_network_failover.vnet_subnets
+  synapse_private_endpoint_subnet_name    = local.synapse_subnet_name
+  servicebus_dns_zone_id                  = azurerm_private_dns_zone.servicebus_failover.id
 
   tags = local.tags
 }
