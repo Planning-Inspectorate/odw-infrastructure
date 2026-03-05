@@ -136,7 +136,7 @@ resource "azurerm_synapse_managed_private_endpoint" "synapse_mpe_appeals_bo_sb" 
 
 resource "azurerm_synapse_managed_private_endpoint" "mpesc_storage" {
   count                = var.mpesc_storage_account_id != null ? 1 : 0
-  name                 = "synapse-st-blob--${var.data_lake_account_name}"
+  name                 = "synapse-st-blob--mpescstorage"
   synapse_workspace_id = azurerm_synapse_workspace.synapse.id
   target_resource_id   = var.mpesc_storage_account_id
   subresource_name     = "blob"
@@ -144,10 +144,18 @@ resource "azurerm_synapse_managed_private_endpoint" "mpesc_storage" {
 
 resource "azurerm_synapse_managed_private_endpoint" "mpesc_table_storage" {
   count                = var.mpesc_storage_account_id != null ? 1 : 0
-  name                 = "synapse-st-table--${var.data_lake_account_name}"
+  name                 = "synapse-st-table--mpescstorage"
   synapse_workspace_id = azurerm_synapse_workspace.synapse.id
   target_resource_id   = var.mpesc_storage_account_id
   subresource_name     = "table"
+}
+
+resource "azurerm_synapse_managed_private_endpoint" "mpesc_dfs_storage" {
+  count                = var.mpesc_storage_account_id != null ? 1 : 0
+  name                 = "synapse-st-dfs--mpescstorage"
+  synapse_workspace_id = azurerm_synapse_workspace.synapse.id
+  target_resource_id   = var.mpesc_storage_account_id
+  subresource_name     = "dfs"
 }
 
 
