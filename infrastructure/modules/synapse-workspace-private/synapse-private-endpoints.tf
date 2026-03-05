@@ -142,6 +142,14 @@ resource "azurerm_synapse_managed_private_endpoint" "mpesc_storage" {
   subresource_name     = "blob"
 }
 
+resource "azurerm_synapse_managed_private_endpoint" "mpesc_table_storage" {
+  count                = var.mpesc_storage_account_id != null ? 1 : 0
+  name                 = "synapse-st-table--${var.data_lake_account_name}"
+  synapse_workspace_id = azurerm_synapse_workspace.synapse.id
+  target_resource_id   = var.mpesc_storage_account_id
+  subresource_name     = "table"
+}
+
 
 # private endpoints in tooling
 
