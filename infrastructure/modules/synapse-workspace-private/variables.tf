@@ -156,6 +156,7 @@ variable "new_spark_pool_version" {
   type        = string
 }
 
+
 variable "sql_pool_collation" {
   default     = "SQL_Latin1_General_CP1_CI_AS"
   description = "The collation of the Synapse-linked dedicated SQL pool"
