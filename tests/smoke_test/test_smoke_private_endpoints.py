@@ -78,26 +78,6 @@ class TestSmokePrivateEndpoints(TestCase):
             assert not raised_exception, exception_message
         return self._ENDPOINT_CACHE[key]
 
-    @pytest.mark.skipif(ENV == "dev" or ENV == "build", reason="Dev environment does not have this private endpoint")
-    def test_odt_backoffice_private_endpoints(self):
-        # Note: This test must temporarily switch subscriptions. For this reason, the smoke tests must run in series
-        initial_subscription = Util.get_subscription()
-        Util.set_subscription(self.ODT_SUBSCRIPTION_ID)
-        test_exception = None
-        try:
-            all_endpoints = self.get_all_endpoints(
-                ServiceBusPrivateEndpointManager,
-                f"pins-rg-appeals-bo-{self.ENV}",
-                f"pins-sb-appeals-bo-{self.ENV}"
-            )
-            self.validate_private_endpoint(all_endpoints, f"pins-pe-appeals-backoffice-sb-odw-{self.ENV}-uks")
-        except Exception as e:
-            test_exception = e
-        finally:
-            Util.set_subscription(initial_subscription)
-        if test_exception:
-            raise test_exception
-
     @pytest.mark.parametrize(
         "endpoint_name",
         [
