@@ -74,27 +74,27 @@ resource "azurerm_synapse_spark_pool" "synapse34" {
 resource "azurerm_synapse_spark_pool" "pinssynspodwmain" {
   #checkov:skip=CKV_AZURE_242: Ensure isolated compute is enabled for Synapse Spark pools (checkov v3)
   count = var.spark_pool_enabled ? 1 : 0
- 
+
   name                           = "pinssynspodw35"
   synapse_workspace_id           = azurerm_synapse_workspace.synapse.id
   node_size_family               = "MemoryOptimized"
   node_size                      = var.spark_pool_node_size
   spark_version                  = var.new_spark_pool_version
   session_level_packages_enabled = true
- 
+
   auto_pause {
     delay_in_minutes = var.spark_pool_timeout_minutes
   }
- 
+
   auto_scale {
     max_node_count = var.spark_pool_max_node_count
     min_node_count = var.spark_pool_min_node_count
   }
- 
+
   lifecycle {
     ignore_changes = [library_requirement]
   }
- 
+
   spark_config {
     content  = <<-EOT
       spark.executorEnv.dataLakeAccountName ${var.data_lake_account_name}
@@ -104,6 +104,6 @@ resource "azurerm_synapse_spark_pool" "pinssynspodwmain" {
       EOT
     filename = "configuration.txt"
   }
- 
+
   tags = local.tags
 }
