@@ -55,6 +55,12 @@ variable "odt_appeals_back_office_service_bus_id" {
   default     = null
 }
 
+variable "odw_service_bus_id" {
+  description = "The id of the ODW Service Bus namespace"
+  type        = string
+  default     = null
+}
+
 variable "network_resource_group_name" {
   description = "The name of the resource group into which private endpoints will be deployed"
   type        = string
