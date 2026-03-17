@@ -6,6 +6,7 @@ resource "azurerm_synapse_managed_private_endpoint" "data_lake" {
 }
 
 
+
 resource "azurerm_synapse_managed_private_endpoint" "mpesc_prod_sql" {
   name                 = "synapse-sql-sqlServer--pins-sql-peas-primary-prod"
   synapse_workspace_id = var.synapse_workspace_id
