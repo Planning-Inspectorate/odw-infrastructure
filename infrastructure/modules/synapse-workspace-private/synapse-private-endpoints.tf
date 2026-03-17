@@ -269,3 +269,11 @@ resource "azurerm_synapse_managed_private_endpoint" "cbos_sql" {
   target_resource_id   = each.value.target_resource_id
   subresource_name     = "sqlServer"
 }
+
+resource "azurerm_synapse_managed_private_endpoint" "odw_service_bus" {
+  count                = var.odw_service_bus_id != null ? 1 : 0
+  name                 = "synapse-mpe-odw-service-bus-namespace-${local.resource_suffix}"
+  synapse_workspace_id = azurerm_synapse_workspace.synapse.id
+  target_resource_id   = var.odw_service_bus_id
+  subresource_name     = "namespace"
+}

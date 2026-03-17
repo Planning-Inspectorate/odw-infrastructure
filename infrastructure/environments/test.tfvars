@@ -148,9 +148,10 @@ odt_backoffice_sb_topic_subscriptions = [
 
 ## Appeals Back Office
 odt_appeals_back_office = {
-  resource_group_name = "pins-rg-appeals-bo-test"
-  service_bus_enabled = true
-  service_bus_name    = "pins-sb-appeals-bo-test"
+  resource_group_name  = "pins-rg-appeals-bo-test"
+  service_bus_enabled  = true
+  service_bus_name     = "pins-sb-appeals-bo-test"
+  virtual_network_name = "pins-vnet-appeals-bo-test"
 }
 
 service_bus_failover_enabled = false
