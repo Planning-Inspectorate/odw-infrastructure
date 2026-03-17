@@ -53,6 +53,19 @@ def approve_private_endpoints(env: str):
     except Exception as e:
         logging.info(f"Failed to approve SQL Server private endpoint with the following errr: {e}")
         pass
+    odw_service_bus_names = Util.get_odw_service_bus_names(env)
+    for odw_service_bus in odw_service_bus_names:
+        try:
+            odw_service_bus_private_endpoint_manager = ServiceBusPrivateEndpointManager()
+            all_odw_service_bus_private_endpoints = odw_service_bus_private_endpoint_manager.get_all(
+                f"pins-rg-ingestion-odw-{env}-uks",
+                odw_service_bus
+            )
+            for pe in all_odw_service_bus_private_endpoints:
+                odw_service_bus_private_endpoint_manager.approve(pe["id"])
+        except Exception as e:
+            logging.info(f"Failed to approve ODW Service Bus private endpoint with the following errr: {e}")
+            pass
     # Approve pending Synapse MPEs pointing to the Appeals Back Office service bus
     # Switch to the appeals bo subscription
     if env != "build":
