@@ -2,6 +2,7 @@ from odw_common.private_endpoint.synapse_private_endpoint_manager import Synapse
 from odw_common.private_endpoint.key_vault_private_endpoint_manager import KeyVaultPrivateEndpointManager
 from odw_common.private_endpoint.storage_private_endpoint_manager import StoragePrivateEndpointManager
 from odw_common.private_endpoint.service_bus_private_endpoint_manager import ServiceBusPrivateEndpointManager
+from odw_common.private_endpoint.sql_server_private_endpoint_manager import SSQLServerPrivateEndpointManager
 from odw_common.util.util import Util
 import argparse
 import logging
@@ -41,6 +42,17 @@ def approve_private_endpoints(env: str):
             storage_account,
             ENDPOINTS_TO_EXCLUDE
         )
+    # The sql server exists in dev but may roll out to other envs, so just attempt to approve it if available
+    try:
+        sql_server_private_endpoint_manager = SSQLServerPrivateEndpointManager()
+        sql_server_private_endpoint_manager.approve_all(
+            f"pins-rg-sqlserver-odw-{env}-uks",
+            f"sql-odw-{env}-uks",
+            ENDPOINTS_TO_EXCLUDE
+        )
+    except Exception as e:
+        logging.info(f"Failed to approve SQL Server private endpoint with the following errr: {e}")
+        pass
     # Approve pending Synapse MPEs pointing to the Appeals Back Office service bus
     # Switch to the appeals bo subscription
     if env != "build":

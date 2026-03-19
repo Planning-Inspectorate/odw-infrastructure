@@ -80,6 +80,12 @@ horizon_integration_config = {
     database_subnet_name = "SN-VNPRD-DB-192.168.3.0-24"
   }
 }
+#Evagelos new horizon migration storage account
+horizon_migration = {
+  rg             = "pins-rg-data-odw-prod-uks"
+  service_name   = "mpesc"
+  container_name = ["mpesc"]
+}
 
 location = "uk-south"
 
@@ -162,60 +168,8 @@ service_bus_role_assignments = {
 
 service_bus_topics_and_subscriptions = [
   {
-    name = "employee"
-    subscriptions = {
-      "employee"        = {},
-      "employee-verify" = {}
-    }
-  },
-  {
-    name = "zendesk"
-    subscriptions = {
-      "zendesk"        = {},
-      "zendesk-verify" = {}
-    }
-  },
-  {
-    name = "service-user"
-    subscriptions = {
-      "odw-service-user-sub" = {}
-    }
-  },
-  {
-    name = "nsip-project"
-    subscriptions = {
-      "odw-nsip-project-sub" = {}
-    }
-  },
-  {
-    name = "nsip-exam-timetable"
-    subscriptions = {
-      "odw-nsip-exam-timetable-sub" = {}
-    }
-  },
-  {
-    name = "nsip-document"
-    subscriptions = {
-      "odw-nsip-document-sub" = {}
-    }
-  },
-  {
-    name = "nsip-representation"
-    subscriptions = {
-      "odw-nsip-representation-sub" = {}
-    }
-  },
-  {
-    name = "nsip-s51-advice"
-    subscriptions = {
-      "odw-nsip-s51-advice-sub" = {},
-    }
-  },
-  {
-    name = "pins-inspector"
-    subscriptions = {
-      "pins-inspector-odw-sub" = {}
-    }
+    name          = "pins-inspector"
+    subscriptions = {}
   }
 ]
 
@@ -225,7 +179,7 @@ spark_pool_min_node_count  = 3
 spark_pool_node_size       = "Small"
 spark_pool_timeout_minutes = 60
 spark_pool_version         = "3.3"
-new_spark_pool_version     = "3.4"
+new_spark_pool_version     = "3.5"
 
 spark_pool_preview_enabled = true
 spark_pool_preview_version = "3.4"
