@@ -269,3 +269,18 @@ resource "azurerm_synapse_managed_private_endpoint" "cbos_sql" {
   target_resource_id   = each.value.target_resource_id
   subresource_name     = "sqlServer"
 }
+
+
+resource "azurerm_synapse_managed_private_endpoint" "mpesc_prod_sql" {
+  count = var.environment == "prod" ? 1 : 0
+
+  name                 = "synapse-sql-sqlServer--pins-sql-peas-primary-prod"
+  synapse_workspace_id = azurerm_synapse_workspace.synapse.id
+  target_resource_id   = "/subscriptions/d1d6c393-2fe3-40af-ac27-f5b6bad36735/resourceGroups/pins-rg-peas-prod/providers/Microsoft.Sql/servers/pins-sql-peas-primary-prod"
+  subresource_name     = "sqlServer"
+
+  depends_on = [
+    azurerm_synapse_workspace.synapse,
+    time_sleep.firewall_delay
+  ]
+}
