@@ -2,6 +2,9 @@
 locals {
   service_name = "ODW"
 }
+variable "log_daily_cap_gb" {
+  default = ""
+}
 resource "azurerm_monitor_scheduled_query_rules_alert_v2" "log_cap" {
   count = var.environment == "prod" ? 1 : 0
 
