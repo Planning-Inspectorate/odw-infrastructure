@@ -25,7 +25,7 @@ steps:
       -H "Authorization: token $GH_TOKEN" \
       "https://api.github.com/repos/$REPO/pulls?state=open" | \
       jq '.[] | select(.updated_at < "'$(date -d "14 days ago" -Iseconds)'") | .number')
-
+ 
     for pr in $stale_prs; do
       echo "Marking PR #$pr as stale..."
       curl -s -X POST \
