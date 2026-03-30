@@ -34,7 +34,7 @@ steps:
     codeql database create codeql-db \
       --language=python \
       --source-root=$(Build.SourcesDirectory)
-
+ 
     echo "Running CodeQL analysis..."
     codeql database analyze codeql-db \
       codeql/python-queries \
