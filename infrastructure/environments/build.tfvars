@@ -217,7 +217,7 @@ spark_pool_min_node_count  = 3
 spark_pool_node_size       = "Small"
 spark_pool_timeout_minutes = 60
 spark_pool_version         = "3.4"
-new_spark_pool_version     = "3.4"
+new_spark_pool_version     = "3.5"
 
 spark_pool_preview_enabled = true
 spark_pool_preview_version = "3.4"
@@ -308,3 +308,5 @@ link_purview_account = false
 run_shir_setup_script = true
 
 create_service_bus_resources = false
+
+devops_agent_vm_sku = "Standard_F4s_v2"
