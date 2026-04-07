@@ -18,7 +18,8 @@ schedules:
       - main
   always: true
 
-pool: pins-agent-pool-odw-build-uks
+pool: 
+  vmImage: ubuntu-latest
 
 variables:
   language: 'python'
