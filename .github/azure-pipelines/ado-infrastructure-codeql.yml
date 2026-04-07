@@ -23,8 +23,6 @@ pool: pins-agent-pool-odw-build-uks
 variables:
   language: 'python'
 
-# timeout: 360
-
 jobs:
   - job: Analyze
     displayName: 'CodeQL Analysis'
@@ -69,17 +67,6 @@ jobs:
             --verbose
         displayName: 'Perform CodeQL Analysis'
 
-            # Publish SARIF results to Azure DevOps Security Tab
-      - task: PublishSecurityAnalysisLogs@3
-        inputs:
-          ArtifactName: 'CodeQL-Results'
-          ArtifactType: 'Sarif'
-          PublishProcessedResults: true
-          AllTools: false
-          ToolLogsNotFoundAction: 'Standard'
-        displayName: 'Publish CodeQL Results'
-        continueOnError: true
-
       # Upload SARIF as build artifact
       - task: PublishBuildArtifacts@1
         inputs:
@@ -88,30 +75,3 @@ jobs:
           publishLocation: 'Container'
         displayName: 'Publish SARIF Artifact'
         condition: always()
-
-# steps:
-# - checkout: self
-
-# - script: |
-#     echo "Downloading CodeQL CLI..."
-#     wget https://github.com/github/codeql-cli-binaries/releases/latest/download/codeql-linux64.zip -O codeql.zip
-#     unzip codeql.zip -d codeql
-#     export PATH="$PATH:$(pwd)/codeql"
-
-#     echo "Initializing CodeQL database..."
-#     codeql database create codeql-db \
-#       --language=python \
-#       --source-root=$(Build.SourcesDirectory)
- 
-#     echo "Running CodeQL analysis..."
-#     codeql database analyze codeql-db \
-#       codeql/python-queries \
-#       --format=sarifv2.1.0 \
-#       --output=codeql-results.sarif
-
-#   displayName: Run CodeQL Analysis
-
-# - task: PublishBuildArtifacts@1
-#   inputs:
-#     pathToPublish: codeql-results.sarif
-#     artifactName: CodeQL-Results
