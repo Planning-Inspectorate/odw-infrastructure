@@ -18,8 +18,7 @@ schedules:
       - main
   always: true
 
-pool: 
-  vmImage: ubuntu-latest
+pool: pins-agent-pool-odw-build-uks
 
 variables:
   language: 'python'
@@ -34,10 +33,10 @@ jobs:
         displayName: 'Checkout repository'
 
       # Install CodeQL CLI
-      - task: UsePythonVersion@0
-        inputs:
-          versionSpec: '3.x'
-        displayName: 'Setup Python'
+      # - task: UsePythonVersion@0
+      #   inputs:
+      #     versionSpec: '3.x'
+      #   displayName: 'Setup Python'
 
       - script: |
           mkdir -p $HOME/codeql-home
