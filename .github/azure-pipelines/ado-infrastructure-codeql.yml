@@ -24,26 +24,7 @@ pool:
 variables:
   language: 'python'
 
-timeout: 360
-
-jobs:
-  - job: Analyze
-    displayName: 'CodeQL Analysis'
-    steps:
-      # Checkout repository
-      - checkout: self
-        fetchDepth: 0
-        displayName: 'Checkout repository'
-
-      # Install CodeQL CLI
-      - task: UsePythonVersion@0
-        inputs:
-          versionSpec: '3.x'
-        displayName: 'Setup Python'
-variables:
-  language: 'python'
-
-timeout: 360
+# timeout: 360
 
 jobs:
   - job: Analyze
