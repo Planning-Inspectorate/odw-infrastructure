@@ -49,6 +49,11 @@ jobs:
           echo "##vso[task.prependpath]$HOME/codeql-home/codeql"
         displayName: 'Install CodeQL CLI'
 
+      # Download CodeQL Python query pack
+      - script: |
+          codeql pack download codeql/python-queries
+        displayName: 'Download CodeQL Python Query Pack'
+
       # Create CodeQL database
       - script: |
           codeql database create $(Build.SourcesDirectory)/codeql-db \
