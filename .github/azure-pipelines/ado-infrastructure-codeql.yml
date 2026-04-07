@@ -18,8 +18,7 @@ schedules:
       - main
   always: true
 
-pool:
-  vmImage: ubuntu-latest
+pool: pins-agent-pool-odw-build-uks
 
 variables:
   language: 'python'
@@ -69,6 +68,26 @@ jobs:
             --output=$(Build.ArtifactStagingDirectory)/results.sarif \
             --verbose
         displayName: 'Perform CodeQL Analysis'
+
+            # Publish SARIF results to Azure DevOps Security Tab
+      - task: PublishSecurityAnalysisLogs@3
+        inputs:
+          ArtifactName: 'CodeQL-Results'
+          ArtifactType: 'Sarif'
+          PublishProcessedResults: true
+          AllTools: false
+          ToolLogsNotFoundAction: 'Standard'
+        displayName: 'Publish CodeQL Results'
+        continueOnError: true
+
+      # Upload SARIF as build artifact
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+          ArtifactName: 'CodeQL-SARIF'
+          publishLocation: 'Container'
+        displayName: 'Publish SARIF Artifact'
+        condition: always()
 
 # steps:
 # - checkout: self
