@@ -32,12 +32,6 @@ jobs:
         fetchDepth: 0
         displayName: 'Checkout repository'
 
-      # Install CodeQL CLI
-      # - task: UsePythonVersion@0
-      #   inputs:
-      #     versionSpec: '3.x'
-      #   displayName: 'Setup Python'
-
       - script: |
           mkdir -p $HOME/codeql-home
           cd $HOME/codeql-home
