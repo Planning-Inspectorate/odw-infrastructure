@@ -21,7 +21,7 @@ steps:
 
     # Get PRs updated >14 days ago
     stale_prs=$(curl -s \
-      -H "Authorization: token $GH_TOKEN" \
+      -H "Authorization: token $GITHUB_TOKEN" \
       "https://api.github.com/repos/$REPO/pulls?state=open" | \
       jq '.[] | select(.updated_at < "'$(date -d "14 days ago" -Iseconds)'") | .number')
  
@@ -49,7 +49,7 @@ steps:
         "https://api.github.com/repos/$REPO/pulls/$pr"
     done
 
-    env:
-      GITHUB_TOKEN: $(GITHUB_TOKEN)
-      
+  env:
+    GITHUB_TOKEN: $(GITHUB_TOKEN)
+
   displayName: Close stale PRs
