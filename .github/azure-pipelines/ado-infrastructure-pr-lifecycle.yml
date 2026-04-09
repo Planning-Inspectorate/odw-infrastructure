@@ -28,7 +28,7 @@ steps:
     for pr in $stale_prs; do
       echo "Marking PR #$pr as stale..."
       curl -s -X POST \
-        -H "Authorization: token $GH_TOKEN" \
+        -H "Authorization: token $GITHUB_TOKEN" \
         -H "Content-Type: application/json" \
         -d '{"labels":["stale"]}' \
         "https://api.github.com/repos/$REPO/issues/$pr/labels"
@@ -36,14 +36,14 @@ steps:
 
     # Close PRs older than 21 days
     very_stale_prs=$(curl -s \
-      -H "Authorization: token $GH_TOKEN" \
+      -H "Authorization: token $GITHUB_TOKEN" \
       "https://api.github.com/repos/$REPO/pulls?state=open" | \
       jq '.[] | select(.updated_at < "'$(date -d "21 days ago" -Iseconds)'") | .number')
 
     for pr in $very_stale_prs; do
       echo "Closing PR #$pr..."
       curl -s -X PATCH \
-        -H "Authorization: token $GH_TOKEN" \
+        -H "Authorization: token $GITHUB_TOKEN" \
         -H "Content-Type: application/json" \
         -d '{"state":"closed"}' \
         "https://api.github.com/repos/$REPO/pulls/$pr"
