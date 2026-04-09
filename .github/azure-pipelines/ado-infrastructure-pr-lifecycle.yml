@@ -9,7 +9,7 @@ schedules:
 pool: pins-agent-pool-odw-build-uks
 
 variables:
-  GH_TOKEN: $(GITHUB_TOKEN)   # PAT stored in Variable Group
+- group: GitHub-Secrets  # GH_TOKEN: $(GITHUB_TOKEN)   # PAT stored in Variable Group
 
 steps:
 - checkout: none
@@ -49,4 +49,7 @@ steps:
         "https://api.github.com/repos/$REPO/pulls/$pr"
     done
 
+    env:
+      GITHUB_TOKEN: $(GITHUB_TOKEN)
+      
   displayName: Close stale PRs
