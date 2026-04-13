@@ -17,4 +17,4 @@ iso8601==2.1.0
 Faker==33.1.0
 
 # Anonymisation 
-pydantic==1.10.0
+pydantic==2.10.0
