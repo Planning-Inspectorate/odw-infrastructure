@@ -7,26 +7,25 @@ resource "azapi_resource" "zendesk_custom_api" {
   parent_id = var.resource_group_id
   tags      = local.tags
 
-  body = jsonencode(
-    {
-      "properties" : {
-        "connectionParameters" : {
-          "username" : {
-            "type" : "securestring",
-          },
-          "password" : {
-            "type" : "securestring",
-          }
-        },
-        "backendService" : {
-          "serviceUrl" : "https://pinssupport.zendesk.com",
-        },
-        "capabilities" : [],
-        "description" : "Custom API for Zendesk",
-        "displayName" : "zensdesk-custom-api",
-        "iconUri" : "https://content.powerapps.com/resource/makerx/static/media/default-connection-icon.00d06b6e.svg",
-        "swagger" : jsondecode(file("${path.module}/zendesk-swagger.json")),
-        "apiType" : "Rest",
+  body = {
+    properties = {
+      connectionParameters = {
+        username = {
+          type = "securestring"
+        }
+        password = {
+          type = "securestring"
+        }
       }
-  })
+      backendService = {
+        serviceUrl = "https://pinssupport.zendesk.com"
+      }
+      capabilities = []
+      description  = "Custom API for Zendesk"
+      displayName  = "zensdesk-custom-api"
+      iconUri      = "https://content.powerapps.com/resource/makerx/static/media/default-connection-icon.00d06b6e.svg"
+      swagger      = jsondecode(file("${path.module}/zendesk-swagger.json"))
+      apiType      = "Rest"
+    }
+  }
 }
