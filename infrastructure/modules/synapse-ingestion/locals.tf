@@ -11,6 +11,7 @@ locals {
     enable_express                          = false
     enable_partitioning                     = false
     max_size_in_megabytes                   = 5120
+    max_message_size_in_kilobytes           = 1024
     requires_duplicate_detection            = false
     support_ordering                        = false
     subscriptions                           = {}

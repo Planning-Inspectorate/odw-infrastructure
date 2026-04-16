@@ -11,6 +11,7 @@ resource "azurerm_servicebus_topic" "topics" {
   express_enabled                         = each.value.enable_express
   partitioning_enabled                    = each.value.enable_partitioning
   max_size_in_megabytes                   = each.value.max_size_in_megabytes
+  max_message_size_in_kilobytes           = each.value.max_message_size_in_kilobytes
   requires_duplicate_detection            = each.value.requires_duplicate_detection
   support_ordering                        = each.value.support_ordering
 }
