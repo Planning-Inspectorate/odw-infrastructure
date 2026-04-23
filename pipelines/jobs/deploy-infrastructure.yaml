@@ -64,6 +64,19 @@ jobs:
       planFileName: tfplan
       workingDirectory: infrastructure
       refreshTFState: ${{ parameters.refreshTFState }}
+
+  # Get Terraform outputs
+  - template: ${{variables['System.DefaultWorkingDirectory']}}/pipelines/steps/terraform-outputs.yaml
+    parameters:
+      outputsFileName: ${{ parameters.outputsFileName }}
+      workingDirectory: infrastructure
+
+  # Convert Terraform outputs to local pipeline variables
+  - template: ${{variables['System.DefaultWorkingDirectory']}}/pipelines/steps/terraform-outputs-to-variables.yaml
+    parameters:
+      multiStageVariables: false
+      outputsFileName: ${{ parameters.outputsFileName }}
+      workingDirectory: infrastructure
   
   # Only deploy infrastructure if specifically requested
   ###
