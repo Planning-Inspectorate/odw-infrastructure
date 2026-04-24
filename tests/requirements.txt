@@ -23,3 +23,4 @@ mock
 azure-monitor-opentelemetry==1.6.4
 tenacity==9.0.0
 pyspark==3.4.0
+python-dateutil
