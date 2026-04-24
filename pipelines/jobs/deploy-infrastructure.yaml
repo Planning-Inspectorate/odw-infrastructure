@@ -24,11 +24,7 @@ jobs:
   - checkout: self
     displayName: 'Checkout Repo'
 
-  # Download firewall rule configuration file
-  - template: ${{variables['System.DefaultWorkingDirectory']}}/pipelines/steps/download-secure-file.yaml
-    parameters:
-      secureFileName: allowed_ip_addresses.yaml
-      workingDirectory: infrastructure/configuration/firewall-rules
+
   
   # Login to Azure using Terraform service principal
   - template: ${{variables['System.DefaultWorkingDirectory']}}/pipelines/steps/azure-login.yaml@odw-common
@@ -68,6 +64,19 @@ jobs:
       planFileName: tfplan
       workingDirectory: infrastructure
       refreshTFState: ${{ parameters.refreshTFState }}
+
+  # Get Terraform outputs
+  - template: ${{variables['System.DefaultWorkingDirectory']}}/pipelines/steps/terraform-outputs.yaml
+    parameters:
+      outputsFileName: ${{ parameters.outputsFileName }}
+      workingDirectory: infrastructure
+
+  # Convert Terraform outputs to local pipeline variables
+  - template: ${{variables['System.DefaultWorkingDirectory']}}/pipelines/steps/terraform-outputs-to-variables.yaml
+    parameters:
+      multiStageVariables: false
+      outputsFileName: ${{ parameters.outputsFileName }}
+      workingDirectory: infrastructure
   
   # Only deploy infrastructure if specifically requested
   ###
@@ -104,18 +113,7 @@ jobs:
         workingDirectory: infrastructure
         refreshTFState: ${{ parameters.refreshTFState }}
     
-    # Get Terraform outputs
-    - template: ${{variables['System.DefaultWorkingDirectory']}}/pipelines/steps/terraform-outputs.yaml
-      parameters:
-        outputsFileName: ${{ parameters.outputsFileName }}
-        workingDirectory: infrastructure
 
-    # Convert Terraform outputs to local pipeline variables
-    - template: ${{variables['System.DefaultWorkingDirectory']}}/pipelines/steps/terraform-outputs-to-variables.yaml
-      parameters:
-        multiStageVariables: false
-        outputsFileName: ${{ parameters.outputsFileName }}
-        workingDirectory: infrastructure
 
     # Approve the data lake managed private endpoint if it has been reinstated
     - template: ${{variables['System.DefaultWorkingDirectory']}}/pipelines/steps/azure-private-endpoint-approval.yaml
