@@ -310,4 +310,4 @@ run_shir_setup_script = true
 
 create_service_bus_resources = false
 
-devops_agent_vm_sku = "Standard_F4s_v2"
+devops_agent_vm_sku = "Standard_E2as_v4"
