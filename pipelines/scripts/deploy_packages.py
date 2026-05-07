@@ -29,7 +29,7 @@ class ODWPackageDeployer():
     """
     SPARK_POOL_REQUIREMENTS_MAP = {
         "pinssynspodwpr": "requirements-preview.txt",
-        "pinssynspodw34": "requirements-preview.txt",
+        "pinssynspodw35": "requirements-preview.txt",
         # "pinssynspodw35": "requirements-preview.txt"
     }
     """
