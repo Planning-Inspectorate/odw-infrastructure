@@ -29,8 +29,7 @@ class ODWPackageDeployer():
     """
     SPARK_POOL_REQUIREMENTS_MAP = {
         "pinssynspodwpr": "requirements-preview.txt",
-        "pinssynspodw35": "requirements-preview.txt",
-        # "pinssynspodw35": "requirements-preview.txt"
+        "pinssynspodw35": "requirements.txt",
     }
     """
     Map of spark pools to their associated requirements.txt files
