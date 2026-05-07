@@ -144,7 +144,7 @@ jobs:
     parameters:
       env: ${{ parameters.env }}
       pythonVersion: 3
-      deploy: ${{ parameters.runTerraformApply }}
+      deploy: true
     
     # Approve all pending managed private endpoints
   - template: ${{variables['System.DefaultWorkingDirectory']}}/pipelines/steps/approve-odw-private-endpoints.yaml
