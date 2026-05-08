@@ -32,8 +32,3 @@ output "key_vault_uri" {
   description = "The URI of the Key Vault"
   value       = azurerm_key_vault.synapse.vault_uri
 }
-
-output "key_vault_fqdn" {
-  description = "The fully-qualified domain name of the Key Vault"
-  value       = azurerm_key_vault.synapse.vault_uri # Might need to check this
-}
