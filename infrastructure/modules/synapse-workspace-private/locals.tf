@@ -17,6 +17,7 @@ locals {
     dev = {
       name               = "synapse-cbos-sqlserver-dev-peas"
       target_resource_id = "/subscriptions/962e477c-0f3b-4372-97fc-a198a58e259e/resourceGroups/pins-rg-peas-dev/providers/Microsoft.Sql/servers/pins-sql-peas-primary-dev"
+      fqdn               = "pins-sql-peas-primary-dev.database.windows.net"
     }
     } : var.environment == "prod" ? {
     prod = {
