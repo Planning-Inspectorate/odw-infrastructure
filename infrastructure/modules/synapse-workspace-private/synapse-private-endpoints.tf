@@ -93,10 +93,11 @@ resource "azurerm_private_endpoint" "synapse_workspace" {
 }
 
 resource "azurerm_synapse_managed_private_endpoint" "data_lake" {
-  name                 = "synapse-st-dfs--${var.data_lake_account_name}"
-  synapse_workspace_id = azurerm_synapse_workspace.synapse.id
-  target_resource_id   = var.data_lake_account_id
-  subresource_name     = "dfs"
+  name                         = "synapse-st-dfs--${var.data_lake_account_name}"
+  synapse_workspace_id         = azurerm_synapse_workspace.synapse.id
+  target_resource_id           = var.data_lake_account_id
+  subresource_name             = "dfs"
+  fully_qualified_domain_names = [var.data_lake_fqdn]
 
   depends_on = [
     azurerm_synapse_workspace.synapse,
@@ -105,10 +106,11 @@ resource "azurerm_synapse_managed_private_endpoint" "data_lake" {
 }
 
 resource "azurerm_synapse_managed_private_endpoint" "synapse_mpe_kv" {
-  name                 = "synapse-mpe-kv--${local.resource_suffix}"
-  synapse_workspace_id = azurerm_synapse_workspace.synapse.id
-  target_resource_id   = var.key_vault_id
-  subresource_name     = "vault"
+  name                         = "synapse-mpe-kv--${local.resource_suffix}"
+  synapse_workspace_id         = azurerm_synapse_workspace.synapse.id
+  target_resource_id           = var.key_vault_id
+  subresource_name             = "vault"
+  fully_qualified_domain_names = [var.key_vault_fqdn]
 
   depends_on = [
     azurerm_synapse_workspace.synapse,
@@ -123,10 +125,11 @@ resource "azurerm_synapse_managed_private_endpoint" "synapse_mpe_kv" {
 resource "azurerm_synapse_managed_private_endpoint" "synapse_mpe_appeals_bo_sb" {
   count = var.create_service_bus_resources ? 1 : 0
 
-  name                 = "synapse-mpe-appeals-bo--${local.resource_suffix}"
-  synapse_workspace_id = azurerm_synapse_workspace.synapse.id
-  target_resource_id   = var.odt_appeals_back_office_service_bus_id
-  subresource_name     = "namespace"
+  name                         = "synapse-mpe-appeals-bo--${local.resource_suffix}"
+  synapse_workspace_id         = azurerm_synapse_workspace.synapse.id
+  target_resource_id           = var.odt_appeals_back_office_service_bus_id
+  subresource_name             = "namespace"
+  fully_qualified_domain_names = [var.odt_appeals_back_office_service_bus_fqdn]
 
   depends_on = [
     azurerm_synapse_workspace.synapse,
@@ -208,10 +211,11 @@ resource "azurerm_private_endpoint" "synapse_workspace_tooling" {
 resource "azurerm_synapse_managed_private_endpoint" "synapse_mpe_purview_account" {
   count = var.create_service_bus_resources && var.purview_id != null ? 1 : 0
 
-  name                 = "synapse-mpe-purview-account--${local.resource_suffix}"
-  synapse_workspace_id = azurerm_synapse_workspace.synapse.id
-  target_resource_id   = var.purview_id
-  subresource_name     = "account"
+  name                         = "synapse-mpe-purview-account--${local.resource_suffix}"
+  synapse_workspace_id         = azurerm_synapse_workspace.synapse.id
+  target_resource_id           = var.purview_id
+  subresource_name             = "account"
+  fully_qualified_domain_names = [var.purview_account_fqdn]
 
   depends_on = [
     azurerm_synapse_workspace.synapse,
@@ -222,10 +226,11 @@ resource "azurerm_synapse_managed_private_endpoint" "synapse_mpe_purview_account
 resource "azurerm_synapse_managed_private_endpoint" "synapse_mpe_purview_storage_blob" {
   count = var.create_service_bus_resources && var.purview_storage_id != null ? 1 : 0
 
-  name                 = "synapse-mpe-purview-storage-blob--${local.resource_suffix}"
-  synapse_workspace_id = azurerm_synapse_workspace.synapse.id
-  target_resource_id   = var.purview_storage_id
-  subresource_name     = "blob"
+  name                         = "synapse-mpe-purview-storage-blob--${local.resource_suffix}"
+  synapse_workspace_id         = azurerm_synapse_workspace.synapse.id
+  target_resource_id           = var.purview_storage_id
+  subresource_name             = "blob"
+  fully_qualified_domain_names = [var.purview_storage_fqdn]
 
   depends_on = [
     azurerm_synapse_workspace.synapse,
@@ -236,10 +241,11 @@ resource "azurerm_synapse_managed_private_endpoint" "synapse_mpe_purview_storage
 resource "azurerm_synapse_managed_private_endpoint" "synapse_mpe_purview_storage_queue" {
   count = var.create_service_bus_resources && var.purview_storage_id != null ? 1 : 0
 
-  name                 = "synapse-mpe-purview-storage-queue--${local.resource_suffix}"
-  synapse_workspace_id = azurerm_synapse_workspace.synapse.id
-  target_resource_id   = var.purview_storage_id
-  subresource_name     = "queue"
+  name                         = "synapse-mpe-purview-storage-queue--${local.resource_suffix}"
+  synapse_workspace_id         = azurerm_synapse_workspace.synapse.id
+  target_resource_id           = var.purview_storage_id
+  subresource_name             = "queue"
+  fully_qualified_domain_names = [var.purview_storage_fqdn]
 
   depends_on = [
     azurerm_synapse_workspace.synapse,
@@ -250,10 +256,11 @@ resource "azurerm_synapse_managed_private_endpoint" "synapse_mpe_purview_storage
 resource "azurerm_synapse_managed_private_endpoint" "synapse_mpe_purview_event_hubs" {
   count = var.create_service_bus_resources && var.purview_event_hub_id != null ? 1 : 0
 
-  name                 = "synapse-mpe-purview-event-hubs--${local.resource_suffix}"
-  synapse_workspace_id = azurerm_synapse_workspace.synapse.id
-  target_resource_id   = var.purview_event_hub_id
-  subresource_name     = "namespace"
+  name                         = "synapse-mpe-purview-event-hubs--${local.resource_suffix}"
+  synapse_workspace_id         = azurerm_synapse_workspace.synapse.id
+  target_resource_id           = var.purview_event_hub_id
+  subresource_name             = "namespace"
+  fully_qualified_domain_names = [var.purview_event_hub_fqdn]
 
   depends_on = [
     azurerm_synapse_workspace.synapse,
@@ -286,9 +293,10 @@ resource "azurerm_synapse_managed_private_endpoint" "mpesc_prod_sql" {
 }
 
 resource "azurerm_synapse_managed_private_endpoint" "odw_service_bus" {
-  count                = var.odw_service_bus_id != null ? 1 : 0
-  name                 = "synapse-mpe-odw-service-bus-namespace-${local.resource_suffix}"
-  synapse_workspace_id = azurerm_synapse_workspace.synapse.id
-  target_resource_id   = var.odw_service_bus_id
-  subresource_name     = "namespace"
+  count                        = var.odw_service_bus_id != null ? 1 : 0
+  name                         = "synapse-mpe-odw-service-bus-namespace-${local.resource_suffix}"
+  synapse_workspace_id         = azurerm_synapse_workspace.synapse.id
+  target_resource_id           = var.odw_service_bus_id
+  subresource_name             = "namespace"
+  fully_qualified_domain_names = [var.odw_service_bus_fqdn]
 }

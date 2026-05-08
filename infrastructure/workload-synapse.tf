@@ -50,6 +50,14 @@ module "synapse_workspace_private" {
   odt_appeals_back_office_service_bus_id = var.odt_appeals_back_office.service_bus_enabled && var.external_resource_links_enabled ? local.odt_appeals_back_office_service_bus_id : null
   odw_service_bus_id                     = module.synapse_ingestion.service_bus_namespace_id
 
+  data_lake_fqdn                           = module.synapse_data_lake.data_lake_account_fqdn
+  key_vault_fqdn                           = module.synapse_data_lake.key_vault_fqdn
+  odt_appeals_back_office_service_bus_fqdn = var.odt_appeals_back_office.service_bus_enabled && var.external_resource_links_enabled ? local.odt_appeals_back_office_service_bus_fqdn : null
+  purview_account_fqdn                     = var.link_purview_account ? var.purview_account_fqdn : null
+  purview_storage_fqdn                     = var.link_purview_account ? var.purview_storage_fqdn : null
+  purview_event_hub_fqdn                   = var.link_purview_account ? var.purview_event_hub_fqdn : null
+  odw_service_bus_fqdn                     = "${module.synapse_ingestion.service_bus_namespace_name}.servicebus.windows.net"
+
   tags = local.tags
 
   providers = {
@@ -107,6 +115,14 @@ module "synapse_workspace_private_failover" {
     synapse_dev_private_dns_zone_id = data.azurerm_private_dns_zone.tooling_synapse_dev.id
     synapse_sql_private_dns_zone_id = data.azurerm_private_dns_zone.tooling_synapse_sql.id
   }
+
+  data_lake_fqdn                           = module.synapse_data_lake.data_lake_account_fqdn
+  key_vault_fqdn                           = module.synapse_data_lake.key_vault_fqdn
+  odt_appeals_back_office_service_bus_fqdn = null
+  purview_account_fqdn                     = null
+  purview_storage_fqdn                     = null
+  purview_event_hub_fqdn                   = null
+  odw_service_bus_fqdn                     = null
 
   tags = local.tags
 
