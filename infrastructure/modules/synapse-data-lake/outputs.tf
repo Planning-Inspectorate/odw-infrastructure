@@ -18,11 +18,6 @@ output "data_lake_filesystem_id" {
   value       = azurerm_storage_data_lake_gen2_filesystem.synapse.id
 }
 
-output "data_lake_account_name" {
-  description = "The name of the data lake"
-  value       = azurerm_storage_account.synapse.name
-}
-
 output "key_vault_id" {
   description = "The ID of the Key Vault"
   value       = azurerm_key_vault.synapse.id
