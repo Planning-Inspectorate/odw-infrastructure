@@ -18,9 +18,9 @@ output "data_lake_filesystem_id" {
   value       = azurerm_storage_data_lake_gen2_filesystem.synapse.id
 }
 
-output "data_lake_account_fqdn" {
-  description = "The primary blob host of the data lake"
-  value       = azurerm_storage_account.synapse.primary_blob_host
+output "data_lake_account_name" {
+  description = "The name of the data lake"
+  value       = azurerm_storage_account.synapse.name
 }
 
 output "key_vault_id" {

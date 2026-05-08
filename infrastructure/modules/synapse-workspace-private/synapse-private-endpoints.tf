@@ -97,7 +97,7 @@ resource "azurerm_synapse_managed_private_endpoint" "data_lake" {
   synapse_workspace_id         = azurerm_synapse_workspace.synapse.id
   target_resource_id           = var.data_lake_account_id
   subresource_name             = "dfs"
-  fully_qualified_domain_names = [var.data_lake_fqdn]
+  fully_qualified_domain_names = ["${var.data_lake_name}.dfs.core.windows.net"]
 
   depends_on = [
     azurerm_synapse_workspace.synapse,
@@ -230,7 +230,7 @@ resource "azurerm_synapse_managed_private_endpoint" "synapse_mpe_purview_storage
   synapse_workspace_id         = azurerm_synapse_workspace.synapse.id
   target_resource_id           = var.purview_storage_id
   subresource_name             = "blob"
-  fully_qualified_domain_names = [var.purview_storage_fqdn]
+  fully_qualified_domain_names = ["${var.purview_storage_name}.blob.core.windows.net"]
 
   depends_on = [
     azurerm_synapse_workspace.synapse,
@@ -245,7 +245,7 @@ resource "azurerm_synapse_managed_private_endpoint" "synapse_mpe_purview_storage
   synapse_workspace_id         = azurerm_synapse_workspace.synapse.id
   target_resource_id           = var.purview_storage_id
   subresource_name             = "queue"
-  fully_qualified_domain_names = [var.purview_storage_fqdn]
+  fully_qualified_domain_names = ["${var.purview_storage_name}.queue.core.windows.net"]
 
   depends_on = [
     azurerm_synapse_workspace.synapse,

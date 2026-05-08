@@ -647,8 +647,8 @@ variable "purview_account_fqdn" {
   default     = null
 }
 
-variable "purview_storage_fqdn" {
-  description = "The fully-qualified domain name of Purview's storage account"
+variable "purview_storage_name" {
+  description = "The name of Purview's storage account"
   type        = string
   default     = null
 }

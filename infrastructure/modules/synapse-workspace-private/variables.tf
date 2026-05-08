@@ -23,8 +23,8 @@ variable "data_lake_filesystem_id" {
   type        = string
 }
 
-variable "data_lake_fqdn" {
-  description = "The fully-qualified domain name of the data lake"
+variable "data_lake_name" {
+  description = "The name of the data lake"
   type        = string
 }
 
@@ -43,8 +43,8 @@ variable "purview_account_fqdn" {
   type        = string
 }
 
-variable "purview_storage_fqdn" {
-  description = "The fully-qualified domain name of Purview's backend storage account"
+variable "purview_storage_name" {
+  description = "The name of Purview's backend storage account"
   type        = string
 }
 
