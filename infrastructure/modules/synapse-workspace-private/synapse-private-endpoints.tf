@@ -110,7 +110,7 @@ resource "azurerm_synapse_managed_private_endpoint" "synapse_mpe_kv" {
   synapse_workspace_id         = azurerm_synapse_workspace.synapse.id
   target_resource_id           = var.key_vault_id
   subresource_name             = "vault"
-  fully_qualified_domain_names = [var.key_vault_fqdn]
+  fully_qualified_domain_names = var.key_vault_fqdn != null ? [var.key_vault_fqdn] : null
 
   depends_on = [
     azurerm_synapse_workspace.synapse,
@@ -214,7 +214,7 @@ resource "azurerm_synapse_managed_private_endpoint" "synapse_mpe_purview_account
   synapse_workspace_id         = azurerm_synapse_workspace.synapse.id
   target_resource_id           = var.purview_id
   subresource_name             = "account"
-  fully_qualified_domain_names = [var.purview_account_fqdn]
+  fully_qualified_domain_names = var.purview_account_fqdn != null ? [var.purview_account_fqdn] : null
 
   depends_on = [
     azurerm_synapse_workspace.synapse,
@@ -259,7 +259,7 @@ resource "azurerm_synapse_managed_private_endpoint" "synapse_mpe_purview_event_h
   synapse_workspace_id         = azurerm_synapse_workspace.synapse.id
   target_resource_id           = var.purview_event_hub_id
   subresource_name             = "namespace"
-  fully_qualified_domain_names = [var.purview_event_hub_fqdn]
+  fully_qualified_domain_names = var.purview_event_hub_fqdn != null ? [var.purview_event_hub_fqdn] : null
 
   depends_on = [
     azurerm_synapse_workspace.synapse,
@@ -274,7 +274,7 @@ resource "azurerm_synapse_managed_private_endpoint" "cbos_sql" {
   synapse_workspace_id         = azurerm_synapse_workspace.synapse.id
   target_resource_id           = each.value.target_resource_id
   subresource_name             = "sqlServer"
-  fully_qualified_domain_names = [each.value.fqdn] #pins-sql-peas-primary-dev.database.windows.net
+  fully_qualified_domain_names = each.value.fqdn != null ? [each.value.fqdn] : null
 }
 
 
@@ -298,5 +298,5 @@ resource "azurerm_synapse_managed_private_endpoint" "odw_service_bus" {
   synapse_workspace_id         = azurerm_synapse_workspace.synapse.id
   target_resource_id           = var.odw_service_bus_id
   subresource_name             = "namespace"
-  fully_qualified_domain_names = [var.odw_service_bus_fqdn]
+  fully_qualified_domain_names = var.odw_service_bus_fqdn != null ? [var.odw_service_bus_fqdn] : null
 }
