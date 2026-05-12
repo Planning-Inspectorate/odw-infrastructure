@@ -23,6 +23,36 @@ variable "data_lake_filesystem_id" {
   type        = string
 }
 
+variable "data_lake_name" {
+  description = "The name of the data lake"
+  type        = string
+}
+
+variable "key_vault_fqdn" {
+  description = "The fully-qualified domain name of the key vault"
+  type        = string
+}
+
+variable "purview_account_fqdn" {
+  description = "The fully-qualified domain name of the Purview account"
+  type        = string
+}
+
+variable "purview_storage_name" {
+  description = "The name of Purview's backend storage account"
+  type        = string
+}
+
+variable "purview_event_hub_fqdn" {
+  description = "The fully-qualified domain name of Purview's Event Hub"
+  type        = string
+}
+
+variable "odw_service_bus_fqdn" {
+  description = "The fully-qualified domain name of the ODW Service Bus"
+  type        = string
+}
+
 variable "environment" {
   description = "The name of the environment in which resources will be deployed"
   type        = string

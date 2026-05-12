@@ -641,6 +641,24 @@ variable "purview_id" {
   default     = null
 }
 
+variable "purview_account_fqdn" {
+  description = "The fully-qualified domain name of the Purview account"
+  type        = string
+  default     = null
+}
+
+variable "purview_storage_name" {
+  description = "The name of Purview's storage account"
+  type        = string
+  default     = null
+}
+
+variable "purview_event_hub_fqdn" {
+  description = "The fully-qualified domain name of Purview's event hub"
+  type        = string
+  default     = null
+}
+
 variable "purview_storage_id" {
   description = "The id of Purview's managed storage account"
   type        = string
