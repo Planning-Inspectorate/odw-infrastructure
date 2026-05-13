@@ -52,6 +52,7 @@ module "synapse_workspace_private" {
 
   data_lake_name         = module.synapse_data_lake.data_lake_account_name
   key_vault_fqdn         = "${module.synapse_data_lake.key_vault_name}.vault.azure.net"
+  appeals_bo_sb_fqdn     = var.odt_appeals_back_office.service_bus_enabled && var.external_resource_links_enabled && var.odt_appeals_back_office.service_bus_name != null ? "${var.odt_appeals_back_office.service_bus_name}.servicebus.windows.net" : null
   purview_account_fqdn   = var.link_purview_account ? var.purview_account_fqdn : null
   purview_storage_name   = var.link_purview_account ? var.purview_storage_name : null
   purview_event_hub_fqdn = var.link_purview_account ? var.purview_event_hub_fqdn : null
@@ -117,6 +118,7 @@ module "synapse_workspace_private_failover" {
 
   data_lake_name         = module.synapse_data_lake.data_lake_account_name
   key_vault_fqdn         = "${module.synapse_data_lake.key_vault_name}.vault.azure.net"
+  appeals_bo_sb_fqdn     = null
   purview_account_fqdn   = null
   purview_storage_name   = null
   purview_event_hub_fqdn = null

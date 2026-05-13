@@ -33,6 +33,11 @@ variable "key_vault_fqdn" {
   type        = string
 }
 
+variable "appeals_bo_sb_fqdn" {
+  description = "The fully-qualified domain name of the appeal back office service bus"
+  type        = string
+}
+
 variable "purview_account_fqdn" {
   description = "The fully-qualified domain name of the Purview account"
   type        = string
