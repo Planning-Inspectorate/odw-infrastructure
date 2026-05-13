@@ -60,7 +60,7 @@ resource "azurerm_storage_account" "synapse" {
   }
 
   tags = local.tags
-  
+
   lifecycle {
     prevent_destroy = true
   }
