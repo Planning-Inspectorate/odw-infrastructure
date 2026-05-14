@@ -286,7 +286,7 @@ resource "azurerm_synapse_managed_private_endpoint" "mpesc_prod_sql" {
   synapse_workspace_id         = azurerm_synapse_workspace.synapse.id
   target_resource_id           = "/subscriptions/d1d6c393-2fe3-40af-ac27-f5b6bad36735/resourceGroups/pins-rg-peas-prod/providers/Microsoft.Sql/servers/pins-sql-peas-primary-prod"
   subresource_name             = "sqlServer"
-  fully_qualified_domain_names = "pins-sql-peas-primary-prod.database.windows.net"
+  fully_qualified_domain_names = ["pins-sql-peas-primary-prod.database.windows.net"]
 
   depends_on = [
     azurerm_synapse_workspace.synapse,
