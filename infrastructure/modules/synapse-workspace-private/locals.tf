@@ -23,7 +23,7 @@ locals {
     prod = {
       name               = "synapse-cbos-sqlserver-prod-training-peas"
       target_resource_id = "/subscriptions/dbfbfbbf-eb6f-457b-9c0c-fe3a071975bc/resourceGroups/pins-rg-peas-training/providers/Microsoft.Sql/servers/pins-sql-peas-primary-training"
-      fqdn               = "pins-sql-peas-primary-prod.database.windows.net"
+      fqdn               = "pins-sql-peas-primary-training.database.windows.net"
     }
   } : {}
 }
