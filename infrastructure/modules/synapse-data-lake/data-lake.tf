@@ -60,6 +60,10 @@ resource "azurerm_storage_account" "synapse" {
   }
 
   tags = local.tags
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "azurerm_storage_data_lake_gen2_filesystem" "synapse" {
