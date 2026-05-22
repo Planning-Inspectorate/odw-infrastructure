@@ -123,8 +123,8 @@ resource "azurerm_synapse_managed_private_endpoint" "synapse_mpe_kv" {
 #
 
 data "azurerm_servicebus_namespace" "appeals_bo" {
-  count          = var.create_service_bus_resources ? 1 : 0
-  name           = reverse(split("/", var.odt_appeals_back_office_service_bus_id)) # Last part of the id is the name of the service bus
+  count               = var.create_service_bus_resources ? 1 : 0
+  name                = reverse(split("/", var.odt_appeals_back_office_service_bus_id)) # Last part of the id is the name of the service bus
   resource_group_name = "pins-rg-appeals-bo-${var.environment}"
 }
 
@@ -301,8 +301,8 @@ resource "azurerm_synapse_managed_private_endpoint" "mpesc_prod_sql" {
 }
 
 data "azurerm_servicebus_namespace" "odw" {
-  count          = var.odw_service_bus_id != null ? 1 : 0
-  name           = reverse(split("/", var.odw_service_bus_id)) # Last part of the id is the name of the service bus
+  count               = var.odw_service_bus_id != null ? 1 : 0
+  name                = reverse(split("/", var.odw_service_bus_id)) # Last part of the id is the name of the service bus
   resource_group_name = "pins-rg-ingestion-${local.resource_suffix}"
 }
 
