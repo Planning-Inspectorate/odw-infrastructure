@@ -307,7 +307,7 @@ data "azurerm_servicebus_namespace" "odw" {
 }
 
 resource "azurerm_synapse_managed_private_endpoint" "odw_service_bus" {
-  count                        = var.odw_service_bus_id != null && data.azurerm_servicebus_namespace.odw.sku == "Premium" ? 1 : 0
+  count                        = var.odw_service_bus_id != null && data.azurerm_servicebus_namespace.odw[0].sku == "Premium" ? 1 : 0
   name                         = "synapse-mpe-odw-service-bus-namespace-${local.resource_suffix}"
   synapse_workspace_id         = azurerm_synapse_workspace.synapse.id
   target_resource_id           = var.odw_service_bus_id
