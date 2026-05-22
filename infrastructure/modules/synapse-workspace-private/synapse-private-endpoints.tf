@@ -122,14 +122,14 @@ resource "azurerm_synapse_managed_private_endpoint" "synapse_mpe_kv" {
 # synapse PE for connecting to the Appeals BO Service Bus instance when running in the Azure integration runtime
 #
 
-data "azurerm_service_bus_namespace" "appeals_bo" {
+data "azurerm_servicebus_namespace" "appeals_bo" {
   count          = var.create_service_bus_resources ? 1 : 0
   name           = reverse(split("/", var.odt_appeals_back_office_service_bus_id)) # Last part of the id is the name of the service bus
-  resource_group = "pins-rg-appeals-bo-${var.environment}"
+  resource_group_name = "pins-rg-appeals-bo-${var.environment}"
 }
 
 resource "azurerm_synapse_managed_private_endpoint" "synapse_mpe_appeals_bo_sb" {
-  count = var.create_service_bus_resources && data.azurerm_service_bus_namespace.appeals_bo[0].sku == "Premium" ? 1 : 0
+  count = var.create_service_bus_resources && data.azurerm_servicebus_namespace.appeals_bo[0].sku == "Premium" ? 1 : 0
 
   name                         = "synapse-mpe-appeals-bo--${local.resource_suffix}"
   synapse_workspace_id         = azurerm_synapse_workspace.synapse.id
@@ -300,14 +300,14 @@ resource "azurerm_synapse_managed_private_endpoint" "mpesc_prod_sql" {
   ]
 }
 
-data "azurerm_service_bus_namespace" "odw" {
+data "azurerm_servicebus_namespace" "odw" {
   count          = var.odw_service_bus_id != null ? 1 : 0
   name           = reverse(split("/", var.odw_service_bus_id)) # Last part of the id is the name of the service bus
-  resource_group = "pins-rg-ingestion-${local.resource_suffix}"
+  resource_group_name = "pins-rg-ingestion-${local.resource_suffix}"
 }
 
 resource "azurerm_synapse_managed_private_endpoint" "odw_service_bus" {
-  count                        = var.odw_service_bus_id != null && data.azurerm_service_bus_namespace.odw.sku == "Premium" ? 1 : 0
+  count                        = var.odw_service_bus_id != null && data.azurerm_servicebus_namespace.odw.sku == "Premium" ? 1 : 0
   name                         = "synapse-mpe-odw-service-bus-namespace-${local.resource_suffix}"
   synapse_workspace_id         = azurerm_synapse_workspace.synapse.id
   target_resource_id           = var.odw_service_bus_id
