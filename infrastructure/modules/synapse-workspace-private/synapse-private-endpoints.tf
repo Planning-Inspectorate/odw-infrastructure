@@ -126,6 +126,7 @@ data "azurerm_servicebus_namespace" "appeals_bo" {
   count               = var.create_service_bus_resources ? 1 : 0
   name                = reverse(split("/", var.odt_appeals_back_office_service_bus_id))[0] # Last part of the id is the name of the service bus
   resource_group_name = "pins-rg-appeals-bo-${var.environment}"
+  provider            = azurerm.odt
 }
 
 resource "azurerm_synapse_managed_private_endpoint" "synapse_mpe_appeals_bo_sb" {
