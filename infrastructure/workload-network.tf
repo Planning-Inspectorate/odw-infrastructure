@@ -65,7 +65,7 @@ resource "azurerm_private_dns_zone" "synapse" {
   tags = local.tags
 }
 
-resource "azurerm_private_dns_zone_virtual_network_link" "data_lake" {
+resource "azurerm_private_dns_zone_virtual_network_link" "datalake" {
   name                  = "dfs-${module.synapse_network.vnet_name}"
   resource_group_name   = azurerm_resource_group.network_global.name
   private_dns_zone_name = data.azurerm_private_dns_zone.tooling_storage["dfs"].name
@@ -75,7 +75,7 @@ resource "azurerm_private_dns_zone_virtual_network_link" "data_lake" {
   tags = local.tags
 }
 
-resource "azurerm_private_dns_zone_virtual_network_link" "data_lake_failover" {
+resource "azurerm_private_dns_zone_virtual_network_link" "datalake_failover" {
   name                  = "dfs-${module.synapse_network_failover.vnet_name}"
   resource_group_name   = azurerm_resource_group.network_global.name
   private_dns_zone_name = data.azurerm_private_dns_zone.tooling_storage["dfs"].name
