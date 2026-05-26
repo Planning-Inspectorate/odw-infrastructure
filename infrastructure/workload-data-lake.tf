@@ -50,6 +50,7 @@ module "synapse_data_lake" {
     azurerm         = azurerm,
     azurerm.horizon = azurerm.horizon
   }
+  depends_on = [azurerm_private_dns_zone.data_lake]
 }
 
 import {
