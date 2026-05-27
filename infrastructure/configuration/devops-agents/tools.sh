@@ -65,7 +65,7 @@ sudo apt-get install -y terraform=1.15.4-1
 
 # Checkov
 python3 -m pip install --force-reinstall packaging==21
-python3 -m pip install -U checkov==3.2.405
+python3 -m pip install -U checkov==3.2.529
 
 # ODW Common
 python3 -m pip install --force-reinstall "git+https://github.com/Planning-Inspectorate/odw-common.git@main"
