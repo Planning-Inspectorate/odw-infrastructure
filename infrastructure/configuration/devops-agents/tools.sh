@@ -61,11 +61,12 @@ python3 -m pip install -U poetry==2.1.3
 # Terraform
 curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add -
 sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-sudo apt-get install -y terraform=1.14.7-1
+sudo apt-get install -y terraform=1.15.4-1
 
 # Checkov
+python3 -m pip install --upgrade "pyopenssl>=23.2.0" # Force an update to avoid a version conflict with cryptography
 python3 -m pip install --force-reinstall packaging==21
-python3 -m pip install -U checkov==3.2.405
+python3 -m pip install -U checkov==3.2.529
 
 # ODW Common
 python3 -m pip install --force-reinstall "git+https://github.com/Planning-Inspectorate/odw-common.git@main"
