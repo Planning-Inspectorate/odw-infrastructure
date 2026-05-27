@@ -64,6 +64,7 @@ sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(l
 sudo apt-get install -y terraform=1.15.4-1
 
 # Checkov
+python3 -m pip install --upgrade "pyopenssl>=23.2.0" # Force an update to avoid a version conflict with cryptography
 python3 -m pip install --force-reinstall packaging==21
 python3 -m pip install -U checkov==3.2.529
 
