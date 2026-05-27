@@ -4,6 +4,7 @@ parameters:
 
 steps:
   - script: |
+      pip install --upgrade "pyopenssl>=23.2.0"
       echo "Running checkov version `checkov -v` in `pwd`"
       checkov -d . \
         --framework terraform \
