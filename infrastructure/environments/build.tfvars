@@ -312,9 +312,4 @@ create_service_bus_resources = false
 
 devops_agent_vm_sku = "Standard_E2as_v4"
 
-runtime_vm_image = {
-  publisher = "MicrosoftWindowsServer"
-  offer     = "windowsserver2022"
-  sku       = "2022-datacenter"
-  version   = "latest"
-}
+

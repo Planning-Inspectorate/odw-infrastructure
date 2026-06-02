@@ -20,11 +20,11 @@ variable "location" {
 
 variable "runtime_vm_image" {
   default = {
-    publisher = "MicrosoftWindowsServer"
-    offer     = "WindowsServer"
-    sku       = "2022-datacenter-azure-edition-core"
-    version   = "latest"
-  }
+  publisher = "MicrosoftWindowsServer"
+  offer     = "windowsserver2022"
+  sku       = "2022-datacenter"
+  version   = "latest"
+}
   description = "An object describing the image specification to use for the self-hosted integration runtime VM"
   type        = map(string)
 }
