@@ -323,37 +323,37 @@ variable "odt_subscription_id" {
   description = "The subscription ID of the ODT subscription"
   type        = string
 }
-/*
-variable "openlineage_function_app" {
-  default = {
-    enabled               = false
-    function_app_receiver = ""
-    function_app_parser   = ""
-    site_config           = {}
-  }
-  description = "Determines whether the resources for the OpenLineage Function App should be deployed"
-  type = object({
-    enabled               = bool
-    function_app_receiver = string
-    function_app_parser   = string
-    site_config           = map(any)
-  })
-}
 
-variable "openlineage_storage_account" {
-  description = "Storage account, tables and  containers for openlineage POC"
-  type = object({
-    container_name = list(string)
-    tables         = list(string)
+# variable "openlineage_function_app" {
+#   default = {
+#     enabled               = false
+#     function_app_receiver = ""
+#     function_app_parser   = ""
+#     site_config           = {}
+#   }
+#   description = "Determines whether the resources for the OpenLineage Function App should be deployed"
+#   type = object({
+#     enabled               = bool
+#     function_app_receiver = string
+#     function_app_parser   = string
+#     site_config           = map(any)
+#   })
+# }
 
-  })
-  default = {
-    container_name = []
-    tables         = []
+# variable "openlineage_storage_account" {
+#   description = "Storage account, tables and  containers for openlineage POC"
+#   type = object({
+#     container_name = list(string)
+#     tables         = list(string)
 
-  }
-}
-*/
+#   })
+#   default = {
+#     container_name = []
+#     tables         = []
+
+#   }
+# }
+
 
 variable "apim_enabled" {
   default     = false
