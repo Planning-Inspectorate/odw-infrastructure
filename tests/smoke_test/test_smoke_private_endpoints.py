@@ -96,7 +96,6 @@ class TestSmokePrivateEndpoints(TestCase):
     @pytest.mark.parametrize(
         "endpoint_name",
         [
-            f"pins-pe-pinskvsynwodw{ENV}uks"
             f"pins-pe-pinskvsynwodw{ENV}uks-tooling"
         ]
     )
@@ -108,7 +107,6 @@ class TestSmokePrivateEndpoints(TestCase):
         "endpoint_name",
         [
             f"pins-pe-pinskvmgmtodw{ENV}uks"
-            f"pins-pe-pinskvmgmtodw{ENV}uks-tooling"
         ]
     )
     def test_management_keyvault_private_endpoints(self, endpoint_name: str):
