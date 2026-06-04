@@ -85,14 +85,13 @@ module "storage_account_failover" {
   ]
 }
 
-
-# Commenting out because the current configuration is broken, and we may need something like this if the PoC goes ahead
-
+# Commenting out because the current configuration is broken, and we may need
+# something like this if the PoC goes ahead.
 # module "storage_account_openlineage" {
 #   count = var.openlineage_function_app.enabled ? 1 : 0
-
+#
 #   source = "./modules/storage-account"
-
+#
 #   resource_group_name                     = azurerm_resource_group.function_app[0].name
 #   service_name                            = local.service_name
 #   environment                             = var.environment
@@ -113,7 +112,6 @@ module "storage_account_failover" {
 #     }
 #   ]
 # }
-
 
 module "function_app" {
   for_each = {
@@ -167,12 +165,11 @@ module "function_app_failover" {
   servicebus_namespace       = var.odt_back_office_service_bus_name
 }
 
-
 # module "function_app_openlineage_receiver" {
 #   count = var.openlineage_function_app.enabled ? 1 : 0
-
+#
 #   source = "./modules/function-app"
-
+#
 #   resource_group_name          = azurerm_resource_group.function_app[0].name
 #   function_app_name            = var.openlineage_function_app.function_app_receiver
 #   service_name                 = local.service_name
@@ -192,12 +189,12 @@ module "function_app_failover" {
 #   storage_account_name         = module.storage_account_openlineage[0].storage_name
 #   storage_account_access_key   = module.storage_account_openlineage[0].primary_access_key
 # }
-
+#
 # module "function_app_openlineage_parser" {
 #   count = var.openlineage_function_app.enabled ? 1 : 0
-
+#
 #   source = "./modules/function-app"
-
+#
 #   resource_group_name          = azurerm_resource_group.function_app[0].name
 #   function_app_name            = var.openlineage_function_app.function_app_parser
 #   service_name                 = local.service_name
@@ -217,7 +214,6 @@ module "function_app_failover" {
 #   storage_account_name         = module.storage_account_openlineage[0].storage_name
 #   storage_account_access_key   = module.storage_account_openlineage[0].primary_access_key
 # }
-
 
 resource "azurerm_role_assignment" "odt_servicebus_namespace" {
   for_each = {
