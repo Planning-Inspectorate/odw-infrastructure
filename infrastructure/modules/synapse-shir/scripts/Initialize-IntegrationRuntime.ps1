@@ -4,6 +4,9 @@
 # Version      : 1.0.0
 # Author       : Lester March (https://github.com/lestermarch)
 # Help         : https://learn.microsoft.com/en-us/azure/data-factory/create-self-hosted-integration-runtime
+# Note         : If you receive a crash when deploying containing the error "Registration of new node is forbidden when Remote Access is disabled on another node"
+#                you need to go to Synapse > Management > Integration runtimes > YOUR_IR > Nodes and then delete the node.
+#                Refer to https://github.com/Azure/Azure-Data-Factory-Integration-Runtime-in-Windows-Container/issues/11 for more information
 # ==============================================================================
 
 Param(

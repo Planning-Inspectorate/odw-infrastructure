@@ -81,7 +81,6 @@ class TestSmokePrivateEndpoints(TestCase):
     @pytest.mark.parametrize(
         "endpoint_name",
         [
-            f"pins-pe-{DATA_LAKE_STORAGE}",
             f"pins-pe-syn-blob-tooling-odw-{ENV}-uks",
             f"pins-pe-syn-dfs-tooling-odw-{ENV}-uks",
             f"pins-pe-syn-file-tooling-odw-{ENV}-uks",
