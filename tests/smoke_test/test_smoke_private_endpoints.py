@@ -9,12 +9,14 @@ from odw_common.util.util import Util
 from tests.util.config import TEST_CONFIG
 from tests.util.test_case import TestCase
 from typing import Type, List, Dict, Any
+from contextlib import contextmanager
 import traceback
 import pytest
 
 
 class TestSmokePrivateEndpoints(TestCase):
     SUBSCRIPTION_ID = TEST_CONFIG["SUBSCRIPTION_ID"]
+    TOOLING_SUBSCRIPTION_ID = TEST_CONFIG["TOOLING_SUBSCRIPTION_ID"]
     ENV = TEST_CONFIG["ENV"].lower()
     DATA_LAKE_STORAGE = TEST_CONFIG["DATA_LAKE_STORAGE"]
     PURVIEW_EVENT_HUB_ID = TEST_CONFIG["PURVIEW_EVENT_HUB_ID"]
@@ -64,7 +66,7 @@ class TestSmokePrivateEndpoints(TestCase):
             The result is cached to boost the performance of subsequent calls
         """
         exception_message = ""
-        key = (private_endpoint_manager_class, resource_group_name, resource_name)
+        key = (private_endpoint_manager_class, resource_group_name, resource_name, Util.get_subscription())
         if key not in self._ENDPOINT_CACHE:
             raised_exception = None
             try:
@@ -77,6 +79,18 @@ class TestSmokePrivateEndpoints(TestCase):
                 )
             assert not raised_exception, exception_message
         return self._ENDPOINT_CACHE[key]
+
+    @contextmanager
+    def temporary_subscription(self, subscription_id: str):
+        initial_subscription = Util.get_subscription()
+        should_switch = bool(subscription_id) and subscription_id != initial_subscription
+        if should_switch:
+            Util.set_subscription(subscription_id)
+        try:
+            yield
+        finally:
+            if should_switch:
+                Util.set_subscription(initial_subscription)
 
     @pytest.mark.parametrize(
         "endpoint_name",
@@ -96,12 +110,13 @@ class TestSmokePrivateEndpoints(TestCase):
     @pytest.mark.parametrize(
         "endpoint_name",
         [
-            f"pins-pe-pinskvsynwodw{ENV}uks",
             f"pins-pe-pinskvsynwodw{ENV}uks-tooling"
         ]
     )
     def test_odw_keyvault_private_endpoints(self, endpoint_name: str):
-        all_endpoints = self.get_all_endpoints(KeyVaultPrivateEndpointManager, f"pins-rg-data-odw-{self.ENV}-uks", f"pinskvsynwodw{self.ENV}uks")
+        subscription_id = self.TOOLING_SUBSCRIPTION_ID if endpoint_name.endswith("-tooling") else self.SUBSCRIPTION_ID
+        with self.temporary_subscription(subscription_id):
+            all_endpoints = self.get_all_endpoints(KeyVaultPrivateEndpointManager, f"pins-rg-data-odw-{self.ENV}-uks", f"pinskvsynwodw{self.ENV}uks")
         self.validate_private_endpoint(all_endpoints, endpoint_name)
 
     @pytest.mark.parametrize(

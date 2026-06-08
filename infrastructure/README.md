@@ -218,7 +218,6 @@ The below tables outline the steps in each stage of the `Terraform CD` pipeline:
 | Name | Type |
 |------|------|
 | [azurerm_application_insights.function_app_insights](https://registry.terraform.io/providers/hashicorp/azurerm/4.13.0/docs/resources/application_insights) | resource |
-| [azurerm_private_dns_zone.key_vault](https://registry.terraform.io/providers/hashicorp/azurerm/4.13.0/docs/resources/private_dns_zone) | resource |
 | [azurerm_private_dns_zone.synapse](https://registry.terraform.io/providers/hashicorp/azurerm/4.13.0/docs/resources/private_dns_zone) | resource |
 | [azurerm_private_dns_zone_virtual_network_link.data_lake](https://registry.terraform.io/providers/hashicorp/azurerm/4.13.0/docs/resources/private_dns_zone_virtual_network_link) | resource |
 | [azurerm_private_dns_zone_virtual_network_link.data_lake_failover](https://registry.terraform.io/providers/hashicorp/azurerm/4.13.0/docs/resources/private_dns_zone_virtual_network_link) | resource |

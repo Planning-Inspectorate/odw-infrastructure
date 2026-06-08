@@ -5,7 +5,7 @@ resource "azurerm_key_vault" "synapse" {
   resource_group_name        = var.resource_group_name
   location                   = var.location
   sku_name                   = "standard"
-  enable_rbac_authorization  = true
+  rbac_authorization_enabled = true
   purge_protection_enabled   = true
   soft_delete_retention_days = 7
   tenant_id                  = var.tenant_id
@@ -15,27 +15,6 @@ resource "azurerm_key_vault" "synapse" {
     default_action             = "Deny"
     ip_rules                   = var.firewall_allowed_ip_addresses
     virtual_network_subnet_ids = local.azurerm_key_vault_synapse_vnet_subnet_ids
-  }
-
-  tags = local.tags
-}
-
-resource "azurerm_private_endpoint" "key_vault" {
-  name                = "pins-pe-${azurerm_key_vault.synapse.name}"
-  resource_group_name = var.network_resource_group_name
-  location            = var.location
-  subnet_id           = var.vnet_subnet_ids[var.synapse_private_endpoint_subnet_name]
-
-  private_dns_zone_group {
-    name                 = "keyVaultDnsZone"
-    private_dns_zone_ids = [var.key_vault_private_endpoint_dns_zone_id]
-  }
-
-  private_service_connection {
-    name                           = "keyVault"
-    is_manual_connection           = false
-    private_connection_resource_id = azurerm_key_vault.synapse.id
-    subresource_names              = ["vault"]
   }
 
   tags = local.tags

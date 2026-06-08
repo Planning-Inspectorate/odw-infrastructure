@@ -339,21 +339,20 @@ variable "odt_subscription_id" {
 #     site_config           = map(any)
 #   })
 # }
-
+#
 # variable "openlineage_storage_account" {
 #   description = "Storage account, tables and  containers for openlineage POC"
 #   type = object({
 #     container_name = list(string)
 #     tables         = list(string)
-
+#
 #   })
 #   default = {
 #     container_name = []
 #     tables         = []
-
+#
 #   }
 # }
-
 
 variable "apim_enabled" {
   default     = false

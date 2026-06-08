@@ -14,6 +14,7 @@ TEST_CONFIG = {
         "ENV",
         "DATA_LAKE_STORAGE",
         "SUBSCRIPTION_ID",
+        "TOOLING_SUBSCRIPTION_ID",
         "PURVIEW_ID",
         "PURVIEW_EVENT_HUB_ID",
         "PURVIEW_STORAGE_ID",
