@@ -23,7 +23,7 @@ resource "azurerm_windows_virtual_machine" "synapse" {
   admin_username        = var.runtime_vm_username
   admin_password        = random_password.shir_vm_administrator_password.result
   computer_name         = "shir-${random_string.unique_id.id}"
-  hotpatching_enabled   = contains(split("_", var.runtime_vm_size), "v2") ? true : false
+  #hotpatching_enabled   = contains(split("_", var.runtime_vm_size), "v2") ? true : false
   network_interface_ids = [azurerm_network_interface.shir.id]
   patch_mode            = contains(split("_", var.runtime_vm_size), "v2") ? "AutomaticByPlatform" : "AutomaticByOS"
   provision_vm_agent    = true
