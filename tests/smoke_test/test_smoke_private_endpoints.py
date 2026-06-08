@@ -114,9 +114,32 @@ class TestSmokePrivateEndpoints(TestCase):
         ]
     )
     def test_odw_keyvault_private_endpoints(self, endpoint_name: str):
-        subscription_id = self.TOOLING_SUBSCRIPTION_ID if endpoint_name.endswith("-tooling") else self.SUBSCRIPTION_ID
-        with self.temporary_subscription(subscription_id):
-            all_endpoints = self.get_all_endpoints(KeyVaultPrivateEndpointManager, f"pins-rg-data-odw-{self.ENV}-uks", f"pinskvsynwodw{self.ENV}uks")
+        # Key Vault lives in the workload subscription; tooling only hosts the private endpoint NIC.
+        # Query workload first and fall back to tooling to support historical deployment differences.
+        all_endpoints = None
+        attempted_subscriptions = [
+            subscription
+            for subscription in [self.SUBSCRIPTION_ID, self.TOOLING_SUBSCRIPTION_ID]
+            if subscription
+        ]
+        attempt_errors = []
+
+        for subscription_id in attempted_subscriptions:
+            with self.temporary_subscription(subscription_id):
+                try:
+                    all_endpoints = self.get_all_endpoints(
+                        KeyVaultPrivateEndpointManager,
+                        f"pins-rg-data-odw-{self.ENV}-uks",
+                        f"pinskvsynwodw{self.ENV}uks"
+                    )
+                    break
+                except AssertionError as e:
+                    attempt_errors.append(f"subscription '{subscription_id}': {str(e)}")
+
+        assert all_endpoints is not None, (
+            "Unable to retrieve Synapse Key Vault private endpoints from the configured subscriptions. "
+            + " ".join(attempt_errors)
+        )
         self.validate_private_endpoint(all_endpoints, endpoint_name)
 
     @pytest.mark.parametrize(
