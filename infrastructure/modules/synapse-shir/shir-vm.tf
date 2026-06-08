@@ -50,3 +50,4 @@ resource "azurerm_windows_virtual_machine" "synapse" {
 
   tags = local.tags
 }
+
