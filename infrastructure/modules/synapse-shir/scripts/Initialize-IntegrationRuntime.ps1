@@ -114,7 +114,7 @@ Function Register-IntegrationRuntime {
 
   $Registration = Start-Process $Executable "-k $AuthKey" -Wait -PassThru -NoNewWindow
   If ($Registration.ExitCode -ne 0) {
-    Throw "Failed to register Integration Runtime: $($Registration.ExitCode)"
+    Throw "Failed to register Integration Runtime: $($Install.ExitCode)"
   }
 }
 
