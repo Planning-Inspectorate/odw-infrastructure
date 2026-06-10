@@ -65,4 +65,5 @@ variable "vnet_subnet_ids" {
 variable "run_shir_setup_script" {
   description = "If the SHIR setup script should be triggered on start-up of the VM"
   type        = bool
+  default     = false
 }
