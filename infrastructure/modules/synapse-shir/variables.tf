@@ -21,7 +21,7 @@ variable "location" {
 variable "runtime_vm_image" {
   default = {
     publisher = "MicrosoftWindowsServer"
-    offer     = "WindowsServer"
+    offer     = "windowsserver2022"
     sku       = "2022-datacenter-azure-edition-core"
     version   = "latest"
   }

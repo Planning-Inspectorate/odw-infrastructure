@@ -269,4 +269,3 @@ external_resource_links_enabled = true
 
 link_purview_account = true
 
-run_shir_setup_script = false

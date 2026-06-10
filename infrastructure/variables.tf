@@ -620,6 +620,7 @@ variable "link_purview_account" {
 variable "run_shir_setup_script" {
   description = "If the SHIR setup script should be triggered on start-up of the VM"
   type        = bool
+  default     = true
 }
 
 variable "create_service_bus_resources" {
