@@ -21,7 +21,7 @@ variable "location" {
 variable "runtime_vm_image" {
   default = {
     publisher = "MicrosoftWindowsServer"
-    offer     = "windowsserver2022"
+    offer     = "WindowsServer"
     sku       = "2022-datacenter-azure-edition-core"
     version   = "latest"
   }
@@ -65,5 +65,4 @@ variable "vnet_subnet_ids" {
 variable "run_shir_setup_script" {
   description = "If the SHIR setup script should be triggered on start-up of the VM"
   type        = bool
-  default     = false
 }
