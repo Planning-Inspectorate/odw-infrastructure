@@ -170,7 +170,7 @@ service_bus_topics_and_subscriptions = [
   {
     name = "application-update"
     subscriptions = {
-      "planning-environmental-specialist-odw-sub"      = {},
+      "planning-environmental-specialist-odw-sub" = {},
       "planning-environmental-specialist-odw-wake-sub" = {}
     }
   }
