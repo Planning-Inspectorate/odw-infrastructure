@@ -180,6 +180,18 @@ variable "horizon_migration" {
   default = null
 }
 
+#S62A Horizon migration
+variable "s62a_migration" {
+  description = "Configuration for S62A data migration"
+  type = object({
+    rg             = string
+    service_name   = string
+    container_name = list(string)
+  })
+  default = null
+}
+
+
 variable "key_vault_role_assignments" {
   default     = {}
   description = "An object mapping RBAC roles to principal IDs for Key Vault"
