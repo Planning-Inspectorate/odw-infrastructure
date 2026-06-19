@@ -17,6 +17,7 @@ locals {
     {
       ServiceBusConnection__fullyQualifiedNamespace        = "${var.servicebus_namespace}.servicebus.windows.net"
       ServiceBusConnectionAppeals__fullyQualifiedNamespace = "${var.servicebus_namespace_appeals}.servicebus.windows.net"
+      ServiceBusConnectionOdw__fullyQualifiedNamespace     = var.servicebus_namespace_odw != null ? "${var.servicebus_namespace_odw}.servicebus.windows.net" : null
       "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING"           = "DefaultEndpointsProtocol=https;AccountName=${var.storage_account_name};AccountKey=${var.storage_account_access_key};EndpointSuffix=core.windows.net"
       "WEBSITE_CONTENTSHARE"                               = var.file_share_name
       "WEBSITE_CONTENTOVERVNET"                            = 1
