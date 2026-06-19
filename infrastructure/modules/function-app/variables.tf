@@ -118,6 +118,12 @@ variable "servicebus_namespace_appeals" {
   default     = null
 }
 
+variable "servicebus_namespace_odw" {
+  type        = string
+  description = "The name of the ODW service bus namespace to use for the function app"
+  default     = null
+}
+
 variable "site_config_defaults" {
   type = object({
     always_on = bool
