@@ -106,13 +106,13 @@ resource "azurerm_synapse_managed_private_endpoint" "data_lake" {
 }
 
 resource "azurerm_synapse_managed_private_endpoint" "s62a" {
-  count = var.environment == "dev" ? 1 : 0
+  count = var.s62a_storage_account_name != null ? 1 : 0
 
-  name                         = "synapse-st-dfs--pinssts62adevuksar7nmu"
+  name                         = "synapse-st-dfs--${var.s62a_storage_account_name}"
   synapse_workspace_id         = azurerm_synapse_workspace.synapse.id
-  target_resource_id           = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Storage/storageAccounts/pinssts62adevuksar7nmu"
+  target_resource_id           = var.s62a_storage_account_id
   subresource_name             = "dfs"
-  fully_qualified_domain_names = ["pinssts62adevuksar7nmu.dfs.core.windows.net"]
+  fully_qualified_domain_names = ["${var.s62a_storage_account_name}.dfs.core.windows.net"]
 
   depends_on = [
     azurerm_synapse_workspace.synapse,
