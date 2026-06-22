@@ -120,7 +120,6 @@ resource "azurerm_synapse_managed_private_endpoint" "s62a" {
   ]
 }
 
-
 resource "azurerm_synapse_managed_private_endpoint" "synapse_mpe_kv" {
   name                         = "synapse-mpe-kv--${local.resource_suffix}"
   synapse_workspace_id         = azurerm_synapse_workspace.synapse.id
