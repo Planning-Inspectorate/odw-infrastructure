@@ -114,10 +114,7 @@ resource "azurerm_synapse_managed_private_endpoint" "s62a" {
   subresource_name             = "dfs"
   fully_qualified_domain_names = ["${var.s62a_storage_account_name}.dfs.core.windows.net"]
 
-  depends_on = [
-    azurerm_synapse_workspace.synapse,
-    time_sleep.firewall_delay
-  ]
+  depends_on = [azurerm_synapse_workspace.synapse, time_sleep.firewall_delay]
 }
 
 resource "azurerm_synapse_managed_private_endpoint" "synapse_mpe_kv" {
