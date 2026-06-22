@@ -277,3 +277,13 @@ variable "tooling_config" {
     synapse_sql_private_dns_zone_id = string
   })
 }
+
+variable "s62a_storage_account_name" {
+  type    = string
+  default = null
+}
+
+variable "s62a_storage_account_id" {
+  type    = string
+  default = null
+}
