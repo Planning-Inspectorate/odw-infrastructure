@@ -1,9 +1,9 @@
 #S62A Horizon Migration Storage Account
 module "storage_account_s62a" {
-  count  = var.s62a_migration != null ? 1 : 0
+  count  = var.s62a_migration.enabled ? 1 : 0
   source = "./modules/storage-account"
 
-  resource_group_name                     = var.s62a_migration.rg
+  resource_group_name                     = resource_group_name = azurerm_resource_group.data.name
   service_name                            = var.s62a_migration.service_name
   environment                             = var.environment
   location                                = module.azure_region.location_cli
