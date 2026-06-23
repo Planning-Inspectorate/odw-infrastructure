@@ -184,11 +184,15 @@ variable "horizon_migration" {
 variable "s62a_migration" {
   description = "Configuration for S62A data migration"
   type = object({
-    rg             = string
+    enabled        = bool
     service_name   = string
     container_name = list(string)
   })
-  default = null
+  default = {
+    enabled        = true
+    service_name   = "s62a"
+    container_name = ["s62a"]
+  }
 }
 
 
