@@ -202,3 +202,9 @@ variable "soft_delete_retention_policy" {
   description = "Is soft delete enabled for containers and blobs?"
   default     = false
 }
+
+variable "public_network_access_enabled" {
+  type        = bool
+  description = "Whether public network access is allowed to the storage account"
+  default     = true
+}
