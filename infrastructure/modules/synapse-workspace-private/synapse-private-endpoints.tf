@@ -16,7 +16,7 @@ resource "azurerm_private_endpoint" "synapse_dedicated_sql_pool" {
 
   private_dns_zone_group {
     name                 = "synapsePrivateDnsZone"
-    private_dns_zone_ids = [var.synapse_private_endpoint_dns_zone_id]
+    private_dns_zone_ids = [var.tooling_config.synapse_sql_private_dns_zone_id]
   }
 
   private_service_connection {
@@ -37,7 +37,7 @@ resource "azurerm_private_endpoint" "synapse_development" {
 
   private_dns_zone_group {
     name                 = "synapsePrivateDnsZone"
-    private_dns_zone_ids = [var.synapse_private_endpoint_dns_zone_id]
+    private_dns_zone_ids = [var.tooling_config.synapse_dev_private_dns_zone_id]
   }
 
   private_service_connection {
@@ -49,7 +49,7 @@ resource "azurerm_private_endpoint" "synapse_development" {
 
   tags = local.tags
 }
-    
+
 
 resource "azurerm_synapse_managed_private_endpoint" "data_lake" {
   name                         = "synapse-st-dfs--${var.data_lake_account_name}"

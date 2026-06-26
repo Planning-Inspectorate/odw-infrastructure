@@ -227,6 +227,7 @@ variable "synapse_data_exfiltration_enabled" {
 }
 
 variable "synapse_private_endpoint_dns_zone_id" {
+  default     = null
   description = "The ID of the Private DNS Zone hosting privatelink.azuresynapse.net"
   type        = string
 }
