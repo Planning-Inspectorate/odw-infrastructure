@@ -226,6 +226,11 @@ variable "synapse_data_exfiltration_enabled" {
   type        = bool
 }
 
+variable "synapse_private_endpoint_dns_zone_id" {
+  description = "The ID of the Private DNS Zone hosting privatelink.azuresynapse.net"
+  type        = string
+}
+
 variable "synapse_private_endpoint_subnet_name" {
   default     = "SynapseEndpointSubnet"
   description = "The name of the subnet into which Synapse private endpoints should be deployed"
