@@ -156,7 +156,7 @@ class TestSmokePrivateEndpoints(TestCase):
         "endpoint_name",
         [
             f"pins-pe-syn-devops-odw-{ENV}-uks",
-            f"pins-pe-syn-ssql-odw-{ENV}-uks",
+            f"pins-pe-syn-dsql-odw-{ENV}-uks",
             f"pins-pe-syn-devops-tooling-odw-{ENV}-uks",
         ]
     )
