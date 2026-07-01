@@ -106,7 +106,7 @@ resource "azurerm_synapse_managed_private_endpoint" "data_lake" {
 }
 
 resource "azurerm_synapse_managed_private_endpoint" "s62a" {
-  count = var.s62a_storage_account_name != null ? 1 : 0
+  count = var.s62a_endpoint_enabled ? 1 : 0
 
   name                         = "synapse-st-dfs--${var.s62a_storage_account_name}"
   synapse_workspace_id         = azurerm_synapse_workspace.synapse.id
