@@ -287,3 +287,9 @@ variable "s62a_storage_account_id" {
   type    = string
   default = null
 }
+
+variable "s62a_endpoint_enabled" {
+  type        = bool
+  description = "Whether to create the S62A synapse managed private endpoint"
+  default     = false
+}
