@@ -168,10 +168,10 @@ resource "azurerm_private_endpoint" "synapse_development_tooling" {
 }
 
 resource "azurerm_private_endpoint" "synapse_sql_tooling" {
-  # entries are created by the back-office stack in test & prod
+  # entries are created by the back-office stack in prod
   # https://github.com/Planning-Inspectorate/infrastructure-environments/blob/d0636a8d0d557ac115f11523b228025b68dac090/app/stacks/uk-west/back-office/synapse-private-link.tf#L1-L20
   # todo: migrate so its all managed here
-  count               = (var.environment == "prod" || var.environment == "test") ? 0 : 1
+  count               = var.environment == "prod" ? 0 : 1
   name                = "pins-pe-syn-sql-tooling-${local.resource_suffix}"
   resource_group_name = var.network_resource_group_name
   location            = var.location
