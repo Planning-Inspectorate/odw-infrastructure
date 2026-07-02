@@ -95,6 +95,7 @@ horizon_migration = {
 
 #S62A Horizon migration storage account
 s62a_migration = {
+  enabled        = true
   rg             = "pins-rg-data-odw-dev-uks"
   service_name   = "s62a"
   container_name = ["s62a"]
