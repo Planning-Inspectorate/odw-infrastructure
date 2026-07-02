@@ -105,6 +105,18 @@ resource "azurerm_synapse_managed_private_endpoint" "data_lake" {
   ]
 }
 
+resource "azurerm_synapse_managed_private_endpoint" "s62a" {
+  count = var.s62a_endpoint_enabled ? 1 : 0
+
+  name                         = "synapse-st-dfs--${var.s62a_storage_account_name}"
+  synapse_workspace_id         = azurerm_synapse_workspace.synapse.id
+  target_resource_id           = var.s62a_storage_account_id
+  subresource_name             = "blob"
+  fully_qualified_domain_names = ["${var.s62a_storage_account_name}.blob.core.windows.net"]
+
+  depends_on = [azurerm_synapse_workspace.synapse, time_sleep.firewall_delay]
+}
+
 resource "azurerm_synapse_managed_private_endpoint" "synapse_mpe_kv" {
   name                         = "synapse-mpe-kv--${local.resource_suffix}"
   synapse_workspace_id         = azurerm_synapse_workspace.synapse.id
