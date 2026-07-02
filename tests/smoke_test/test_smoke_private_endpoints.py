@@ -156,8 +156,8 @@ class TestSmokePrivateEndpoints(TestCase):
         "endpoint_name",
         [
             f"pins-pe-syn-devops-odw-{ENV}-uks",
-            f"pins-pe-syn-ssql-odw-{ENV}-uks",
             f"pins-pe-syn-devops-tooling-odw-{ENV}-uks",
+            *([f"pins-pe-syn-sql-tooling-odw-{ENV}-uks"] if ENV != "prod" else [])
         ]
     )
     def test_odw_synapse_private_endpoints(self, endpoint_name: str):
@@ -167,7 +167,6 @@ class TestSmokePrivateEndpoints(TestCase):
     @pytest.mark.parametrize(
         "endpoint_name",
         [
-            f"pins-pe-syn-ws-odw-{ENV}-uks",
             f"pins-pe-syn-ws-tooling-odw-{ENV}-uks"
         ]
     )

@@ -16,7 +16,7 @@ resource "azurerm_private_endpoint" "synapse_dedicated_sql_pool" {
 
   private_dns_zone_group {
     name                 = "synapsePrivateDnsZone"
-    private_dns_zone_ids = [var.synapse_private_endpoint_dns_zone_id]
+    private_dns_zone_ids = [var.tooling_config.synapse_sql_private_dns_zone_id]
   }
 
   private_service_connection {
@@ -37,7 +37,7 @@ resource "azurerm_private_endpoint" "synapse_development" {
 
   private_dns_zone_group {
     name                 = "synapsePrivateDnsZone"
-    private_dns_zone_ids = [var.synapse_private_endpoint_dns_zone_id]
+    private_dns_zone_ids = [var.tooling_config.synapse_dev_private_dns_zone_id]
   }
 
   private_service_connection {
@@ -50,47 +50,6 @@ resource "azurerm_private_endpoint" "synapse_development" {
   tags = local.tags
 }
 
-resource "azurerm_private_endpoint" "synapse_serverless_sql_pool" {
-  name                = "pins-pe-syn-ssql-${local.resource_suffix}"
-  resource_group_name = var.network_resource_group_name
-  location            = var.location
-  subnet_id           = var.synapse_private_endpoint_vnet_subnets[var.synapse_private_endpoint_subnet_name]
-
-  private_dns_zone_group {
-    name                 = "synapsePrivateDnsZone"
-    private_dns_zone_ids = [var.synapse_private_endpoint_dns_zone_id]
-  }
-
-  private_service_connection {
-    name                           = "synapseServerlessSql"
-    is_manual_connection           = false
-    private_connection_resource_id = azurerm_synapse_workspace.synapse.id
-    subresource_names              = ["SqlOnDemand"]
-  }
-
-  tags = local.tags
-}
-
-resource "azurerm_private_endpoint" "synapse_workspace" {
-  name                = "pins-pe-syn-ws-${local.resource_suffix}"
-  resource_group_name = var.network_resource_group_name
-  location            = var.location
-  subnet_id           = var.synapse_private_endpoint_vnet_subnets[var.synapse_private_endpoint_subnet_name]
-
-  private_dns_zone_group {
-    name                 = "synapsePrivateDnsZone"
-    private_dns_zone_ids = [var.synapse_private_endpoint_dns_zone_id]
-  }
-
-  private_service_connection {
-    name                           = "synapseWorkspace"
-    is_manual_connection           = false
-    private_connection_resource_id = azurerm_synapse_private_link_hub.synapse_workspace.id
-    subresource_names              = ["Web"]
-  }
-
-  tags = local.tags
-}
 
 resource "azurerm_synapse_managed_private_endpoint" "data_lake" {
   name                         = "synapse-st-dfs--${var.data_lake_account_name}"
@@ -168,10 +127,10 @@ resource "azurerm_private_endpoint" "synapse_development_tooling" {
 }
 
 resource "azurerm_private_endpoint" "synapse_sql_tooling" {
-  # entries are created by the back-office stack in test & prod
+  # entries are created by the back-office stack in prod
   # https://github.com/Planning-Inspectorate/infrastructure-environments/blob/d0636a8d0d557ac115f11523b228025b68dac090/app/stacks/uk-west/back-office/synapse-private-link.tf#L1-L20
   # todo: migrate so its all managed here
-  count               = (var.environment == "prod" || var.environment == "test") ? 0 : 1
+  count               = var.environment == "prod" ? 0 : 1
   name                = "pins-pe-syn-sql-tooling-${local.resource_suffix}"
   resource_group_name = var.network_resource_group_name
   location            = var.location

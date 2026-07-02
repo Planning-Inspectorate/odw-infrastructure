@@ -51,13 +51,6 @@ module "synapse_network_failover" {
   tags = local.tags
 }
 
-resource "azurerm_private_dns_zone" "synapse" {
-  name                = "privatelink.azuresynapse.net"
-  resource_group_name = azurerm_resource_group.network_global.name
-
-  tags = local.tags
-}
-
 resource "azurerm_private_dns_zone_virtual_network_link" "datalake" {
   name                  = "dfs-${module.synapse_network.vnet_name}"
   resource_group_name   = var.tooling_config.network_rg
@@ -98,20 +91,22 @@ resource "azurerm_private_dns_zone_virtual_network_link" "keyvault_failover" {
   tags = local.tags
 }
 
-resource "azurerm_private_dns_zone_virtual_network_link" "synapse" {
+resource "azurerm_private_dns_zone_virtual_network_link" "synapse_odw" {
   name                  = "azuresynapse-${module.synapse_network.vnet_name}"
-  resource_group_name   = azurerm_resource_group.network_global.name
-  private_dns_zone_name = azurerm_private_dns_zone.synapse.name
+  resource_group_name   = var.tooling_config.network_rg
+  private_dns_zone_name = data.azurerm_private_dns_zone.tooling_synapse.name
   virtual_network_id    = module.synapse_network.vnet_id
+  provider              = azurerm.tooling
 
   tags = local.tags
 }
 
-resource "azurerm_private_dns_zone_virtual_network_link" "synapse_failover" {
+resource "azurerm_private_dns_zone_virtual_network_link" "synapse_odw_failover" {
   name                  = "azuresynapse-${module.synapse_network_failover.vnet_name}"
-  resource_group_name   = azurerm_resource_group.network_global.name
-  private_dns_zone_name = azurerm_private_dns_zone.synapse.name
+  resource_group_name   = var.tooling_config.network_rg
+  private_dns_zone_name = data.azurerm_private_dns_zone.tooling_synapse.name
   virtual_network_id    = module.synapse_network_failover.vnet_id
+  provider              = azurerm.tooling
 
   tags = local.tags
 }
