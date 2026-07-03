@@ -108,7 +108,7 @@ resource "azurerm_monitor_scheduled_query_rules_alert_v2" "integration_function_
   display_name = "ODW function app integration failure - ${local.resource_suffix}"
   description  = "Triggered when the integration function app logs any function execution failures."
 
-  location            = "Global"
+  location            = "uksouth"
   resource_group_name = var.resource_group_name
   scopes              = [azurerm_log_analytics_workspace.synapse.id]
 
@@ -143,7 +143,7 @@ resource "azurerm_monitor_scheduled_query_rules_alert_v2" "integration_function_
   display_name = "ODW function app integration exception - ${local.resource_suffix}"
   description  = "Triggered when the integration function app logs any exceptions."
 
-  location            = "Global"
+  location            = "uksouth"
   resource_group_name = var.resource_group_name
   scopes              = [azurerm_log_analytics_workspace.synapse.id]
 
