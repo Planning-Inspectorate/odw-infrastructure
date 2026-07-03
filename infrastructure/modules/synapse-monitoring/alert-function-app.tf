@@ -120,7 +120,7 @@ resource "azurerm_monitor_scheduled_query_rules_alert_v2" "integration_function_
 
   criteria {
     query                   = <<-QUERY
-      requests
+      AppRequests
       | where AppRoleName =~ 'pins-fnapp01-odw-${var.environment}-uks'
       | where Success == False
       QUERY
