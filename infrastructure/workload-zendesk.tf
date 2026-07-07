@@ -1,3 +1,6 @@
+# These resources are all related to Zendesk and MAY be needed in the future. This has been moved to
+# its own module and disabled for now
+
 resource "azurerm_resource_group" "zendesk" {
   count = var.zendesk_enabled ? 1 : 0
 
