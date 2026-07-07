@@ -676,3 +676,24 @@ variable "purview_event_hub_id" {
   type        = string
   default     = null
 }
+
+variable "specialist_case_validation_check_logic_app_enabled" {
+  type    = bool
+  default = true
+}
+
+variable "specialist_case_validation_check_recipients" {
+  type = string
+
+}
+
+variable "specialist_case_validation_check_logic_app_migration_ids" {
+  description = "Temporary variable for importing logic apps into Terraform"
+  type        = map(string)
+  default = {
+    build = null
+    dev   = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Logic/workflows/odw-specialist-case-validation-check-dev"
+    test  = "/subscriptions/6b18ba9d-2399-48b5-a834-e0f267be122d/resourceGroups/pins-rg-data-odw-test-uks/providers/Microsoft.Logic/workflows/odw-specialist-case-validation-check-test"
+    prod  = "/subscriptions/a82fd28d-5989-4e06-a0bb-1a5d859f9e0c/resourceGroups/pins-rg-data-odw-prod-uks/providers/Microsoft.Logic/workflows/odw-specialist-case-validation-check-prod"
+  }
+}
