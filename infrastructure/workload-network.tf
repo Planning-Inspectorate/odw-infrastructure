@@ -111,6 +111,46 @@ resource "azurerm_private_dns_zone_virtual_network_link" "synapse_odw_failover" 
   tags = local.tags
 }
 
+resource "azurerm_private_dns_zone_virtual_network_link" "synapse_dev_odw" {
+  name                  = "azuresynapse-dev-${module.synapse_network.vnet_name}"
+  resource_group_name   = var.tooling_config.network_rg
+  private_dns_zone_name = data.azurerm_private_dns_zone.tooling_synapse_dev.name
+  virtual_network_id    = module.synapse_network.vnet_id
+  provider              = azurerm.tooling
+
+  tags = local.tags
+}
+
+resource "azurerm_private_dns_zone_virtual_network_link" "synapse_dev_odw_failover" {
+  name                  = "azuresynapse-dev-${module.synapse_network_failover.vnet_name}"
+  resource_group_name   = var.tooling_config.network_rg
+  private_dns_zone_name = data.azurerm_private_dns_zone.tooling_synapse_dev.name
+  virtual_network_id    = module.synapse_network_failover.vnet_id
+  provider              = azurerm.tooling
+
+  tags = local.tags
+}
+
+resource "azurerm_private_dns_zone_virtual_network_link" "synapse_sql_odw" {
+  name                  = "azuresynapse-sql-${module.synapse_network.vnet_name}"
+  resource_group_name   = var.tooling_config.network_rg
+  private_dns_zone_name = data.azurerm_private_dns_zone.tooling_synapse_sql.name
+  virtual_network_id    = module.synapse_network.vnet_id
+  provider              = azurerm.tooling
+
+  tags = local.tags
+}
+
+resource "azurerm_private_dns_zone_virtual_network_link" "synapse_sql_odw_failover" {
+  name                  = "azuresynapse-sql-${module.synapse_network_failover.vnet_name}"
+  resource_group_name   = var.tooling_config.network_rg
+  private_dns_zone_name = data.azurerm_private_dns_zone.tooling_synapse_sql.name
+  virtual_network_id    = module.synapse_network_failover.vnet_id
+  provider              = azurerm.tooling
+
+  tags = local.tags
+}
+
 resource "azurerm_private_dns_zone_virtual_network_link" "servicebus" {
   name                  = "servicebus-${module.synapse_network.vnet_name}"
   resource_group_name   = var.tooling_config.network_rg
