@@ -191,12 +191,6 @@ variable "location" {
   type        = string
 }
 
-variable "logic_app_enabled" {
-  default     = false
-  description = "Determines whether the resources for the App Service Plan, Storage Account and Logic App Standard should be deployed"
-  type        = bool
-}
-
 variable "zendesk_enabled" {
   default     = false
   description = "Determines whether the resources related to Zendesk"
@@ -678,12 +672,14 @@ variable "purview_event_hub_id" {
 }
 
 variable "specialist_case_validation_check_logic_app_enabled" {
-  type    = bool
-  default = true
+  description = "If the specialist case validation logic app should be deployed"
+  type        = bool
+  default     = true
 }
 
 variable "specialist_case_validation_check_recipients" {
-  type = string
+  description = "Semicolon-separates list of email addresses"
+  type        = string
 
 }
 
