@@ -197,6 +197,12 @@ variable "logic_app_enabled" {
   type        = bool
 }
 
+variable "zendesk_enabled" {
+  default     = false
+  description = "Determines whether the resources related to Zendesk"
+  type        = bool
+}
+
 variable "message_storage_account" {
   type        = string
   description = "Name of the storage account for service bus messages"
