@@ -1,5 +1,6 @@
 # Legacy manually-created logic app that has been migrated to Terraform
 module "specialist_case_validation_check" {
+  count               = var.specialist_case_validation_check_logic_app_enabled ? 1 : 0
   source              = "./modules/logic-app"
   logic_app_name      = "odw-specialist-case-validation-check-${var.environment}"
   resource_group_name = azurerm_resource_group.data.name
