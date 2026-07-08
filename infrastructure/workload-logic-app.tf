@@ -4,7 +4,7 @@ module "specialist_case_validation_check" {
   source              = "./modules/logic-app"
   logic_app_name      = "odw-specialist-case-validation-check-${var.environment}"
   resource_group_name = azurerm_resource_group.data.name
-  location            = var.location
+  location            = module.azure_region.location_cli
 
   custom_actions = [
     {
