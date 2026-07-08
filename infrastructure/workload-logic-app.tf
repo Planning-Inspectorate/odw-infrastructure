@@ -5,6 +5,36 @@ module "specialist_case_validation_check" {
   logic_app_name      = "odw-specialist-case-validation-check-${var.environment}"
   resource_group_name = azurerm_resource_group.data.name
   location            = module.azure_region.location_cli
+  parameters = {
+    "$connections" = jsonencode(
+      {
+        azureblob-1 = {
+          connectionId   = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Web/connections/azureblob-1"
+          connectionName = "azureblob-1"
+          connectionProperties = {
+            authentication = {
+              type = "ManagedServiceIdentity"
+            }
+          }
+          id = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/providers/Microsoft.Web/locations/uksouth/managedApis/azureblob"
+        }
+        office365 = {
+          connectionId         = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Web/connections/office365-2"
+          connectionName       = "office365-2"
+          connectionProperties = {}
+          id                   = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/providers/Microsoft.Web/locations/uksouth/managedApis/office365"
+        }
+      }
+    )
+  }
+  workflow_parameters = {
+    "$connections" = jsonencode(
+      {
+        defaultValue = {}
+        type         = "Object"
+      }
+    )
+  }
 
   custom_actions = [
     {
