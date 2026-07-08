@@ -11,8 +11,5 @@ module "storage_account_s62a_migration" {
   location                                = module.azure_region.location_cli
   tags                                    = local.tags
   container_name                          = var.s62a_migration.container_name
-  network_rule_virtual_network_subnet_ids = concat([
-    module.synapse_network.vnet_subnets[local.functionapp_subnet_name],
-    module.synapse_network.vnet_subnets[local.compute_subnet_name]
-  ])
+  network_rule_virtual_network_subnet_ids = concat([module.synapse_network.vnet_subnets[local.functionapp_subnet_name], module.synapse_network.vnet_subnets[local.compute_subnet_name]])
 }
