@@ -71,7 +71,7 @@ resource "azurerm_role_assignment" "odw_read_only_prod" {
 # Import only in prod
 import {
   for_each = var.environment == "prod" ? toset([1]) : toset([])
-  to       = azurerm_role_assignment.odw_read_only_prod
+  to       = azurerm_role_assignment.odw_read_only_prod[0]
   id       = "${module.synapse_data_lake.data_lake_account_id}/providers/microsoft.authorization/roleassignments/da8b1642-e925-45e7-aaa7-ec9c1c8925dd"
 }
 
