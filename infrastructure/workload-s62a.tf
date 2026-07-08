@@ -36,7 +36,7 @@ resource "azurerm_private_endpoint" "s62a_endpoint" {
 
   private_service_connection {
     name                           = "privateendpointconnection"
-    private_connection_resource_id = azurerm_storage_account.synapse.id
+    private_connection_resource_id = module.synapse_data_lake.data_lake_account_id
     subresource_names              = ["blob"]
     is_manual_connection           = false
   }
