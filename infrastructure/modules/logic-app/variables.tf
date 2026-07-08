@@ -13,6 +13,16 @@ variable "location" {
   type        = string
 }
 
+variable "parameters" {
+  description = "Parameters for the logic app. Note this is different to workflow_parameters"
+  type        = map(string)
+}
+
+variable "workflow_parameters" {
+  description = "Workflow parameters for the logic app. Note this is different to parameters"
+  type        = map(string)
+}
+
 variable "custom_actions" {
   type = list(object({
     name         = string

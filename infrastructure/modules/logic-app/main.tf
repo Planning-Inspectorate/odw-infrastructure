@@ -2,6 +2,8 @@ resource "azurerm_logic_app_workflow" "main" {
   name                = var.logic_app_name
   location            = var.location
   resource_group_name = var.resource_group_name
+  parameters          = var.parameters
+  workflow_parameters = var.workflow_parameters
   identity {
     type = "SystemAssigned"
   }
