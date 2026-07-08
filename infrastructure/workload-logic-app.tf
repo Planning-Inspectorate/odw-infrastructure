@@ -94,19 +94,19 @@ module "specialist_case_validation_check" {
 
 import {
   for_each = var.specialist_case_validation_check_logic_app_enabled ? toset([1]) : toset([])
-  to       = module.specialist_case_validation_check.azurerm_logic_app_workflow.main
+  to       = module.specialist_case_validation_check[0].azurerm_logic_app_workflow.main
   id       = var.specialist_case_validation_check_logic_app_migration_ids[var.environment]
 
 }
 
 import {
   for_each = var.specialist_case_validation_check_logic_app_enabled ? toset(["Get_blob_content_using_path_V2", "Send_an_email_(V2)"]) : toset([])
-  to       = module.specialist_case_validation_check.azurerm_logic_app_action_custom.main[each.value]
+  to       = module.specialist_case_validation_check[0].azurerm_logic_app_action_custom.main[each.value]
   id       = "${var.specialist_case_validation_check_logic_app_migration_ids[var.environment]}/actions/${each.value}"
 }
 
 import {
   for_each = var.specialist_case_validation_check_logic_app_enabled ? toset([1]) : toset([])
-  to       = module.specialist_case_validation_check.azurerm_logic_app_trigger_http_request.main["When_an_HTTP_request_is_received"]
+  to       = module.specialist_case_validation_check[0].azurerm_logic_app_trigger_http_request.main["When_an_HTTP_request_is_received"]
   id       = "${var.specialist_case_validation_check_logic_app_migration_ids[var.environment]}/triggers/When_an_HTTP_request_is_received"
 }
