@@ -36,7 +36,7 @@ resource "azurerm_private_endpoint" "s62a_endpoint" {
 
   private_service_connection {
     name                           = "privateendpointconnection"
-    private_connection_resource_id = module.storage_account_s62a_migration.id
+    private_connection_resource_id = one(module.storage_account_s62a[*].storage_id)
     subresource_names              = ["blob"]
     is_manual_connection           = false
   }
