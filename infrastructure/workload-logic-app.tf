@@ -8,31 +8,28 @@ module "specialist_case_validation_check" {
   parameters = {
     "$connections" = jsonencode(
       {
-        azureblob-1 = {
-          connectionId   = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Web/connections/azureblob-1"
-          connectionName = "azureblob-1"
-          connectionProperties = {
-            authentication = {
-              type = "ManagedServiceIdentity"
+        "azureblob" : {
+          "connectionId" : "${azurerm_resource_group.data.id}/providers/Microsoft.Web/connections/azureblob",
+          "connectionName" : "azureblob",
+          "connectionProperties" : {
+            "authentication" : {
+              "type" : "ManagedServiceIdentity"
             }
-          }
-          id = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/providers/Microsoft.Web/locations/uksouth/managedApis/azureblob"
-        }
-        office365 = {
-          connectionId         = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Web/connections/office365-2"
-          connectionName       = "office365-2"
-          connectionProperties = {}
-          id                   = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/providers/Microsoft.Web/locations/uksouth/managedApis/office365"
+          },
+          "id" : "/subscriptions/${data.azurerm_subscription.current.subscription_id}/providers/Microsoft.Web/locations/uksouth/managedApis/azureblob"
+        },
+        "office365" : {
+          "connectionId" : "${azurerm_resource_group.data.id}/providers/Microsoft.Web/connections/office365",
+          "connectionName" : "office365",
+          "connectionProperties" : {},
+          "id" : "/subscriptions/${data.azurerm_subscription.current.subscription_id}/providers/Microsoft.Web/locations/uksouth/managedApis/office365"
         }
       }
     )
   }
   workflow_parameters = {
     "$connections" = jsonencode(
-      {
-        defaultValue = {}
-        type         = "Object"
-      }
+      { "defaultValue" : {}, "type" : "Object" }
     )
   }
 
@@ -44,7 +41,7 @@ module "specialist_case_validation_check" {
         inputs = {
           host = {
             connection = {
-              name = "@parameters('$connections')['azureblob-1']['connectionId']"
+              name = "@parameters('$connections')['azureblob']['connectionId']"
             }
           }
           method = "get"
@@ -62,32 +59,38 @@ module "specialist_case_validation_check" {
     {
       name         = "Send_an_email_(V2)"
       logic_app_id = var.specialist_case_validation_check_logic_app_migration_ids[var.environment]
-      body = jsonencode({
-        inputs = {
-          body = {
-            Attachments = [{
-              ContentBytes = "@{body('Get_blob_content_using_path_V2')?['$content']}"
-              Name         = "@triggerBody()?['fileName']"
-            }]
-            Body       = "@{triggerBody()?['bodyHtml']}"
-            From       = "svc_sharepoint_pins_o365@pinso365.onmicrosoft.com"
-            Importance = "Normal"
-            Subject    = "@triggerBody()?['subject']"
-            To         = var.specialist_case_validation_check_recipients
+      body = jsonencode(
+        {
+          "runAfter" : {
+            "Get_blob_content_using_path_V2" : [
+              "Succeeded"
+            ]
+          },
+          "type" : "ApiConnection",
+          "inputs" : {
+            "host" : {
+              "connection" : {
+                "name" : "@parameters('$connections')['office365']['connectionId']"
+              }
+            },
+            "method" : "post",
+            "body" : {
+              "To" : var.specialist_case_validation_check_recipients,
+              "Subject" : "@triggerBody()?['subject']",
+              "Body" : "<p class=\"editor-paragraph\">@{triggerBody()?['bodyHtml']}</p>",
+              "From" : "svc_sharepoint_pins_o365@pinso365.onmicrosoft.com",
+              "Attachments" : [
+                {
+                  "Name" : "@{triggerBody()?['fileName']}",
+                  "ContentBytes" : "@{body('Get_blob_content_using_path_V2')?['$content']}"
+                }
+              ],
+              "Importance" : "Normal"
+            },
+            "path" : "/v2/Mail"
           }
-          host = {
-            connection = {
-              name = "@parameters('$connections')['office365']['connectionId']"
-            }
-          }
-          method = "post"
-          path   = "/v2/Mail"
         }
-        runAfter = {
-          Get_blob_content_using_path_V2 = ["Succeeded"]
-        }
-        type = "ApiConnection"
-      })
+      )
     }
   ]
   http_triggers = [
