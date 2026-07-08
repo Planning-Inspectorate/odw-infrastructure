@@ -57,7 +57,8 @@ import {
 }
 
 data "azuread_group" "odw_read_only_prod" {
-  display_name = "pins-odw-read-only-prod"
+  display_name     = "pins-odw-read-only-prod"
+  security_enabled = true
 }
 
 resource "azurerm_role_assignment" "odw_read_only_prod" {
