@@ -36,7 +36,8 @@ data_lake_storage_containers = [
   "odw-raw",
   "odw-standardised",
   "odw-harmonised",
-  "odw-config"
+  "odw-config",
+  "odw-meta-db"
 ]
 
 data_lake_storage_containers_to_import = [
@@ -48,6 +49,8 @@ devops_agent_pool_resource_group_name          = "pins-rg-devops-odw-test-uks"
 devops_agent_pool_resource_group_name_failover = "pins-rg-devops-odw-test-ukw"
 
 environment = "test"
+
+deploy_s62a_migration_storage = true
 
 function_app_enabled = true
 function_app = [

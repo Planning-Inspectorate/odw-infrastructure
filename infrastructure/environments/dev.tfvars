@@ -93,6 +93,8 @@ horizon_migration = {
   container_name = ["mpesc"]
 }
 
+deploy_s62a_migration_storage = true
+
 location = "uk-south"
 
 logic_app_enabled = false

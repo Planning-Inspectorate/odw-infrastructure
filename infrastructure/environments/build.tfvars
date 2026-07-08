@@ -38,7 +38,8 @@ data_lake_storage_containers = [
   "odw-harmonised",
   "odw-config",
   "odw-curated-migration", # This container seems to be manually created in the other envs. This should be reviewed
-  "odw-config-db"          # This container seems to be manually created in the other envs. This should be reviewed
+  "odw-config-db",         # This container seems to be manually created in the other envs. This should be reviewed
+  "odw-meta-db"
 ]
 
 devops_agent_pool_resource_group_name          = "pins-rg-devops-odw-build-uks"
@@ -309,6 +310,6 @@ link_purview_account = false
 
 create_service_bus_resources = false
 
-devops_agent_vm_sku = "Standard_E2as_v4"
+devops_agent_vm_sku = "Standard_D4as_v4"
 
 specialist_case_validation_check_logic_app_enabled = false
