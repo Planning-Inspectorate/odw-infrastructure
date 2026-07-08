@@ -56,6 +56,23 @@ import {
   id       = "https://${module.synapse_data_lake.data_lake_account_name}.blob.core.windows.net/${each.key}"
 }
 
+data "azuread_group" "odw_read_only_prod" {
+  display_name = "pins-odw-read-only-prod"
+}
+
+resource "azurerm_role_assignment" "odw_read_only_prod" {
+  scope                = module.synapse_data_lake.data_lake_account_id
+  role_definition_name = "Reader"
+  principal_id         = data.azuread_group.odw_read_only_prod.id
+}
+
+# Import only in prod
+import {
+  for_each = var.environment == "prod" ? toset([1]) : toset([])
+  to       = azurerm_role_assignment.odw_read_only_prod
+  id       = "${module.synapse_data_lake.data_lake_account_id}/providers/microsoft.authorization/roleassignments/da8b1642-e925-45e7-aaa7-ec9c1c8925dd"
+}
+
 # module "synapse_data_lake_failover" {
 #   source = "./modules/synapse-data-lake"
 
