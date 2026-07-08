@@ -27,7 +27,7 @@ resource "azurerm_private_endpoint" "s62a_endpoint" {
   name                = "pins-pe-odw-s62a-${var.environment}"
   resource_group_name = azurerm_resource_group.network.name
   location            = module.azure_region.location_cli
-  subnet_id           = concat([module.synapse_network.vnet_subnets[local.functionapp_subnet_name], module.synapse_network.vnet_subnets[local.compute_subnet_name]])
+  subnet_id           = module.synapse_network.vnet_subnets[local.compute_subnet_name]
 
   private_dns_zone_group {
     name                 = "sts62aprivateendpoint"
@@ -36,7 +36,7 @@ resource "azurerm_private_endpoint" "s62a_endpoint" {
 
   private_service_connection {
     name                           = "privateendpointconnection"
-    private_connection_resource_id = module.storage_account_s62a_migration
+    private_connection_resource_id = module.storage_account_s62a_migration.id
     subresource_names              = ["blob"]
     is_manual_connection           = false
   }
