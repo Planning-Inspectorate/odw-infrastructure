@@ -15,7 +15,7 @@ module "storage_account_s62a_migration" {
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "storage" {
-  name                  = "${local.org}-vnetlink-storage-${local.resource_suffix}"
+  name                  = "pins-vnetlink-storage-s62a"
   resource_group_name   = var.tooling_config.network_rg
   private_dns_zone_name = data.azurerm_private_dns_zone.storage.name
   virtual_network_id    = module.synapse_network.vnet_id
@@ -25,7 +25,7 @@ resource "azurerm_private_dns_zone_virtual_network_link" "storage" {
 
 resource "azurerm_private_endpoint" "s62a_endpoint" {
   name                = "pins-pe-odw-s62a-${var.environment}"
-  resource_group_name = azurerm_resource_group.primary.name
+  resource_group_name = azurerm_resource_group.network.name
   location            = module.azure_region.location_cli
   subnet_id           = concat([module.synapse_network.vnet_subnets[local.functionapp_subnet_name], module.synapse_network.vnet_subnets[local.compute_subnet_name]])
 
