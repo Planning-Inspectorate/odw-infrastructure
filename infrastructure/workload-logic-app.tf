@@ -2,7 +2,7 @@
 
 resource "azurerm_api_connection" "azure_blob" {
   count               = var.az_api_blob_connection_names[var.environment] != null ? 1 : 0
-  managed_api_id      = "/subscriptions/${data.azurerm_subscription.current.subscription_id}/providers/Microsoft.Web/locations/uksouth/managedApis/${var.az_api_blob_connection_names[var.environment]}"
+  managed_api_id      = "/subscriptions/${data.azurerm_subscription.current.subscription_id}/providers/Microsoft.Web/locations/uksouth/managedApis/azureblob"
   name                = var.az_api_blob_connection_names[var.environment]
   resource_group_name = azurerm_resource_group.data.name
 }
@@ -15,7 +15,7 @@ import {
 
 resource "azurerm_api_connection" "office_365" {
   count               = var.az_api_office365_connection_names[var.environment] != null ? 1 : 0
-  managed_api_id      = "/subscriptions/${data.azurerm_subscription.current.subscription_id}/providers/Microsoft.Web/locations/uksouth/managedApis/${var.az_api_office365_connection_names[var.environment]}"
+  managed_api_id      = "/subscriptions/${data.azurerm_subscription.current.subscription_id}/providers/Microsoft.Web/locations/uksouth/managedApis/office365"
   name                = var.az_api_office365_connection_names[var.environment]
   resource_group_name = azurerm_resource_group.data.name
 }
@@ -35,21 +35,21 @@ module "specialist_case_validation_check" {
   parameters = {
     "$connections" = jsonencode(
       {
-        var.az_api_blob_connection_names[var.environment] : {
-          "connectionId" : "${azurerm_resource_group.data.id}/providers/Microsoft.Web/connections/${var.az_api_blob_connection_names[var.environment]}",
-          "connectionName" : var.az_api_blob_connection_names[var.environment],
+        "azureblob" : {
+          "connectionId" : azurerm_api_connection.azure_blob[0].id,
+          "connectionName" : azurerm_api_connection.azure_blob[0].name,
           "connectionProperties" : {
             "authentication" : {
               "type" : "ManagedServiceIdentity"
             }
           },
-          "id" : "/subscriptions/${data.azurerm_subscription.current.subscription_id}/providers/Microsoft.Web/locations/uksouth/managedApis/${var.az_api_blob_connection_names[var.environment]}"
+          "id" : azurerm_api_connection.azure_blob[0].managed_api_id
         },
-        var.az_api_office365_connection_names[var.environment] : {
-          "connectionId" : "${azurerm_resource_group.data.id}/providers/Microsoft.Web/connections/${var.az_api_office365_connection_names[var.environment]}",
-          "connectionName" : var.az_api_office365_connection_names[var.environment],
+        "office365" : {
+          "connectionId" : azurerm_api_connection.office_365[0].id,
+          "connectionName" : azurerm_api_connection.office_365[0].name,
           "connectionProperties" : {},
-          "id" : "/subscriptions/${data.azurerm_subscription.current.subscription_id}/providers/Microsoft.Web/locations/uksouth/managedApis/${var.az_api_office365_connection_names[var.environment]}"
+          "id" : azurerm_api_connection.office_365[0].managed_api_id
         }
       }
     )
