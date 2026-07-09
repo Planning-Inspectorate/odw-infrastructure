@@ -37,6 +37,7 @@ module "synapse_workspace_private" {
   synapse_private_endpoint_dns_zone_id  = azurerm_private_dns_zone.synapse.id
   synapse_private_endpoint_subnet_name  = local.synapse_subnet_name
   synapse_private_endpoint_vnet_subnets = module.synapse_network.vnet_subnets
+  synapse_public_network_access_enabled = var.synapse_public_network_access_enabled
   synapse_sql_administrator_username    = var.synapse_sql_administrator_username
   synapse_role_assignments              = var.synapse_role_assignments
   tenant_id                             = var.tenant_id
@@ -107,6 +108,7 @@ module "synapse_workspace_private_failover" {
   synapse_private_endpoint_dns_zone_id  = azurerm_private_dns_zone.synapse.id
   synapse_private_endpoint_subnet_name  = local.synapse_subnet_name
   synapse_private_endpoint_vnet_subnets = module.synapse_network_failover.vnet_subnets
+  synapse_public_network_access_enabled = var.synapse_public_network_access_enabled
   synapse_sql_administrator_username    = var.synapse_sql_administrator_username
   synapse_role_assignments              = var.synapse_role_assignments
   tenant_id                             = var.tenant_id

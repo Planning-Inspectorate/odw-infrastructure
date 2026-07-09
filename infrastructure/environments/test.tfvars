@@ -199,8 +199,9 @@ synapse_aad_administrator = {
   object_id = "ba5af92f-a1bf-4332-a3c9-613a0a8f1b12"
 }
 
-synapse_data_exfiltration_enabled  = false
-synapse_sql_administrator_username = "synadmin"
+synapse_data_exfiltration_enabled     = false
+synapse_sql_administrator_username    = "synadmin"
+synapse_public_network_access_enabled = false
 
 synapse_role_assignments = [
   { # pins-odw-data-preprod-syn-ws-administrators

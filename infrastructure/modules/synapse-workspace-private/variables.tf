@@ -242,6 +242,11 @@ variable "synapse_private_endpoint_vnet_subnets" {
   type        = map(string)
 }
 
+variable "synapse_public_network_access_enabled" {
+  description = "Whether public access is enabled on the synapse workspace"
+  type        = bool
+}
+
 variable "synapse_role_assignments" {
   default     = []
   description = "A list of RBAC roles assignments for the Synapse Workspace"
