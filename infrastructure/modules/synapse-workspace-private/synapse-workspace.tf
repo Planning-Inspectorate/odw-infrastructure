@@ -14,6 +14,7 @@ resource "azurerm_synapse_workspace" "synapse" {
   sql_administrator_login              = var.synapse_sql_administrator_username
   sql_administrator_login_password     = random_password.synapse_sql_administrator_password.result
   storage_data_lake_gen2_filesystem_id = var.data_lake_filesystem_id
+  public_network_access_enabled        = var.synapse_public_network_access_enabled
 
   identity {
     type = "SystemAssigned"

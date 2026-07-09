@@ -543,6 +543,11 @@ variable "synapse_data_exfiltration_enabled" {
   description = "Determines whether the Synapse Workspace should have data exfiltration protection enabled"
   type        = bool
 }
+variable "synapse_public_network_access_enabled" {
+  description = "Whether public access is enabled on the synapse workspace"
+  type        = bool
+  default     = true
+}
 
 variable "synapse_role_assignments" {
   default     = []
