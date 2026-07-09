@@ -41,3 +41,9 @@ variable "http_triggers" {
   }))
   default = []
 }
+
+variable "tags" {
+  description = "List of tags to be applied to resources"
+  type        = map(string)
+  default     = {}
+}

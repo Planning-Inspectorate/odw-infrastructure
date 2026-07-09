@@ -7,6 +7,7 @@ resource "azurerm_logic_app_workflow" "main" {
   identity {
     type = "SystemAssigned"
   }
+  tags = var.tags
 }
 
 resource "azurerm_logic_app_action_custom" "main" {
