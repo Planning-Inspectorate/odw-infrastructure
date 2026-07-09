@@ -64,8 +64,8 @@ data "azuread_group" "odw_read_only_prod" {
 resource "azurerm_role_assignment" "odw_read_only_prod" {
   count                = var.environment == "prod" ? 1 : 0
   scope                = module.synapse_data_lake.data_lake_account_id
-  role_definition_name = "Reader"
-  principal_id         = data.azuread_group.odw_read_only_prod.id
+  role_definition_name = "Storage Blob Data Reader"
+  principal_id         = data.azuread_group.odw_read_only_prod.object_id
 }
 
 # Import only in prod
