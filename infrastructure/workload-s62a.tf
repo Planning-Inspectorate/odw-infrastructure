@@ -24,6 +24,8 @@ resource "azurerm_private_dns_zone_virtual_network_link" "storage" {
 }
 
 resource "azurerm_private_endpoint" "s62a_endpoint" {
+  count = var.s62a_migration != null ? 1 : 0
+
   name                = "pins-pe-odw-s62a-${var.environment}"
   resource_group_name = azurerm_resource_group.network.name
   location            = module.azure_region.location_cli
@@ -36,7 +38,7 @@ resource "azurerm_private_endpoint" "s62a_endpoint" {
 
   private_service_connection {
     name                           = "privateendpointconnection"
-    private_connection_resource_id = count = var.s62a_migration != null ? 1 : 0
+    private_connection_resource_id = module.storage_account_s62a_migration[0].storage_id
     subresource_names              = ["blob"]
     is_manual_connection           = false
   }
