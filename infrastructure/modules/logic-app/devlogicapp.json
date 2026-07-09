@@ -1,0 +1,164 @@
+{
+    "definition": {
+        "metadata": {
+            "notes": {}
+        },
+        "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+        "contentVersion": "1.0.0.0",
+        "triggers": {
+            "When_an_HTTP_request_is_received": {
+                "type": "Request",
+                "description": "This http request would use Post method whenever there will be a successful post validation check",
+                "kind": "Http",
+                "inputs": {
+                    "method": "POST",
+                    "schema": {
+                        "properties": {
+                            "bodyHtml": {
+                                "type": "string"
+                            },
+                            "fileName": {
+                                "type": "string"
+                            },
+                            "storageAccountName": {
+                                "type": "string"
+                            },
+                            "storagePath": {
+                                "type": "string"
+                            },
+                            "subject": {
+                                "type": "string"
+                            },
+                            "to": {
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    }
+                }
+            }
+        },
+        "actions": {
+            "Get_blob_content_using_path_V2": {
+                "runAfter": {
+                    "Get_blob_content_(V2)": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "ApiConnection",
+                "inputs": {
+                    "host": {
+                        "connection": {
+                            "name": "@parameters('$connections')['azureblob']['connectionId']"
+                        }
+                    },
+                    "method": "get",
+                    "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(triggerBody()?['storageAccountName']))}/GetFileContentByPath",
+                    "queries": {
+                        "inferContentType": false,
+                        "path": "@triggerBody()?['storagePath']",
+                        "queryParametersSingleEncoded": true
+                    }
+                }
+            },
+            "Send_an_email_(V2)": {
+                "type": "ApiConnection",
+                "inputs": {
+                    "host": {
+                        "connection": {
+                            "name": "@parameters('$connections')['office365']['connectionId']"
+                        }
+                    },
+                    "method": "post",
+                    "body": {
+                        "To": "Evangelos.Magklaras@planninginspectorate.gov.uk;Harriet.stuart.wd@planninginspectorate.gov.uk;Prathap.Adicherla.ag@planninginspectorate.gov.uk;dataservices_support@planninginspectorate.gov.uk;",
+                        "Subject": "@triggerBody()?['subject']",
+                        "Body": "<p class=\"editor-paragraph\">@{triggerBody()?['bodyHtml']}</p>",
+                        "From": "svc_sharepoint_pins_o365@pinso365.onmicrosoft.com",
+                        "Attachments": [
+                            {
+                                "ContentBytes": "@{body('Get_blob_content_using_path_V2')?['$content']}",
+                                "Name": "@{triggerBody()?['fileName']}"
+                            }
+                        ],
+                        "Importance": "Normal"
+                    },
+                    "path": "/v2/Mail"
+                },
+                "runAfter": {
+                    "Get_blob_content_using_path_V2": [
+                        "Succeeded"
+                    ]
+                }
+            },
+            "Get_blob_content_(V2)": {
+                "type": "ApiConnection",
+                "inputs": {
+                    "host": {
+                        "connection": {
+                            "name": "@parameters('$connections')['azureblob-1']['connectionId']"
+                        }
+                    },
+                    "method": "get",
+                    "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(''))}/files/@{encodeURIComponent(encodeURIComponent(''))}/content",
+                    "queries": {
+                        "inferContentType": true
+                    }
+                },
+                "runAfter": {
+                    "Get_blob_content_using_path_(V2)": [
+                        "Succeeded"
+                    ]
+                }
+            },
+            "Get_blob_content_using_path_(V2)": {
+                "type": "ApiConnection",
+                "inputs": {
+                    "host": {
+                        "connection": {
+                            "name": "@parameters('$connections')['azureblob-1']['connectionId']"
+                        }
+                    },
+                    "method": "get",
+                    "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(''))}/GetFileContentByPath",
+                    "queries": {
+                        "path": "",
+                        "inferContentType": true,
+                        "queryParametersSingleEncoded": true
+                    }
+                },
+                "runAfter": {}
+            }
+        },
+        "outputs": {},
+        "parameters": {
+            "$connections": {
+                "type": "Object",
+                "defaultValue": {}
+            }
+        }
+    },
+    "parameters": {
+        "$connections": {
+            "type": "Object",
+            "value": {
+                "office365": {
+                    "id": "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/providers/Microsoft.Web/locations/uksouth/managedApis/office365",
+                    "connectionId": "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Web/connections/office365-2",
+                    "connectionName": "office365-2",
+                    "connectionProperties": {}
+                },
+                "azureblob-1": {
+                    "id": "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/providers/Microsoft.Web/locations/uksouth/managedApis/azureblob",
+                    "connectionId": "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Web/connections/azureblob-1",
+                    "connectionName": "azureblob-1",
+                    "connectionProperties": {
+                        "authentication": {
+                            "type": "ManagedServiceIdentity"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -693,3 +693,25 @@ variable "specialist_case_validation_check_logic_app_migration_ids" {
     prod  = "/subscriptions/a82fd28d-5989-4e06-a0bb-1a5d859f9e0c/resourceGroups/pins-rg-data-odw-prod-uks/providers/Microsoft.Logic/workflows/odw-specialist-case-validation-check-prod"
   }
 }
+
+variable "az_api_blob_connection_names" {
+  description = "Temporary variable for importing az api resources into Terraform"
+  type        = map(string)
+  default = {
+    build = null
+    dev   = "azureblob-1"
+    test  = "azureblob"
+    prod  = "azureblob"
+  }
+}
+
+variable "az_api_office365_connection_names" {
+  description = "Temporary variable for importing az api resources into Terraform"
+  type        = map(string)
+  default = {
+    build = null
+    dev   = "office365-2"
+    test  = "office365-1"
+    prod  = "office365"
+  }
+}

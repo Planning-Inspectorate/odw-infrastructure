@@ -1,4 +1,31 @@
 # Legacy manually-created logic app that has been migrated to Terraform
+
+resource "azurerm_api_connection" "azure_blob" {
+  count               = var.az_api_blob_connection_names[var.environment] != null ? 1 : 0
+  managed_api_id      = "/subscriptions/${data.azurerm_subscription.current.subscription_id}/providers/Microsoft.Web/locations/uksouth/managedApis/${var.az_api_blob_connection_names[var.environment]}"
+  name                = var.az_api_blob_connection_names[var.environment]
+  resource_group_name = azurerm_resource_group.data.name
+}
+
+import {
+  for_each = var.az_api_blob_connection_names[var.environment] != null ? toset([1]) : toset([])
+  to       = azurerm_api_connection.azure_blob[0]
+  id       = "/subscriptions/${data.azurerm_subscription.current.subscription_id}/resourceGroups/pins-rg-data-odw-${var.environment}-uks/providers/Microsoft.Web/connections/${var.az_api_blob_connection_names[var.environment]}"
+}
+
+resource "azurerm_api_connection" "office_365" {
+  count               = var.az_api_office365_connection_names[var.environment] != null ? 1 : 0
+  managed_api_id      = "/subscriptions/${data.azurerm_subscription.current.subscription_id}/providers/Microsoft.Web/locations/uksouth/managedApis/${var.az_api_office365_connection_names[var.environment]}"
+  name                = var.az_api_office365_connection_names[var.environment]
+  resource_group_name = azurerm_resource_group.data.name
+}
+
+import {
+  for_each = var.az_api_office365_connection_names[var.environment] != null ? toset([1]) : toset([])
+  to       = azurerm_api_connection.office_365[0]
+  id       = "/subscriptions/${data.azurerm_subscription.current.subscription_id}/resourceGroups/pins-rg-data-odw-${var.environment}-uks/providers/Microsoft.Web/connections/${var.az_api_office365_connection_names[var.environment]}"
+}
+
 module "specialist_case_validation_check" {
   count               = var.specialist_case_validation_check_logic_app_enabled ? 1 : 0
   source              = "./modules/logic-app"
@@ -8,21 +35,21 @@ module "specialist_case_validation_check" {
   parameters = {
     "$connections" = jsonencode(
       {
-        "azureblob" : {
-          "connectionId" : "${azurerm_resource_group.data.id}/providers/Microsoft.Web/connections/azureblob",
-          "connectionName" : "azureblob",
+        var.az_api_blob_connection_names[var.environment] : {
+          "connectionId" : "${azurerm_resource_group.data.id}/providers/Microsoft.Web/connections/${var.az_api_blob_connection_names[var.environment]}",
+          "connectionName" : var.az_api_blob_connection_names[var.environment],
           "connectionProperties" : {
             "authentication" : {
               "type" : "ManagedServiceIdentity"
             }
           },
-          "id" : "/subscriptions/${data.azurerm_subscription.current.subscription_id}/providers/Microsoft.Web/locations/uksouth/managedApis/azureblob"
+          "id" : "/subscriptions/${data.azurerm_subscription.current.subscription_id}/providers/Microsoft.Web/locations/uksouth/managedApis/${var.az_api_blob_connection_names[var.environment]}"
         },
-        "office365" : {
-          "connectionId" : "${azurerm_resource_group.data.id}/providers/Microsoft.Web/connections/office365",
-          "connectionName" : "office365",
+        var.az_api_office365_connection_names[var.environment] : {
+          "connectionId" : "${azurerm_resource_group.data.id}/providers/Microsoft.Web/connections/${var.az_api_office365_connection_names[var.environment]}",
+          "connectionName" : var.az_api_office365_connection_names[var.environment],
           "connectionProperties" : {},
-          "id" : "/subscriptions/${data.azurerm_subscription.current.subscription_id}/providers/Microsoft.Web/locations/uksouth/managedApis/office365"
+          "id" : "/subscriptions/${data.azurerm_subscription.current.subscription_id}/providers/Microsoft.Web/locations/uksouth/managedApis/${var.az_api_office365_connection_names[var.environment]}"
         }
       }
     )
@@ -41,7 +68,7 @@ module "specialist_case_validation_check" {
         inputs = {
           host = {
             connection = {
-              name = "@parameters('$connections')['azureblob']['connectionId']"
+              name = "@parameters('$connections')['${var.az_api_blob_connection_names[var.environment]}']['connectionId']"
             }
           }
           method = "get"
@@ -70,7 +97,7 @@ module "specialist_case_validation_check" {
           "inputs" : {
             "host" : {
               "connection" : {
-                "name" : "@parameters('$connections')['office365']['connectionId']"
+                "name" : "@parameters('$connections')['${var.az_api_office365_connection_names[var.environment]}']['connectionId']"
               }
             },
             "method" : "post",
