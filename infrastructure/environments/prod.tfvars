@@ -152,6 +152,42 @@ odt_backoffice_sb_topic_subscriptions = [
   {
     subscription_name = "odw-folder-sub"
     topic_name        = "folder"
+  },
+  {
+    subscription_name = "folder-odw-wake-sub"
+    topic_name        = "folder"
+  },
+  {
+    subscription_name = "odw-nsip-document-wake-sub"
+    topic_name        = "nsip-document"
+  },
+  {
+    subscription_name = "odw-nsip-exam-timetable-wake-sub"
+    topic_name        = "nsip-exam-timetable"
+  },
+  {
+    subscription_name = "odw-nsip-project-wake-sub"
+    topic_name        = "nsip-project"
+  },
+  {
+    subscription_name = "odw-nsip-project-update-wake-sub"
+    topic_name        = "nsip-project-update"
+  },
+  {
+    subscription_name = "odw-nsip-representation-wake-sub"
+    topic_name        = "nsip-representation"
+  },
+  {
+    subscription_name = "odw-nsip-s51-advice-wake-sub"
+    topic_name        = "nsip-s51-advice"
+  },
+  {
+    subscription_name = "odw-nsip-subscription-wake-sub"
+    topic_name        = "nsip-subscription"
+  },
+  {
+    subscription_name = "odw-service-user-wake-sub"
+    topic_name        = "service-user"
   }
 ]
 
