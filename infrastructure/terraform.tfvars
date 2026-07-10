@@ -31,36 +31,53 @@ odt_appeals_back_office_sb_topic_subscriptions = [
     topic_name        = "appeal-event-estimate"
   },
   {
-    subscription_name = "appeal-document-odw-wake-sub"
-    topic_name        = "appeal-document"
+    subscription_name                         = "appeal-document-odw-wake-sub"
+    topic_name                                = "appeal-document"
+    enable_batched_operations                 = true
+    dead_lettering_on_filter_evaluation_error = false
+    max_delivery_count                        = 1
   },
   {
-    subscription_name = "appeal-document-to-move-bo-sub"
-    topic_name        = "appeal-document-to-move"
+    subscription_name                         = "appeal-event-odw-wake-sub"
+    topic_name                                = "appeal-event"
+    enable_batched_operations                 = true
+    dead_lettering_on_filter_evaluation_error = false
+    max_delivery_count                        = 1
   },
   {
-    subscription_name = "appeal-event-odw-wake-sub"
-    topic_name        = "appeal-event"
+    subscription_name                         = "appeal-event-estimate-odw-wake-sub"
+    topic_name                                = "appeal-event-estimate"
+    enable_batched_operations                 = true
+    dead_lettering_on_filter_evaluation_error = false
+    max_delivery_count                        = 1
   },
   {
-    subscription_name = "appeal-event-estimate-odw-wake-sub"
-    topic_name        = "appeal-event-estimate"
+    subscription_name                         = "appeal-has-odw-wake-sub"
+    topic_name                                = "appeal-has"
+    enable_batched_operations                 = true
+    dead_lettering_on_filter_evaluation_error = false
+    max_delivery_count                        = 1
   },
   {
-    subscription_name = "appeal-has-odw-wake-sub"
-    topic_name        = "appeal-has"
+    subscription_name                         = "appeal-representation-odw-wake-sub"
+    topic_name                                = "appeal-representation"
+    enable_batched_operations                 = true
+    dead_lettering_on_filter_evaluation_error = false
+    max_delivery_count                        = 1
   },
   {
-    subscription_name = "appeal-representation-odw-wake-sub"
-    topic_name        = "appeal-representation"
+    subscription_name                         = "appeal-s78-odw-wake-sub"
+    topic_name                                = "appeal-s78"
+    enable_batched_operations                 = true
+    dead_lettering_on_filter_evaluation_error = false
+    max_delivery_count                        = 1
   },
   {
-    subscription_name = "appeal-s78-odw-wake-sub"
-    topic_name        = "appeal-s78"
-  },
-  {
-    subscription_name = "appeal-service-user-odw-wake-sub"
-    topic_name        = "appeal-service-user"
+    subscription_name                         = "appeal-service-user-odw-wake-sub"
+    topic_name                                = "appeal-service-user"
+    enable_batched_operations                 = true
+    dead_lettering_on_filter_evaluation_error = false
+    max_delivery_count                        = 1
   }
 ]
 
@@ -113,10 +130,6 @@ odt_appeals_backoffice_sb_topic_subscriptions_to_import = [
   {
     subscription_name = "appeal-document-odw-wake-sub"
     topic_name        = "appeal-document"
-  },
-  {
-    subscription_name = "appeal-document-to-move-bo-sub"
-    topic_name        = "appeal-document-to-move"
   },
   {
     subscription_name = "appeal-event-odw-wake-sub"
