@@ -38,7 +38,7 @@ module "odt_backoffice_sb" {
 }
 
 import {
-  for_each = { for entry in var.odt_backoffice_sb_topic_subscriptions_to_import : entry.subscription_name => entry }
+  for_each = var.environment != "build" ? { for entry in var.odt_backoffice_sb_topic_subscriptions_to_import : entry.subscription_name => entry } : toset([])
   to       = module.odt_backoffice_sb.azurerm_servicebus_subscription.odt_backoffice_subscriptions[each.key]
   id       = "${local.odt_back_office_service_bus_id}/topics/${each.topic_name}/subscriptions/${each.subscription_name}"
   provider = azurerm.odt
@@ -90,7 +90,7 @@ module "odt_appeals_back_office_sb" {
 }
 
 import {
-  for_each = { for entry in var.odt_appeals_backoffice_sb_topic_subscriptions_to_import : entry.subscription_name => entry }
+  for_each = var.environment != "build" ? { for entry in var.odt_appeals_backoffice_sb_topic_subscriptions_to_import : entry.subscription_name => entry } : toset([])
   to       = module.odt_appeals_back_office_sb.azurerm_servicebus_subscription.odt_backoffice_subscriptions[each.key]
   id       = "${local.odt_appeals_back_office_service_bus_id}/topics/${each.topic_name}/subscriptions/${each.subscription_name}"
   provider = azurerm.odt
