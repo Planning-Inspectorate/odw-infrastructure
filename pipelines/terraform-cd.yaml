@@ -1,0 +1,93 @@
+trigger: none
+
+pr: none
+
+resources:
+  pipelines:
+    - pipeline: terraform-ci
+      source: Infrastructure PR
+      trigger:
+        branches:
+          include:
+            - main
+  repositories:
+    - repository: templates
+      type: github
+      endpoint: Planning-Inspectorate
+      name: Planning-Inspectorate/common-pipeline-templates
+      ref: refs/tags/release/3.29.0
+    - repository: odw-common
+      type: github
+      name: Planning-Inspectorate/odw-common
+      endpoint: Planning-Inspectorate
+      ref: main
+
+extends:
+  template: pipelines/terraform_plan_apply.yml@templates
+  parameters:
+    environments:
+      - name: Build
+      - name: Dev
+      - name: Test
+        dependsOn:
+          - Build
+          - Dev
+      - name: Prod
+        dependsOn:
+          - Test
+    automaticDeploymentEnvironments:
+      - name: Build
+      - name: Dev
+    serviceConnectionCustomFormatString: Azure Devops Pipelines - ODW {0} - Infrastructure
+    storageAccountName: pinsstsharedtfstateuks
+    resourceGroupName: pins-rg-shared-terraform-uks
+    containerFormatString: terraformstate-odw
+    workingDirectory: $(Build.Repository.LocalPath)/infrastructure
+    environmentVarFilePath: $(Build.Repository.LocalPath)/infrastructure/environments
+    poolNameFormatString: pins-agent-pool-odw-{0}-uks
+    planStageVariableGroupFormatString: Terraform {0}
+    planStageExtraEnvironmentVariables:
+      - name: TF_VAR_failover_deployment
+        value: 'false'
+      - name: TF_VAR_odt_subscription_id
+        value: $(ODT_SUBSCRIPTION_ID)
+      - name: TF_VAR_horizon_subscription_id
+        value: $(HORIZON_SUBSCRIPTION_ID)
+      - name: TF_VAR_purview_id
+        value: $(PURVIEW_ID)
+      - name: TF_VAR_purview_account_fqdn
+        value: $(PURVIEW_ACCOUNT_FQDN)
+      - name: TF_VAR_purview_storage_id
+        value: $(PURVIEW_STORAGE_ID)
+      - name: TF_VAR_purview_storage_name
+        value: $(PURVIEW_STORAGE_NAME)
+      - name: TF_VAR_purview_event_hub_id
+        value: $(PURVIEW_EVENT_HUB_ID)
+      - name: TF_VAR_purview_event_hub_fqdn
+        value: $(PURVIEW_EVENT_HUB_FQDN)
+      - name: TF_VAR_purview_msi_id
+        value: $(PURVIEW_MSI_ID)
+      - name: TF_VAR_specialist_case_validation_check_recipients
+        value: $(SPECIALIST_CASE_VALIDATION_CHECK_RECIPIENTS)
+      - name: TF_VAR_system_asset_owner
+        value: $(system_asset_owner)
+    applyStageVariableGroupFormatString: Terraform {0}
+    postApplySteps:
+      - checkout: self
+        fetchDepth: 1
+      # Login to Azure using Terraform service principal
+      - template: ${{variables['System.DefaultWorkingDirectory']}}/pipelines/steps/azure-login.yaml@odw-common
+      - script: |
+          echo "##[group]ToolInstall"
+          export PATH="$PATH:/home/AzDevOps/.local/bin/"
+          sudo apt-get install -y unixodbc-dev=2.3.9-5ubuntu0.1
+          sudo curl -fsSL https://aka.ms/install-azd.sh | bash
+          # make environment name lower case
+          export SYNAPSE_ENDPOINT="https://pins-synw-odw-$(Environment.Name)-uks.dev.azuresynapse.net/"
+          export CREDENTIAL_NAME="https://dev.azuresynapse.net/.default"
+          echo "##[endgroup]"
+          echo "Config:"
+          echo $SYNAPSE_ENDPOINT 
+          echo $CREDENTIAL_NAME
+          python3 -m pytest $(Build.SourcesDirectory)/tests/smoke_test -vv -rP
+        displayName: 'Smoke test'
