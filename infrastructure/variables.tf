@@ -191,9 +191,9 @@ variable "location" {
   type        = string
 }
 
-variable "logic_app_enabled" {
+variable "zendesk_enabled" {
   default     = false
-  description = "Determines whether the resources for the App Service Plan, Storage Account and Logic App Standard should be deployed"
+  description = "Determines whether the resources related to Zendesk"
   type        = bool
 }
 
@@ -669,4 +669,49 @@ variable "purview_event_hub_id" {
   description = "The id of Purview's managed event hub"
   type        = string
   default     = null
+}
+
+variable "specialist_case_validation_check_logic_app_enabled" {
+  description = "If the specialist case validation logic app should be deployed"
+  type        = bool
+  default     = true
+}
+
+variable "specialist_case_validation_check_recipients" {
+  description = "Semicolon-separates list of email addresses"
+  type        = string
+
+}
+
+variable "specialist_case_validation_check_logic_app_migration_ids" {
+  description = "Temporary variable for importing logic apps into Terraform"
+  type        = map(string)
+  default = {
+    build = null
+    dev   = "/subscriptions/ff442a29-fc06-4a13-8e3e-65fd5da513b3/resourceGroups/pins-rg-data-odw-dev-uks/providers/Microsoft.Logic/workflows/odw-specialist-case-validation-check-dev"
+    test  = "/subscriptions/6b18ba9d-2399-48b5-a834-e0f267be122d/resourceGroups/pins-rg-data-odw-test-uks/providers/Microsoft.Logic/workflows/odw-specialist-case-validation-check-test"
+    prod  = "/subscriptions/a82fd28d-5989-4e06-a0bb-1a5d859f9e0c/resourceGroups/pins-rg-data-odw-prod-uks/providers/Microsoft.Logic/workflows/odw-specialist-case-validation-check-prod"
+  }
+}
+
+variable "az_api_blob_connection_names" {
+  description = "Temporary variable for importing az api resources into Terraform"
+  type        = map(string)
+  default = {
+    build = null
+    dev   = "azureblob-1"
+    test  = "azureblob"
+    prod  = "azureblob"
+  }
+}
+
+variable "az_api_office365_connection_names" {
+  description = "Temporary variable for importing az api resources into Terraform"
+  type        = map(string)
+  default = {
+    build = null
+    dev   = "office365-2"
+    test  = "office365-1"
+    prod  = "office365"
+  }
 }
