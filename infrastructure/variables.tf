@@ -695,7 +695,7 @@ variable "specialist_case_validation_check_logic_app_migration_ids" {
 }
 
 variable "az_api_blob_connection_names" {
-  description = "Temporary variable for importing az api resources into Terraform"
+  description = "Imported azure blob az api connection names - these need to be cleaned up at some point"
   type        = map(string)
   default = {
     build = null
@@ -706,7 +706,7 @@ variable "az_api_blob_connection_names" {
 }
 
 variable "az_api_office365_connection_names" {
-  description = "Temporary variable for importing az api resources into Terraform"
+  description = "Imported office365 az api connection names - these need to be cleaned up at some point"
   type        = map(string)
   default = {
     build = null
