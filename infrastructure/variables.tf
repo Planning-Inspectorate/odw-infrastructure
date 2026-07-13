@@ -679,7 +679,11 @@ variable "specialist_case_validation_check_logic_app_enabled" {
 
 variable "specialist_case_validation_check_recipients" {
   description = "Semicolon-separates list of email addresses"
+<<<<<<< HEAD
   type        = string
+=======
+  type        = list(string)
+>>>>>>> 1096ee0 (Variable block updated)
   default     = []
 }
 
@@ -714,4 +718,8 @@ variable "az_api_office365_connection_names" {
     test  = "office365-1"
     prod  = "office365"
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 1096ee0 (Variable block updated)
