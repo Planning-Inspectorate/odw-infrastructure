@@ -670,3 +670,9 @@ variable "purview_event_hub_id" {
   type        = string
   default     = null
 }
+
+variable "specialist_case_validation_check_recipients" {
+  description = "Recipients for specialist case validation checks"
+  type        = list(string)
+  default     = []
+}

@@ -47,7 +47,6 @@ steps:
         -var "horizon_subscription_id=${{ lower(parameters.horizonSubscriptionId) }}" \
         -var "deploy_agent_pool=${{ lower(parameters.deployAgentPool) }}" \
         -var "failover_deployment=${{ lower(parameters.failoverDeployment) }}" \
-        -var "specialist_case_validation_check_recipients"="$(SPECIALIST_CASE_VALIDATION_CHECK_RECIPIENTS)" \
         -target=${{ parameters.planTargetResourceName }} \
         -input=false \
         -out=${{ parameters.planFileName }}
