@@ -679,8 +679,8 @@ variable "specialist_case_validation_check_logic_app_enabled" {
 
 variable "specialist_case_validation_check_recipients" {
   description = "Semicolon-separates list of email addresses"
-  type        = list(string)
-  default     = []
+  type        = string
+  default     = ""
 }
 
 variable "specialist_case_validation_check_logic_app_migration_ids" {
