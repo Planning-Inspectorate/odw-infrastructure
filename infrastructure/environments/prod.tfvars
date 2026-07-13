@@ -41,7 +41,7 @@ data_lake_storage_containers = [
 
 data_lake_storage_containers_to_import = [
   "logging",
-  "odw-curated-migration"
+  "odw-curated-migration",
 ]
 
 devops_agent_pool_resource_group_name          = "pins-rg-devops-odw-prod-uks"
@@ -171,6 +171,13 @@ service_bus_topics_and_subscriptions = [
   {
     name          = "pins-inspector"
     subscriptions = {}
+  },
+  {
+    name = "application-update"
+    subscriptions = {
+      "planning-environmental-specialist-odw-sub"      = {},
+      "planning-environmental-specialist-odw-wake-sub" = {}
+    }
   }
 ]
 

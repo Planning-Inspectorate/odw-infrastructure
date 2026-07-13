@@ -56,6 +56,25 @@ import {
   id       = "https://${module.synapse_data_lake.data_lake_account_name}.blob.core.windows.net/${each.key}"
 }
 
+data "azuread_group" "odw_read_only_prod" {
+  display_name     = "pins-odw-read-only-prod"
+  security_enabled = true
+}
+
+resource "azurerm_role_assignment" "odw_read_only_prod" {
+  count                = var.environment == "prod" ? 1 : 0
+  scope                = module.synapse_data_lake.data_lake_account_id
+  role_definition_name = "Storage Blob Data Reader"
+  principal_id         = data.azuread_group.odw_read_only_prod.object_id
+}
+
+# Import only in prod
+import {
+  for_each = var.environment == "prod" ? toset([1]) : toset([])
+  to       = azurerm_role_assignment.odw_read_only_prod[0]
+  id       = "${module.synapse_data_lake.data_lake_account_id}/providers/Microsoft.Authorization/roleAssignments/da8b1642-e925-45e7-aaa7-ec9c1c8925dd"
+}
+
 # module "synapse_data_lake_failover" {
 #   source = "./modules/synapse-data-lake"
 

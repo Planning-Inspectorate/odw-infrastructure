@@ -101,3 +101,72 @@ resource "azurerm_monitor_activity_log_alert" "function_app_delete" {
 
   tags = local.tags
 }
+
+# Alert on integration function failures
+resource "azurerm_monitor_scheduled_query_rules_alert_v2" "integration_function_failures" {
+  name         = "ODW function app integration failure - ${local.resource_suffix}"
+  display_name = "ODW function app integration failure - ${local.resource_suffix}"
+  description  = "Triggered when the integration function app logs any function execution failures."
+
+  location            = "uksouth"
+  resource_group_name = var.resource_group_name
+  scopes              = [azurerm_log_analytics_workspace.synapse.id]
+
+  enabled                 = var.alert_group_platform_enabled
+  auto_mitigation_enabled = true
+
+  evaluation_frequency = "PT5M"
+  window_duration      = "PT10M"
+
+  criteria {
+    query                   = <<-QUERY
+      AppRequests
+      | where AppRoleName =~ 'pins-fnapp01-odw-${var.environment}-uks'
+      | where Success == False
+      QUERY
+    time_aggregation_method = "Count"
+    threshold               = 0
+    operator                = "GreaterThan"
+  }
+
+  severity = 1
+  action {
+    action_groups = [azurerm_monitor_action_group.platform_alerts.id]
+  }
+
+  tags = local.tags
+}
+
+# Alert on integration function exceptions
+resource "azurerm_monitor_scheduled_query_rules_alert_v2" "integration_function_exceptions" {
+  name         = "ODW function app integration exception - ${local.resource_suffix}"
+  display_name = "ODW function app integration exception - ${local.resource_suffix}"
+  description  = "Triggered when the integration function app logs any exceptions."
+
+  location            = "uksouth"
+  resource_group_name = var.resource_group_name
+  scopes              = [azurerm_log_analytics_workspace.synapse.id]
+
+  enabled                 = var.alert_group_platform_enabled
+  auto_mitigation_enabled = true
+
+  evaluation_frequency = "PT5M"
+  window_duration      = "PT10M"
+
+  criteria {
+    query                   = <<-QUERY
+      AppExceptions
+      | where AppRoleName =~ 'pins-fnapp01-odw-${var.environment}-uks'
+      QUERY
+    time_aggregation_method = "Count"
+    threshold               = 0
+    operator                = "GreaterThan"
+  }
+
+  severity = 1
+  action {
+    action_groups = [azurerm_monitor_action_group.platform_alerts.id]
+  }
+
+  tags = local.tags
+}
