@@ -27,11 +27,8 @@ parameters:
 pr:
 - main
 
-# Run when merged into main
-trigger:
- branches:
-  include:
-  - main
+# Disable CI runs on merge/push to main
+trigger: none
 
 # Import the core repository
 resources:
