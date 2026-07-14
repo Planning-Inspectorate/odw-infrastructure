@@ -82,6 +82,14 @@ horizon_integration_config = {
   }
 }
 
+# test.tfvars
+s62a_migration = {
+  rg             = "pins-rg-data-odw-test-uks"
+  service_name   = "s62a"
+  container_name = ["s62a"]
+}
+
+
 location = "uk-south"
 
 logic_app_enabled = false

@@ -59,6 +59,9 @@ module "synapse_workspace_private" {
   purview_event_hub_fqdn = var.link_purview_account ? var.purview_event_hub_fqdn : null
   odw_service_bus_fqdn   = "${module.synapse_ingestion.service_bus_namespace_name}.servicebus.windows.net"
 
+  s62a_storage_account_name = one(module.storage_account_s62a[*].storage_name)
+  s62a_storage_account_id   = one(module.storage_account_s62a[*].storage_id)
+
   tags = local.tags
 
   providers = {
