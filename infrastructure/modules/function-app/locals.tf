@@ -25,7 +25,13 @@ locals {
       "MESSAGE_STORAGE_CONTAINER"                          = var.message_storage_container
       "SERVICEBUS_NAMESPACE_APPEALS"                       = "${var.servicebus_namespace_appeals}.servicebus.windows.net"
       "SCM_DO_BUILD_DURING_DEPLOYMENT"                     = "true"
-    }
+    },
+    # fix for production DNS resolution which uses custom DNS on the VNET
+    # we need to use the Azure default DNS resolution for private endpoints to work
+    # see also https://docs.azure.cn/en-us/virtual-network/what-is-ip-address-168-63-129-16
+    var.environment == "prod" ? {
+      WEBSITE_DNS_SERVER = "168.63.129.16"
+    } : {}
   )
 
   site_config = merge(
