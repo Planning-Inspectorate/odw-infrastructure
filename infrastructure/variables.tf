@@ -180,15 +180,10 @@ variable "horizon_migration" {
   default = null
 }
 
-# S62A migration storage account
-variable "s62a_migration" {
-  description = "Configuration for S62A migration"
-  type = object({
-    rg             = string
-    service_name   = string
-    container_name = list(string)
-  })
-  default = null
+variable "deploy_s62a_migration_storage" {
+  description = "Deploy S62A migration storage account"
+  type        = bool
+  default     = false
 }
 
 variable "key_vault_role_assignments" {

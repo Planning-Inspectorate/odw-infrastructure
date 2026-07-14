@@ -49,6 +49,8 @@ devops_agent_pool_resource_group_name_failover = "pins-rg-devops-odw-test-ukw"
 
 environment = "test"
 
+deploy_s62a_migration_storage = true
+
 function_app_enabled = true
 function_app = [
   {
@@ -80,13 +82,6 @@ horizon_integration_config = {
     vnet_name            = "VNPRE-10.0.0.0-16"
     database_subnet_name = "SN-VNPRE-DB-10.0.3.0-24"
   }
-}
-
-#Evagelos new horizon migration storage account
-s62a_migration = {
-  rg             = "pins-rg-data-odw-test-uks"
-  service_name   = "s62a"
-  container_name = ["s62a"]
 }
 
 location = "uk-south"

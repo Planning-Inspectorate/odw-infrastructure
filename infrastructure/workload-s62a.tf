@@ -1,30 +1,21 @@
 # S62A Storage Account
 module "storage_account_s62a_migration" {
 
-  count = var.s62a_migration != null ? 1 : 0
+  count = var.deploy_s62a_migration_storage ? 1 : 0
 
   source = "./modules/storage-account"
 
-  resource_group_name                     = var.s62a_migration.rg
-  service_name                            = var.s62a_migration.service_name
+  resource_group_name                     = azurerm_resource_group.data.name
+  service_name                            = "s62a"
   environment                             = var.environment
   location                                = module.azure_region.location_cli
   tags                                    = local.tags
-  container_name                          = var.s62a_migration.container_name
+  container_name                          = ["s62a"]
   network_rule_virtual_network_subnet_ids = concat([module.synapse_network.vnet_subnets[local.functionapp_subnet_name], module.synapse_network.vnet_subnets[local.compute_subnet_name]])
 }
 
-resource "azurerm_private_dns_zone_virtual_network_link" "storage" {
-  name                  = "pins-vnetlink-storage-s62a"
-  resource_group_name   = var.tooling_config.network_rg
-  private_dns_zone_name = data.azurerm_private_dns_zone.storage.name
-  virtual_network_id    = module.synapse_network.vnet_id
-
-  provider = azurerm.tooling
-}
-
 resource "azurerm_private_endpoint" "s62a_endpoint" {
-  count = var.s62a_migration != null ? 1 : 0
+  count = var.deploy_s62a_migration_storage ? 1 : 0
 
   name                = "pins-pe-odw-s62a-${var.environment}"
   resource_group_name = azurerm_resource_group.network.name
@@ -33,7 +24,7 @@ resource "azurerm_private_endpoint" "s62a_endpoint" {
 
   private_dns_zone_group {
     name                 = "sts62aprivateendpoint"
-    private_dns_zone_ids = [data.azurerm_private_dns_zone.storage.id]
+    private_dns_zone_ids = [data.azurerm_private_dns_zone.tooling_storage["blob"].id]
   }
 
   private_service_connection {

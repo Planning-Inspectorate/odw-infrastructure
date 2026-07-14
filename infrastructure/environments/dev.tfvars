@@ -92,12 +92,8 @@ horizon_migration = {
   service_name   = "mpesc"
   container_name = ["mpesc"]
 }
-#Evagelos new horizon migration storage account
-s62a_migration = {
-  rg             = "pins-rg-data-odw-dev-uks"
-  service_name   = "s62a"
-  container_name = ["s62a"]
-}
+
+deploy_s62a_migration_storage = true
 
 location = "uk-south"
 
