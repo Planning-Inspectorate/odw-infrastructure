@@ -309,6 +309,6 @@ link_purview_account = false
 
 create_service_bus_resources = false
 
-devops_agent_vm_sku = "Standard_E2as_v4"
+devops_agent_vm_sku = "Standard_D4as_v4"
 
 specialist_case_validation_check_logic_app_enabled = false
