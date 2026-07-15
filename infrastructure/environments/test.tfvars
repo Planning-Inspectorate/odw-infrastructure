@@ -49,6 +49,8 @@ devops_agent_pool_resource_group_name_failover = "pins-rg-devops-odw-test-ukw"
 
 environment = "test"
 
+deploy_s62a_migration_storage = true
+
 function_app_enabled = true
 function_app = [
   {

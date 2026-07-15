@@ -180,6 +180,12 @@ variable "horizon_migration" {
   default = null
 }
 
+variable "deploy_s62a_migration_storage" {
+  description = "Deploy S62A migration storage account"
+  type        = bool
+  default     = false
+}
+
 variable "key_vault_role_assignments" {
   default     = {}
   description = "An object mapping RBAC roles to principal IDs for Key Vault"
