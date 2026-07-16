@@ -7,6 +7,7 @@ parameters:
   runTerraformApply: false
   refreshTFState: false
   extraEnvironmentVariables: []
+  system_asset_owner: []
 
 ##
 # Deploy Infrastructure only if a modification has been detected in the codebase
@@ -15,6 +16,7 @@ stages:
 - stage: DeployInfrastructure
   displayName: 'Deploy Infrastructure to the ${{ parameters.env }} environment'
   condition: not(or(failed(), canceled()))
+  variables: ${{ parameters.system_asset_owner }}
   jobs:
   - template: ${{variables['System.DefaultWorkingDirectory']}}/pipelines/jobs/deploy-infrastructure.yaml
     parameters:
