@@ -36,3 +36,19 @@ resource "azurerm_private_endpoint" "s62a_endpoint" {
 
   tags = local.tags
 }
+
+resource "azurerm_key_vault_secret" "s62a_storage_account_key" {
+  count           = var.deploy_s62a_migration_storage ? 1 : 0
+  content_type    = "text/plain"
+  key_vault_id    = module.synapse_data_lake.key_vault_id
+  name            = "S62a-Storage"
+  value           = module.storage_account_s62a_migration[0].primary_access_key
+  expiration_date = timeadd(timestamp(), "867834h")
+
+  lifecycle {
+    ignore_changes = [
+      expiration_date,
+      value
+    ]
+  }
+}
