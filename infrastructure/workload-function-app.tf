@@ -4,7 +4,10 @@ resource "azurerm_resource_group" "function_app" {
   name     = "pins-rg-function-app-${local.resource_suffix}"
   location = module.azure_region.location_cli
 
-  tags = local.tags
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 }
 
 resource "azurerm_resource_group" "function_app_failover" {
@@ -13,7 +16,10 @@ resource "azurerm_resource_group" "function_app_failover" {
   name     = "pins-rg-function-app-${local.resource_suffix_failover}"
   location = module.azure_region.paired_location.location_cli
 
-  tags = local.tags
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 }
 
 module "service_plan" {
@@ -25,7 +31,11 @@ module "service_plan" {
   service_name        = local.service_name
   environment         = var.environment
   location            = module.azure_region.location_cli
-  tags                = local.tags
+
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 }
 
 module "service_plan_failover" {
@@ -37,7 +47,11 @@ module "service_plan_failover" {
   service_name        = local.service_name
   environment         = var.environment
   location            = module.azure_region.paired_location.location_cli
-  tags                = local.tags
+
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 }
 
 module "storage_account" {
@@ -51,7 +65,6 @@ module "storage_account" {
   service_name                            = local.service_name
   environment                             = var.environment
   location                                = module.azure_region.location_cli
-  tags                                    = local.tags
   network_rules_enabled                   = true
   network_rule_virtual_network_subnet_ids = concat([module.synapse_network.vnet_subnets[local.functionapp_subnet_name], module.synapse_network.vnet_subnets[local.compute_subnet_name]])
   shares = [
@@ -60,6 +73,11 @@ module "storage_account" {
       quota = 5120
     }
   ]
+
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 }
 
 
@@ -74,7 +92,6 @@ module "storage_account_failover" {
   service_name                            = local.service_name
   environment                             = var.environment
   location                                = module.azure_region.paired_location.location_cli
-  tags                                    = local.tags
   network_rules_enabled                   = true
   network_rule_virtual_network_subnet_ids = concat([module.synapse_network_failover.vnet_subnets[local.functionapp_subnet_name], module.synapse_network_failover.vnet_subnets[local.compute_subnet_name]])
   shares = [
@@ -83,6 +100,11 @@ module "storage_account_failover" {
       quota = 5120
     }
   ]
+
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 }
 
 # Commenting out because the current configuration is broken, and we may need
@@ -128,7 +150,6 @@ module "function_app" {
   storage_account_access_key   = module.storage_account[each.key].primary_access_key
   environment                  = var.environment
   location                     = module.azure_region.location_cli
-  tags                         = local.tags
   application_insights_key     = azurerm_application_insights.function_app_insights[each.key].instrumentation_key
   synapse_vnet_subnet_names    = module.synapse_network.vnet_subnets
   app_settings                 = try(each.value.app_settings, null)
@@ -140,6 +161,11 @@ module "function_app" {
   servicebus_namespace_odw     = module.synapse_ingestion.service_bus_namespace_name
   message_storage_account      = var.message_storage_account
   message_storage_container    = var.message_storage_container
+
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 }
 
 module "function_app_failover" {
@@ -157,7 +183,6 @@ module "function_app_failover" {
   storage_account_access_key = module.storage_account_failover[each.key].primary_access_key
   environment                = var.environment
   location                   = module.azure_region.paired_location.location_cli
-  tags                       = local.tags
   application_insights_key   = azurerm_application_insights.function_app_insights[each.key].instrumentation_key
   synapse_vnet_subnet_names  = module.synapse_network_failover.vnet_subnets
   app_settings               = try(each.value.app_settings, null)
@@ -165,6 +190,11 @@ module "function_app_failover" {
   file_share_name            = "pins-${each.key}-${local.resource_suffix_failover}"
   servicebus_namespace       = var.odt_back_office_service_bus_name
   servicebus_namespace_odw   = var.service_bus_failover_enabled ? module.synapse_ingestion_failover[0].service_bus_namespace_name : module.synapse_ingestion.service_bus_namespace_name
+
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 }
 
 # module "function_app_openlineage_receiver" {
@@ -259,5 +289,10 @@ resource "azurerm_application_insights" "function_app_insights" {
   retention_in_days   = 30
   workspace_id        = module.synapse_monitoring.log_analytics_workspace_id
 
-  tags = local.tags
+  tags = merge(
+    local.tags,
+    var.environment == "prod" ? {
+      resourceType = "application insights"
+    } : {}
+  )
 }

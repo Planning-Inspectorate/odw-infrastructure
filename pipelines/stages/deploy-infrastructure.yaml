@@ -6,6 +6,7 @@ parameters:
   outputsFileName: ''
   runTerraformApply: false
   refreshTFState: false
+  extraEnvironmentVariables: []
 
 ##
 # Deploy Infrastructure only if a modification has been detected in the codebase
@@ -24,3 +25,4 @@ stages:
       outputsFileName: ${{ parameters.outputsFileName }}
       runTerraformApply: ${{ parameters.runTerraformApply }}
       refreshTFState: ${{ parameters.refreshTFState }}
+      extraEnvironmentVariables: ${{ parameters.extraEnvironmentVariables }}

@@ -5,7 +5,11 @@ resource "azurerm_api_connection" "azure_blob" {
   managed_api_id      = "/subscriptions/${data.azurerm_subscription.current.subscription_id}/providers/Microsoft.Web/locations/uksouth/managedApis/azureblob"
   name                = var.az_api_blob_connection_names[var.environment]
   resource_group_name = azurerm_resource_group.data.name
-  tags                = local.tags
+
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 }
 
 import {
@@ -19,7 +23,11 @@ resource "azurerm_api_connection" "office_365" {
   managed_api_id      = "/subscriptions/${data.azurerm_subscription.current.subscription_id}/providers/Microsoft.Web/locations/uksouth/managedApis/office365"
   name                = var.az_api_office365_connection_names[var.environment]
   resource_group_name = azurerm_resource_group.data.name
-  tags                = local.tags
+
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 }
 
 import {
@@ -152,7 +160,11 @@ module "specialist_case_validation_check" {
       })
     }
   ]
-  tags = local.tags
+
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 }
 
 import {

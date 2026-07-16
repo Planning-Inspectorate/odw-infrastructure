@@ -67,6 +67,11 @@ stages:
     outputsFileName: "tfoutputs.json"
     runTerraformApply: ${{ parameters.runTerraformApply }}
     refreshTFState: ${{ parameters.refreshTFState }}
+    system_asset_owner:
+      - group: system_asset_owner
+    extraEnvironmentVariables:
+      - name: TF_VAR_system_asset_owner
+        value: $(system_asset_owner)
 
 - ${{ if eq(parameters.runTerraformApply, true) }}:
   - template: stages/run-tests.yaml

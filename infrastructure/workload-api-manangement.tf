@@ -3,7 +3,10 @@ resource "azurerm_resource_group" "api_management" {
   name     = "pins-rg-apim-${local.resource_suffix}"
   location = module.azure_region.location_cli
 
-  tags = local.tags
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 }
 
 resource "azurerm_resource_group" "api_management_failover" {
@@ -12,7 +15,10 @@ resource "azurerm_resource_group" "api_management_failover" {
   name     = "pins-rg-apim-${local.resource_suffix_failover}"
   location = module.azure_region.paired_location.location_cli
 
-  tags = local.tags
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 }
 
 module "api_management" {
@@ -33,7 +39,10 @@ module "api_management" {
   synapse_vnet_subnet_names = module.synapse_network.vnet_subnets
   #synapse_vnet_subnet_prefixes = module.synapse_network.vnet_subnet_prefixes
 
-  tags = local.tags
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 }
 
 module "api_management_failover" {
@@ -54,5 +63,8 @@ module "api_management_failover" {
   synapse_vnet_subnet_names = module.synapse_network_failover.vnet_subnets
   #synapse_vnet_subnet_prefixes = module.synapse_network_failover.vnet_subnet_prefixes
 
-  tags = local.tags
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 }

@@ -2,7 +2,10 @@ resource "azurerm_resource_group" "shir" {
   name     = "pins-rg-shir-${local.resource_suffix}"
   location = module.azure_region.location_cli
 
-  tags = local.tags
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 }
 
 resource "azurerm_resource_group" "shir_failover" {
@@ -11,7 +14,10 @@ resource "azurerm_resource_group" "shir_failover" {
   name     = "pins-rg-shir-${local.resource_suffix_failover}"
   location = module.azure_region.paired_location.location_cli
 
-  tags = local.tags
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 }
 
 module "synapse_shir" {
@@ -23,12 +29,14 @@ module "synapse_shir" {
   service_name        = local.service_name
 
   devops_agent_subnet_name = local.compute_subnet_name
+  run_shir_setup_script    = var.run_shir_setup_script
   synapse_workspace_id     = module.synapse_workspace_private.synapse_workspace_id
   vnet_subnet_ids          = module.synapse_network.vnet_subnets
 
-  tags = local.tags
-
-  run_shir_setup_script = var.run_shir_setup_script
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 }
 
 module "synapse_shir_failover" {
@@ -43,9 +51,11 @@ module "synapse_shir_failover" {
 
   devops_agent_subnet_name = local.compute_subnet_name
   synapse_workspace_id     = module.synapse_workspace_private_failover[0].synapse_workspace_id
+  run_shir_setup_script    = var.run_shir_setup_script
   vnet_subnet_ids          = module.synapse_network_failover.vnet_subnets
 
-  tags = local.tags
-
-  run_shir_setup_script = var.run_shir_setup_script
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 }

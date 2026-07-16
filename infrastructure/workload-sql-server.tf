@@ -4,7 +4,10 @@ resource "azurerm_resource_group" "sql_server" {
   name     = "pins-rg-sqlserver-${local.resource_suffix}"
   location = module.azure_region.location_cli
 
-  tags = local.tags
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 }
 
 resource "azurerm_resource_group" "sql_server_failover" {
@@ -13,7 +16,10 @@ resource "azurerm_resource_group" "sql_server_failover" {
   name     = "pins-rg-sqlserver-${local.resource_suffix_failover}"
   location = module.azure_region.paired_location.location_cli
 
-  tags = local.tags
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 }
 
 module "synapse_sql_server" {
@@ -35,7 +41,10 @@ module "synapse_sql_server" {
   vnet_subnet_ids                   = module.synapse_network.vnet_subnets
   vnet_subnet_ids_failover          = module.synapse_network_failover.vnet_subnets
 
-  tags = local.tags
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 }
 
 module "synapse_sql_server_failover" {
@@ -57,5 +66,8 @@ module "synapse_sql_server_failover" {
   vnet_subnet_ids                   = module.synapse_network_failover.vnet_subnets
   vnet_subnet_ids_failover          = module.synapse_network.vnet_subnets
 
-  tags = local.tags
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 }

@@ -4,7 +4,10 @@ resource "azurerm_resource_group" "odt_backoffice_sb" {
   name     = "pins-rg-odt-bo-sb-${local.resource_suffix}"
   location = module.azure_region.location_cli
 
-  tags = local.tags
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 }
 
 resource "azurerm_resource_group" "odt_backoffice_sb_failover" {
@@ -13,7 +16,10 @@ resource "azurerm_resource_group" "odt_backoffice_sb_failover" {
   name     = "pins-rg-odt-bo-sb-${local.resource_suffix_failover}"
   location = module.azure_region.paired_location.location_cli
 
-  tags = local.tags
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 }
 
 module "odt_backoffice_sb" {
@@ -29,7 +35,10 @@ module "odt_backoffice_sb" {
   synapse_workspace_failover_principal_id = try(module.synapse_workspace_private_failover.synapse_workspace_principal_id, null)
   synapse_workspace_principal_id          = module.synapse_workspace_private.synapse_workspace_principal_id
 
-  tags = local.tags
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 
   providers = {
     azurerm     = azurerm,
@@ -50,7 +59,10 @@ module "odt_backoffice_sb_failover" {
   synapse_workspace_failover_principal_id = try(module.synapse_workspace_private_failover.synapse_workspace_principal_id, null)
   synapse_workspace_principal_id          = module.synapse_workspace_private.synapse_workspace_principal_id
 
-  tags = local.tags
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 
   providers = {
     azurerm     = azurerm,
@@ -74,7 +86,10 @@ module "odt_appeals_back_office_sb" {
   synapse_workspace_principal_id          = module.synapse_workspace_private.synapse_workspace_principal_id
   topics_to_send                          = ["listed-building"]
 
-  tags = local.tags
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 
   providers = {
     azurerm     = azurerm,

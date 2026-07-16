@@ -676,6 +676,7 @@ variable "purview_storage_id" {
   default     = null
 }
 
+
 variable "purview_event_hub_id" {
   description = "The id of Purview's managed event hub"
   type        = string
@@ -692,6 +693,12 @@ variable "specialist_case_validation_check_recipients" {
   description = "Semicolon-separates list of email addresses"
   type        = string
   default     = ""
+}
+
+variable "system_asset_owner" {
+  description = "tagging - value extracted from ADO library secret"
+  type        = string
+  sensitive   = true
 }
 
 variable "specialist_case_validation_check_logic_app_migration_ids" {

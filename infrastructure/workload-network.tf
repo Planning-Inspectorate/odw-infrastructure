@@ -2,21 +2,30 @@ resource "azurerm_resource_group" "network" {
   name     = "pins-rg-network-${local.resource_suffix}"
   location = module.azure_region.location_cli
 
-  tags = local.tags
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 }
 
 resource "azurerm_resource_group" "network_failover" {
   name     = "pins-rg-network-${local.resource_suffix_failover}"
   location = module.azure_region.paired_location.location_cli
 
-  tags = local.tags
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 }
 
 resource "azurerm_resource_group" "network_global" {
   name     = "pins-rg-network-${local.resource_suffix_global}"
   location = module.azure_region.location_cli
 
-  tags = local.tags
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 }
 
 module "synapse_network" {
@@ -32,7 +41,10 @@ module "synapse_network" {
   vnet_base_cidr_block    = var.vnet_base_cidr_block
   vnet_subnets            = var.vnet_subnets
 
-  tags = local.tags
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 }
 
 module "synapse_network_failover" {
@@ -48,14 +60,20 @@ module "synapse_network_failover" {
   vnet_base_cidr_block    = var.vnet_base_cidr_block_failover
   vnet_subnets            = var.vnet_subnets
 
-  tags = local.tags
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 }
 
 resource "azurerm_private_dns_zone" "synapse" {
   name                = "privatelink.azuresynapse.net"
   resource_group_name = azurerm_resource_group.network_global.name
 
-  tags = local.tags
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "datalake" {
@@ -65,7 +83,10 @@ resource "azurerm_private_dns_zone_virtual_network_link" "datalake" {
   virtual_network_id    = module.synapse_network.vnet_id
   provider              = azurerm.tooling
 
-  tags = local.tags
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "storage_blob" {
@@ -85,7 +106,10 @@ resource "azurerm_private_dns_zone_virtual_network_link" "datalake_failover" {
   virtual_network_id    = module.synapse_network_failover.vnet_id
   provider              = azurerm.tooling
 
-  tags = local.tags
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "storage_blob_failover" {
@@ -105,7 +129,10 @@ resource "azurerm_private_dns_zone_virtual_network_link" "keyvault" {
   virtual_network_id    = module.synapse_network.vnet_id
   provider              = azurerm.tooling
 
-  tags = local.tags
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "keyvault_failover" {
@@ -115,7 +142,10 @@ resource "azurerm_private_dns_zone_virtual_network_link" "keyvault_failover" {
   virtual_network_id    = module.synapse_network_failover.vnet_id
   provider              = azurerm.tooling
 
-  tags = local.tags
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "synapse" {
@@ -124,7 +154,10 @@ resource "azurerm_private_dns_zone_virtual_network_link" "synapse" {
   private_dns_zone_name = azurerm_private_dns_zone.synapse.name
   virtual_network_id    = module.synapse_network.vnet_id
 
-  tags = local.tags
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "synapse_failover" {
@@ -133,7 +166,10 @@ resource "azurerm_private_dns_zone_virtual_network_link" "synapse_failover" {
   private_dns_zone_name = azurerm_private_dns_zone.synapse.name
   virtual_network_id    = module.synapse_network_failover.vnet_id
 
-  tags = local.tags
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "tooling_synapse_dev" {
@@ -183,7 +219,10 @@ resource "azurerm_private_dns_zone_virtual_network_link" "servicebus" {
   virtual_network_id    = module.synapse_network.vnet_id
   provider              = azurerm.tooling
 
-  tags = local.tags
+  tags = merge(
+    local.tags,
+    var.environment == "prod"
+  )
 }
 
 resource "azurerm_virtual_network_peering" "pri_sec" {
