@@ -75,9 +75,7 @@ jobs:
       refreshTFState: ${{ parameters.refreshTFState }}
   
   # Only deploy infrastructure if specifically requested
-  ###
   ## Terraform deployment phase
-  ###
   - ${{ if eq(parameters.runTerraformApply, true) }}:
     # Copy Terraform plan files to artifact directory
     - task: CopyFiles@2

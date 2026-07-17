@@ -676,7 +676,6 @@ variable "purview_storage_id" {
   default     = null
 }
 
-
 variable "purview_event_hub_id" {
   description = "The id of Purview's managed event hub"
   type        = string
