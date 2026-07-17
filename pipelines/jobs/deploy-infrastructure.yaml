@@ -55,6 +55,12 @@ jobs:
       workingDirectory: infrastructure
 
   # Run TFLint
+  - script: |
+      echo "Installing TFLint..."
+      curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+    displayName: 'Install TFLint'
+    workingDirectory: .
+
   - template: ${{variables['System.DefaultWorkingDirectory']}}/pipelines/steps/tflint-validate.yaml
     parameters:
       configFilePath: $(Build.Repository.LocalPath)/.tflint.hcl
