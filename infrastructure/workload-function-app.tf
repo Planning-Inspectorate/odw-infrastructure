@@ -4,7 +4,7 @@ resource "azurerm_resource_group" "function_app" {
   name     = "pins-rg-function-app-${local.resource_suffix}"
   location = module.azure_region.location_cli
 
-  tags = merge(local.tags, local.prod_tags)
+  tags = merge(local.tags, var.environment == "prod")
 }
 
 resource "azurerm_resource_group" "function_app_failover" {
@@ -13,7 +13,7 @@ resource "azurerm_resource_group" "function_app_failover" {
   name     = "pins-rg-function-app-${local.resource_suffix_failover}"
   location = module.azure_region.paired_location.location_cli
 
-  tags = merge(local.tags, local.prod_tags)
+  tags = merge(local.tags, var.environment == "prod")
 }
 
 module "service_plan" {
@@ -26,7 +26,7 @@ module "service_plan" {
   environment         = var.environment
   location            = module.azure_region.location_cli
 
-  tags = merge(local.tags, local.prod_tags)
+  tags = merge(local.tags, var.environment == "prod")
 }
 
 module "service_plan_failover" {
@@ -39,7 +39,7 @@ module "service_plan_failover" {
   environment         = var.environment
   location            = module.azure_region.paired_location.location_cli
 
-  tags = merge(local.tags, local.prod_tags)
+  tags = merge(local.tags, var.environment == "prod")
 }
 
 module "storage_account" {
@@ -62,7 +62,7 @@ module "storage_account" {
     }
   ]
 
-  tags = merge(local.tags, local.prod_tags)
+  tags = merge(local.tags, var.environment == "prod")
 }
 
 
@@ -86,7 +86,7 @@ module "storage_account_failover" {
     }
   ]
 
-  tags = merge(local.tags, local.prod_tags)
+  tags = merge(local.tags, var.environment == "prod")
 }
 
 # Commenting out because the current configuration is broken, and we may need
@@ -144,7 +144,7 @@ module "function_app" {
   message_storage_account      = var.message_storage_account
   message_storage_container    = var.message_storage_container
 
-  tags = merge(local.tags, local.prod_tags)
+  tags = merge(local.tags, var.environment == "prod")
 }
 
 module "function_app_failover" {
@@ -170,7 +170,7 @@ module "function_app_failover" {
   servicebus_namespace       = var.odt_back_office_service_bus_name
   servicebus_namespace_odw   = var.service_bus_failover_enabled ? module.synapse_ingestion_failover[0].service_bus_namespace_name : module.synapse_ingestion.service_bus_namespace_name
 
-  tags = merge(local.tags, local.prod_tags)
+  tags = merge(local.tags, var.environment == "prod")
 }
 
 # module "function_app_openlineage_receiver" {

@@ -34,5 +34,5 @@ resource "azurerm_private_endpoint" "s62a_endpoint" {
     is_manual_connection           = false
   }
 
-  tags = merge(local.tags, local.prod_tags)
+  tags = merge(local.tags, var.environment == "prod")
 }

@@ -13,7 +13,7 @@ module "devops_agent_pool" {
   devops_agent_vm_sku       = var.devops_agent_vm_sku
   vnet_subnet_ids           = module.synapse_network.vnet_subnets
 
-  tags = merge(local.tags, local.prod_tags)
+  tags = merge(local.tags, var.environment == "prod")
 }
 
 module "devops_agent_pool_failover" {
@@ -32,7 +32,7 @@ module "devops_agent_pool_failover" {
   devops_agent_vm_sku       = var.devops_agent_vm_sku
   vnet_subnet_ids           = module.synapse_network_failover.vnet_subnets
 
-  tags = merge(local.tags, local.prod_tags)
+  tags = merge(local.tags, var.environment == "prod")
 }
 
 moved {
