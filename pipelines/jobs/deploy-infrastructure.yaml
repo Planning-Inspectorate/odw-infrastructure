@@ -6,7 +6,7 @@ parameters:
   outputsFileName: ''
   runTerraformApply: false
   refreshTFState: false
-  extraEnvironmentVariables: []
+  extra_variables: []
 
 
 ##
@@ -17,7 +17,7 @@ jobs:
   pool: ${{ parameters.agentPool }}
   timeoutInMinutes: 0 # Max timeout
   variables:
-  - ${{ each pair in parameters.extraEnvironmentVariables }}:
+  - ${{ each pair in parameters.extra_variables }}:
     - name: ${{ pair.name }}
       value: ${{ pair.value }}
   steps:
