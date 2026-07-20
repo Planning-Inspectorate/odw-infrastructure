@@ -1,4 +1,4 @@
-from pipelines.scripts.private_endpoint.managed_private_endpoint_manager import ManagedPrivateEndpointManager
+from tests.util.private_endpoint.managed_private_endpoint_manager import ManagedPrivateEndpointManager
 from azure.identity import AzureCliCredential
 import requests
 
