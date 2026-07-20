@@ -47,8 +47,7 @@ resource "azurerm_key_vault_secret" "s62a_storage_account_key" {
 
   lifecycle {
     ignore_changes = [
-      expiration_date,
-      value
+      expiration_date
     ]
   }
 }
