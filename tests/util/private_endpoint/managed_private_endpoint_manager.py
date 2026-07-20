@@ -3,6 +3,9 @@ from typing import Dict, List, Any
 
 
 class ManagedPrivateEndpointManager(ABC):
+    """
+    TODO: could be moved to odw-common
+    """
     @abstractmethod
     def get(self, private_endpoint_name: str) -> Dict[str, Any]:
         """
