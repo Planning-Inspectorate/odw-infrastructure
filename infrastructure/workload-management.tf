@@ -2,10 +2,7 @@ resource "azurerm_resource_group" "data_management" {
   name     = "pins-rg-datamgmt-${local.resource_suffix}"
   location = module.azure_region.location_cli
 
-  tags = merge(
-    local.tags,
-    var.environment == "prod"
-  )
+  tags = local.tags
 }
 
 resource "azurerm_resource_group" "data_management_failover" {
@@ -14,10 +11,7 @@ resource "azurerm_resource_group" "data_management_failover" {
   name     = "pins-rg-datamgmt-${local.resource_suffix_failover}"
   location = module.azure_region.paired_location.location_cli
 
-  tags = merge(
-    local.tags,
-    var.environment == "prod"
-  )
+  tags = local.tags
 }
 
 module "synapse_management" {
@@ -40,10 +34,7 @@ module "synapse_management" {
   vnet_subnet_ids_failover               = module.synapse_network_failover.vnet_subnets
   purview_msi_id                         = var.purview_msi_id
 
-  tags = merge(
-    local.tags,
-    var.environment == "prod"
-  )
+  tags = local.tags
 }
 
 
@@ -92,10 +83,7 @@ module "synapse_management_failover" {
   vnet_subnet_ids_failover               = module.synapse_network.vnet_subnets
   purview_msi_id                         = var.purview_msi_id
 
-  tags = merge(
-    local.tags,
-    var.environment == "prod"
-  )
+  tags = local.tags
 }
 
 module "bastion_host" {
@@ -118,10 +106,7 @@ module "bastion_host" {
   synapse_vnet_subnet_names    = module.synapse_network.vnet_subnets
   synapse_vnet_subnet_prefixes = module.synapse_network.vnet_subnet_prefixes
 
-  tags = merge(
-    local.tags,
-    var.environment == "prod"
-  )
+  tags = local.tags
 }
 
 module "bastion_host_failover" {
@@ -144,8 +129,5 @@ module "bastion_host_failover" {
   synapse_vnet_subnet_names    = module.synapse_network_failover.vnet_subnets
   synapse_vnet_subnet_prefixes = module.synapse_network_failover.vnet_subnet_prefixes
 
-  tags = merge(
-    local.tags,
-    var.environment == "prod"
-  )
+  tags = local.tags
 }

@@ -6,10 +6,7 @@ resource "azurerm_api_connection" "azure_blob" {
   name                = var.az_api_blob_connection_names[var.environment]
   resource_group_name = azurerm_resource_group.data.name
 
-  tags = merge(
-    local.tags,
-    var.environment == "prod"
-  )
+  tags = local.tags
 }
 
 import {
@@ -24,10 +21,7 @@ resource "azurerm_api_connection" "office_365" {
   name                = var.az_api_office365_connection_names[var.environment]
   resource_group_name = azurerm_resource_group.data.name
 
-  tags = merge(
-    local.tags,
-    var.environment == "prod"
-  )
+  tags = local.tags
 }
 
 import {
@@ -161,10 +155,7 @@ module "specialist_case_validation_check" {
     }
   ]
 
-  tags = merge(
-    local.tags,
-    var.environment == "prod"
-  )
+  tags = local.tags
 }
 
 import {

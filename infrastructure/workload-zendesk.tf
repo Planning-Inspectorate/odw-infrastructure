@@ -7,10 +7,7 @@ resource "azurerm_resource_group" "zendesk" {
   name     = "pins-rg-logic-app-${local.resource_suffix}"
   location = module.azure_region.location_cli
 
-  tags = merge(
-    local.tags,
-    var.environment == "prod"
-  )
+  tags = local.tags
 }
 
 resource "azurerm_resource_group" "zendesk_failover" {
@@ -19,10 +16,7 @@ resource "azurerm_resource_group" "zendesk_failover" {
   name     = "pins-rg-logic-app-${local.resource_suffix_failover}"
   location = module.azure_region.paired_location.location_cli
 
-  tags = merge(
-    local.tags,
-    var.environment == "prod"
-  )
+  tags = local.tags
 }
 
 module "zendesk" {
@@ -39,10 +33,7 @@ module "zendesk" {
   service_name                          = local.service_name
   service_bus_primary_connection_string = module.synapse_ingestion.service_bus_primary_connection_string
 
-  tags = merge(
-    local.tags,
-    var.environment == "prod"
-  )
+  tags = local.tags
 }
 
 module "zendesk_failover" {
@@ -59,8 +50,5 @@ module "zendesk_failover" {
   service_name                          = local.service_name
   service_bus_primary_connection_string = module.synapse_ingestion_failover[0].service_bus_primary_connection_string
 
-  tags = merge(
-    local.tags,
-    var.environment == "prod"
-  )
+  tags = local.tags
 }

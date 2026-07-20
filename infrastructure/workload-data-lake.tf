@@ -2,20 +2,14 @@ resource "azurerm_resource_group" "data" {
   name     = "pins-rg-data-${local.resource_suffix}"
   location = module.azure_region.location_cli
 
-  tags = merge(
-    local.tags,
-    var.environment == "prod"
-  )
+  tags = local.tags
 }
 
 resource "azurerm_resource_group" "data_failover" {
   name     = "pins-rg-data-${local.resource_suffix_failover}"
   location = module.azure_region.paired_location.location_cli
 
-  tags = merge(
-    local.tags,
-    var.environment == "prod"
-  )
+  tags = local.tags
 }
 
 module "synapse_data_lake" {
@@ -49,10 +43,7 @@ module "synapse_data_lake" {
   vnet_subnet_ids_failover = module.synapse_network_failover.vnet_subnets
 
 
-  tags = merge(
-    local.tags,
-    var.environment == "prod"
-  )
+  tags = local.tags
 
   providers = {
     azurerm         = azurerm,
