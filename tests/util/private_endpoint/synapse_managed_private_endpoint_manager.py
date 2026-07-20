@@ -1,4 +1,4 @@
-from pipelines.scripts.private_endpoint.managed_private_endpoint_manager import ManagedPrivateEndpointManager
+from tests.util.private_endpoint.managed_private_endpoint_manager import ManagedPrivateEndpointManager
 from azure.identity import AzureCliCredential, ChainedTokenCredential
 from typing import Dict, List, Any
 import requests
@@ -7,6 +7,8 @@ import requests
 class SynapseManagedPrivateEndpointManager(ManagedPrivateEndpointManager):
     """
         Class for fetching managed private endpoints from synapse
+
+        TODO: could be moved to odw-common
     """
     credential = None
     _token = None

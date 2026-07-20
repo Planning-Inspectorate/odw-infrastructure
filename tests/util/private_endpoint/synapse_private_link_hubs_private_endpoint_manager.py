@@ -1,4 +1,4 @@
-from pipelines.scripts.private_endpoint.managed_private_endpoint_manager import ManagedPrivateEndpointManager
+from tests.util.private_endpoint.managed_private_endpoint_manager import ManagedPrivateEndpointManager
 from azure.identity import AzureCliCredential
 import requests
 
@@ -7,6 +7,8 @@ class SynapsePrivateLinkHubsPrivateEndpointManager(ManagedPrivateEndpointManager
         Class to interact with Synapse Private Link private endpoints
 
         Note: API/CLI support for this kind of endpoint is quite limited. Only getting endpoints is available
+
+        TODO: could be moved to odw-common
     """
     _token = None
 
