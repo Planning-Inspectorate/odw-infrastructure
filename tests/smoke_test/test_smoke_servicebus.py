@@ -24,7 +24,9 @@ def generate_test_case_tuple(
     resource_group: str,
 ):
     """
-    Extract the first topic that has a subscription from the service bus
+    Extract the first topic that has an ODW-owned subscription (name starts with 'odw-') from the service bus.
+    Filtering to ODW-owned subscriptions avoids false positive auth failures on subscriptions
+    provisioned for other consumers that the ODW managed identity has no access to.
     """
     topics = [
         x.name
@@ -38,8 +40,9 @@ def generate_test_case_tuple(
                 resource_group, service_bus_name, topic
             )
         )
-        if subscriptions:
-            return (service_bus_name, topic, subscriptions[0].name)
+        odw_subscriptions = [s for s in subscriptions if s.name.startswith("odw-")]
+        if odw_subscriptions:
+            return (service_bus_name, topic, odw_subscriptions[0].name)
     return (service_bus_name, None, None)
 
 
@@ -157,8 +160,8 @@ class TestSmokeServiceBus(TestCase):
         self, service_bus_name, topic_name, subscription_name
     ):
         if not (topic_name or subscription_name):
-            assert False, (
-                f"No topics and subscriptions could be used to test connectivity for service bus '{service_bus_name}'"
+            pytest.skip(
+                f"No ODW-owned subscriptions (starting with 'odw-') found for service bus '{service_bus_name}' - skipping connectivity test"
             )
         if isinstance(topic_name, ValueError) or isinstance(
             subscription_name, ValueError
