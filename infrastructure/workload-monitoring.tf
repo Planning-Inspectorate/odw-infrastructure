@@ -2,7 +2,7 @@ resource "azurerm_resource_group" "monitoring" {
   name     = "pins-rg-monitoring-${local.resource_suffix}"
   location = module.azure_region.location_cli
 
-  tags = local.tags
+  tags = merge(local.tags, local.prod_tags)
 }
 
 resource "azurerm_resource_group" "monitoring_failover" {
@@ -11,7 +11,7 @@ resource "azurerm_resource_group" "monitoring_failover" {
   name     = "pins-rg-monitoring-${local.resource_suffix_failover}"
   location = module.azure_region.paired_location.location_cli
 
-  tags = local.tags
+  tags = merge(local.tags, local.prod_tags)
 }
 
 module "synapse_monitoring" {
@@ -38,7 +38,7 @@ module "synapse_monitoring" {
   synapse_workspace_id                     = module.synapse_workspace_private.synapse_workspace_id
   synapse_vnet_id                          = module.synapse_network.vnet_id
 
-  tags = local.tags
+  tags = merge(local.tags, local.prod_tags)
 }
 
 module "synapse_monitoring_failover" {
@@ -67,5 +67,5 @@ module "synapse_monitoring_failover" {
   synapse_workspace_id                     = module.synapse_workspace_private_failover[0].synapse_workspace_id
   synapse_vnet_id                          = module.synapse_network_failover.vnet_id
 
-  tags = local.tags
+  tags = merge(local.tags, local.prod_tags)
 }

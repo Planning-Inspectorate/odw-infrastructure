@@ -29,16 +29,17 @@ locals {
       CreatedBy   = "Terraform"
       Environment = var.environment
       ServiceName = local.service_name
-    },
-    var.environment == "prod" ? {
-      SystemAssetOwner    = var.system_asset_owner
-      BusinessProcess     = "ODW"
-      PersonalData        = "No"
-      SpecialCategoryData = "No"
-      ProtectiveMarking   = "Official-Sensitive-Mission-Critical"
-      CriticalityRating   = "Level 2"
-    } : {}
+    }
   )
+
+  prod_tags = var.environment == "prod" ? {
+    SystemAssetOwner    = var.system_asset_owner
+    BusinessProcess     = "ODW"
+    PersonalData        = "No"
+    SpecialCategoryData = "No"
+    ProtectiveMarking   = "Official-Sensitive-Mission-Critical"
+    CriticalityRating   = "Level 2"
+  } : {}
 
   tooling_storage_dns_zone_ids = {
     for zone in toset(local.storage_zones) : zone => data.azurerm_private_dns_zone.tooling_storage[zone].id

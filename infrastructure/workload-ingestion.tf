@@ -2,14 +2,14 @@ resource "azurerm_resource_group" "ingestion" {
   name     = "pins-rg-ingestion-${local.resource_suffix}"
   location = module.azure_region.location_cli
 
-  tags = local.tags
+  tags = merge(local.tags, local.prod_tags)
 }
 
 resource "azurerm_resource_group" "ingestion_failover" {
   name     = "pins-rg-ingestion-${local.resource_suffix_failover}"
   location = module.azure_region.paired_location.location_cli
 
-  tags = local.tags
+  tags = merge(local.tags, local.prod_tags)
 }
 
 module "synapse_ingestion" {
@@ -31,7 +31,7 @@ module "synapse_ingestion" {
   synapse_private_endpoint_subnet_name    = local.synapse_subnet_name
   odw_servicebus_dns_zone_id              = data.azurerm_private_dns_zone.tooling_servicebus.id
 
-  tags = local.tags
+  tags = merge(local.tags, local.prod_tags)
 }
 
 module "synapse_ingestion_failover" {
@@ -55,5 +55,5 @@ module "synapse_ingestion_failover" {
   synapse_private_endpoint_subnet_name    = local.synapse_subnet_name
   odw_servicebus_dns_zone_id              = data.azurerm_private_dns_zone.tooling_servicebus.id
 
-  tags = local.tags
+  tags = merge(local.tags, local.prod_tags)
 }
