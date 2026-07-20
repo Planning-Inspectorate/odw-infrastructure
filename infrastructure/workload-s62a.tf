@@ -33,6 +33,5 @@ resource "azurerm_private_endpoint" "s62a_endpoint" {
     subresource_names              = ["blob"]
     is_manual_connection           = false
   }
-
   tags = local.tags
 }
