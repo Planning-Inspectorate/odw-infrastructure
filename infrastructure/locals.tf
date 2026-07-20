@@ -32,7 +32,6 @@ locals {
     }
   )
 
-
   prod_tags = var.environment == "prod" ? {
     SystemAssetOwner    = var.system_asset_owner
     BusinessProcess     = "ODW"
