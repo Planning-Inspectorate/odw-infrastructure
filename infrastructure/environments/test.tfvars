@@ -188,7 +188,7 @@ spark_pool_version         = "3.4"
 new_spark_pool_version     = "3.5"
 
 spark_pool_preview_enabled = true
-spark_pool_preview_version = "3.4"
+spark_pool_preview_version = "3.5"
 
 sql_pool_collation = "SQL_Latin1_General_CP1_CI_AS"
 sql_pool_enabled   = false
