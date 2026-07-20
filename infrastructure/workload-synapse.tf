@@ -59,7 +59,7 @@ module "synapse_workspace_private" {
   purview_event_hub_fqdn = var.link_purview_account ? var.purview_event_hub_fqdn : null
   odw_service_bus_fqdn   = "${module.synapse_ingestion.service_bus_namespace_name}.servicebus.windows.net"
 
-  tags = merge(local.tags, var.environment == "prod")
+  tags = merge(local.tags, local.prod_tags)
   providers = {
     azurerm     = azurerm,
     azurerm.odt = azurerm.odt
@@ -125,7 +125,7 @@ module "synapse_workspace_private_failover" {
   purview_event_hub_fqdn = null
   odw_service_bus_fqdn   = null
 
-  tags = merge(local.tags, var.environment == "prod")
+  tags = merge(local.tags, local.prod_tags)
 
   providers = {
     azurerm     = azurerm,
