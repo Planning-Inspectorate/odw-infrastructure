@@ -30,6 +30,11 @@ output "primary_connection_string" {
   value       = azurerm_storage_account.storage.primary_connection_string
 }
 
+output "primary_blob_connection_string" {
+  description = "The blob connection string for the storage account"
+  value       = azurerm_storage_account.storage.primary_blob_connection_string
+}
+
 output "container_id" {
   description = "The IDs of storage containers"
   value = tolist([
