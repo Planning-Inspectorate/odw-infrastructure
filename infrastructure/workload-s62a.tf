@@ -26,7 +26,6 @@ resource "azurerm_private_endpoint" "s62a_endpoint" {
     name                 = "sts62aprivateendpoint"
     private_dns_zone_ids = [data.azurerm_private_dns_zone.tooling_storage["blob"].id]
   }
-  
 
   private_service_connection {
     name                           = "privateendpointconnection"
