@@ -62,6 +62,7 @@ module "storage_account" {
 
   tags = merge(
     local.tags,
+    { TestTag = "TagValue" },
     var.environment == "prod" ? {
       PersonalData = "Yes"
     } : {}
