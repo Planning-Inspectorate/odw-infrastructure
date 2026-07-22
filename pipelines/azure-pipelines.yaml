@@ -54,6 +54,8 @@ variables:
 - name: azureSubscription
   value: 'pins-agent-pool-odw-${{ parameters.env }}-uks'
 - group: ${{ variables.variableGroupName }}
+- name: TF_VAR_system_asset_owner
+  value: $(system_asset_owner)
 
 stages:
 - template: pipelines/stages/wait-for-approval.yaml@odw-common

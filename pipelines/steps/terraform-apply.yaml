@@ -41,3 +41,4 @@ steps:
       ARM_CLIENT_SECRET: ${{ parameters.armClientSecret }}
       ARM_SUBSCRIPTION_ID: ${{ parameters.armSubscriptionId }}
       ARM_TENANT_ID: ${{ parameters.armTenantId }}
+      TF_VAR_system_asset_owner: ${{ variables.TF_VAR_system_asset_owner }}
