@@ -27,10 +27,34 @@ resource "azurerm_private_endpoint" "s62a_endpoint" {
     private_dns_zone_ids = [data.azurerm_private_dns_zone.tooling_storage["blob"].id]
   }
 
+  
   private_service_connection {
     name                           = "privateendpointconnection"
     private_connection_resource_id = module.storage_account_s62a_migration[0].storage_id
     subresource_names              = ["blob"]
+    is_manual_connection           = false
+  }
+
+  tags = local.tags
+}
+
+resource "azurerm_private_endpoint" "s62a_dfs_endpoint" {
+  count = var.deploy_s62a_migration_storage ? 1 : 0
+
+  name                = "pins-pe-odw-s62a-dfs-${var.environment}"
+  resource_group_name = azurerm_resource_group.network.name
+  location            = module.azure_region.location_cli
+  subnet_id           = module.synapse_network.vnet_subnets[local.compute_subnet_name]
+
+  private_dns_zone_group {
+    name                 = "sts62adfsprivateendpoint"
+    private_dns_zone_ids = [data.azurerm_private_dns_zone.tooling_storage["dfs"].id]
+  }
+
+  private_service_connection {
+    name                           = "privateendpointconnection-dfs"
+    private_connection_resource_id = module.storage_account_s62a_migration[0].storage_id
+    subresource_names              = ["dfs"]
     is_manual_connection           = false
   }
 
