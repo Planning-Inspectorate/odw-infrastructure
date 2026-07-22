@@ -705,6 +705,12 @@ variable "specialist_case_validation_check_logic_app_migration_ids" {
   }
 }
 
+variable "system_asset_owner" {
+  description = "tagging - value extracted from ADO library secret"
+  type        = string
+  sensitive   = true
+}
+
 variable "az_api_blob_connection_names" {
   description = "Imported azure blob az api connection names - these need to be cleaned up at some point"
   type        = map(string)

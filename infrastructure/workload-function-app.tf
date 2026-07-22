@@ -51,7 +51,6 @@ module "storage_account" {
   service_name                            = local.service_name
   environment                             = var.environment
   location                                = module.azure_region.location_cli
-  tags                                    = local.tags
   network_rules_enabled                   = true
   network_rule_virtual_network_subnet_ids = concat([module.synapse_network.vnet_subnets[local.functionapp_subnet_name], module.synapse_network.vnet_subnets[local.compute_subnet_name]])
   shares = [
@@ -60,6 +59,13 @@ module "storage_account" {
       quota = 5120
     }
   ]
+
+  tags = merge(
+    local.tags,
+    var.environment == "prod" ? {
+      PersonalData = "Yes"
+    } : {}
+  )
 }
 
 
@@ -128,7 +134,6 @@ module "function_app" {
   storage_account_access_key   = module.storage_account[each.key].primary_access_key
   environment                  = var.environment
   location                     = module.azure_region.location_cli
-  tags                         = local.tags
   application_insights_key     = azurerm_application_insights.function_app_insights[each.key].instrumentation_key
   synapse_vnet_subnet_names    = module.synapse_network.vnet_subnets
   app_settings                 = try(each.value.app_settings, null)
@@ -140,6 +145,14 @@ module "function_app" {
   servicebus_namespace_odw     = module.synapse_ingestion.service_bus_namespace_name
   message_storage_account      = var.message_storage_account
   message_storage_container    = var.message_storage_container
+
+  tags = merge(
+    local.tags,
+    var.environment == "prod" ? {
+      CriticalityRating = "Level 1"
+      PersonalData      = "Yes"
+    } : {}
+  )
 }
 
 module "function_app_failover" {

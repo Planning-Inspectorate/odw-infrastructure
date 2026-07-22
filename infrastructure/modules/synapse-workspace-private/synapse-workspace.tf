@@ -26,5 +26,11 @@ resource "azurerm_synapse_workspace" "synapse" {
     ]
   }
 
-  tags = local.tags
+  tags = merge(
+    local.tags,
+    var.environment == "prod" ? {
+      PersonalData        = "Yes"
+      SpecialCategoryData = "Yes"
+    } : {}
+  )
 }
