@@ -24,9 +24,7 @@ resource "azurerm_private_endpoint" "s62a_endpoint" {
 
   private_dns_zone_group {
     name                 = "sts62aprivateendpoint"
-    private_dns_zone_ids = [data.azurerm_private_dns_zone.tooling_storage["blob"].id,
-    data.azurerm_private_dns_zone.tooling_storage["dfs"].id
-    ]
+    private_dns_zone_ids = [data.azurerm_private_dns_zone.tooling_storage["blob"].id,data.azurerm_private_dns_zone.tooling_storage["dfs"].id]
   }
   
 
