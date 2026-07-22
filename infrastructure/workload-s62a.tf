@@ -1,4 +1,4 @@
-# S62A Storage Account
+# S62A Storage account
 module "storage_account_s62a_migration" {
 
   count = var.deploy_s62a_migration_storage ? 1 : 0
