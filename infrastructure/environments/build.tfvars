@@ -3,11 +3,6 @@ alert_group_synapse_enabled              = true
 alert_scope_service_health               = "/subscriptions/12806449-ae7c-4754-b104-65bcdc7b28c8"
 alert_threshold_data_lake_capacity_bytes = 10995116277760 # 10TiB
 
-apim_enabled         = false
-apim_publisher_email = "alex.delany@planninginspectorate.gov.uk"
-apim_publisher_name  = "Alex Delany"
-apim_sku_name        = "Developer_1"
-
 bastion_host_enabled = false
 bastion_vm_username  = "basadmin"
 bastion_vm_size      = "Standard_F2s_v2"
