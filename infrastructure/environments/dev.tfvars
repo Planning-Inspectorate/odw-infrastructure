@@ -302,8 +302,6 @@ synapse_role_assignments = [
   }
 ]
 
-tags = {}
-
 vnet_base_cidr_block          = "10.70.0.0/24"
 vnet_base_cidr_block_failover = "10.70.1.0/24"
 vnet_subnets = [
