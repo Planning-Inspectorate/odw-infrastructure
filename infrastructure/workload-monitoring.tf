@@ -24,7 +24,7 @@ module "synapse_monitoring" {
 
   alert_group_platform_enabled             = var.alert_group_platform_enabled
   alert_group_synapse_enabled              = var.alert_group_synapse_enabled
-  alert_scope_service_health               = var.alert_scope_service_health
+  alert_scope_service_health               = data.azurerm_subscription.current.id
   alert_threshold_data_lake_capacity_bytes = var.alert_threshold_data_lake_capacity_bytes
   data_lake_account_id                     = module.synapse_data_lake.data_lake_account_id
   daily_log_cap                            = var.daily_log_cap
@@ -53,7 +53,7 @@ module "synapse_monitoring_failover" {
 
   alert_group_platform_enabled             = var.alert_group_platform_enabled
   alert_group_synapse_enabled              = var.alert_group_synapse_enabled
-  alert_scope_service_health               = var.alert_scope_service_health
+  alert_scope_service_health               = data.azurerm_subscription.current.id
   alert_threshold_data_lake_capacity_bytes = var.alert_threshold_data_lake_capacity_bytes
   data_lake_account_id                     = module.synapse_data_lake.data_lake_account_id
   daily_log_cap                            = var.daily_log_cap

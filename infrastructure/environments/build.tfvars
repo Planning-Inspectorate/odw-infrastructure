@@ -1,8 +1,3 @@
-alert_group_platform_enabled             = true
-alert_group_synapse_enabled              = true
-alert_scope_service_health               = "/subscriptions/12806449-ae7c-4754-b104-65bcdc7b28c8"
-alert_threshold_data_lake_capacity_bytes = 10995116277760 # 10TiB
-
 bastion_host_enabled = false
 
 daily_log_cap = 0.2
