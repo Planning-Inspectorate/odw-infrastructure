@@ -4,14 +4,6 @@ alert_scope_service_health               = "/subscriptions/12806449-ae7c-4754-b1
 alert_threshold_data_lake_capacity_bytes = 10995116277760 # 10TiB
 
 bastion_host_enabled = false
-bastion_vm_username  = "basadmin"
-bastion_vm_size      = "Standard_F2s_v2"
-bastion_vm_image = {
-  publisher = "microsoft-dsvm"
-  offer     = "dsvm-win-2019"
-  sku       = "winserver-2019"
-  version   = "latest"
-}
 
 daily_log_cap = 0.2
 
