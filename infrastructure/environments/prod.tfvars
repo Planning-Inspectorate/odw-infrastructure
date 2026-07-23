@@ -78,8 +78,6 @@ horizon_migration = {
 
 deploy_s62a_migration_storage = true
 
-location = "uk-south"
-
 logic_app_enabled = false
 
 key_vault_role_assignments = {

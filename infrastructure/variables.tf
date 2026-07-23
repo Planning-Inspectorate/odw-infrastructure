@@ -193,6 +193,7 @@ variable "key_vault_role_assignments" {
 }
 
 variable "location" {
+  default     = "uk-south"
   description = "The short-format Azure region into which resources will be deployed"
   type        = string
 }
