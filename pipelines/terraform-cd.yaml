@@ -16,6 +16,11 @@ resources:
       endpoint: Planning-Inspectorate
       name: Planning-Inspectorate/common-pipeline-templates
       ref: fba37a747e4d8c809fa5d1cb4f98e97ce00de658
+    - repository: odw-common
+      type: github
+      name: Planning-Inspectorate/odw-common
+      endpoint: Planning-Inspectorate
+      ref: main
 
 extends:
   template: pipelines/terraform_plan_apply.yml@templates
@@ -70,15 +75,19 @@ extends:
     postApplySteps:
       - checkout: self
         fetchDepth: 1
+      # Login to Azure using Terraform service principal
+      - template: ${{variables['System.DefaultWorkingDirectory']}}/pipelines/steps/azure-login.yaml@odw-common
       - script: |
           echo "##[group]ToolInstall"
           export PATH="$PATH:/home/AzDevOps/.local/bin/"
           sudo apt-get install -y unixodbc-dev=2.3.9-5ubuntu0.1
           sudo curl -fsSL https://aka.ms/install-azd.sh | bash
-          export SYNAPSE_ENDPOINT="https://pins-synw-odw-$(Environment.Name)-uks.dev.azuresynapse.net/"
+          # make environment name lower case
+          export SYNAPSE_ENDPOINT="https://pins-synw-odw-${$(Environment.Name),,}-uks.dev.azuresynapse.net/"
           export CREDENTIAL_NAME="https://dev.azuresynapse.net/.default"
+          echo "##[endgroup]"
+          echo "Config:"
           echo $SYNAPSE_ENDPOINT 
           echo $CREDENTIAL_NAME
-          echo "##[endgroup]"
           python3 -m pytest $(Build.SourcesDirectory)/tests/smoke_test -vv -rP
         displayName: 'Smoke test'
