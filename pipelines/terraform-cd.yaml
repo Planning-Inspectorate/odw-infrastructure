@@ -83,7 +83,7 @@ extends:
           sudo apt-get install -y unixodbc-dev=2.3.9-5ubuntu0.1
           sudo curl -fsSL https://aka.ms/install-azd.sh | bash
           # make environment name lower case
-          export SYNAPSE_ENDPOINT="https://pins-synw-odw-${$(Environment.Name),,}-uks.dev.azuresynapse.net/"
+          export SYNAPSE_ENDPOINT="https://pins-synw-odw-$(Environment.Name)-uks.dev.azuresynapse.net/"
           export CREDENTIAL_NAME="https://dev.azuresynapse.net/.default"
           echo "##[endgroup]"
           echo "Config:"
