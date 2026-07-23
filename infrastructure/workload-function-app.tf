@@ -42,7 +42,7 @@ module "service_plan_failover" {
 
 module "storage_account" {
   for_each = {
-    for function_app in var.function_app : function_app.name => function_app if var.function_app_enabled == true
+    for function_app in local.function_app : function_app.name => function_app if var.function_app_enabled == true
   }
 
   source = "./modules/storage-account"
@@ -71,7 +71,7 @@ module "storage_account" {
 
 module "storage_account_failover" {
   for_each = {
-    for function_app in var.function_app : function_app.name => function_app if var.function_app_enabled && var.failover_deployment == true
+    for function_app in local.function_app : function_app.name => function_app if var.function_app_enabled && var.failover_deployment == true
   }
 
   source = "./modules/storage-account"
@@ -121,7 +121,7 @@ module "storage_account_failover" {
 
 module "function_app" {
   for_each = {
-    for function_app in var.function_app : function_app.name => function_app if var.function_app_enabled == true
+    for function_app in local.function_app : function_app.name => function_app if var.function_app_enabled == true
   }
 
   source = "./modules/function-app"
@@ -157,7 +157,7 @@ module "function_app" {
 
 module "function_app_failover" {
   for_each = {
-    for function_app in var.function_app : function_app.name => function_app if var.function_app_enabled && var.failover_deployment == true
+    for function_app in local.function_app : function_app.name => function_app if var.function_app_enabled && var.failover_deployment == true
   }
 
   source = "./modules/function-app"
@@ -232,7 +232,7 @@ module "function_app_failover" {
 
 resource "azurerm_role_assignment" "odt_servicebus_namespace" {
   for_each = {
-    for function_app in var.function_app : function_app.name => function_app if var.function_app_enabled == true && var.external_resource_links_enabled
+    for function_app in local.function_app : function_app.name => function_app if var.function_app_enabled == true && var.external_resource_links_enabled
   }
 
   scope                = local.odt_back_office_service_bus_id
@@ -242,7 +242,7 @@ resource "azurerm_role_assignment" "odt_servicebus_namespace" {
 
 resource "azurerm_role_assignment" "odt_appeals_servicebus_namespace" {
   for_each = {
-    for function_app in var.function_app : function_app.name => function_app if var.function_app_enabled == true && var.odt_appeals_back_office.service_bus_enabled && var.external_resource_links_enabled
+    for function_app in local.function_app : function_app.name => function_app if var.function_app_enabled == true && var.odt_appeals_back_office.service_bus_enabled && var.external_resource_links_enabled
   }
 
   scope                = local.odt_appeals_back_office_service_bus_id
@@ -252,7 +252,7 @@ resource "azurerm_role_assignment" "odt_appeals_servicebus_namespace" {
 
 resource "azurerm_role_assignment" "odw_servicebus_namespace" {
   for_each = {
-    for function_app in var.function_app : function_app.name => function_app if var.function_app_enabled == true
+    for function_app in local.function_app : function_app.name => function_app if var.function_app_enabled == true
   }
 
   scope                = module.synapse_ingestion.service_bus_namespace_id
@@ -262,7 +262,7 @@ resource "azurerm_role_assignment" "odw_servicebus_namespace" {
 
 resource "azurerm_application_insights" "function_app_insights" {
   for_each = {
-    for function_app in var.function_app : function_app.name => function_app if var.function_app_enabled == true
+    for function_app in local.function_app : function_app.name => function_app if var.function_app_enabled == true
   }
 
   name                = "pins-${each.key}-${local.resource_suffix}-app-insights"

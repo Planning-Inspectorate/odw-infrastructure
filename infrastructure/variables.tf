@@ -138,14 +138,9 @@ variable "failover_deployment" {
 }
 
 variable "function_app_enabled" {
-  default     = false
+  default     = true
   description = "Determines whether the resources for the Function App should be deployed"
   type        = bool
-}
-
-variable "function_app" {
-  description = "A map containing the configuration for the Function App to be created"
-  type        = any
 }
 
 variable "horizon_subscription_id" {
