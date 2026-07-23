@@ -189,6 +189,43 @@ tooling_config = {
   subscription_id = "edb1ff78-90da-4901-a497-7e79f966f8e2"
 }
 
+vnet_subnets = [
+  {
+    "name" : "AzureBastionSubnet",
+    "new_bits" : 4 # /28
+    service_endpoints  = []
+    service_delegation = []
+  },
+  {
+    "name" : "FunctionAppSubnet",
+    "new_bits" : 4 # /28
+    service_endpoints = ["Microsoft.Storage", "Microsoft.KeyVault", "Microsoft.ServiceBus"]
+    service_delegation = [
+      {
+        delegation_name = "Microsoft.Web/serverFarms"
+        actions         = ["Microsoft.Network/virtualNetworks/subnets/action"]
+      }
+    ]
+  },
+  {
+    "name" : "SynapseEndpointSubnet",
+    "new_bits" : 2 # /26
+    service_endpoints  = []
+    service_delegation = []
+  },
+  {
+    "name" : "ComputeSubnet"
+    "new_bits" : 2 # /26
+    service_endpoints  = ["Microsoft.Storage", "Microsoft.KeyVault"]
+    service_delegation = []
+  },
+  {
+    "name" : "ApimSubnet",
+    "new_bits" : 2 # /26
+    service_endpoints  = []
+    service_delegation = []
+  },
+]
 odt_backoffice_sb_topic_subscriptions_to_import = [
   {
     subscription_name = "folder-odw-wake-sub"
