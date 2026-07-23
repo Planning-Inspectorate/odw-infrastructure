@@ -125,20 +125,6 @@ service_bus_role_assignments = {
   }
 }
 
-service_bus_topics_and_subscriptions = [
-  {
-    name          = "pins-inspector"
-    subscriptions = {}
-  },
-  {
-    name = "application-update"
-    subscriptions = {
-      "planning-environmental-specialist-odw-sub"      = {},
-      "planning-environmental-specialist-odw-wake-sub" = {}
-    }
-  }
-]
-
 spark_pool_version = "3.4"
 
 sql_server_enabled = true
