@@ -122,57 +122,15 @@ odt_backoffice_sb_topic_subscriptions = [
     topic_name        = "service-user"
   },
   {
+    subscription_name                         = "odw-service-user-wake-sub"
+    topic_name                                = "service-user"
+    enable_batched_operations                 = true
+    dead_lettering_on_filter_evaluation_error = false
+    max_delivery_count                        = 1
+  },
+  {
     subscription_name = "odw-nsip-project-sub"
     topic_name        = "nsip-project"
-  },
-  {
-    subscription_name = "odw-nsip-exam-timetable-sub"
-    topic_name        = "nsip-exam-timetable"
-  },
-  {
-    subscription_name = "odw-nsip-document-sub"
-    topic_name        = "nsip-document"
-  },
-  {
-    subscription_name = "odw-nsip-representation-sub"
-    topic_name        = "nsip-representation"
-  },
-  {
-    subscription_name = "odw-nsip-s51-advice-sub"
-    topic_name        = "nsip-s51-advice"
-  },
-  {
-    subscription_name = "odw-nsip-project-update-sub"
-    topic_name        = "nsip-project-update"
-  },
-  {
-    subscription_name = "odw-nsip-subscription-sub"
-    topic_name        = "nsip-subscription"
-  },
-  {
-    subscription_name = "odw-folder-sub"
-    topic_name        = "folder"
-  },
-  {
-    subscription_name                         = "folder-odw-wake-sub"
-    topic_name                                = "folder"
-    enable_batched_operations                 = true
-    dead_lettering_on_filter_evaluation_error = false
-    max_delivery_count                        = 1
-  },
-  {
-    subscription_name                         = "odw-nsip-document-wake-sub"
-    topic_name                                = "nsip-document"
-    enable_batched_operations                 = true
-    dead_lettering_on_filter_evaluation_error = false
-    max_delivery_count                        = 1
-  },
-  {
-    subscription_name                         = "odw-nsip-exam-timetable-wake-sub"
-    topic_name                                = "nsip-exam-timetable"
-    enable_batched_operations                 = true
-    dead_lettering_on_filter_evaluation_error = false
-    max_delivery_count                        = 1
   },
   {
     subscription_name                         = "odw-nsip-project-wake-sub"
@@ -182,11 +140,30 @@ odt_backoffice_sb_topic_subscriptions = [
     max_delivery_count                        = 1
   },
   {
-    subscription_name                         = "odw-nsip-project-update-wake-sub"
-    topic_name                                = "nsip-project-update"
+    subscription_name = "odw-nsip-exam-timetable-sub"
+    topic_name        = "nsip-exam-timetable"
+  },
+  {
+    subscription_name                         = "odw-nsip-exam-timetable-wake-sub"
+    topic_name                                = "nsip-exam-timetable"
     enable_batched_operations                 = true
     dead_lettering_on_filter_evaluation_error = false
     max_delivery_count                        = 1
+  },
+  {
+    subscription_name = "odw-nsip-document-sub"
+    topic_name        = "nsip-document"
+  },
+  {
+    subscription_name                         = "odw-nsip-document-wake-sub"
+    topic_name                                = "nsip-document"
+    enable_batched_operations                 = true
+    dead_lettering_on_filter_evaluation_error = false
+    max_delivery_count                        = 1
+  },
+  {
+    subscription_name = "odw-nsip-representation-sub"
+    topic_name        = "nsip-representation"
   },
   {
     subscription_name                         = "odw-nsip-representation-wake-sub"
@@ -196,11 +173,30 @@ odt_backoffice_sb_topic_subscriptions = [
     max_delivery_count                        = 1
   },
   {
+    subscription_name = "odw-nsip-s51-advice-sub"
+    topic_name        = "nsip-s51-advice"
+  },
+  {
     subscription_name                         = "odw-nsip-s51-advice-wake-sub"
     topic_name                                = "nsip-s51-advice"
     enable_batched_operations                 = true
     dead_lettering_on_filter_evaluation_error = false
     max_delivery_count                        = 1
+  },
+  {
+    subscription_name = "odw-nsip-project-update-sub"
+    topic_name        = "nsip-project-update"
+  },
+  {
+    subscription_name                         = "odw-nsip-project-update-wake-sub"
+    topic_name                                = "nsip-project-update"
+    enable_batched_operations                 = true
+    dead_lettering_on_filter_evaluation_error = false
+    max_delivery_count                        = 1
+  },
+  {
+    subscription_name = "odw-nsip-subscription-sub"
+    topic_name        = "nsip-subscription"
   },
   {
     subscription_name                         = "odw-nsip-subscription-wake-sub"
@@ -210,8 +206,12 @@ odt_backoffice_sb_topic_subscriptions = [
     max_delivery_count                        = 1
   },
   {
-    subscription_name                         = "odw-service-user-wake-sub"
-    topic_name                                = "service-user"
+    subscription_name = "odw-folder-sub"
+    topic_name        = "folder"
+  },
+  {
+    subscription_name                         = "folder-odw-wake-sub"
+    topic_name                                = "folder"
     enable_batched_operations                 = true
     dead_lettering_on_filter_evaluation_error = false
     max_delivery_count                        = 1
