@@ -15,7 +15,7 @@ resources:
       type: github
       endpoint: Planning-Inspectorate
       name: Planning-Inspectorate/common-pipeline-templates
-      ref: refs/tags/release/3.28.0
+      ref: fba37a747e4d8c809fa5d1cb4f98e97ce00de658
 
 extends:
   template: pipelines/terraform_plan_apply.yml@templates
@@ -66,6 +66,7 @@ extends:
         value: $(SPECIALIST_CASE_VALIDATION_CHECK_RECIPIENTS)
       - name: TF_VAR_system_asset_owner
         value: $(system_asset_owner)
+    applyStageVariableGroupFormatString: Terraform {0}
     postApplySteps:
       - checkout: self
         fetchDepth: 1
