@@ -272,9 +272,6 @@ service_bus_topics_and_subscriptions = [
 
 spark_pool_version = "3.4"
 
-sql_server_administrator_username = "sqladmin"
-sql_server_enabled                = false
-
 synapse_aad_administrator = {
   username  = "pins-odw-data-prod-syn-ws-sqladmins"
   object_id = "f0e4d89f-3288-48c9-ada9-1227a069c76e"
