@@ -552,6 +552,7 @@ variable "tags" {
 }
 
 variable "tenant_id" {
+  default     = "5878df98-6f88-48ab-9322-998ce557088d"
   description = "The ID of the Azure AD tenant containing the identities used for RBAC assignments"
   type        = string
 }
