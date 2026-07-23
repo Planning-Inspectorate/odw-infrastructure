@@ -732,3 +732,15 @@ variable "az_api_office365_connection_names" {
     prod  = "office365"
   }
 }
+
+variable "odt_backoffice_sb_topic_subscriptions_to_import" {
+  description = "Temp variable to import back office subscriptions into Terraform"
+  default     = {}
+  type        = any
+}
+
+variable "odt_appeals_backoffice_sb_topic_subscriptions_to_import" {
+  description = "Temp variable to import appeals back office subscriptions into Terraform"
+  default     = {}
+  type        = any
+}
