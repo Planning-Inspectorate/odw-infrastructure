@@ -430,13 +430,13 @@ variable "service_bus_topics_and_subscriptions" {
 }
 
 variable "spark_pool_enabled" {
-  default     = false
+  default     = true
   description = "Determines whether a Synapse-linked Spark pool should be deployed"
   type        = bool
 }
 
 variable "spark_pool_max_node_count" {
-  default     = 9
+  default     = 12
   description = "The maximum number of nodes the Synapse-linked Spark pool can autoscale to"
   type        = number
 }
@@ -454,31 +454,31 @@ variable "spark_pool_node_size" {
 }
 
 variable "spark_pool_preview_enabled" {
-  default     = false
+  default     = true
   description = "Determines whether a Synapse-linked preview Spark pool should be deployed"
   type        = bool
 }
 
 variable "spark_pool_preview_version" {
-  default     = "3.3"
+  default     = "3.5"
   description = "The version of Spark running on the Synapse-linked preview Spark pool"
   type        = string
 }
 
 variable "spark_pool_timeout_minutes" {
-  default     = 15
+  default     = 60
   description = "The time buffer in minutes to wait before the Spark pool is paused due to inactivity"
   type        = number
 }
 
 variable "spark_pool_version" {
-  default     = "2.4"
+  default     = "3.5"
   description = "The version of Spark running on the Synapse-linked Spark pool"
   type        = string
 }
 
 variable "new_spark_pool_version" {
-  default     = "2.4"
+  default     = "3.5"
   description = "The version of Spark running on the new Synapse-linked Spark pool"
   type        = string
 }
