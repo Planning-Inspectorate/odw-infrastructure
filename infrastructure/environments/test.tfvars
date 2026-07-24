@@ -2,9 +2,7 @@ bastion_host_enabled = false
 
 daily_log_cap = 0.2
 
-data_lake_account_tier     = "Standard"
 data_lake_replication_type = "GRS"
-data_lake_retention_days   = 7
 data_lake_role_assignments = {
   "Storage Blob Data Contributor" = [
     "8274feca-09ef-41b1-9b4e-5eedc3384df4", # pins-odw-preprod-administrators

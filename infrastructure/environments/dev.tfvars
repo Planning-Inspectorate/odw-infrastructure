@@ -10,9 +10,6 @@ bastion_vm_image = {
 
 daily_log_cap = 0.2
 
-data_lake_account_tier     = "Standard"
-data_lake_replication_type = "LRS"
-data_lake_retention_days   = 7
 data_lake_role_assignments = {
   "Storage Blob Data Contributor" = [
     "ebcc4498-4abe-4457-8970-7fa08bf87543", # pins-odw-dev-administrators

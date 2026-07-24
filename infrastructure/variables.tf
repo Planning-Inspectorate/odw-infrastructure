@@ -57,7 +57,7 @@ variable "data_lake_account_tier" {
 }
 
 variable "data_lake_replication_type" {
-  default     = "ZRS"
+  default     = "LRS"
   description = "The replication type for the Synapse data lake Storage Account"
   type        = string
 }
