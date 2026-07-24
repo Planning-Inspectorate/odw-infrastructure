@@ -66,7 +66,7 @@ resource "azurerm_key_vault_secret" "s62a_storage_account_key" {
   content_type    = "text/plain"
   key_vault_id    = module.synapse_data_lake.key_vault_id
   name            = "S62a-Storage"
-  value           = module.storage_account_s62a_migration[0].primary_access_key
+  value           = module.storage_account_s62a_migration[0].primary_connection_string
   expiration_date = timeadd(timestamp(), "867834h")
 
   lifecycle {
