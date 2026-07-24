@@ -629,6 +629,7 @@ variable "system_asset_owner" {
   description = "tagging - value extracted from ADO library secret"
   type        = string
   sensitive   = true
+  default     = ""
 }
 
 variable "az_api_blob_connection_names" {
