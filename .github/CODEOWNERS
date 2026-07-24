@@ -1,19 +1,19 @@
 # Define owner of the CODEOWNERS file itself
-/.github/CODEOWNERS                                             @beejjacobs @m-juckes-pins @stef-solirius
+/.github/CODEOWNERS                                             @beejjacobs @m-juckes-pins
 
 # Protect important folders
 
 # Github Actions workflows
-/.github/workflows                                              @beejjacobs @m-juckes-pins @roytalari @stef-solirius @HarrisonBoyleThomas @Fred83200 @KranthiRayipudi @mukundaraogummadi-pins
+/.github/workflows                                              @beejjacobs @m-juckes-pins @HarrisonBoyleThomas @KranthiRayipudi @mukundaraogummadi-pins
 
 # most files in infrastructure relate to Terraform code
-/infrastructure/**                                              @beejjacobs @m-juckes-pins @roytalari @stef-solirius @HarrisonBoyleThomas @Fred83200 @KranthiRayipudi @mukundaraogummadi-pins
+/infrastructure/**                                              @beejjacobs @m-juckes-pins @HarrisonBoyleThomas @KranthiRayipudi @mukundaraogummadi-pins
 
 # Azure DevOps pipeline files
-/pipelines/**                                                   @m-juckes-pins @NHAL22 @roytalari @stef-solirius @HarrisonBoyleThomas @Fred83200 @KranthiRayipudi @mukundaraogummadi-pins
+/pipelines/**                                                   @m-juckes-pins @NHAL22 @HarrisonBoyleThomas @KranthiRayipudi @mukundaraogummadi-pins
 
 # Add protection for certain file extensions,
 # i.e. a python or sql expert must approve
-*.py                                                            @roytalari @stef-solirius @HarrisonBoyleThomas @Fred83200 @KranthiRayipudi @mukundaraogummadi-pins
-*.ipynb                                                         @roytalari @stef-solirius @HarrisonBoyleThomas @Fred83200 @KranthiRayipudi @mukundaraogummadi-pins
-*.sql                                                           @roytalari @stef-solirius @HarrisonBoyleThomas @Fred83200 @KranthiRayipudi @mukundaraogummadi-pins
+*.py                                                            @HarrisonBoyleThomas @KranthiRayipudi @mukundaraogummadi-pins
+*.ipynb                                                         @HarrisonBoyleThomas @KranthiRayipudi @mukundaraogummadi-pins
+*.sql                                                           @HarrisonBoyleThomas @KranthiRayipudi @mukundaraogummadi-pins
