@@ -86,8 +86,6 @@ service_bus_role_assignments = {
   }
 }
 
-spark_pool_version = "3.4"
-
 sql_server_enabled = true
 
 synapse_aad_administrator = {
