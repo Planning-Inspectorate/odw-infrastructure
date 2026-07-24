@@ -47,8 +47,6 @@ key_vault_role_assignments = {
 
 message_storage_account = "https://pinsstodwprodukson83nw.blob.core.windows.net"
 
-message_storage_container = "odw-raw/ServiceBus"
-
 odt_backoffice_sb_topic_subscriptions_to_import = [
   {
     subscription_name = "odw-nsip-document-wake-sub"
