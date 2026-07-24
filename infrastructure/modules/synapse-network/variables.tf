@@ -9,12 +9,6 @@ variable "environment" {
   type        = string
 }
 
-variable "network_watcher_enabled" {
-  default     = false
-  description = "Determines whether a Network Watcher resource will be deployed"
-  type        = bool
-}
-
 variable "resource_group_id" {
   description = "The ID of the resource group into which resources will be deployed"
   type        = string

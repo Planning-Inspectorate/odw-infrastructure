@@ -49,8 +49,6 @@ message_storage_account = "https://pinsstodwprodukson83nw.blob.core.windows.net"
 
 message_storage_container = "odw-raw/ServiceBus"
 
-network_watcher_enabled = false
-
 odt_backoffice_sb_topic_subscriptions_to_import = [
   {
     subscription_name = "odw-nsip-document-wake-sub"

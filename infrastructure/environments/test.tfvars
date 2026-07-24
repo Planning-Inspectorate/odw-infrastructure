@@ -41,8 +41,6 @@ message_storage_account = "https://pinsstodwtestukswic3ai.blob.core.windows.net"
 
 message_storage_container = "odw-raw/ServiceBus"
 
-network_watcher_enabled = false
-
 service_bus_premium_enabled = true
 service_bus_role_assignments = {
   "Azure Service Bus Data Owner" = {
