@@ -1,6 +1,16 @@
 # common variables loaded by default
 # see https://developer.hashicorp.com/terraform/language/values/variables#variable-definitions-tfvars-files
 
+data_lake_storage_containers = [
+  "backup-logs",
+  "odw-curated",
+  "odw-raw",
+  "odw-standardised",
+  "odw-harmonised",
+  "odw-config",
+  "odw-meta-db"
+]
+
 odt_backoffice_sb_topic_subscriptions = [
   {
     subscription_name = "odw-service-user-sub"

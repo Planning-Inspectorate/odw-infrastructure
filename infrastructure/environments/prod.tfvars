@@ -12,15 +12,6 @@ data_lake_role_assignments = {
     "0cad1989-27de-4242-a06b-7cad373497e7"  # Azure DevOps Pipelines - ODW Prod - Infrastructure
   ]
 }
-data_lake_storage_containers = [
-  "backup-logs",
-  "odw-curated",
-  "odw-raw",
-  "odw-standardised",
-  "odw-harmonised",
-  "odw-config",
-  "odw-meta-db"
-]
 
 data_lake_storage_containers_to_import = [
   "logging",
