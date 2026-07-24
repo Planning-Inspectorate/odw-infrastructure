@@ -196,12 +196,6 @@ variable "message_storage_container" {
   default     = null
 }
 
-variable "network_watcher_enabled" {
-  default     = false
-  description = "Determines whether a Network Watcher resource will be deployed"
-  type        = bool
-}
-
 variable "odt_back_office_service_bus_enabled" {
   default     = true
   description = "Determines whether the ODT Service Bus Namespace will be deployed"

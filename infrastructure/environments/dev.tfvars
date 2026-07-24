@@ -59,8 +59,6 @@ message_storage_account = "https://pinsstodwdevuks9h80mb.blob.core.windows.net"
 
 message_storage_container = "odw-raw/ServiceBus"
 
-network_watcher_enabled = false
-
 /*
 # openlineage POC
 openlineage_function_app = {

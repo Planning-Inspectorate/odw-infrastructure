@@ -28,9 +28,8 @@ module "synapse_network" {
   location            = module.azure_region.location_cli
   service_name        = local.service_name
 
-  network_watcher_enabled = var.network_watcher_enabled
-  vnet_base_cidr_block    = var.vnet_base_cidr_block
-  vnet_subnets            = var.vnet_subnets
+  vnet_base_cidr_block = var.vnet_base_cidr_block
+  vnet_subnets         = var.vnet_subnets
 
   tags = local.tags
 }
@@ -44,9 +43,8 @@ module "synapse_network_failover" {
   location            = module.azure_region.paired_location.location_cli
   service_name        = local.service_name
 
-  network_watcher_enabled = var.network_watcher_enabled
-  vnet_base_cidr_block    = var.vnet_base_cidr_block_failover
-  vnet_subnets            = var.vnet_subnets
+  vnet_base_cidr_block = var.vnet_base_cidr_block_failover
+  vnet_subnets         = var.vnet_subnets
 
   tags = local.tags
 }
