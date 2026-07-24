@@ -28,8 +28,6 @@ horizon_integration_config = {
   }
 }
 
-logic_app_enabled = false
-
 key_vault_role_assignments = {
   "Key Vault Administrator" = [
     "8274feca-09ef-41b1-9b4e-5eedc3384df4" # pins-odw-preprod-administrators

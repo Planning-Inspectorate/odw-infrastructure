@@ -46,8 +46,6 @@ horizon_migration = {
 
 deploy_s62a_migration_storage = true
 
-logic_app_enabled = false
-
 key_vault_role_assignments = {
   "Key Vault Administrator" = [
     "ebcc4498-4abe-4457-8970-7fa08bf87543" # pins-odw-dev-administrators
