@@ -481,7 +481,7 @@ variable "synapse_data_exfiltration_enabled" {
 variable "synapse_public_network_access_enabled" {
   description = "Whether public access is enabled on the synapse workspace"
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "synapse_role_assignments" {
