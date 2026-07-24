@@ -98,8 +98,7 @@ odt_backoffice_sb_topic_subscriptions_to_import = [
   }
 ]
 
-service_bus_failover_enabled = false
-service_bus_premium_enabled  = true
+service_bus_premium_enabled = true
 service_bus_role_assignments = {
   "Azure Service Bus Data Owner" = {
     groups = ["pins-odw-prod-administrators"]
