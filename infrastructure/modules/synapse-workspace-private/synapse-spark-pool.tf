@@ -42,7 +42,7 @@ resource "azurerm_synapse_spark_pool" "pinssynspodwmain" {
   synapse_workspace_id           = azurerm_synapse_workspace.synapse.id
   node_size_family               = "MemoryOptimized"
   node_size                      = var.spark_pool_node_size
-  spark_version                  = var.new_spark_pool_version
+  spark_version                  = var.spark_pool_version
   session_level_packages_enabled = true
 
   auto_pause {

@@ -87,8 +87,6 @@ service_bus_role_assignments = {
   }
 }
 
-spark_pool_version = "3.4"
-
 synapse_aad_administrator = {
   username  = "pins-odw-data-prod-syn-ws-sqladmins"
   object_id = "f0e4d89f-3288-48c9-ada9-1227a069c76e"
