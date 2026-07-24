@@ -142,7 +142,6 @@ module "function_app" {
   file_share_name              = "pins-${each.key}-${local.resource_suffix}"
   servicebus_namespace         = var.odt_back_office_service_bus_name
   servicebus_namespace_appeals = var.odt_appeals_back_office.service_bus_name
-  servicebus_namespace_odw     = module.synapse_ingestion.service_bus_namespace_name
   message_storage_account      = var.message_storage_account
   message_storage_container    = var.message_storage_container
 
@@ -177,7 +176,6 @@ module "function_app_failover" {
   site_config                = each.value.site_config
   file_share_name            = "pins-${each.key}-${local.resource_suffix_failover}"
   servicebus_namespace       = var.odt_back_office_service_bus_name
-  servicebus_namespace_odw   = var.service_bus_failover_enabled ? module.synapse_ingestion_failover[0].service_bus_namespace_name : module.synapse_ingestion.service_bus_namespace_name
 }
 
 # module "function_app_openlineage_receiver" {
@@ -246,16 +244,6 @@ resource "azurerm_role_assignment" "odt_appeals_servicebus_namespace" {
   }
 
   scope                = local.odt_appeals_back_office_service_bus_id
-  role_definition_name = "Azure Service Bus Data receiver"
-  principal_id         = module.function_app[each.key].identity[0].principal_id
-}
-
-resource "azurerm_role_assignment" "odw_servicebus_namespace" {
-  for_each = {
-    for function_app in var.function_app : function_app.name => function_app if var.function_app_enabled == true
-  }
-
-  scope                = module.synapse_ingestion.service_bus_namespace_id
   role_definition_name = "Azure Service Bus Data receiver"
   principal_id         = module.function_app[each.key].identity[0].principal_id
 }
