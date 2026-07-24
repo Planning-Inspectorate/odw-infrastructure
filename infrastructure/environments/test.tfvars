@@ -39,8 +39,6 @@ key_vault_role_assignments = {
 
 message_storage_account = "https://pinsstodwtestukswic3ai.blob.core.windows.net"
 
-message_storage_container = "odw-raw/ServiceBus"
-
 service_bus_premium_enabled = true
 service_bus_role_assignments = {
   "Azure Service Bus Data Owner" = {

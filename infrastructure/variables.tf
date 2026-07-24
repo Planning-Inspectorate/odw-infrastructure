@@ -193,7 +193,7 @@ variable "message_storage_account" {
 variable "message_storage_container" {
   type        = string
   description = "Name of the storage account container for service bus messages"
-  default     = null
+  default     = "odw-raw/ServiceBus"
 }
 
 variable "odt_back_office_service_bus_enabled" {
