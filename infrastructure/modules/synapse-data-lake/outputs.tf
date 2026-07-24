@@ -8,6 +8,11 @@ output "data_lake_account_name" {
   value       = azurerm_storage_account.synapse.name
 }
 
+output "data_lake_blob_endpoint" {
+  description = "The Blob endpoint URL of the Data Lake Storage Account"
+  value       = azurerm_storage_account.synapse.primary_blob_endpoint
+}
+
 output "data_lake_dfs_endpoint" {
   description = "The DFS endpoint URL of the Data Lake Storage Account"
   value       = azurerm_storage_account.synapse.primary_dfs_endpoint

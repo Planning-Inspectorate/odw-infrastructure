@@ -22,4 +22,5 @@ locals {
       }
     }
   ]
+  message_storage_account = substr(module.synapse_data_lake.data_lake_blob_endpoint, 0, length(module.synapse_data_lake.data_lake_blob_endpoint) - 1)
 }

@@ -55,8 +55,6 @@ key_vault_role_assignments = {
   ]
 }
 
-message_storage_account = "https://pinsstodwdevuks9h80mb.blob.core.windows.net"
-
 /*
 # openlineage POC
 openlineage_function_app = {
