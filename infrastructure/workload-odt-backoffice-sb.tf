@@ -24,7 +24,7 @@ module "odt_backoffice_sb" {
   environment                             = var.environment
   location                                = module.azure_region.location_cli
   service_name                            = local.service_name
-  odt_backoffice_sb_topic_subscriptions   = var.odt_backoffice_sb_topic_subscriptions
+  odt_backoffice_sb_topic_subscriptions   = local.odt_nsips_back_office_sb_topic_subscriptions
   odt_back_office_service_bus_id          = local.odt_nsips_back_office_service_bus_id
   synapse_workspace_failover_principal_id = try(module.synapse_workspace_private_failover.synapse_workspace_principal_id, null)
   synapse_workspace_principal_id          = module.synapse_workspace_private.synapse_workspace_principal_id
@@ -51,7 +51,7 @@ module "odt_backoffice_sb_failover" {
   environment                             = var.environment
   location                                = module.azure_region.location_cli
   service_name                            = local.service_name
-  odt_backoffice_sb_topic_subscriptions   = var.odt_backoffice_sb_topic_subscriptions
+  odt_backoffice_sb_topic_subscriptions   = local.odt_nsips_back_office_sb_topic_subscriptions
   odt_back_office_service_bus_id          = local.odt_nsips_back_office_service_bus_id
   synapse_workspace_failover_principal_id = try(module.synapse_workspace_private_failover.synapse_workspace_principal_id, null)
   synapse_workspace_principal_id          = module.synapse_workspace_private.synapse_workspace_principal_id
