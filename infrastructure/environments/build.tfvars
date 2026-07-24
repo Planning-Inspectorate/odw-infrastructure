@@ -53,7 +53,6 @@ message_storage_container = "odw-raw/ServiceBus"
 
 network_watcher_enabled = false
 
-service_bus_failover_enabled = false
 service_bus_role_assignments = {
   "Azure Service Bus Data Owner" = {
     groups = [] # "pins-odw-preprod-administrators"
