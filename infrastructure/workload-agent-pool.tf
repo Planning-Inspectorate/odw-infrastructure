@@ -2,7 +2,7 @@ module "devops_agent_pool" {
   source = "./modules/devops-agent-pool"
 
   environment         = var.environment
-  resource_group_name = var.devops_agent_pool_resource_group_name
+  resource_group_name = "pins-rg-devops-odw-${var.environment}-uks"
   location            = module.azure_region.location_cli
   service_name        = local.service_name
 
@@ -21,7 +21,7 @@ module "devops_agent_pool_failover" {
   source = "./modules/devops-agent-pool"
 
   environment         = var.environment
-  resource_group_name = var.devops_agent_pool_resource_group_name_failover
+  resource_group_name = "pins-rg-devops-odw-${var.environment}-ukw"
   location            = module.azure_region.paired_location.location_cli
   service_name        = local.service_name
 
