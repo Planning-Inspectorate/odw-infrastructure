@@ -211,8 +211,8 @@ data "azurerm_virtual_network" "tooling" {
 
 data "azurerm_virtual_network" "appeals" {
   count               = var.environment != "build" ? 1 : 0
-  name                = var.odt_appeals_back_office.virtual_network_name
-  resource_group_name = var.odt_appeals_back_office.resource_group_name
+  name                = local.odt_appeals_back_office.virtual_network_name
+  resource_group_name = local.odt_appeals_back_office.resource_group_name
   provider            = azurerm.odt
 }
 
@@ -266,7 +266,7 @@ resource "azurerm_virtual_network_peering" "odw_to_appeals" {
 resource "azurerm_virtual_network_peering" "appeals_to_odw" {
   count                     = var.environment != "build" ? 1 : 0
   name                      = "pins-peer-appeals-to-${local.service_name}-${var.environment}"
-  resource_group_name       = var.odt_appeals_back_office.resource_group_name
+  resource_group_name       = local.odt_appeals_back_office.resource_group_name
   virtual_network_name      = data.azurerm_virtual_network.appeals[0].name
   remote_virtual_network_id = module.synapse_network.vnet_id
   provider                  = azurerm.odt

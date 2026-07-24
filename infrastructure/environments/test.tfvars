@@ -59,21 +59,6 @@ message_storage_container = "odw-raw/ServiceBus"
 
 network_watcher_enabled = false
 
-odt_back_office_service_bus_enabled                      = true
-odt_back_office_service_bus_failover_enabled             = false
-odt_back_office_service_bus_name                         = "pins-sb-back-office-test-ukw-001"
-odt_back_office_service_bus_name_failover                = "pins-sb-back-office-test-uks-001"
-odt_back_office_service_bus_resource_group_name          = "pins-rg-back-office-test-ukw-001"
-odt_back_office_service_bus_resource_group_name_failover = "pins-rg-back-office-test-uks-001"
-
-## Appeals Back Office
-odt_appeals_back_office = {
-  resource_group_name  = "pins-rg-appeals-bo-test"
-  service_bus_enabled  = true
-  service_bus_name     = "pins-sb-appeals-bo-test"
-  virtual_network_name = "pins-vnet-appeals-bo-test"
-}
-
 service_bus_failover_enabled = false
 service_bus_premium_enabled  = true
 service_bus_role_assignments = {
