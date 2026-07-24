@@ -143,7 +143,7 @@ module "function_app" {
   servicebus_namespace         = local.odt_nsips_back_office.service_bus_name
   servicebus_namespace_appeals = local.odt_appeals_back_office.service_bus_name
   servicebus_namespace_odw     = module.synapse_ingestion.service_bus_namespace_name
-  message_storage_account      = var.message_storage_account
+  message_storage_account      = local.message_storage_account
   message_storage_container    = var.message_storage_container
 
   tags = merge(

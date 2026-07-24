@@ -42,8 +42,6 @@ key_vault_role_assignments = {
   ]
 }
 
-message_storage_account = "https://pinsstodwbuildukslu4d8k.blob.core.windows.net"
-
 service_bus_role_assignments = {
   "Azure Service Bus Data Owner" = {
     groups = [] # "pins-odw-preprod-administrators"

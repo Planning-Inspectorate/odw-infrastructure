@@ -184,12 +184,6 @@ variable "zendesk_enabled" {
   type        = bool
 }
 
-variable "message_storage_account" {
-  type        = string
-  description = "Name of the storage account for service bus messages"
-  default     = null
-}
-
 variable "message_storage_container" {
   type        = string
   description = "Name of the storage account container for service bus messages"
