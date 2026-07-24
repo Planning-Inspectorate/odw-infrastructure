@@ -78,21 +78,6 @@ message_storage_container = "odw-raw/ServiceBus"
 
 network_watcher_enabled = false
 
-odt_back_office_service_bus_enabled                      = true
-odt_back_office_service_bus_failover_enabled             = false
-odt_back_office_service_bus_name                         = "pins-sb-back-office-dev-ukw-001"
-odt_back_office_service_bus_name_failover                = "pins-sb-back-office-dev-uks-001"
-odt_back_office_service_bus_resource_group_name          = "pins-rg-back-office-dev-ukw-001"
-odt_back_office_service_bus_resource_group_name_failover = "pins-rg-back-office-dev-uks-001"
-
-## Appeals Back Office
-odt_appeals_back_office = {
-  resource_group_name  = "pins-rg-appeals-bo-dev"
-  service_bus_enabled  = true
-  service_bus_name     = "pins-sb-appeals-bo-dev"
-  virtual_network_name = "pins-vnet-appeals-bo-dev"
-}
-
 /*
 # openlineage POC
 openlineage_function_app = {

@@ -213,35 +213,9 @@ variable "network_watcher_enabled" {
 }
 
 variable "odt_back_office_service_bus_enabled" {
-  default     = false
+  default     = true
   description = "Determines whether the ODT Service Bus Namespace will be deployed"
   type        = bool
-}
-
-variable "odt_back_office_service_bus_failover_enabled" {
-  default     = false
-  description = "Whether or not to enable failover for the Service Bus namespace"
-  type        = bool
-}
-
-variable "odt_back_office_service_bus_name" {
-  description = "The name of the Service Bus namespace into which resources will be deployed"
-  type        = string
-}
-
-variable "odt_back_office_service_bus_name_failover" {
-  description = "The name of the Service Bus namespace into which resources will be deployed"
-  type        = string
-}
-
-variable "odt_back_office_service_bus_resource_group_name" {
-  description = "The name of the resource group into which resources will be deployed"
-  type        = string
-}
-
-variable "odt_back_office_service_bus_resource_group_name_failover" {
-  description = "The name of the resource group into which resources will be deployed"
-  type        = string
 }
 
 variable "service_bus_premium_enabled" {
@@ -276,16 +250,6 @@ variable "odt_backoffice_sb_topic_subscriptions" {
       }
     }"
   EOT
-}
-
-variable "odt_appeals_back_office" {
-  description = "Appeals Back Office configuration"
-  type = object({
-    resource_group_name  = string
-    service_bus_enabled  = bool
-    service_bus_name     = string
-    virtual_network_name = string
-  })
 }
 
 variable "odt_appeals_back_office_sb_topic_subscriptions" {

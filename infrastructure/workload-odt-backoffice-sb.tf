@@ -25,7 +25,7 @@ module "odt_backoffice_sb" {
   location                                = module.azure_region.location_cli
   service_name                            = local.service_name
   odt_backoffice_sb_topic_subscriptions   = var.odt_backoffice_sb_topic_subscriptions
-  odt_back_office_service_bus_id          = local.odt_back_office_service_bus_id
+  odt_back_office_service_bus_id          = local.odt_nsips_back_office_service_bus_id
   synapse_workspace_failover_principal_id = try(module.synapse_workspace_private_failover.synapse_workspace_principal_id, null)
   synapse_workspace_principal_id          = module.synapse_workspace_private.synapse_workspace_principal_id
 
@@ -40,7 +40,7 @@ module "odt_backoffice_sb" {
 import {
   for_each = var.environment != "build" ? { for entry in var.odt_backoffice_sb_topic_subscriptions_to_import : entry.subscription_name => entry } : {}
   to       = module.odt_backoffice_sb[0].azurerm_servicebus_subscription.odt_backoffice_subscriptions[each.key]
-  id       = "${local.odt_back_office_service_bus_id}/topics/${each.value.topic_name}/subscriptions/${each.value.subscription_name}"
+  id       = "${local.odt_nsips_back_office_service_bus_id}/topics/${each.value.topic_name}/subscriptions/${each.value.subscription_name}"
 }
 
 module "odt_backoffice_sb_failover" {
@@ -52,7 +52,7 @@ module "odt_backoffice_sb_failover" {
   location                                = module.azure_region.location_cli
   service_name                            = local.service_name
   odt_backoffice_sb_topic_subscriptions   = var.odt_backoffice_sb_topic_subscriptions
-  odt_back_office_service_bus_id          = local.odt_back_office_service_bus_id
+  odt_back_office_service_bus_id          = local.odt_nsips_back_office_service_bus_id
   synapse_workspace_failover_principal_id = try(module.synapse_workspace_private_failover.synapse_workspace_principal_id, null)
   synapse_workspace_principal_id          = module.synapse_workspace_private.synapse_workspace_principal_id
 
@@ -66,7 +66,7 @@ module "odt_backoffice_sb_failover" {
 
 
 module "odt_appeals_back_office_sb" {
-  count = var.odt_appeals_back_office.service_bus_enabled && var.external_resource_links_enabled ? 1 : 0
+  count = local.odt_appeals_back_office.service_bus_enabled && var.external_resource_links_enabled ? 1 : 0
 
   source = "./modules/odt-backoffice-sb"
 

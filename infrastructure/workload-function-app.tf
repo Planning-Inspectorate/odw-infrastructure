@@ -140,8 +140,8 @@ module "function_app" {
   connection_strings           = each.value.connection_strings
   site_config                  = each.value.site_config
   file_share_name              = "pins-${each.key}-${local.resource_suffix}"
-  servicebus_namespace         = var.odt_back_office_service_bus_name
-  servicebus_namespace_appeals = var.odt_appeals_back_office.service_bus_name
+  servicebus_namespace         = local.odt_nsips_back_office.service_bus_name
+  servicebus_namespace_appeals = local.odt_appeals_back_office.service_bus_name
   servicebus_namespace_odw     = module.synapse_ingestion.service_bus_namespace_name
   message_storage_account      = var.message_storage_account
   message_storage_container    = var.message_storage_container
@@ -176,7 +176,7 @@ module "function_app_failover" {
   app_settings               = try(each.value.app_settings, null)
   site_config                = each.value.site_config
   file_share_name            = "pins-${each.key}-${local.resource_suffix_failover}"
-  servicebus_namespace       = var.odt_back_office_service_bus_name
+  servicebus_namespace       = local.odt_nsips_back_office.service_bus_name
   servicebus_namespace_odw   = var.service_bus_failover_enabled ? module.synapse_ingestion_failover[0].service_bus_namespace_name : module.synapse_ingestion.service_bus_namespace_name
 }
 
@@ -235,14 +235,14 @@ resource "azurerm_role_assignment" "odt_servicebus_namespace" {
     for function_app in local.function_app : function_app.name => function_app if var.function_app_enabled == true && var.external_resource_links_enabled
   }
 
-  scope                = local.odt_back_office_service_bus_id
+  scope                = local.odt_nsips_back_office_service_bus_id
   role_definition_name = "Azure Service Bus Data receiver"
   principal_id         = module.function_app[each.key].identity[0].principal_id
 }
 
 resource "azurerm_role_assignment" "odt_appeals_servicebus_namespace" {
   for_each = {
-    for function_app in local.function_app : function_app.name => function_app if var.function_app_enabled == true && var.odt_appeals_back_office.service_bus_enabled && var.external_resource_links_enabled
+    for function_app in local.function_app : function_app.name => function_app if var.function_app_enabled == true && local.odt_appeals_back_office.service_bus_enabled && var.external_resource_links_enabled
   }
 
   scope                = local.odt_appeals_back_office_service_bus_id
