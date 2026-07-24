@@ -24,9 +24,7 @@ data_lake_storage_containers = [
   "odw-meta-db"
 ]
 
-devops_agent_pool_resource_group_name          = "pins-rg-devops-odw-build-uks"
-devops_agent_pool_resource_group_name_failover = "pins-rg-devops-odw-build-ukw"
-devops_agent_failover_enabled                  = false
+devops_agent_failover_enabled = false
 
 environment = "build"
 

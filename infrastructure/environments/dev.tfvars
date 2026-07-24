@@ -40,9 +40,6 @@ data_lake_storage_containers_to_import = [
   "saphrspdata-to-odw"
 ]
 
-devops_agent_pool_resource_group_name          = "pins-rg-devops-odw-dev-uks"
-devops_agent_pool_resource_group_name_failover = "pins-rg-devops-odw-dev-ukw"
-
 environment = "dev"
 
 horizon_integration_config = {

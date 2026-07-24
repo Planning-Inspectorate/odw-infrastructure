@@ -104,16 +104,6 @@ variable "devops_agent_instances" {
   type        = number
 }
 
-variable "devops_agent_pool_resource_group_name" {
-  description = "The name of the resource group into which the Azure DevOps agents VMs will be deployed"
-  type        = string
-}
-
-variable "devops_agent_pool_resource_group_name_failover" {
-  description = "The name of the failover resource group into which the Azure DevOps agents VMs will be deployed"
-  type        = string
-}
-
 variable "devops_agent_failover_enabled" {
   description = "If failover devops agents should be created or not"
   type        = bool
