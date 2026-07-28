@@ -35,7 +35,8 @@ class TestSmokeSynapse(AzureManagementTestCase, SynapseTestCase):
         synapse_response = requests.get(workspace_notebooks_url, headers=headers)
         assert synapse_response.status_code == 200, (
             f"Expected the status code to be '200' when polling synapse, but was '{synapse_response.status_code}'. "
-            "Check that the VPN is enabled on the test host, and that Synapse private endpoints exist and are enabled"
+            "Check that the VPN is enabled on the test host, that Synapse private endpoints exist and are enabled, "
+            f"and that the smoke-test identity has Synapse access. Response body: {synapse_response.text}"
         )
 
     @pytest.mark.skipif(not TEST_CONFIG["PURVIEW_ID"] == "BUILD", reason="Purview is not connected to the build environment")

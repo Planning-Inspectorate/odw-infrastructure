@@ -35,7 +35,18 @@ class SynapseManagedPrivateEndpointManager(ManagedPrivateEndpointManager):
     
     def get_all(self) -> List[Dict[str, Any]]:
         api_call_headers = {'Authorization': 'Bearer ' + self._get_token()}
-        return requests.get(
+        response = requests.get(
             f"{self.SYNAPSE_ENDPOINT}/managedVirtualNetworks/default/managedPrivateEndpoints?api-version=2020-12-01",
             headers=api_call_headers
-        ).json()["value"]
+        )
+        assert response.status_code == 200, (
+            f"Could not retrieve managed private endpoints from Synapse workspace '{self.SYNAPSE_ENDPOINT}'. "
+            f"Expected HTTP 200 but received {response.status_code}. Response body: {response.text}"
+        )
+
+        response_json = response.json()
+        assert "value" in response_json, (
+            f"Synapse managed private endpoint response did not contain a 'value' field. "
+            f"Response body: {response.text}"
+        )
+        return response_json["value"]
