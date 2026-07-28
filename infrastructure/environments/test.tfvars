@@ -44,6 +44,41 @@ service_bus_role_assignments = {
   }
 }
 
+<<<<<<< Updated upstream
+=======
+service_bus_topics_and_subscriptions = [
+  {
+    name          = "pins-inspector"
+    subscriptions = {}
+  },
+  {
+    name = "applications-application-update"
+    subscriptions = {
+      "applications-application-update-sub"      = {},
+      "applications-application-update-wake-sub" = {}
+    }
+  }
+]
+
+spark_pool_enabled         = true
+spark_pool_max_node_count  = 12
+spark_pool_min_node_count  = 3
+spark_pool_node_size       = "Small"
+spark_pool_timeout_minutes = 60
+spark_pool_version         = "3.4"
+new_spark_pool_version     = "3.5"
+
+spark_pool_preview_enabled = true
+spark_pool_preview_version = "3.4"
+
+sql_pool_collation = "SQL_Latin1_General_CP1_CI_AS"
+sql_pool_enabled   = false
+sql_pool_sku_name  = "DW100c"
+
+sql_server_administrator_username = "sqladmin"
+sql_server_enabled                = false
+
+>>>>>>> Stashed changes
 synapse_aad_administrator = {
   username  = "pins-odw-data-preprod-syn-ws-sqladmins"
   object_id = "ba5af92f-a1bf-4332-a3c9-613a0a8f1b12"
