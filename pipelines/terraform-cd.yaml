@@ -25,6 +25,9 @@ resources:
 extends:
   template: pipelines/terraform_plan_apply.yml@templates
   parameters:
+    extraVariables:
+      - name: TF_CLI_ARGS_PLAN_OVERRIDE
+        value: ''
     environments:
       - name: Build
       - name: Dev
@@ -47,6 +50,8 @@ extends:
     poolNameFormatString: pins-agent-pool-odw-{0}-uks
     planStageVariableGroupFormatString: Terraform {0}
     planStageExtraEnvironmentVariables:
+      - name: TF_CLI_ARGS_plan
+        value: $(TF_CLI_ARGS_PLAN_OVERRIDE)
       - name: TF_VAR_failover_deployment
         value: 'false'
       - name: TF_VAR_odt_subscription_id
