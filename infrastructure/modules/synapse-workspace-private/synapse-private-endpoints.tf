@@ -301,44 +301,14 @@ resource "azurerm_synapse_managed_private_endpoint" "mpesc_prod_sql" {
   ]
 }
 
-resource "azurerm_synapse_managed_private_endpoint" "crown_dev_sql" {
-  count = var.environment == "dev" ? 1 : 0
+resource "azurerm_synapse_managed_private_endpoint" "crown_sql" {
+  name                 = "synapse-sql-sqlServer--pins-sql-crown-primary-${var.environment}"
+  synapse_workspace_id = azurerm_synapse_workspace.synapse.id
 
-  name                         = "synapse-sql-sqlServer--pins-sql-crown-primary-dev"
-  synapse_workspace_id         = azurerm_synapse_workspace.synapse.id
-  target_resource_id           = "/subscriptions/962e477c-0f3b-4372-97fc-a198a58e259e/resourceGroups/pins-rg-crown-dev/providers/Microsoft.Sql/servers/pins-sql-crown-primary-dev"
+  target_resource_id = "/subscriptions/${var.odt_subscription_id}/resourceGroups/pins-rg-crown-${var.environment}/providers/Microsoft.Sql/servers/pins-sql-crown-primary-${var.environment}"
+
   subresource_name             = "sqlServer"
-  fully_qualified_domain_names = ["pins-sql-crown-primary-dev.database.windows.net"]
-
-  depends_on = [
-    azurerm_synapse_workspace.synapse,
-    time_sleep.firewall_delay
-  ]
-}
-
-resource "azurerm_synapse_managed_private_endpoint" "crown_test_sql" {
-  count = var.environment == "test" ? 1 : 0
-
-  name                         = "synapse-sql-sqlServer--pins-sql-crown-primary-test"
-  synapse_workspace_id         = azurerm_synapse_workspace.synapse.id
-  target_resource_id           = "/subscriptions/76cf28c6-6fda-42f1-bcd9-6d7dbed704ef/resourceGroups/pins-rg-crown-test/providers/Microsoft.Sql/servers/pins-sql-crown-primary-test"
-  subresource_name             = "sqlServer"
-  fully_qualified_domain_names = ["pins-sql-crown-primary-test.database.windows.net"]
-
-  depends_on = [
-    azurerm_synapse_workspace.synapse,
-    time_sleep.firewall_delay
-  ]
-}
-
-resource "azurerm_synapse_managed_private_endpoint" "crown_prod_sql" {
-  count = var.environment == "prod" ? 1 : 0
-
-  name                         = "synapse-sql-sqlServer--pins-sql-crown-primary-prod"
-  synapse_workspace_id         = azurerm_synapse_workspace.synapse.id
-  target_resource_id           = "/subscriptions/d1d6c393-2fe3-40af-ac27-f5b6bad36735/resourceGroups/pins-rg-crown-prod/providers/Microsoft.Sql/servers/pins-sql-crown-primary-prod"
-  subresource_name             = "sqlServer"
-  fully_qualified_domain_names = ["pins-sql-crown-primary-prod.database.windows.net"]
+  fully_qualified_domain_names = ["pins-sql-crown-primary-${var.environment}.database.windows.net"]
 
   depends_on = [
     azurerm_synapse_workspace.synapse,
