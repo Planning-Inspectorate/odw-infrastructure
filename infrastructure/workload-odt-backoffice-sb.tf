@@ -37,12 +37,6 @@ module "odt_backoffice_sb" {
   }
 }
 
-import {
-  for_each = var.environment != "build" ? { for entry in var.odt_backoffice_sb_topic_subscriptions_to_import : entry.subscription_name => entry } : {}
-  to       = module.odt_backoffice_sb[0].azurerm_servicebus_subscription.odt_backoffice_subscriptions[each.key]
-  id       = "${local.odt_nsips_back_office_service_bus_id}/topics/${each.value.topic_name}/subscriptions/${each.value.subscription_name}"
-}
-
 module "odt_backoffice_sb_failover" {
   count = var.odt_back_office_service_bus_enabled && var.failover_deployment && var.external_resource_links_enabled ? 1 : 0
 
@@ -87,32 +81,6 @@ module "odt_appeals_back_office_sb" {
     azurerm.odt = azurerm.odt
   }
 }
-
-import {
-  for_each = var.environment != "build" ? { for entry in var.odt_appeals_backoffice_sb_topic_subscriptions_to_import : entry.subscription_name => entry } : {}
-  to       = module.odt_appeals_back_office_sb[0].azurerm_servicebus_subscription.odt_backoffice_subscriptions[each.key]
-  id       = "${local.odt_appeals_back_office_service_bus_id}/topics/${each.value.topic_name}/subscriptions/${each.value.subscription_name}"
-}
-
-
-# For the dev environment
-#moved {
-#  from = module.odt_appeals_back_office_sb[0].azurerm_role_assignment.topics_to_send["/subscriptions/962e477c-0f3b-4372-97fc-a198a58e259e/resourceGroups/pins-rg-appeals-bo-dev/providers/Microsoft.ServiceBus/namespaces/pins-sb-appeals-bo-dev/topics/listed-building"]
-#  to   = module.odt_appeals_back_office_sb[0].azurerm_role_assignment.topics_to_send["0"]
-#}
-
-# For the test environment
-#moved {
-#  from = module.odt_appeals_back_office_sb[0].azurerm_role_assignment.topics_to_send["/subscriptions/76cf28c6-6fda-42f1-bcd9-6d7dbed704ef/resourceGroups/pins-rg-appeals-bo-test/providers/Microsoft.ServiceBus/namespaces/pins-sb-appeals-bo-test/topics/listed-building"]
-#  to   = module.odt_appeals_back_office_sb[0].azurerm_role_assignment.topics_to_send["0"]
-#}
-
-# For the prod environment
-moved {
-  from = module.odt_appeals_back_office_sb[0].azurerm_role_assignment.topics_to_send["/subscriptions/d1d6c393-2fe3-40af-ac27-f5b6bad36735/resourceGroups/pins-rg-appeals-bo-prod/providers/Microsoft.ServiceBus/namespaces/pins-sb-appeals-bo-prod/topics/listed-building"]
-  to   = module.odt_appeals_back_office_sb[0].azurerm_role_assignment.topics_to_send["0"]
-}
-
 
 resource "azurerm_role_assignment" "appeals_vnet_odw_ado_network_contributor" {
   count                = var.environment != "build" ? 1 : 0
