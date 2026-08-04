@@ -301,6 +301,22 @@ resource "azurerm_synapse_managed_private_endpoint" "mpesc_prod_sql" {
   ]
 }
 
+# Managed private endpoint to Crown SQL server used for S62A migration
+resource "azurerm_synapse_managed_private_endpoint" "crown_sql" {
+  name                 = "synapse-sql-sqlServer--pins-sql-crown-primary-${var.environment}"
+  synapse_workspace_id = azurerm_synapse_workspace.synapse.id
+
+  target_resource_id = "/subscriptions/${var.odt_subscription_id}/resourceGroups/pins-rg-crown-${var.environment}/providers/Microsoft.Sql/servers/pins-sql-crown-primary-${var.environment}"
+
+  subresource_name             = "sqlServer"
+  fully_qualified_domain_names = ["pins-sql-crown-primary-${var.environment}.database.windows.net"]
+
+  depends_on = [
+    azurerm_synapse_workspace.synapse,
+    time_sleep.firewall_delay
+  ]
+}
+
 data "azurerm_servicebus_namespace" "odw" {
   count               = var.odw_service_bus_id != null ? 1 : 0
   name                = reverse(split("/", var.odw_service_bus_id))[0] # Last part of the id is the name of the service bus

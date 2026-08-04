@@ -63,6 +63,11 @@ variable "environment" {
   type        = string
 }
 
+variable "odt_subscription_id" {
+  description = "The subscription ID of the ODT subscription"
+  type        = string
+}
+
 variable "firewall_allowed_ip_addresses" {
   default     = []
   description = "A list of CIDR ranges to be permitted access to the data lake Storage Account"
