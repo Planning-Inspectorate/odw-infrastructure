@@ -69,6 +69,9 @@ extends:
         value: $(PURVIEW_MSI_ID)
       - name: TF_VAR_specialist_case_validation_check_recipients
         value: $(SPECIALIST_CASE_VALIDATION_CHECK_RECIPIENTS)
+    extraVariables:
+      - group: azure_tagging_variables 
+    extraEnvironmentVariables:
       - name: TF_VAR_system_asset_owner
         value: $(system_asset_owner)
     applyStageVariableGroupFormatString: Terraform {0}
