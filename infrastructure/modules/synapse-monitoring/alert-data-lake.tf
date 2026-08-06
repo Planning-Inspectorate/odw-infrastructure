@@ -107,6 +107,8 @@ resource "azurerm_monitor_metric_alert" "data_lake_latency" {
   action {
     action_group_id = azurerm_monitor_action_group.platform_alerts.id
   }
+
+  tags = local.tags
 }
 
 resource "azurerm_monitor_metric_alert" "data_lake_throughput_egress" {
@@ -130,6 +132,8 @@ resource "azurerm_monitor_metric_alert" "data_lake_throughput_egress" {
   action {
     action_group_id = azurerm_monitor_action_group.platform_alerts.id
   }
+
+  tags = local.tags
 }
 
 resource "azurerm_monitor_metric_alert" "data_lake_throughput_ingress" {
@@ -153,4 +157,6 @@ resource "azurerm_monitor_metric_alert" "data_lake_throughput_ingress" {
   action {
     action_group_id = azurerm_monitor_action_group.platform_alerts.id
   }
+
+  tags = local.tags
 }

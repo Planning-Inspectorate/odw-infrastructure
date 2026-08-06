@@ -74,4 +74,6 @@ resource "azurerm_linux_virtual_machine_scale_set" "devops_agent_pool" {
       tags
     ]
   }
+
+  tags = local.tags
 }

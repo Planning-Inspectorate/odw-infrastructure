@@ -6,6 +6,14 @@ locals {
     var.tags,
     {
       ModuleName = local.module_name
-    }
+    },
+    var.environment == "prod" ? {
+      SystemAssetOwner    = var.system_asset_owner
+      BusinessProcess     = "ODW"
+      PersonalData        = "No"
+      SpecialCategoryData = "No"
+      ProtectiveMarking   = "Official-Sensitive-Mission-Critical"
+      CriticalityRating   = "Level 2"
+    } : {}
   )
 }
