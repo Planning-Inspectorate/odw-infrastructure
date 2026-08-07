@@ -53,12 +53,12 @@ variable "service_name" {
   type        = string
 }
 
-variable "system_asset_owner" {
-  description = "tagging - value extracted from ADO library secret"
-  type        = string
-  sensitive   = true
-  default     = ""
-}
+# variable "system_asset_owner" {
+#   description = "tagging - value extracted from ADO library secret"
+#   type        = string
+#   sensitive   = true
+#   default     = ""
+# }
 
 variable "tags" {
   default     = {}
