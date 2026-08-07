@@ -10,7 +10,8 @@ locals {
     var.tags,
     {
       ModuleName = local.module_name
-    }
+    },
+    {}
   )
 
   cbos_sql_mpe = var.environment == "dev" ? {

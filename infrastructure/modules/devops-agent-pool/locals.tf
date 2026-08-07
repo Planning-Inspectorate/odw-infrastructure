@@ -6,6 +6,7 @@ locals {
     var.tags,
     {
       ModuleName = local.module_name
-    }
+    },
+    {}
   )
 }
