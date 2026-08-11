@@ -91,5 +91,5 @@ extends:
           echo $CREDENTIAL_NAME
           python3 -m pytest $(Build.SourcesDirectory)/tests/smoke_test -vv -rP
         displayName: 'Smoke test'
-    extraVariables:
-    - group: extra_variables
+    azure_tagging_variables:
+    - group: azure_tagging_variables
