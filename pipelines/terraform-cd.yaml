@@ -22,6 +22,9 @@ resources:
       endpoint: Planning-Inspectorate
       ref: main
 
+variables:
+  - group: azure_tagging_variables
+
 extends:
   template: pipelines/terraform_plan_apply.yml@templates
   parameters:
@@ -69,9 +72,8 @@ extends:
         value: $(PURVIEW_MSI_ID)
       - name: TF_VAR_specialist_case_validation_check_recipients
         value: $(SPECIALIST_CASE_VALIDATION_CHECK_RECIPIENTS)
-      - group: azure_tagging_variables
       - name: TF_VAR_system_asset_owner
-        value: $(system_asset_owner)
+        value: $(SYSTEM_ASSET_OWNER)
     applyStageVariableGroupFormatString: Terraform {0}
     postApplySteps:
       - checkout: self
