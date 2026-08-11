@@ -22,9 +22,6 @@ resources:
       endpoint: Planning-Inspectorate
       ref: main
 
-variables:
-  - group: azure_tagging_variables
-
 extends:
   template: pipelines/terraform_plan_apply.yml@templates
   parameters:
@@ -94,3 +91,5 @@ extends:
           echo $CREDENTIAL_NAME
           python3 -m pytest $(Build.SourcesDirectory)/tests/smoke_test -vv -rP
         displayName: 'Smoke test'
+    extraVariables:
+    - group: extra_variables
