@@ -5,6 +5,7 @@ resource "azurerm_storage_account" "sap_landing" {
   #checkov:skip=CKV2_AZURE_18: PoC uses Microsoft-managed keys; CMK via the standard ODW Key Vault (pinskvsynwodw<env>uks) to be introduced pre-production (THEODW-3387 follow-up).
   #checkov:skip=CKV2_AZURE_33: Public network access is disabled and firewall denies by default. Private Endpoint + Private Link Service bridge to SAP BTP is delivered under THEODW-3385; drop this skip once implemented.
   #checkov:skip=CKV2_AZURE_40: Shared Key auth required for the PoC because SAP BTP Cloud Integration Destinations currently consume account-key-based SAS URLs. Target state (THEODW-3387) is OAuth via Entra ID App Registration — drop this skip and set shared_access_key_enabled = false once the OAuth flow is validated with MHCLG.
+  #checkov:skip=CKV2_AZURE_41: SAS expiration policy IS configured via the sas_policy block below (1-day expiration, Log action). Checkov 3.2.529 does not always detect it on this layout — skip is a false-positive suppression, not a policy waiver.
 
   # Name: pinsstsapldngdevuks (19 chars) - safe for all environment lengths
   name                = "pinsstsapldng${var.environment}${module.azure_region.location_short}"
@@ -49,6 +50,33 @@ resource "azurerm_storage_account_network_rules" "sap_landing" {
   storage_account_id = azurerm_storage_account.sap_landing.id
   default_action     = "Deny"
   bypass             = ["AzureServices"]
+}
+
+# Queue service logging – satisfies CKV_AZURE_33. No queues are used by the SAP
+# BTP integration today, but enabling logging is cheap defence-in-depth and
+# keeps the security baseline consistent with other ODW storage accounts.
+resource "azurerm_storage_account_queue_properties" "sap_landing" {
+  storage_account_id = azurerm_storage_account.sap_landing.id
+
+  logging {
+    read                  = true
+    write                 = true
+    delete                = true
+    retention_policy_days = 7
+    version               = "1.0"
+  }
+
+  minute_metrics {
+    include_apis          = true
+    retention_policy_days = 7
+    version               = "1.0"
+  }
+
+  hour_metrics {
+    include_apis          = true
+    retention_policy_days = 7
+    version               = "1.0"
+  }
 }
 
 resource "azurerm_storage_container" "sap_container" {
