@@ -1,19 +1,19 @@
 # --- SAP BTP Storage Landing Zone (THEODW-3386) ---
 
 resource "azurerm_storage_account" "sap_landing" {
-  # Name will be pinsstsaplandingdevuks (22 chars)
-  name                     = "pinsstsaplanding${var.environment}${module.azure_region.location_short}"
-  resource_group_name      = data.azurerm_resource_group.data.name
-  location                 = data.azurerm_resource_group.data.location
+  # Name: pinsstsapldngdevuks (19 chars) - safe for all environment lengths
+  name                     = "pinsstsapldng${var.environment}${module.azure_region.location_short}"
+  resource_group_name      = azurerm_resource_group.data.name
+  location                 = azurerm_resource_group.data.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
 
   # Standard Blob for SAP compatibility as per PoC design
   is_hns_enabled           = false
 
-  # Security Requirements
+  # Security Requirements (Updated for azurerm v4 provider)
   public_network_access_enabled = false
-  enable_https_traffic_only     = true
+  https_traffic_only_enabled    = true
   min_tls_version               = "TLS1_2"
 
   network_rules {
