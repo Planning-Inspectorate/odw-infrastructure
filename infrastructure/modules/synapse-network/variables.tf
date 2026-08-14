@@ -83,7 +83,8 @@ variable "vnet_subnets" {
       delegation_name = string
       actions         = list(string)
     }))
-    private_endpoint_network_policies = optional(string, "Enabled")
+    private_endpoint_network_policies             = optional(string, "Enabled")
+    private_link_service_network_policies_enabled = optional(bool, true)
   }))
 }
 

@@ -166,12 +166,6 @@ variable "deploy_s62a_migration_storage" {
   default     = false
 }
 
-variable "deploy_sap_btp_landing" {
-  description = "Deploy SAP BTP landing zone storage account, private endpoint and Key Vault secret (THEODW-3386 / 3385 / 3387)"
-  type        = bool
-  default     = false
-}
-
 variable "key_vault_role_assignments" {
   default     = {}
   description = "An object mapping RBAC roles to principal IDs for Key Vault"
@@ -465,7 +459,8 @@ variable "vnet_subnets" {
       delegation_name = string
       actions         = list(string)
     }))
-    private_endpoint_network_policies = optional(string)
+    private_endpoint_network_policies             = optional(string)
+    private_link_service_network_policies_enabled = optional(bool, true)
   }))
 }
 
@@ -585,3 +580,38 @@ variable "az_api_office365_connection_names" {
     prod  = "office365"
   }
 }
+
+# -----------------------------------------------------------------------------
+# SAP BTP Landing Zone (THEODW-3385 / THEODW-3386 / THEODW-3062)
+# -----------------------------------------------------------------------------
+
+variable "deploy_sap_btp_landing" {
+  description = "Determines whether the SAP BTP landing zone (storage + PE + PLS bridge) is deployed"
+  type        = bool
+  default     = false
+}
+
+variable "sap_proxy_vm_sku" {
+  description = "The VM SKU for the SAP BTP proxy VMSS instances (NGINX TLS passthrough)"
+  type        = string
+  default     = "Standard_B2s"
+}
+
+variable "sap_proxy_instance_count" {
+  description = "The base capacity of the SAP BTP proxy VMSS"
+  type        = number
+  default     = 2
+}
+
+variable "sap_proxy_admin_username" {
+  description = "The Linux admin username on the SAP BTP proxy VMSS (SSH access disabled by default; key stored in Key Vault)"
+  type        = string
+  default     = "sapproxy"
+}
+
+variable "sap_btp_approved_subscription_ids" {
+  description = "MHCLG/SAP subscription IDs allowed to see and auto-approve the SAP BTP Private Link Service alias. Use a placeholder GUID until MHCLG provides the real value."
+  type        = list(string)
+  default     = ["00000000-0000-0000-0000-000000000000"]
+}
+

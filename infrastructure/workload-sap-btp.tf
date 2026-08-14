@@ -1,3 +1,14 @@
+# =============================================================================
+# SAP BTP Landing Zone - Storage (THEODW-3386)
+#   - Blob container that receives SAP BTP HR data.
+#   - Deployed via the shared ./modules/storage-account module for parity with
+#     the rest of the ODW estate (naming, tagging, network rules, soft delete).
+#   - Access key surfaced via Key Vault for BTP connector consumption (3387).
+#
+# The networking bridge (PLS + LB + proxy VMSS) that exposes this account to
+# the SAP tenant lives in `workload-sap-btp-pls.tf` (THEODW-3385).
+# =============================================================================
+
 # --- SAP BTP Storage Landing Zone (THEODW-3386) ---
 
 module "storage_account_sap_landing" {
@@ -6,17 +17,19 @@ module "storage_account_sap_landing" {
   source = "./modules/storage-account"
 
   resource_group_name = azurerm_resource_group.data.name
-  service_name        = "sapldng" # Shortened to keep within 24-char limit
+  service_name        = "sapldng" # Shortened to keep the account name <= 24 chars
   environment         = var.environment
   location            = module.azure_region.location_cli
   tags                = local.tags
 
-  # Configuration - Using LRS to align with ODW module defaults and cost-saving patterns
+  # Configuration - LRS aligns with ODW module defaults and cost-saving patterns.
   storage_replication = "LRS"
   is_hns_enabled      = false
   container_name      = ["sap-test-entity"]
 
-  # Network Rules: Allow access from ODW compute and function subnets
+  # Network Rules: allow access from ODW compute and function subnets so
+  # in-VNet workloads (and the SAP proxy VMSS) can reach the account. The
+  # module sets default_action = Deny by default.
   network_rule_virtual_network_subnet_ids = [
     module.synapse_network.vnet_subnets[local.compute_subnet_name],
     module.synapse_network.vnet_subnets[local.functionapp_subnet_name]
@@ -25,7 +38,9 @@ module "storage_account_sap_landing" {
 
 # --- Networking Bridge (THEODW-3385) ---
 
-# Private Endpoint for Blob access - This allows connection when public_access is false
+# Private Endpoint for Blob access - required because public access is denied
+# on the storage account. Placed in the ODW network RG and compute subnet,
+# mirroring workload-s62a.tf.
 resource "azurerm_private_endpoint" "sap_landing_blob_endpoint" {
   count = var.deploy_sap_btp_landing ? 1 : 0
 
@@ -51,7 +66,7 @@ resource "azurerm_private_endpoint" "sap_landing_blob_endpoint" {
 
 # --- Secret Management (THEODW-3387) ---
 
-# Store the primary access key in the ODW Key Vault as per s62a pattern
+# Store the primary access key in the ODW Key Vault (s62a pattern).
 resource "azurerm_key_vault_secret" "sap_landing_storage_key" {
   count = var.deploy_sap_btp_landing ? 1 : 0
 
@@ -60,10 +75,11 @@ resource "azurerm_key_vault_secret" "sap_landing_storage_key" {
   key_vault_id = module.synapse_data_lake.key_vault_id
   content_type = "text/plain"
 
-  # Set expiration for 1 year (8760h)
+  # Set expiration for 1 year (8760h).
   expiration_date = timeadd(timestamp(), "8760h")
 
   lifecycle {
     ignore_changes = [expiration_date]
   }
 }
+
