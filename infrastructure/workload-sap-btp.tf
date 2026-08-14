@@ -1,6 +1,8 @@
 # --- SAP BTP Storage Landing Zone (THEODW-3386) ---
 
 module "storage_account_sap_landing" {
+  count = var.deploy_sap_btp_landing ? 1 : 0
+
   source = "./modules/storage-account"
 
   resource_group_name = azurerm_resource_group.data.name
@@ -25,7 +27,9 @@ module "storage_account_sap_landing" {
 
 # Private Endpoint for Blob access - This allows connection when public_access is false
 resource "azurerm_private_endpoint" "sap_landing_blob_endpoint" {
-  name                = "pins-pe-sap-blob-${var.environment}-uks"
+  count = var.deploy_sap_btp_landing ? 1 : 0
+
+  name                = "pins-pe-odw-sap-blob-${var.environment}"
   resource_group_name = azurerm_resource_group.network.name
   location            = module.azure_region.location_cli
   subnet_id           = module.synapse_network.vnet_subnets[local.compute_subnet_name]
@@ -37,7 +41,7 @@ resource "azurerm_private_endpoint" "sap_landing_blob_endpoint" {
 
   private_service_connection {
     name                           = "sap-blob-connection"
-    private_connection_resource_id = module.storage_account_sap_landing.storage_id
+    private_connection_resource_id = module.storage_account_sap_landing[0].storage_id
     subresource_names              = ["blob"]
     is_manual_connection           = false
   }
@@ -49,8 +53,10 @@ resource "azurerm_private_endpoint" "sap_landing_blob_endpoint" {
 
 # Store the primary access key in the ODW Key Vault as per s62a pattern
 resource "azurerm_key_vault_secret" "sap_landing_storage_key" {
+  count = var.deploy_sap_btp_landing ? 1 : 0
+
   name         = "SAP-Landing-Storage-Key"
-  value        = module.storage_account_sap_landing.primary_access_key
+  value        = module.storage_account_sap_landing[0].primary_access_key
   key_vault_id = module.synapse_data_lake.key_vault_id
   content_type = "text/plain"
 
