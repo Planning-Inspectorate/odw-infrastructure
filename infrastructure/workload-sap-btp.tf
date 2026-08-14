@@ -1,6 +1,7 @@
 # --- SAP BTP Storage Landing Zone (THEODW-3386) ---
 
 resource "azurerm_storage_account" "sap_landing" {
+  #checkov:skip=CKV_AZURE_33: Queue logging IS enabled — via the separate azurerm_storage_account_queue_properties.sap_landing resource below (matching the pattern used in modules/synapse-shir). Checkov's attribute check only inspects the inline queue_properties block on azurerm_storage_account, so this is a false-positive suppression, not a policy waiver.
   #checkov:skip=CKV2_AZURE_1: PoC uses Microsoft-managed keys; CMK via the standard ODW Key Vault (pinskvsynwodw<env>uks) to be introduced pre-production (THEODW-3387 follow-up).
   #checkov:skip=CKV2_AZURE_18: PoC uses Microsoft-managed keys; CMK via the standard ODW Key Vault (pinskvsynwodw<env>uks) to be introduced pre-production (THEODW-3387 follow-up).
   #checkov:skip=CKV2_AZURE_33: Public network access is disabled and firewall denies by default. Private Endpoint + Private Link Service bridge to SAP BTP is delivered under THEODW-3385; drop this skip once implemented.
