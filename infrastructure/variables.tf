@@ -166,6 +166,12 @@ variable "deploy_s62a_migration_storage" {
   default     = false
 }
 
+variable "deploy_sap_btp_landing" {
+  description = "Deploy SAP BTP landing zone storage account, private endpoint and Key Vault secret (THEODW-3386 / 3385 / 3387)"
+  type        = bool
+  default     = false
+}
+
 variable "key_vault_role_assignments" {
   default     = {}
   description = "An object mapping RBAC roles to principal IDs for Key Vault"

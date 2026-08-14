@@ -19,6 +19,7 @@ data_lake_storage_containers_to_import = [
 environment = "test"
 
 deploy_s62a_migration_storage = true
+deploy_sap_btp_landing        = false
 
 horizon_integration_config = {
   networking = {
