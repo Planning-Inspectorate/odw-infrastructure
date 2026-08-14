@@ -12,7 +12,7 @@ resource "azurerm_storage_account" "sap_landing" {
   location            = azurerm_resource_group.data.location
 
   account_tier             = "Standard"
-  account_replication_type = "ZRS"
+  account_replication_type = "GZRS"
 
   # Standard Blob (non-HNS) for SAP compatibility as per PoC design
   is_hns_enabled = false
