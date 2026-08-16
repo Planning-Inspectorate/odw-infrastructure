@@ -64,6 +64,32 @@ resource "azurerm_private_endpoint" "sap_landing_blob_endpoint" {
   tags = local.tags
 }
 
+# --- Bridge Verification (Dev Only) ---
+
+# Internal private endpoint used to verify the full PLS -> LB -> VMSS -> Storage
+# path before handing the alias to the external SAP/MHCLG consumer.
+resource "azurerm_private_endpoint" "sap_bridge_verification" {
+  count = var.environment == "dev" && var.deploy_sap_btp_landing ? 1 : 0
+
+  name                = "pins-pe-sap-bridge-verify-${var.environment}"
+  resource_group_name = azurerm_resource_group.network.name
+  location            = module.azure_region.location_cli
+  subnet_id           = module.synapse_network.vnet_subnets[local.compute_subnet_name]
+
+  private_service_connection {
+    name                           = "sap-bridge-verify-connection"
+    private_connection_resource_id = azurerm_private_link_service.sap[0].id
+    is_manual_connection           = true
+    request_message                = "Internal verification of SAP PLS bridge"
+  }
+
+  tags = merge(local.tags, {
+    Usage = "Verification-Only"
+  })
+
+  depends_on = [azurerm_private_link_service.sap]
+}
+
 # --- Secret Management (THEODW-3387) ---
 
 # Store the primary access key in the ODW Key Vault (s62a pattern).
