@@ -579,3 +579,8 @@ variable "az_api_office365_connection_names" {
     prod  = "office365"
   }
 }
+variable "deploy_sap_btp_landing" {
+  description = "Determines whether the SAP BTP landing zone (storage + PE + PLS bridge) is deployed"
+  type        = bool
+  default     = false
+}
