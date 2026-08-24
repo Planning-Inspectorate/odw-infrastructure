@@ -6,7 +6,7 @@ module "storage_account_sap_landing" {
   source = "./modules/storage-account"
 
   resource_group_name = azurerm_resource_group.data.name
-  service_name        = "sapldng" # Shortened to keep the account name <= 24 chars
+  service_name        = "sapldg" # 6 chars keeps storage account name within 24-char Azure limit
   environment         = var.environment
   location            = module.azure_region.location_cli
   tags                = local.tags
