@@ -25,7 +25,6 @@ service_bus_topics_and_subscriptions = [
   },
   {
   name = "applications-notify-email"
-
   subscriptions = {
     "applications-notify-email-sub"      = {},
     "applications-notify-email-wake-sub" = {}
