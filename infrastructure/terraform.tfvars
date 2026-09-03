@@ -24,19 +24,19 @@ service_bus_topics_and_subscriptions = [
     }
   },
   {
-  name = "applications-notify-email"
-  subscriptions = {
-    "applications-notify-email-sub"      = {},
-    "applications-notify-email-wake-sub" = {}
-  }
+    name = "applications-notify-email"
+    subscriptions = {
+      "applications-notify-email-sub"      = {},
+      "applications-notify-email-wake-sub" = {}
+    }
   },
   {
-  name = "applications-representation"
-  subscriptions = {
-    "applications-representation-sub"      = {},
-    "applications-representation-wake-sub" = {}
+    name = "applications-representation"
+    subscriptions = {
+      "applications-representation-sub"      = {},
+      "applications-representation-wake-sub" = {}
+    }
   }
-}
 ]
 
 tooling_config = {
