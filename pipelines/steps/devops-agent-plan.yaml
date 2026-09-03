@@ -2,45 +2,77 @@ parameters:
   - name: armClientId
     type: string
     default: $(AZURE_SERVICE_PRINCIPAL_ID)
+
   - name: armClientSecret
     type: string
     default: $(AZURE_SERVICE_PRINCIPAL_SECRET)
+
   - name: armSubscriptionId
     type: string
     default: $(SUBSCRIPTION_ID)
+
   - name: armTenantId
     type: string
     default: $(AZURE_TENANT_ID)
+
   - name: odtSubscriptionId
     type: string
     default: $(ODT_SUBSCRIPTION_ID)
+
   - name: horizonSubscriptionId
     type: string
     default: $(HORIZON_SUBSCRIPTION_ID)
+
   - name: deployAgentPool
     type: boolean
     default: false
+
   - name: environment
     type: string
     default: dev
+
   - name: failoverDeployment
     type: boolean
     default: false
+
   - name: planFileName
     type: string
     default: tfplan
+
   - name: planTargetResourceName
     type: string
     default: module.devops_agent_pool
+
   - name: workingDirectory
     type: string
 
 steps:
   - script: |
+      echo "=== DNS TEST ==="
+
+      echo "Checking nslookup availability..."
+      which nslookup || true
+
+      echo "=== SYNAPSE DEV ENDPOINT ==="
+      nslookup pins-synw-odw-prod-uks.dev.azuresynapse.net || true
+      getent hosts pins-synw-odw-prod-uks.dev.azuresynapse.net || true
+
+      echo "=== SYNAPSE SQL ENDPOINT ==="
+      nslookup pins-synw-odw-prod-uks.sql.azuresynapse.net || true
+      getent hosts pins-synw-odw-prod-uks.sql.azuresynapse.net || true
+    displayName: 'Test Synapse DNS'
+    workingDirectory: ${{ parameters.workingDirectory }}
+
+  - script: |
       echo "Planning Terraform deployment..."
+
       echo "##[command]terraform plan -var-file=./environments/${{ parameters.environment }}.tfvars \
-      -var deploy_agent_pool=${{ lower(parameters.deployAgentPool) }} -var failover_deployment=${{ lower(parameters.failoverDeployment) }} \
-      -target=${{ parameters.planTargetResourceName }} -input=false -out=${{ parameters.planFileName }}"
+      -var deploy_agent_pool=${{ lower(parameters.deployAgentPool) }} \
+      -var failover_deployment=${{ lower(parameters.failoverDeployment) }} \
+      -target=${{ parameters.planTargetResourceName }} \
+      -input=false \
+      -out=${{ parameters.planFileName }}"
+
       terraform plan \
         -var-file=./environments/${{ parameters.environment }}.tfvars \
         -var "odt_subscription_id=${{ lower(parameters.odtSubscriptionId) }}" \
