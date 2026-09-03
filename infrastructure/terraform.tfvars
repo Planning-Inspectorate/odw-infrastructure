@@ -17,10 +17,10 @@ service_bus_topics_and_subscriptions = [
     subscriptions = {}
   },
   {
-    name = "application-update"
+    name = "applications-application-update"
     subscriptions = {
-      "planning-environmental-specialist-odw-sub"      = {},
-      "planning-environmental-specialist-odw-wake-sub" = {}
+      "applications-application-update-sub"      = {},
+      "applications-application-update-wake-sub" = {}
     }
   },
   {
