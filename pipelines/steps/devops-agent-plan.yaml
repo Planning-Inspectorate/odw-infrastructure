@@ -50,6 +50,7 @@ steps:
   - script: |
       echo "=== DNS TEST ==="
 
+      echo "Checking nslookup availability..."
       which nslookup || true
 
       echo "=== SYNAPSE DEV ENDPOINT ==="
@@ -64,9 +65,13 @@ steps:
 
   - script: |
       echo "Planning Terraform deployment..."
+
       echo "##[command]terraform plan -var-file=./environments/${{ parameters.environment }}.tfvars \
-      -var deploy_agent_pool=${{ lower(parameters.deployAgentPool) }} -var failover_deployment=${{ lower(parameters.failoverDeployment) }} \
-      -target=${{ parameters.planTargetResourceName }} -input=false -out=${{ parameters.planFileName }}"
+      -var deploy_agent_pool=${{ lower(parameters.deployAgentPool) }} \
+      -var failover_deployment=${{ lower(parameters.failoverDeployment) }} \
+      -target=${{ parameters.planTargetResourceName }} \
+      -input=false \
+      -out=${{ parameters.planFileName }}"
 
       terraform plan \
         -var-file=./environments/${{ parameters.environment }}.tfvars \
