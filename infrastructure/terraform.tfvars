@@ -22,6 +22,20 @@ service_bus_topics_and_subscriptions = [
       "planning-environmental-specialist-odw-sub"      = {},
       "planning-environmental-specialist-odw-wake-sub" = {}
     }
+  },
+  {
+    name = "applications-notify-email"
+    subscriptions = {
+      "applications-notify-email-sub"      = {},
+      "applications-notify-email-wake-sub" = {}
+    }
+  },
+  {
+    name = "applications-representation"
+    subscriptions = {
+      "applications-representation-sub"      = {},
+      "applications-representation-wake-sub" = {}
+    }
   }
 ]
 
