@@ -19,12 +19,12 @@ resource "azurerm_virtual_network" "synapse" {
 resource "azurerm_subnet" "synapse" {
   for_each = local.subnets
 
-  name                              = each.key
-  resource_group_name               = var.resource_group_name
-  address_prefixes                  = [each.value.cidr_block]
-  virtual_network_name              = azurerm_virtual_network.synapse.name
-  service_endpoints                 = each.value.service_endpoints
-  private_endpoint_network_policies = each.value.private_endpoint_network_policies
+  name                                          = each.key
+  resource_group_name                           = var.resource_group_name
+  address_prefixes                              = [each.value.cidr_block]
+  virtual_network_name                          = azurerm_virtual_network.synapse.name
+  service_endpoints                             = each.value.service_endpoints
+  private_endpoint_network_policies             = each.value.private_endpoint_network_policies
   private_link_service_network_policies_enabled = each.value.private_link_service_network_policies_enabled
 
   dynamic "delegation" {

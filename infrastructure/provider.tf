@@ -12,7 +12,7 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "> 4"
     }
-tls = {
+    tls = {
       source  = "hashicorp/tls"
       version = "~> 4.0"
     }
