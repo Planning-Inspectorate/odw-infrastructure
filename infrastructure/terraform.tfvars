@@ -67,4 +67,13 @@ vnet_subnets = [
     service_endpoints  = []
     service_delegation = []
   },
+ {
+     # SAP BTP proxy VMSS + PLS NAT subnet (THEODW-3385).
+     # PLS network policies must be disabled on this subnet.
+     "name" : "SapPlsSubnet",
+     "new_bits" : 4 # /28 - 11 usable IPs, enough for 2-VMSS + LB + NAT
+     service_endpoints                             = []
+     service_delegation                            = []
+     private_link_service_network_policies_enabled = false
+   },
 ]

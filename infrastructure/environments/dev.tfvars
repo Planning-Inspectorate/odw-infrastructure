@@ -46,6 +46,7 @@ horizon_migration = {
 
 deploy_s62a_migration_storage = true
 deploy_sap_btp_landing        = true
+sap_btp_approved_subscription_ids = ["00000000-0000-0000-0000-000000000000"]
 
 key_vault_role_assignments = {
   "Key Vault Administrator" = [

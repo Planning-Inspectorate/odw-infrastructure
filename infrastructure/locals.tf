@@ -13,6 +13,7 @@ locals {
   compute_subnet_name     = "ComputeSubnet"
   functionapp_subnet_name = "FunctionAppSubnet"
   synapse_subnet_name     = "SynapseEndpointSubnet"
+  sap_pls_subnet_name     = "SapPlsSubnet"
 
   function_app_identity = {
     for function_app in module.function_app : function_app.name => function_app.identity[0].principal_id
