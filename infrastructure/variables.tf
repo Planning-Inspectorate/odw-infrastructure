@@ -459,7 +459,8 @@ variable "vnet_subnets" {
       delegation_name = string
       actions         = list(string)
     }))
-    private_endpoint_network_policies = optional(string)
+    private_endpoint_network_policies             = optional(string)
+    private_link_service_network_policies_enabled = optional(bool, true)
   }))
 }
 
@@ -579,8 +580,33 @@ variable "az_api_office365_connection_names" {
     prod  = "office365"
   }
 }
+
 variable "deploy_sap_btp_landing" {
   description = "Determines whether the SAP BTP landing zone (storage + PE + PLS bridge) is deployed"
   type        = bool
   default     = false
+}
+
+variable "sap_btp_approved_subscription_ids" {
+  description = "Subscription IDs allowed to see and auto-approve the SAP BTP Private Link Service alias."
+  type        = list(string)
+  default     = []
+}
+
+variable "sap_proxy_vm_sku" {
+  description = "VM SKU for the SAP BTP proxy VMSS (NGINX TCP passthrough)."
+  type        = string
+  default     = "Standard_B2s"
+}
+
+variable "sap_proxy_instance_count" {
+  description = "Number of instances in the SAP BTP proxy VMSS."
+  type        = number
+  default     = 2
+}
+
+variable "sap_proxy_admin_username" {
+  description = "Admin username for the SAP BTP proxy VMSS instances."
+  type        = string
+  default     = "sapproxyadmin"
 }
