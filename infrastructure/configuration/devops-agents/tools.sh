@@ -44,12 +44,16 @@ sudo apt install -y --no-install-recommends \
   git-lfs \
   git-ftp
 
-# Python
-# Python(Ubuntu 22 uses 3.10 by default)
+# Python 3.11
 sudo apt-get install -y --no-install-recommends \
-  python3 \
-  python3-distutils \
-  python3-pip
+  python3.11 \
+  python3.11-distutils \
+  python3.11-venv
+
+sudo ln -sf /usr/bin/python3.11 /usr/local/bin/python3
+curl -sS https://bootstrap.pypa.io/get-pip.py | sudo python3
+
+python3 --version | grep -q '^Python 3\.11\.'
 
 # Python dependencies
 ## Requirements for the tests
