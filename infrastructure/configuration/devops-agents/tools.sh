@@ -111,5 +111,19 @@ sudo apt-get update; \
 pwsh -c "& {Install-Module -Name Az -Scope AllUsers -Repository PSGallery -Force -Verbose}"
 pwsh -c "& {Get-Module -ListAvailable}"
 
+# Configure Azure DNS for Synapse Private Link resolution
+echo "Configuring Azure DNS..."
+
+sudo mkdir -p /etc/systemd/resolved.conf.d
+
+cat <<EOF | sudo tee /etc/systemd/resolved.conf.d/azure-dns.conf
+[Resolve]
+DNS=168.63.129.16
+EOF
+
+sudo systemctl restart systemd-resolved
+
+echo "Azure DNS configured"
+
 # Sysprep
 /usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync
