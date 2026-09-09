@@ -8,4 +8,6 @@ locals {
       ModuleName = local.module_name
     }
   )
+
+  dns_servers = var.environment == "prod" ? ["192.168.5.4", "192.168.5.10", "168.63.129.16"] : []
 }

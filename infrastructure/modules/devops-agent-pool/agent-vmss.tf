@@ -43,6 +43,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "devops_agent_pool" {
     enable_accelerated_networking = true
     name                          = "pins-vmss-nic-devops-${local.resource_suffix}"
     primary                       = true
+    dns_servers                   = local.dns_servers
 
     ip_configuration {
       name      = "ipconfig"
