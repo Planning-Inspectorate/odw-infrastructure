@@ -73,3 +73,21 @@ output "synapse_workspace_name" {
   description = "The name of the Synapse Workspace"
   value       = var.failover_deployment ? one(module.synapse_workspace_private_failover).synapse_workspace_name : module.synapse_workspace_private.synapse_workspace_name
 }
+
+# --- SAP BTP Landing Zone (THEODW-3385) ---
+# These outputs are the deliverables handed to the MHCLG/SAP team so they can
+# create their side of the Private Link connection.
+output "sap_pls_alias" {
+  description = "The Private Link Service alias to be shared with the SAP BTP team. Null when deploy_sap_btp_landing is false."
+  value       = var.deploy_sap_btp_landing ? one(azurerm_private_link_service.sap[*].alias) : null
+}
+
+output "sap_pls_id" {
+  description = "The Private Link Service resource ID for the SAP BTP integration. Null when deploy_sap_btp_landing is false."
+  value       = var.deploy_sap_btp_landing ? one(azurerm_private_link_service.sap[*].id) : null
+}
+
+output "sap_landing_storage_id" {
+  description = "The resource ID of the SAP BTP landing storage account. Null when deploy_sap_btp_landing is false."
+  value       = var.deploy_sap_btp_landing ? one(module.storage_account_sap_landing[*].storage_id) : null
+}
