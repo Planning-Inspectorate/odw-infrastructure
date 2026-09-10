@@ -47,8 +47,8 @@ service_bus_topics_and_subscriptions = [
   {
     name = "service-user"
     subscriptions = {
-      "service-user-odw-sub"      = {},
-      "service-user-odw-wake-sub" = {}
+      "odw-service-user-sub"      = {},
+      "odw-service-user-wake-sub" = {}
     }
   },
 
