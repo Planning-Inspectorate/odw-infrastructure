@@ -26,15 +26,15 @@ service_bus_topics_and_subscriptions = [
   {
     name = "applications-notify-email"
     subscriptions = {
-      "applications-notify-email-sub"      = {},
-      "applications-notify-email-wake-sub" = {}
+      "applications-notify-email-odw-sub"      = {},
+      "applications-notify-email-odw-wake-sub" = {}
     }
   },
   {
     name = "applications-representation"
     subscriptions = {
-      "applications-representation-sub"      = {},
-      "applications-representation-wake-sub" = {}
+      "applications-representation-odw-sub"      = {},
+      "applications-representation-odw-wake-sub" = {}
     }
   }
 ]
