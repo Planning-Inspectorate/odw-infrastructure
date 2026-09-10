@@ -19,8 +19,8 @@ service_bus_topics_and_subscriptions = [
   {
     name = "applications-application-update"
     subscriptions = {
-      "applications-application-update-sub"      = {},
-      "applications-application-update-wake-sub" = {}
+      "applications-application-update-odw-sub"      = {},
+      "applications-application-update-odw-wake-sub" = {}
     }
   }
 ]
