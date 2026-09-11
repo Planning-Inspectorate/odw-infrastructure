@@ -56,7 +56,7 @@ resource "azurerm_storage_account" "storage" {
 
 resource "azurerm_storage_account_static_website" "static_website" {
   storage_account_id = azurerm_storage_account.storage.id
-  index_document     = "your_index.html" # testing purposes
+  index_document     = "your_index.html"     # testing purposes # if ok then variable static_website may need editing
   error_404_document = "your_error_404.html" # testing purposes
 }
 

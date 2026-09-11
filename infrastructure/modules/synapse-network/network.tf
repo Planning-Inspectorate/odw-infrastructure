@@ -27,7 +27,7 @@ resource "azurerm_subnet" "synapse" {
   private_link_service_network_policies_enabled = each.value.private_link_service_network_policies_enabled
 
   service_endpoint {
-    service = each.value.service_endpoint
+    service = each.value.service_endpoints
   }
 
   dynamic "delegation" {
