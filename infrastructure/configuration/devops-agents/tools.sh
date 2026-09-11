@@ -44,12 +44,16 @@ sudo apt install -y --no-install-recommends \
   git-lfs \
   git-ftp
 
-# Python
-# Python(Ubuntu 22 uses 3.10 by default)
+# Python 3.11
 sudo apt-get install -y --no-install-recommends \
-  python3 \
-  python3-distutils \
-  python3-pip
+  python3.11 \
+  python3.11-distutils \
+  python3.11-venv
+
+sudo ln -sf /usr/bin/python3.11 /usr/local/bin/python3
+curl -sS https://bootstrap.pypa.io/get-pip.py | sudo python3
+
+python3 --version | grep -q '^Python 3\.11\.'
 
 # Python dependencies
 ## Requirements for the tests
@@ -106,6 +110,20 @@ sudo apt-get update; \
 # PowerShell Modules
 pwsh -c "& {Install-Module -Name Az -Scope AllUsers -Repository PSGallery -Force -Verbose}"
 pwsh -c "& {Get-Module -ListAvailable}"
+
+# Configure Azure DNS for Synapse Private Link resolution jira reference https://pins-ds.atlassian.net/browse/DEV-818
+echo "Configuring Azure DNS..."
+
+sudo mkdir -p /etc/systemd/resolved.conf.d
+
+cat <<EOF | sudo tee /etc/systemd/resolved.conf.d/azure-dns.conf
+[Resolve]
+DNS=168.63.129.16
+EOF
+
+sudo systemctl restart systemd-resolved
+
+echo "Azure DNS configured"
 
 # Sysprep
 /usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync

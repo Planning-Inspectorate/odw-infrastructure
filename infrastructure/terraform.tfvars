@@ -22,6 +22,20 @@ service_bus_topics_and_subscriptions = [
       "planning-environmental-specialist-odw-sub"      = {},
       "planning-environmental-specialist-odw-wake-sub" = {}
     }
+  },
+  {
+    name = "applications-notify-email"
+    subscriptions = {
+      "applications-notify-email-odw-sub"      = {},
+      "applications-notify-email-odw-wake-sub" = {}
+    }
+  },
+  {
+    name = "applications-representation"
+    subscriptions = {
+      "applications-representation-odw-sub"      = {},
+      "applications-representation-odw-wake-sub" = {}
+    }
   }
 ]
 
@@ -48,6 +62,18 @@ vnet_subnets = [
         actions         = ["Microsoft.Network/virtualNetworks/subnets/action"]
       }
     ]
+  },
+  {
+    # SAP BTP proxy VMSS + PLS NAT subnet (THEODW-3385).
+    # PLS network policies must be disabled on this subnet.
+    # Positioned here (after the other /28s and before the /26s) so it
+    # slots into the /27 gap left by /26 alignment; keeps all existing
+    # subnet CIDRs unchanged.
+    "name" : "SapPlsSubnet",
+    "new_bits" : 4 # /28 - 11 usable IPs, enough for 2-VMSS + LB + NAT
+    service_endpoints                             = []
+    service_delegation                            = []
+    private_link_service_network_policies_enabled = false
   },
   {
     "name" : "SynapseEndpointSubnet",
