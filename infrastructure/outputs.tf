@@ -51,17 +51,17 @@ output "service_bus_primary_connection_string" {
 
 output "synapse_dev_endpoint" {
   description = "The development connectivity endpoint for the Synapse Workspace"
-  value       = var.failover_deployment ? one(module.synapse_workspace_private_failover).synapse_endpoint["dev"] : module.synapse_workspace_private.synapse_endpoint["dev"]
+  value       = var.failover_deployment ? one(module.synapse_workspace_private_failover).synapse_endpoints["dev"] : module.synapse_workspace_private.synapse_endpoints["dev"]
 }
 
 output "synapse_dsql_endpoint" {
   description = "The dedicated SQL pool connectivity endpoint for the Synapse Workspace"
-  value       = var.failover_deployment ? one(module.synapse_workspace_private_failover).synapse_endpoint["sql"] : module.synapse_workspace_private.synapse_endpoint["sql"]
+  value       = var.failover_deployment ? one(module.synapse_workspace_private_failover).synapse_endpoints["sql"] : module.synapse_workspace_private.synapse_endpoints["sql"]
 }
 
 output "synapse_ssql_endpoint" {
   description = "The serverless SQL pool connectivity endpoint for the Synapse Workspace"
-  value       = var.failover_deployment ? one(module.synapse_workspace_private_failover).synapse_endpoint["sqlOnDemand"] : module.synapse_workspace_private.synapse_endpoint["sqlOnDemand"]
+  value       = var.failover_deployment ? one(module.synapse_workspace_private_failover).synapse_endpoints["sqlOnDemand"] : module.synapse_workspace_private.synapse_endpoints["sqlOnDemand"]
 }
 
 output "synapse_workspace_id" {
