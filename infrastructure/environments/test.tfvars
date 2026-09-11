@@ -18,6 +18,8 @@ data_lake_storage_containers_to_import = [
 
 environment = "test"
 
+checkmark_managed_identity_enabled = true
+
 deploy_s62a_migration_storage = true
 deploy_sap_btp_landing        = false
 

@@ -45,6 +45,12 @@ variable "bastion_vm_size" {
   type        = string
 }
 
+variable "checkmark_managed_identity_enabled" {
+  default     = false
+  description = "Determines whether a dedicated Managed Identity for the Checkmark application should be created"
+  type        = bool
+}
+
 variable "daily_log_cap" {
   description = "The daily log cap in GB"
   type        = number

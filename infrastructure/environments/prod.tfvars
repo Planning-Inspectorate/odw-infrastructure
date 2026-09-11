@@ -19,6 +19,8 @@ data_lake_storage_containers_to_import = [
 
 environment = "prod"
 
+checkmark_managed_identity_enabled = true
+
 horizon_integration_config = {
   networking = {
     resource_group_name  = "PRDHZN"

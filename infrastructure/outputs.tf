@@ -1,3 +1,18 @@
+output "checkmark_managed_identity_client_id" {
+  description = "The client ID of the Checkmark Managed Identity"
+  value       = var.checkmark_managed_identity_enabled ? azurerm_user_assigned_identity.checkmark[0].client_id : null
+}
+
+output "checkmark_managed_identity_name" {
+  description = "The name of the Checkmark Managed Identity"
+  value       = var.checkmark_managed_identity_enabled ? azurerm_user_assigned_identity.checkmark[0].name : null
+}
+
+output "checkmark_managed_identity_principal_id" {
+  description = "The object (principal) ID of the Checkmark Managed Identity in Microsoft Entra ID"
+  value       = var.checkmark_managed_identity_enabled ? azurerm_user_assigned_identity.checkmark[0].principal_id : null
+}
+
 output "data_lake_account_id" {
   description = "The ID of the Data Lake Storage Account"
   value       = var.failover_deployment ? module.synapse_data_lake.data_lake_account_id : module.synapse_data_lake.data_lake_account_id
