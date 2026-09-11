@@ -56,8 +56,8 @@ resource "azurerm_storage_account" "storage" {
 
 resource "azurerm_storage_account_static_website" "static_website" {
   storage_account_id = azurerm_storage_account.storage.id
-  index_document     = var.static_website.value.index_document
-  error_404_document = var.static_website.value.error_404_document
+  index_document     = "your_index.html" # testing purposes
+  error_404_document = "your_error_404.html" # testing purposes
 }
 
 resource "azurerm_storage_account_network_rules" "storage_network_rule" {
