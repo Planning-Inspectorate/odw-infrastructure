@@ -454,7 +454,7 @@ variable "vnet_subnets" {
   type = list(object({
     name              = string
     new_bits          = number
-    service_endpoints = list(string)
+    service_endpoint = list(string)
     service_delegation = list(object({
       delegation_name = string
       actions         = list(string)

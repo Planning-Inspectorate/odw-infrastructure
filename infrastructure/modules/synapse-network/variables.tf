@@ -40,13 +40,13 @@ variable "vnet_subnets" {
     {
       "name" : "AzureBastionSubnet",
       "new_bits" : 4 # /28
-      service_endpoints  = []
+      service_endpoint  = []
       service_delegation = []
     },
     {
       "name" : "FunctionAppSubnet",
       "new_bits" : 4 # /28
-      service_endpoints = ["Microsoft.Storage", "Microsoft.KeyVault"]
+      service_endpoint = ["Microsoft.Storage", "Microsoft.KeyVault"]
       service_delegation = [
         {
           delegation_name = "Microsoft.Web/serverFarms"
@@ -57,20 +57,20 @@ variable "vnet_subnets" {
     {
       "name" : "SynapseEndpointSubnet",
       "new_bits" : 2 # /26
-      service_endpoints                 = []
+      service_endpoint                 = []
       service_delegation                = []
       private_endpoint_network_policies = "Disabled"
     },
     {
       "name" : "ComputeSubnet"
       "new_bits" : 2 # /26
-      service_endpoints  = ["Microsoft.Storage", "Microsoft.KeyVault"]
+      service_endpoint  = ["Microsoft.Storage", "Microsoft.KeyVault"]
       service_delegation = []
     },
     {
       "name" : "ApimSubnet",
       "new_bits" : 2 # /26
-      service_endpoints  = []
+      service_endpoint  = []
       service_delegation = []
     },
   ]
@@ -78,7 +78,7 @@ variable "vnet_subnets" {
   type = list(object({
     name              = string
     new_bits          = number
-    service_endpoints = list(string)
+    service_endpoint = list(string)
     service_delegation = list(object({
       delegation_name = string
       actions         = list(string)
