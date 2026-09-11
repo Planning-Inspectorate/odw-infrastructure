@@ -1,19 +1,19 @@
 # Define owner of the CODEOWNERS file itself
-/.github/CODEOWNERS                                             @beejjacobs @m-juckes-pins
+/.github/CODEOWNERS                                             @beejjacobs @m-juckes-pins @Medini-Aithal
 
 # Protect important folders
 
 # Github Actions workflows
-/.github/workflows                                              @beejjacobs @m-juckes-pins @HarrisonBoyleThomas @KranthiRayipudi @mukundaraogummadi-pins
+/.github/workflows                                              @beejjacobs @m-juckes-pins @Medini-Aithal @KranthiRayipudi @mukundaraogummadi-pins @EvangelosMagklaras
 
 # most files in infrastructure relate to Terraform code
-/infrastructure/**                                              @beejjacobs @m-juckes-pins @HarrisonBoyleThomas @KranthiRayipudi @mukundaraogummadi-pins
+/infrastructure/**                                              @beejjacobs @m-juckes-pins @Medini-Aithal @KranthiRayipudi @mukundaraogummadi-pins @EvangelosMagklaras
 
 # Azure DevOps pipeline files
-/pipelines/**                                                   @m-juckes-pins @NHAL22 @HarrisonBoyleThomas @KranthiRayipudi @mukundaraogummadi-pins
+/pipelines/**                                                   @m-juckes-pins @Medini-Aithal @KranthiRayipudi @mukundaraogummadi-pins @EvangelosMagklaras
 
 # Add protection for certain file extensions,
 # i.e. a python or sql expert must approve
-*.py                                                            @HarrisonBoyleThomas @KranthiRayipudi @mukundaraogummadi-pins
-*.ipynb                                                         @HarrisonBoyleThomas @KranthiRayipudi @mukundaraogummadi-pins
-*.sql                                                           @HarrisonBoyleThomas @KranthiRayipudi @mukundaraogummadi-pins
+*.py                                                            @m-juckes-pins @Medini-Aithal @KranthiRayipudi @mukundaraogummadi-pins @EvangelosMagklaras
+*.ipynb                                                         @m-juckes-pins @Medini-Aithal @KranthiRayipudi @mukundaraogummadi-pins @EvangelosMagklaras
+*.sql                                                           @m-juckes-pins @Medini-Aithal @KranthiRayipudi @mukundaraogummadi-pins @EvangelosMagklaras
