@@ -40,7 +40,7 @@ variable "vnet_subnets" {
     {
       "name" : "AzureBastionSubnet",
       "new_bits" : 4 # /28
-      service_endpoint  = []
+      service_endpoint   = []
       service_delegation = []
     },
     {
@@ -57,27 +57,27 @@ variable "vnet_subnets" {
     {
       "name" : "SynapseEndpointSubnet",
       "new_bits" : 2 # /26
-      service_endpoint                 = []
+      service_endpoint                  = []
       service_delegation                = []
       private_endpoint_network_policies = "Disabled"
     },
     {
       "name" : "ComputeSubnet"
       "new_bits" : 2 # /26
-      service_endpoint  = ["Microsoft.Storage", "Microsoft.KeyVault"]
+      service_endpoint   = ["Microsoft.Storage", "Microsoft.KeyVault"]
       service_delegation = []
     },
     {
       "name" : "ApimSubnet",
       "new_bits" : 2 # /26
-      service_endpoint  = []
+      service_endpoint   = []
       service_delegation = []
     },
   ]
   description = "A collection of subnet definitions used to logically partition the Virtual Network"
   type = list(object({
-    name              = string
-    new_bits          = number
+    name             = string
+    new_bits         = number
     service_endpoint = list(string)
     service_delegation = list(object({
       delegation_name = string

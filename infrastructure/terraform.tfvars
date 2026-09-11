@@ -49,13 +49,13 @@ vnet_subnets = [
   {
     "name" : "AzureBastionSubnet",
     "new_bits" : 4 # /28
-    service_endpoint  = []
+    service_endpoint   = []
     service_delegation = []
   },
   {
     "name" : "FunctionAppSubnet",
     "new_bits" : 4 # /28
-    service_endpoint  = ["Microsoft.Storage", "Microsoft.KeyVault", "Microsoft.ServiceBus"]
+    service_endpoint = ["Microsoft.Storage", "Microsoft.KeyVault", "Microsoft.ServiceBus"]
     service_delegation = [
       {
         delegation_name = "Microsoft.Web/serverFarms"
@@ -66,19 +66,19 @@ vnet_subnets = [
   {
     "name" : "SynapseEndpointSubnet",
     "new_bits" : 2 # /26
-    service_endpoint  = []
+    service_endpoint   = []
     service_delegation = []
   },
   {
     "name" : "ComputeSubnet"
     "new_bits" : 2 # /26
-    service_endpoint  = ["Microsoft.Storage", "Microsoft.KeyVault"]
+    service_endpoint   = ["Microsoft.Storage", "Microsoft.KeyVault"]
     service_delegation = []
   },
   {
     "name" : "ApimSubnet",
     "new_bits" : 2 # /26
-    service_endpoint  = []
+    service_endpoint   = []
     service_delegation = []
   },
   {
@@ -86,7 +86,7 @@ vnet_subnets = [
     # PLS network policies must be disabled on this subnet.
     "name" : "SapPlsSubnet",
     "new_bits" : 4 # /28 - 11 usable IPs, enough for 2-VMSS + LB + NAT
-    service_endpoint                             = []
+    service_endpoint                              = []
     service_delegation                            = []
     private_link_service_network_policies_enabled = false
   },
