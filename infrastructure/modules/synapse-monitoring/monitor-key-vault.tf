@@ -3,9 +3,8 @@ resource "azurerm_monitor_diagnostic_setting" "key_vault" {
   target_resource_id         = var.key_vault_id
   log_analytics_workspace_id = azurerm_log_analytics_workspace.synapse.id
 
-  metric {
+  enabled_metric {
     category = "AllMetrics"
-    enabled  = true
   }
 
   enabled_log {

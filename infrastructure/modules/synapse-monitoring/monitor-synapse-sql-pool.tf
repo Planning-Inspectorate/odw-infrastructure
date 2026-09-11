@@ -5,9 +5,8 @@ resource "azurerm_monitor_diagnostic_setting" "synapse_sql_pool" {
   target_resource_id         = var.synapse_sql_pool_id
   log_analytics_workspace_id = azurerm_log_analytics_workspace.synapse.id
 
-  metric {
+  enabled_metric {
     category = "AllMetrics"
-    enabled  = true
   }
 
   enabled_log {

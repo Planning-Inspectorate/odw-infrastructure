@@ -35,30 +35,6 @@ resource "azurerm_storage_account" "synapse" {
     }
   }
 
-  queue_properties {
-    logging {
-      read                  = true
-      write                 = true
-      delete                = true
-      retention_policy_days = var.data_lake_retention_days
-      version               = "1.0"
-    }
-
-    minute_metrics {
-      enabled               = true
-      include_apis          = true
-      retention_policy_days = var.data_lake_retention_days
-      version               = "1.0"
-    }
-
-    hour_metrics {
-      enabled               = true
-      include_apis          = true
-      retention_policy_days = var.data_lake_retention_days
-      version               = "1.0"
-    }
-  }
-
   lifecycle {
     prevent_destroy = true
   }
@@ -72,6 +48,30 @@ resource "azurerm_storage_account" "synapse" {
   )
 }
 
+resource "azurerm_storage_account_queue_properties" "synapse" {
+  storage_account_id = azurerm_storage_account.synapse.id
+
+  logging {
+    read                  = true
+    write                 = true
+    delete                = true
+    retention_policy_days = var.data_lake_retention_days
+    version               = "1.0"
+  }
+
+  minute_metrics {
+    include_apis          = true
+    retention_policy_days = var.data_lake_retention_days
+    version               = "1.0"
+  }
+
+  hour_metrics {
+    include_apis          = true
+    retention_policy_days = var.data_lake_retention_days
+    version               = "1.0"
+  }
+}
+
 resource "azurerm_storage_data_lake_gen2_filesystem" "synapse" {
   name               = "synapse"
   storage_account_id = azurerm_storage_account.synapse.id
@@ -82,7 +82,7 @@ resource "azurerm_storage_container" "synapse" {
   for_each = toset(var.data_lake_storage_containers)
 
   name                  = each.key
-  storage_account_name  = azurerm_storage_account.synapse.name
+  storage_account_id    = azurerm_storage_account.synapse.id
   container_access_type = "private"
 
   depends_on = [

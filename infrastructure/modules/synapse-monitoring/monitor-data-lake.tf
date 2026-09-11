@@ -3,13 +3,11 @@ resource "azurerm_monitor_diagnostic_setting" "data_lake" {
   target_resource_id         = var.data_lake_account_id
   log_analytics_workspace_id = azurerm_log_analytics_workspace.synapse.id
 
-  metric {
+  enabled_metric {
     category = "Capacity"
-    enabled  = true
   }
 
-  metric {
+  enabled_metric {
     category = "Transaction"
-    enabled  = false
   }
 }
