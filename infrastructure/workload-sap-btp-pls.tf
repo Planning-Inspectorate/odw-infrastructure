@@ -208,8 +208,8 @@ resource "azurerm_lb_rule" "sap" {
   frontend_ip_configuration_name = azurerm_lb.sap[0].frontend_ip_configuration[0].name
   backend_address_pool_ids       = [azurerm_lb_backend_address_pool.sap[0].id]
   probe_id                       = azurerm_lb_probe.sap[0].id
-  enable_floating_ip             = false
-  enable_tcp_reset               = true
+  floating_ip_enabled            = false
+  tcp_reset_enabled              = true
   disable_outbound_snat          = true
   idle_timeout_in_minutes        = 15
 }
@@ -306,4 +306,3 @@ resource "azurerm_private_link_service" "sap" {
 
   depends_on = [azurerm_lb_rule.sap]
 }
-
