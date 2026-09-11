@@ -24,6 +24,7 @@ resource "azurerm_storage_account" "synapse" {
   min_tls_version                  = "TLS1_2"
   public_network_access_enabled    = true
   cross_tenant_replication_enabled = true
+  allow_nested_items_to_be_public  = false
 
   blob_properties {
     delete_retention_policy {

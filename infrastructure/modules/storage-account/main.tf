@@ -24,6 +24,7 @@ resource "azurerm_storage_account" "storage" {
   is_hns_enabled                   = var.is_hns_enabled
   large_file_share_enabled         = var.large_file_share_enabled
   cross_tenant_replication_enabled = true
+  allow_nested_items_to_be_public  = false
 
   dynamic "custom_domain" {
     for_each = var.custom_domain

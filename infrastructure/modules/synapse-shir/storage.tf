@@ -21,6 +21,7 @@ resource "azurerm_storage_account" "shir" {
   https_traffic_only_enabled       = true
   min_tls_version                  = "TLS1_2"
   cross_tenant_replication_enabled = true
+  allow_nested_items_to_be_public  = false # Original setting seems to be true: https://dev.azure.com/planninginspectorate/operational-data-warehouse/_build/results?buildId=209516&view=logs&j=dca0d66b-78f8-5aa4-f97c-58e8603479e1&t=60b18e3e-44c0-58b5-e1f4-b2fde30f6707&l=421
 
   blob_properties {
     delete_retention_policy {
