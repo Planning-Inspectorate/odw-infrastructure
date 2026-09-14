@@ -231,6 +231,10 @@ resource "azurerm_linux_virtual_machine_scale_set" "sap_proxy" {
   upgrade_mode                    = "Automatic"
   custom_data                     = local.sap_proxy_cloud_init
 
+  # Required by `automatic_instance_repair` - Azure needs a probe to decide
+  # instance health. We reuse the LB TCP 443 probe (nginx listens on 443).
+  health_probe_id = azurerm_lb_probe.sap[0].id
+
   admin_ssh_key {
     username   = var.sap_proxy_admin_username
     public_key = tls_private_key.sap_proxy[0].public_key_openssh
