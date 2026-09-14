@@ -26,17 +26,14 @@ resource "azurerm_subnet" "synapse" {
   private_endpoint_network_policies             = each.value.private_endpoint_network_policies
   private_link_service_network_policies_enabled = each.value.private_link_service_network_policies_enabled
 
-  dynamic "service_endpoint" {
-    for_each = each.value.service_endpoints
-    content {
-      service = service_endpoint.value
-    }
+  service_endpoint {
+    service = each.value.service_endpoints
   }
 
   dynamic "delegation" {
     for_each = each.value.service_delegation
     content {
-      name = delegation.value.delegation_name
+      name = each.key
       service_delegation {
         name    = delegation.value.delegation_name
         actions = delegation.value.actions
