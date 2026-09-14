@@ -302,7 +302,7 @@ resource "azurerm_synapse_managed_private_endpoint" "mpesc_prod_sql" {
 }
 
 # Managed private endpoint to Crown SQL server used for S62A migration
-resource "azurerm_synapse_managed_private_endpoint" "crown_sql" {
+resource "azurerm_synapse_managed_private_endpoint" "crown_sql" {count = var.environment == "build" ? 0 : 1
   name                 = "synapse-sql-sqlServer--pins-sql-crown-primary-${var.environment}"
   synapse_workspace_id = azurerm_synapse_workspace.synapse.id
 
