@@ -303,11 +303,11 @@ resource "azurerm_synapse_managed_private_endpoint" "mpesc_prod_sql" {
 
 # Managed private endpoint to Crown SQL server used for S62A migration
 resource "azurerm_synapse_managed_private_endpoint" "crown_sql" {
-  name                 = "synapse-sql-sqlServer--pins-sql-crown-primary-${var.environment}"
-  synapse_workspace_id = azurerm_synapse_workspace.synapse.id
+  count = var.environment == "build" ? 0 : 1
 
-  target_resource_id = "/subscriptions/${var.odt_subscription_id}/resourceGroups/pins-rg-crown-${var.environment}/providers/Microsoft.Sql/servers/pins-sql-crown-primary-${var.environment}"
-
+  name                         = "synapse-sql-sqlServer--pins-sql-crown-primary-${var.environment}"
+  synapse_workspace_id         = azurerm_synapse_workspace.synapse.id
+  target_resource_id           = "/subscriptions/${var.odt_subscription_id}/resourceGroups/pins-rg-crown-${var.environment}/providers/Microsoft.Sql/servers/pins-sql-crown-primary-${var.environment}"
   subresource_name             = "sqlServer"
   fully_qualified_domain_names = ["pins-sql-crown-primary-${var.environment}.database.windows.net"]
 
