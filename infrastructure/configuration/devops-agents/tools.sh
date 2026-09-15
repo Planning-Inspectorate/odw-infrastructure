@@ -49,7 +49,7 @@ sudo apt-get install -y --no-install-recommends \
   python3.11 \
   python3.11-distutils \
   python3.11-venv \
-  python3.11-pip
+  python3-pip
 
 sudo ln -sf /usr/bin/python3.11 /usr/local/bin/python3
 curl -sS https://bootstrap.pypa.io/get-pip.py | sudo python3
