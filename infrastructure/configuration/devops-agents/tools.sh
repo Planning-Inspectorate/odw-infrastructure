@@ -59,15 +59,17 @@ sudo python3.11 -m venv /opt/odw-tools
 # Deadsnakes/Debian builds of python3.11 ship without ensurepip's bundled wheels, so the venv has no pip
 curl -sS https://bootstrap.pypa.io/get-pip.py | sudo /opt/odw-tools/bin/python3 -
 
-for bin in /opt/odw-tools/bin/*; do
-  sudo ln -sf "$bin" "/usr/local/bin/$(basename "$bin")"
-done
+# Symlinking the interpreter elsewhere breaks the venv's pyvenv.cfg self-detection, so put it on PATH instead
+export PATH="/opt/odw-tools/bin:$PATH"
+sudo sed -i '/^PATH=/d' /etc/environment
+echo 'PATH="/opt/odw-tools/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"' | sudo tee -a /etc/environment
 
 python3 --version | grep -q '^Python 3\.11\.'
 
 # Python dependencies
 ## Requirements for the tests
-sudo python3 -m pip install -r tests_requirements.txt
+# No leading `sudo`: the whole script already runs as root, and sudo would reset PATH via secure_path, bypassing the venv
+python3 -m pip install -r tests_requirements.txt
 
 # Install Poetry
 python3 -m pip install -U poetry==2.1.3
