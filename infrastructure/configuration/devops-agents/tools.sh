@@ -55,6 +55,10 @@ sudo apt-get install -y --no-install-recommends \
 # Isolated venv: pip installs into the shared /usr/lib/python3/dist-packages directory
 # previously deleted apt-owned packages (e.g. PyYAML) that cloud-init's system Python 3.10 depends on
 sudo python3.11 -m venv /opt/odw-tools
+
+# Deadsnakes/Debian builds of python3.11 ship without ensurepip's bundled wheels, so the venv has no pip
+curl -sS https://bootstrap.pypa.io/get-pip.py | sudo /opt/odw-tools/bin/python3 -
+
 for bin in /opt/odw-tools/bin/*; do
   sudo ln -sf "$bin" "/usr/local/bin/$(basename "$bin")"
 done
