@@ -128,9 +128,9 @@ sudo systemctl restart systemd-resolved
 
 echo "Azure DNS configured"
 
-# Guard against later apt operations having disturbed cloud-init's own python3.10 + PyYAML dependency
-sudo apt-get install -y --reinstall python3-yaml
-/usr/bin/python3 -c "import yaml"
+# Guard against earlier steps having disturbed cloud-init's own python3.10 dependency set
+sudo apt-get install -y --reinstall cloud-init
+/usr/bin/python3 -c "from cloudinit.cmd import main"
 
 # Sysprep
 /usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync
