@@ -50,7 +50,7 @@ sudo apt-get install -y --no-install-recommends \
   python3.11-distutils \
   python3.11-venv
 
-# Adding python3.11 must not disturb cloud-init's own python3.10 + PyYAML dependency
+# Adding python3.11 must not disturb cloud-init's own python3.10 + PyYAML dependency 
 sudo apt-get install -y --reinstall python3-yaml
 
 sudo ln -sf /usr/bin/python3.11 /usr/local/bin/python3
