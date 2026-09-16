@@ -50,9 +50,6 @@ sudo apt-get install -y --no-install-recommends \
   python3.11-distutils \
   python3.11-venv
 
-# Adding python3.11 must not disturb cloud-init's own python3.10 + PyYAML dependency 
-sudo apt-get install -y --reinstall python3-yaml
-
 sudo ln -sf /usr/bin/python3.11 /usr/local/bin/python3
 curl -sS https://bootstrap.pypa.io/get-pip.py | sudo python3
 
@@ -130,6 +127,10 @@ EOF
 sudo systemctl restart systemd-resolved
 
 echo "Azure DNS configured"
+
+# Guard against later apt operations having disturbed cloud-init's own python3.10 + PyYAML dependency
+sudo apt-get install -y --reinstall python3-yaml
+/usr/bin/python3 -c "import yaml"
 
 # Sysprep
 /usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync
