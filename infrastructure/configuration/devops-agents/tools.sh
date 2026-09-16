@@ -18,12 +18,18 @@ sudo apt-get install -y --no-install-recommends \
   gnupg \
   jq \
   libasound2 \
+  libbz2-dev \
+  libffi-dev \
   libgbm-dev \
   libgconf-2-4 \
   libgtk2.0-0 \
   libgtk-3-0 \
+  liblzma-dev \
   libnotify-dev \
   libnss3 \
+  libreadline-dev \
+  libsqlite3-dev \
+  libssl-dev \
   libxss1 \
   libxtst6 \
   lsb-release \
@@ -33,7 +39,9 @@ sudo apt-get install -y --no-install-recommends \
   wget \
   xauth \
   xvfb \
-  zip
+  xz-utils \
+  zip \
+  zlib1g-dev
 
 sudo add-apt-repository ppa:git-core/ppa
 sudo add-apt-repository ppa:deadsnakes/ppa
@@ -46,14 +54,10 @@ sudo apt install -y --no-install-recommends \
 
 # Python 3.11
 sudo apt-get install -y --no-install-recommends \
-  python3.11 \
-  python3.11-distutils \
-  python3.11-venv
+  python3 \
+  python3-distutils \
+  python3-pip
 
-sudo ln -sf /usr/bin/python3.11 /usr/local/bin/python3
-curl -sS https://bootstrap.pypa.io/get-pip.py | sudo python3
-
-python3 --version | grep -q '^Python 3\.11\.'
 
 # Python dependencies
 ## Requirements for the tests
@@ -114,6 +118,17 @@ sudo apt-get update; \
 pwsh -c "& {Install-Module -Name Az -Scope AllUsers -Repository PSGallery -Force -Verbose}"
 pwsh -c "& {Get-Module -ListAvailable}"
 
+# pyenv installation
+curl -fsSL https://pyenv.run | bash
+
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - bash)"
+
+pyenv install 3.11
+pyenv install 3.12
+pyenv global 3.11
+
 # Configure Azure DNS for Synapse Private Link resolution jira reference https://pins-ds.atlassian.net/browse/DEV-818
 echo "Configuring Azure DNS..."
 
@@ -127,6 +142,11 @@ EOF
 sudo systemctl restart systemd-resolved
 
 echo "Azure DNS configured"
+
+## fixing pyenv  affect waagent runtime
+sudo apt-get install -y walinuxagent
+unset PYENV_VERSION || true
+export PATH="/usr/sbin:/usr/bin:/sbin:/bin:$PATH"
 
 # Sysprep
 /usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync
