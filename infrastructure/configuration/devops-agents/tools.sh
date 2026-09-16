@@ -48,10 +48,16 @@ sudo apt install -y --no-install-recommends \
 sudo apt-get install -y --no-install-recommends \
   python3.11 \
   python3.11-distutils \
-  python3.11-venv
+  python3.11-venv \
+  python3.11-dev \
+  libffi-dev
 
-sudo ln -sf /usr/bin/python3.11 /usr/local/bin/python3
-curl -sS https://bootstrap.pypa.io/get-pip.py | sudo python3
+# Isolated venv: pip installs into the shared /usr/lib/python3/dist-packages directory
+# previously deleted apt-owned packages (e.g. PyYAML) that cloud-init's system Python 3.10 depends on
+sudo python3.11 -m venv /opt/odw-tools
+for bin in /opt/odw-tools/bin/*; do
+  sudo ln -sf "$bin" "/usr/local/bin/$(basename "$bin")"
+done
 
 python3 --version | grep -q '^Python 3\.11\.'
 
@@ -128,8 +134,7 @@ sudo systemctl restart systemd-resolved
 
 echo "Azure DNS configured"
 
-# Guard against earlier steps having disturbed cloud-init's own python3.10 dependency set
-sudo apt-get install -y --reinstall cloud-init
+# Verify cloud-init's system python3.10 dependency set was not disturbed by the steps above
 /usr/bin/python3 -c "from cloudinit.cmd import main"
 
 # Sysprep
