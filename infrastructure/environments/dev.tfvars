@@ -114,6 +114,13 @@ synapse_role_assignments = [
   { # pins-odw-data-dev-syn-ws-computeoperators
     role_definition_name = "Synapse Compute Operator",
     principal_id         = "a66ee73a-c31b-451d-b13e-19b4e92c0c25"
+  },
+  { # pins-odw-data-dev-syn-ws-computeoperators
+    # ensure compute operators in dev can run pipelines, as per the docs
+    # "To run pipelines, this role is required, scoped to the workspace system identity."
+    # https://learn.microsoft.com/en-us/azure/synapse-analytics/security/synapse-workspace-synapse-rbac-roles#built-in-synapse-rbac-roles-and-scopes
+    role_definition_name = "Synapse Credential User",
+    principal_id         = "a66ee73a-c31b-451d-b13e-19b4e92c0c25"
   }
 ]
 
