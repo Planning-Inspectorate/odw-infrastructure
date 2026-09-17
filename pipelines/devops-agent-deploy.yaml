@@ -157,3 +157,20 @@ stages:
                 planFilePath: ${{ variables.planFileName }}
                 workingDirectory: infrastructure
                 refreshTFState: false
+  - stage: Verify_Python_Runtime
+    dependsOn: Pool_Apply
+    displayName: Verify Python Runtime ${{ parameters.environment }}
+    jobs:
+    - job: Verify_Python_Runtime
+      displayName: Verify Python Runtime
+      # Runs on the pool just deployed, in the same non-interactive shell/user context real pipeline jobs use
+      pool:
+        name: pins-agent-pool-odw-${{ variables.environment }}-uks
+      steps:
+      - script: |
+          echo "whoami: $(whoami)"
+          echo "which python3: $(command -v python3)"
+          python3 --version
+          python3 -c "import sys; print(sys.executable); print(sys.version)"
+        displayName: Verify Python runtime
+ 
