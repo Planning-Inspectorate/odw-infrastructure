@@ -168,9 +168,11 @@ stages:
         name: pins-agent-pool-odw-${{ variables.environment }}-uks
       steps:
       - script: |
+          set -euo pipefail
           echo "whoami: $(whoami)"
           echo "which python3: $(command -v python3)"
           python3 --version
+          python3 --version | grep -q '^Python 3\.11\.'
           python3 -c "import sys; print(sys.executable); print(sys.version)"
         displayName: Verify Python runtime
  
