@@ -44,16 +44,12 @@ sudo apt install -y --no-install-recommends \
   git-lfs \
   git-ftp
 
-# Python 3.11
+# Python
+# Python(Ubuntu 22 uses 3.10 by default)
 sudo apt-get install -y --no-install-recommends \
-  python3.11 \
-  python3.11-distutils \
-  python3.11-venv
-
-sudo ln -sf /usr/bin/python3.11 /usr/local/bin/python3
-curl -sS https://bootstrap.pypa.io/get-pip.py | sudo python3
-
-python3 --version | grep -q '^Python 3\.11\.'
+  python3 \
+  python3-distutils \
+  python3-pip
 
 # Python dependencies
 ## Requirements for the tests
@@ -75,11 +71,8 @@ python3 -m pip install -U checkov==3.2.529
 # ODW Common
 python3 -m pip install --force-reinstall "git+https://github.com/Planning-Inspectorate/odw-common.git@main"
 
-# TFLint (upstream removed the install_linux.sh auto-install script)
-curl -sSLO https://github.com/terraform-linters/tflint/releases/latest/download/tflint_linux_amd64.zip
-unzip tflint_linux_amd64.zip
-sudo install -c -v tflint /usr/local/bin/
-rm tflint_linux_amd64.zip
+# TFLint
+curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
 
 # Set up Node.js 22.x
 curl -sL https://deb.nodesource.com/setup_22.x | sudo -E bash -
