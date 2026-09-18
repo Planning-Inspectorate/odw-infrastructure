@@ -18,18 +18,12 @@ sudo apt-get install -y --no-install-recommends \
   gnupg \
   jq \
   libasound2 \
-  libbz2-dev \
-  libffi-dev \
   libgbm-dev \
   libgconf-2-4 \
   libgtk2.0-0 \
   libgtk-3-0 \
-  liblzma-dev \
   libnotify-dev \
   libnss3 \
-  libreadline-dev \
-  libsqlite3-dev \
-  libssl-dev \
   libxss1 \
   libxtst6 \
   lsb-release \
@@ -39,9 +33,7 @@ sudo apt-get install -y --no-install-recommends \
   wget \
   xauth \
   xvfb \
-  xz-utils \
-  zip \
-  zlib1g-dev
+  zip
 
 sudo add-apt-repository ppa:git-core/ppa
 sudo add-apt-repository ppa:deadsnakes/ppa
@@ -52,12 +44,12 @@ sudo apt install -y --no-install-recommends \
   git-lfs \
   git-ftp
 
-# Python 3.11
+# Python
+# Python(Ubuntu 22 uses 3.10 by default)
 sudo apt-get install -y --no-install-recommends \
   python3 \
   python3-distutils \
   python3-pip
-
 
 # Python dependencies
 ## Requirements for the tests
@@ -79,11 +71,8 @@ python3 -m pip install -U checkov==3.2.529
 # ODW Common
 python3 -m pip install --force-reinstall "git+https://github.com/Planning-Inspectorate/odw-common.git@main"
 
-# TFLint (upstream removed the install_linux.sh auto-install script)
-curl -sSLO https://github.com/terraform-linters/tflint/releases/latest/download/tflint_linux_amd64.zip
-unzip tflint_linux_amd64.zip
-sudo install -c -v tflint /usr/local/bin/
-rm tflint_linux_amd64.zip
+# TFLint
+curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
 
 # Set up Node.js 22.x
 curl -sL https://deb.nodesource.com/setup_22.x | sudo -E bash -
@@ -118,17 +107,6 @@ sudo apt-get update; \
 pwsh -c "& {Install-Module -Name Az -Scope AllUsers -Repository PSGallery -Force -Verbose}"
 pwsh -c "& {Get-Module -ListAvailable}"
 
-# pyenv installation
-curl -fsSL https://pyenv.run | bash
-
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init - bash)"
-
-pyenv install 3.11
-pyenv install 3.12
-pyenv global 3.11
-
 # Configure Azure DNS for Synapse Private Link resolution jira reference https://pins-ds.atlassian.net/browse/DEV-818
 echo "Configuring Azure DNS..."
 
@@ -142,11 +120,6 @@ EOF
 sudo systemctl restart systemd-resolved
 
 echo "Azure DNS configured"
-
-## fixing pyenv  affect waagent runtime
-sudo apt-get install -y walinuxagent
-unset PYENV_VERSION || true
-export PATH="/usr/sbin:/usr/bin:/sbin:/bin:$PATH"
 
 # Sysprep
 /usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync
