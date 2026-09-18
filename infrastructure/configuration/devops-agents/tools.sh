@@ -71,8 +71,11 @@ python3 -m pip install -U checkov==3.2.529
 # ODW Common
 python3 -m pip install --force-reinstall "git+https://github.com/Planning-Inspectorate/odw-common.git@main"
 
-# TFLint
-curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+# TFLint (upstream removed the install_linux.sh auto-install script)
+curl -sSLO https://github.com/terraform-linters/tflint/releases/latest/download/tflint_linux_amd64.zip
+unzip tflint_linux_amd64.zip
+sudo install -c -v tflint /usr/local/bin/
+rm tflint_linux_amd64.zip
 
 # Set up Node.js 22.x
 curl -sL https://deb.nodesource.com/setup_22.x | sudo -E bash -
