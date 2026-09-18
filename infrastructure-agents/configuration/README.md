@@ -223,11 +223,11 @@ Rollback should use a newly built image from a revert commit or a controlled upd
 
 | File | Purpose |
 | --- | --- |
-| `infrastructure/configuration/devops-agents/build.pkr.hcl` | Defines the Ubuntu-based managed image and invokes the provisioning script. |
-| `infrastructure/configuration/devops-agents/tools.sh` | Installs Python and the other tools included in the agent image. |
+| `infrastructure-agents/configuration/devops-agents/build.pkr.hcl` | Defines the Ubuntu-based managed image and invokes the provisioning script. |
+| `infrastructure-agents/configuration/devops-agents/tools.sh` | Installs Python and the other tools included in the agent image. |
 | `pipelines/devops-agent-deploy.yaml` | Builds the image and plans/applies the agent pool for the selected environment. |
 | `pipelines/steps/devops-agent-build.yaml` | Runs Packer with the Azure build parameters. |
-| `infrastructure/workload-agent-pool.tf` | Instantiates the primary and failover agent-pool modules. |
-| `infrastructure/modules/devops-agent-pool/agent-vmss.tf` | Defines the VM scale set and selects the managed agent image. |
-| `infrastructure/variables.tf` | Defines the default base agent count of two. |
+| `../agent-pool.tf` | Instantiates the primary and failover agent-pool modules. |
+| `infrastructure-agents/modules/devops-agent-pool/agent-vmss.tf` | Defines the VM scale set and selects the managed agent image. |
+| `infrastructure-agents/variables.tf` | Defines the default base agent count of two. |
 | `tests/requirements.txt` | Defines Python dependencies installed for ODW tests. |
