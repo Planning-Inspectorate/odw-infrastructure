@@ -21,8 +21,6 @@ data_lake_storage_containers = [
   "odw-meta-db"
 ]
 
-devops_agent_failover_enabled = false
-
 environment = "build"
 
 horizon_integration_config = {
@@ -134,7 +132,5 @@ external_resource_links_enabled = false
 link_purview_account = false
 
 create_service_bus_resources = false
-
-devops_agent_vm_sku = "Standard_D4as_v4"
 
 specialist_case_validation_check_logic_app_enabled = false

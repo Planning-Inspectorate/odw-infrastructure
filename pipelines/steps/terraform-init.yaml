@@ -23,10 +23,10 @@ steps:
       echo "##[command]terraform -v"
       terraform -v
 
-      echo "Initialising Terraform using state file ${{ parameters.environment }}.tfstate..."
-      echo "##[command]terraform init -backend-config="key=${{ parameters.environment }}.tfstate" -input=false"
+      echo "Initialising Terraform using state file ${{ parameters.environment }}-agents.tfstate..."
+      echo "##[command]terraform init -backend-config="key=${{ parameters.environment }}-agents.tfstate" -input=false"
       terraform init \
-        -backend-config="key=${{ parameters.environment }}.tfstate" \
+        -backend-config="key=${{ parameters.environment }}-agents.tfstate" \
         -input=false
     displayName: 'Terraform Init'
     workingDirectory: ${{ parameters.workingDirectory }}
