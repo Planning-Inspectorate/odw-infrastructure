@@ -16,6 +16,14 @@ terraform {
       source  = "hashicorp/tls"
       version = "~> 4.0"
     }
+    azuread = {
+      source  = "hashicorp/azuread"
+      version = "~> 3.0"
+    }
+    time = {
+      source  = "hashicorp/time"
+      version = "~> 0.11"
+    }
   }
   required_version = ">= 1.11.0, < 1.17.0"
 }
