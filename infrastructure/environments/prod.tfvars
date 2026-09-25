@@ -19,6 +19,8 @@ data_lake_storage_containers_to_import = [
 
 environment = "prod"
 
+defender_for_storage_enabled = true
+
 checkmark_managed_identity_enabled = true
 
 horizon_integration_config = {
