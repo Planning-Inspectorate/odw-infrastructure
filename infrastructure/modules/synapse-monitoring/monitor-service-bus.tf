@@ -3,9 +3,8 @@ resource "azurerm_monitor_diagnostic_setting" "service_bus_namespace" {
   target_resource_id         = var.service_bus_namespace_id
   log_analytics_workspace_id = azurerm_log_analytics_workspace.synapse.id
 
-  metric {
+  enabled_metric {
     category = "AllMetrics"
-    enabled  = true
   }
 
   enabled_log {

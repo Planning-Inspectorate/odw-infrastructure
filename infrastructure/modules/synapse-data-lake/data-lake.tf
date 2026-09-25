@@ -1,9 +1,7 @@
 
 resource "azurerm_storage_account" "synapse" {
-  #checkov:skip=CKV2_AZURE_40: Ensure storage account is not configured with Shared Key authorization (checkov v3)
-  #checkov:skip=CKV2_AZURE_47: Ensure storage account is configured without blob anonymous access (checkov v3)
-  #checkov:skip=CKV2_AZURE_41: Ensure storage account is configured with SAS expiration policy (checkov v3)
   #checkov:skip=CKV_AZURE_244: Avoid the use of local users for Azure Storage unless necessary (checkov v3)
+  #checkov:skip=CKV_AZURE_33: Ensure Storage logging is enabled for Queue service for read, write and delete requests (checkov v3)
   #checkov:skip=CKV_AZURE_35: Firewall is enabled using azurerm_storage_account_network_rules
   #checkov:skip=CKV_AZURE_59: Firewall is enabled using azurerm_storage_account_network_rules
   #checkov:skip=CKV_AZURE_190: Firewall is enabled using azurerm_storage_account_network_rules
@@ -12,6 +10,9 @@ resource "azurerm_storage_account" "synapse" {
   #checkov:skip=CKV2_AZURE_8: Firewall is enabled using azurerm_storage_account_network_rules
   #checkov:skip=CKV2_AZURE_18: Microsoft managed keys are acceptable
   #checkov:skip=CKV2_AZURE_33: Private Endpoint is not enabled as networking is controlled by Firewall
+  #checkov:skip=CKV2_AZURE_40: Ensure storage account is not configured with Shared Key authorization (checkov v3)
+  #checkov:skip=CKV2_AZURE_47: Ensure storage account is configured without blob anonymous access (checkov v3)
+  #checkov:skip=CKV2_AZURE_41: Ensure storage account is configured with SAS expiration policy (checkov v3)
   name                             = replace("pins-st-${local.resource_suffix}-${random_string.unique_id.id}", "-", "")
   resource_group_name              = var.resource_group_name
   location                         = var.location
@@ -24,6 +25,7 @@ resource "azurerm_storage_account" "synapse" {
   min_tls_version                  = "TLS1_2"
   public_network_access_enabled    = true
   cross_tenant_replication_enabled = true
+  allow_nested_items_to_be_public  = false
 
   blob_properties {
     delete_retention_policy {
@@ -32,30 +34,6 @@ resource "azurerm_storage_account" "synapse" {
 
     container_delete_retention_policy {
       days = var.data_lake_retention_days
-    }
-  }
-
-  queue_properties {
-    logging {
-      read                  = true
-      write                 = true
-      delete                = true
-      retention_policy_days = var.data_lake_retention_days
-      version               = "1.0"
-    }
-
-    minute_metrics {
-      enabled               = true
-      include_apis          = true
-      retention_policy_days = var.data_lake_retention_days
-      version               = "1.0"
-    }
-
-    hour_metrics {
-      enabled               = true
-      include_apis          = true
-      retention_policy_days = var.data_lake_retention_days
-      version               = "1.0"
     }
   }
 
@@ -72,6 +50,30 @@ resource "azurerm_storage_account" "synapse" {
   )
 }
 
+resource "azurerm_storage_account_queue_properties" "synapse" {
+  storage_account_id = azurerm_storage_account.synapse.id
+
+  logging {
+    read                  = true
+    write                 = true
+    delete                = true
+    retention_policy_days = var.data_lake_retention_days
+    version               = "1.0"
+  }
+
+  minute_metrics {
+    include_apis          = true
+    retention_policy_days = var.data_lake_retention_days
+    version               = "1.0"
+  }
+
+  hour_metrics {
+    include_apis          = true
+    retention_policy_days = var.data_lake_retention_days
+    version               = "1.0"
+  }
+}
+
 resource "azurerm_storage_data_lake_gen2_filesystem" "synapse" {
   name               = "synapse"
   storage_account_id = azurerm_storage_account.synapse.id
@@ -82,7 +84,7 @@ resource "azurerm_storage_container" "synapse" {
   for_each = toset(var.data_lake_storage_containers)
 
   name                  = each.key
-  storage_account_name  = azurerm_storage_account.synapse.name
+  storage_account_id    = azurerm_storage_account.synapse.id
   container_access_type = "private"
 
   depends_on = [

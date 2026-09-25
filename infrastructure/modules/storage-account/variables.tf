@@ -31,6 +31,12 @@ variable "storage_tier" {
   default     = "Standard"
 }
 
+variable "import_static_website" {
+  type        = bool
+  description = "Set to true to import the pre-existing storage account's static website settings, previously part of azurerm_storage_account, into the standalone azurerm_storage_account_static_website resource. Only needed once, for storage accounts created before the azurerm v5 upgrade."
+  default     = false
+}
+
 variable "storage_replication" {
   type        = string
   description = "Type of replication. Accepts LRS, GRS, RAGRS and ZRS"

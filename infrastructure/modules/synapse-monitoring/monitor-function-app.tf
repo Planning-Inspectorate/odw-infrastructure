@@ -9,7 +9,7 @@ resource "azurerm_monitor_diagnostic_setting" "function_app" {
     category = "FunctionAppLogs"
   }
 
-  metric {
+  enabled_metric {
     category = "AllMetrics"
   }
 }

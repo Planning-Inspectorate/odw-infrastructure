@@ -55,7 +55,7 @@ vnet_subnets = [
   {
     "name" : "FunctionAppSubnet",
     "new_bits" : 4 # /28
-    service_endpoints = ["Microsoft.Storage", "Microsoft.KeyVault", "Microsoft.ServiceBus"]
+    service_endpoints = ["Microsoft.KeyVault", "Microsoft.ServiceBus", "Microsoft.Storage"]
     service_delegation = [
       {
         delegation_name = "Microsoft.Web/serverFarms"
@@ -84,7 +84,7 @@ vnet_subnets = [
   {
     "name" : "ComputeSubnet"
     "new_bits" : 2 # /26
-    service_endpoints  = ["Microsoft.Storage", "Microsoft.KeyVault"]
+    service_endpoints  = ["Microsoft.KeyVault", "Microsoft.Storage"]
     service_delegation = []
   },
   {
