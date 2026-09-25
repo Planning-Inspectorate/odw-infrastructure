@@ -21,6 +21,7 @@ resource "azurerm_storage_account" "shir" {
   https_traffic_only_enabled       = true
   min_tls_version                  = "TLS1_2"
   cross_tenant_replication_enabled = true
+  allow_nested_items_to_be_public  = false
 
   blob_properties {
     delete_retention_policy {
@@ -62,30 +63,27 @@ resource "azurerm_storage_container" "shir" {
   #checkov:skip=CKV_AZURE_34: Public access is required
   #checkov:skip=CKV2_AZURE_21: Blob logging is not required
   name                  = "scripts"
-  storage_account_name  = azurerm_storage_account.shir.name
+  storage_account_id    = azurerm_storage_account.shir.id
   container_access_type = "container"
 }
 
 resource "azurerm_storage_blob" "deploy_script" {
-  name                   = local.script_name_deploy
-  storage_account_name   = azurerm_storage_account.shir.name
-  storage_container_name = azurerm_storage_container.shir.name
-  type                   = "Block"
-  source                 = "${path.module}/scripts/${local.script_name_deploy}"
+  name                 = local.script_name_deploy
+  storage_container_id = azurerm_storage_container.shir.id
+  type                 = "Block"
+  source               = "${path.module}/scripts/${local.script_name_deploy}"
 }
 
 resource "azurerm_storage_blob" "runtime_script" {
-  name                   = local.script_name_runtime
-  storage_account_name   = azurerm_storage_account.shir.name
-  storage_container_name = azurerm_storage_container.shir.name
-  type                   = "Block"
-  source                 = "${path.module}/scripts/${local.script_name_runtime}"
+  name                 = local.script_name_runtime
+  storage_container_id = azurerm_storage_container.shir.id
+  type                 = "Block"
+  source               = "${path.module}/scripts/${local.script_name_runtime}"
 }
 
 resource "azurerm_storage_blob" "openjdk_script" {
-  name                   = local.script_name_openjdk
-  storage_account_name   = azurerm_storage_account.shir.name
-  storage_container_name = azurerm_storage_container.shir.name
-  type                   = "Block"
-  source                 = "${path.module}/scripts/${local.script_name_openjdk}"
+  name                 = local.script_name_openjdk
+  storage_container_id = azurerm_storage_container.shir.id
+  type                 = "Block"
+  source               = "${path.module}/scripts/${local.script_name_openjdk}"
 }

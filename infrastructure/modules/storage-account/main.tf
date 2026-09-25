@@ -24,6 +24,7 @@ resource "azurerm_storage_account" "storage" {
   is_hns_enabled                   = var.is_hns_enabled
   large_file_share_enabled         = var.large_file_share_enabled
   cross_tenant_replication_enabled = true
+  allow_nested_items_to_be_public  = false
 
   dynamic "custom_domain" {
     for_each = var.custom_domain
@@ -49,15 +50,22 @@ resource "azurerm_storage_account" "storage" {
       }
     }
   }
-  dynamic "static_website" {
-    for_each = var.static_website
-    content {
-      index_document     = static_website.value.index_document
-      error_404_document = static_website.value.error_404_document
-    }
-  }
 
   tags = local.tags
+}
+
+resource "azurerm_storage_account_static_website" "static_website" {
+  count = length(var.static_website) > 0 ? 1 : 0
+
+  storage_account_id = azurerm_storage_account.storage.id
+  index_document     = var.static_website.index_document
+  error_404_document = try(var.static_website.error_404_document, null)
+}
+
+import {
+  for_each = var.import_static_website && length(var.static_website) > 0 ? toset([1]) : toset([])
+  to       = azurerm_storage_account_static_website.static_website[0]
+  id       = azurerm_storage_account.storage.id
 }
 
 resource "azurerm_storage_account_network_rules" "storage_network_rule" {
@@ -83,47 +91,46 @@ resource "azurerm_storage_container" "container" {
   #checkov:skip=CKV2_AZURE_21: "Ensure Storage logging is enabled for Blob service for read requests"
   for_each              = toset(var.container_name)
   name                  = each.key
-  storage_account_name  = azurerm_storage_account.storage.name
+  storage_account_id    = azurerm_storage_account.storage.id
   container_access_type = var.container_access_type #TODO: this needs to be a list
 }
 
 resource "azurerm_storage_blob" "blob" {
-  count                  = length(var.blobs)
-  name                   = var.blobs[count.index].name
-  storage_container_name = var.blobs[count.index].container_name
-  storage_account_name   = azurerm_storage_account.storage.name
-  type                   = var.blobs[count.index].type
-  size                   = contains(keys(var.blobs[count.index]), "size") ? var.blobs[count.index].size : 0
-  source                 = contains(keys(var.blobs[count.index]), "source") ? var.blobs[count.index].source : null
-  content_md5            = contains(keys(var.blobs[count.index]), "source") && var.blobs[count.index].type == "Block" ? filemd5(var.blobs[count.index].source) : null
-  depends_on             = [azurerm_storage_container.container]
+  count                = length(var.blobs)
+  name                 = var.blobs[count.index].name
+  storage_container_id = azurerm_storage_container.container[var.blobs[count.index].container_name].id ###### Double check this, AI automation input
+  type                 = var.blobs[count.index].type
+  size                 = contains(keys(var.blobs[count.index]), "size") ? var.blobs[count.index].size : 0
+  source               = contains(keys(var.blobs[count.index]), "source") ? var.blobs[count.index].source : null
+  content_md5          = contains(keys(var.blobs[count.index]), "source") && var.blobs[count.index].type == "Block" ? filemd5(var.blobs[count.index].source) : null
+  depends_on           = [azurerm_storage_container.container]
 }
 
 resource "azurerm_storage_queue" "queue" {
-  for_each             = toset(var.queue_name)
-  name                 = each.key
-  storage_account_name = azurerm_storage_account.storage.name
+  for_each           = toset(var.queue_name)
+  name               = each.key
+  storage_account_id = azurerm_storage_account.storage.id
 }
 
 resource "azurerm_storage_share" "share" {
-  count                = length(var.shares)
-  name                 = var.shares[count.index].name
-  storage_account_name = azurerm_storage_account.storage.name
-  quota                = var.shares[count.index].quota
+  count              = length(var.shares)
+  name               = var.shares[count.index].name
+  storage_account_id = azurerm_storage_account.storage.id
+  quota              = var.shares[count.index].quota
 }
 
 resource "azurerm_storage_share_directory" "share_directories" {
-  for_each         = var.share_directories
-  name             = each.key
-  depends_on       = [azurerm_storage_share.share]
-  storage_share_id = azurerm_storage_share.share[each.value.share_index].id
+  for_each          = var.share_directories
+  name              = each.key
+  depends_on        = [azurerm_storage_share.share]
+  storage_share_url = azurerm_storage_share.share[each.value.share_index].url
 }
 
 resource "azurerm_storage_table" "table" {
   #checkov:skip=CKV2_AZURE_20: Ensure Storage logging is enabled for Table service for read requests
-  for_each             = toset(var.tables)
-  name                 = each.key
-  storage_account_name = azurerm_storage_account.storage.name
+  for_each           = toset(var.tables)
+  name               = each.key
+  storage_account_id = azurerm_storage_account.storage.id
 }
 
 resource "azurerm_storage_data_lake_gen2_filesystem" "storage_dlg2fs" {

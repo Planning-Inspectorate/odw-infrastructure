@@ -5,9 +5,8 @@ resource "azurerm_monitor_diagnostic_setting" "synapse_spark_pool" {
   target_resource_id         = var.synapse_spark_pool_id
   log_analytics_workspace_id = azurerm_log_analytics_workspace.synapse.id
 
-  metric {
+  enabled_metric {
     category = "Apache Spark Pool"
-    enabled  = true
   }
 
   enabled_log {
