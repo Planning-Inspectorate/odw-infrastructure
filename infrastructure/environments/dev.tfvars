@@ -37,12 +37,6 @@ horizon_integration_config = {
     database_subnet_name = "SN-VNPRE-DB-10.0.3.0-24"
   }
 }
-#Evagelos new horizon migration storage account
-horizon_migration = {
-  rg             = "pins-rg-data-odw-dev-uks"
-  service_name   = "mpesc"
-  container_name = ["mpesc"]
-}
 
 checkmark_managed_identity_enabled = true
 
