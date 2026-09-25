@@ -15,6 +15,11 @@ locals {
   synapse_subnet_name     = "SynapseEndpointSubnet"
   sap_pls_subnet_name     = "SapPlsSubnet"
 
+  defender_private_link_access = var.defender_for_storage_enabled ? [{
+    endpoint_resource_id = "${data.azurerm_subscription.current.id}/providers/Microsoft.Security/datascanners/storageDataScanner"
+    endpoint_tenant_id   = "5878df98-6f88-48ab-9322-998ce557088d"
+  }] : []
+
   function_app_identity = {
     for function_app in module.function_app : function_app.name => function_app.identity[0].principal_id
   }

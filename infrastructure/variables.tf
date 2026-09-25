@@ -142,6 +142,12 @@ variable "deploy_s62a_migration_storage" {
   default     = false
 }
 
+variable "defender_for_storage_enabled" {
+  description = "Whether Microsoft Defender for Storage data scanner access is configured"
+  type        = bool
+  default     = false
+}
+
 variable "key_vault_role_assignments" {
   default     = {}
   description = "An object mapping RBAC roles to principal IDs for Key Vault"
