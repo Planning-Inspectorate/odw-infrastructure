@@ -23,6 +23,7 @@ module "storage_account_sap_landing" {
     module.synapse_network.vnet_subnets[local.compute_subnet_name],
     module.synapse_network.vnet_subnets[local.functionapp_subnet_name]
   ]
+  defender_private_link_access = local.defender_private_link_access
 }
 
 # --- Networking Bridge (THEODW-3386) ---

@@ -64,10 +64,19 @@ resource "azurerm_storage_account_network_rules" "storage_network_rule" {
   #checkov:skip=CKV_AZURE_59: Firewall is enabled using azurerm_storage_account_network_rules
   count                      = var.network_rules_enabled ? 1 : 0
   storage_account_id         = azurerm_storage_account.storage.id
-  default_action             = var.network_default_action
+  default_action             = "Deny"
   ip_rules                   = var.network_rule_ips
   virtual_network_subnet_ids = var.network_rule_virtual_network_subnet_ids
   bypass                     = var.network_rule_bypass
+
+  dynamic "private_link_access" {
+    for_each = var.defender_private_link_access
+
+    content {
+      endpoint_resource_id = private_link_access.value.endpoint_resource_id
+      endpoint_tenant_id   = private_link_access.value.endpoint_tenant_id
+    }
+  }
 }
 
 resource "azurerm_storage_container" "container" {
