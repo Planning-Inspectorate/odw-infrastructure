@@ -36,6 +36,13 @@ service_bus_topics_and_subscriptions = [
       "applications-representation-odw-sub"      = {},
       "applications-representation-odw-wake-sub" = {}
     }
+  },
+  {
+    name = "applications-crowndev-application"
+    subscriptions = {
+      "applications-crowndev-application-odw-sub"      = {},
+      "applications-crowndev-application-odw-wake-sub" = {}
+    }
   }
 ]
 
