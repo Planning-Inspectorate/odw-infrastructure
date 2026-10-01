@@ -54,22 +54,6 @@ resource "azurerm_storage_account" "storage" {
   tags = local.tags
 }
 
-resource "azurerm_storage_account_static_website" "static_website" {
-  count = length(var.static_website) > 0 ? 1 : 0
-
-
-  storage_account_id = azurerm_storage_account.storage.id
-  index_document     = var.static_website.index_document
-  error_404_document = try(var.static_website.error_404_document, null)
-}
-
-import {
-  for_each = var.import_static_website && length(var.static_website) > 0 ? toset([1]) : toset([])
-  # import only runs if import_static_website is set to true and a static website is defined
-  to = azurerm_storage_account_static_website.static_website[0]
-  id = azurerm_storage_account.storage.id
-}
-
 resource "azurerm_storage_account_network_rules" "storage_network_rule" {
   #checkov:skip=CKV_AZURE_59: Firewall is enabled using azurerm_storage_account_network_rules
   count                      = var.network_rules_enabled ? 1 : 0
