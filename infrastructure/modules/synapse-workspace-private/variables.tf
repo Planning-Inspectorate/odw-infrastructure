@@ -23,6 +23,12 @@ variable "s62a_storage_account_id" {
   type        = string
 }
 
+variable "s62a_storage_account_name" {
+  description = "The name of the S62A Storage Account"
+  type        = string
+  default     = null
+}
+
 variable "data_lake_filesystem_id" {
   description = "The ID of the Data Lake Gen2 filesystem"
   type        = string
