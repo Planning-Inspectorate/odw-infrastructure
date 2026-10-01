@@ -31,12 +31,6 @@ variable "storage_tier" {
   default     = "Standard"
 }
 
-variable "import_static_website" {
-  type        = bool
-  description = "Set to true to import the pre-existing (azurerm < v5) storage account's static website settings."
-  default     = false
-}
-
 variable "storage_replication" {
   type        = string
   description = "Type of replication. Accepts LRS, GRS, RAGRS and ZRS"
@@ -65,18 +59,6 @@ variable "custom_domain" {
   type        = list(map(string))
   description = "A custom domain that should be used for the storage account"
   default     = []
-}
-
-variable "static_website" {
-  type        = map(string)
-  description = <<-EOT
-  "A static website that should be hosting from this storage account. The amp format must be:
-  static_website = {
-    index_document     = "your_index.html"
-    error_404_document = "a_page_to_display_for_404"
-  }"
-  EOT
-  default     = {}
 }
 
 variable "network_rules_enabled" {
