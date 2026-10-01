@@ -95,7 +95,7 @@ module "synapse_workspace_private_failover" {
   )
 
   s62a_storage_account_name = (
-  var.deploy_s62a_migration_storage
+    var.deploy_s62a_migration_storage
     ? module.storage_account_s62a_migration[0].storage_name
     : null
   )
