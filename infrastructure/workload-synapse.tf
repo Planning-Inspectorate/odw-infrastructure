@@ -18,6 +18,12 @@ module "synapse_workspace_private" {
     : null
   )
 
+  s62a_storage_account_name = (
+    var.deploy_s62a_migration_storage
+    ? module.storage_account_s62a_migration[0].storage_name
+    : null
+  )
+
   data_lake_filesystem_id               = module.synapse_data_lake.data_lake_filesystem_id
   firewall_allowed_ip_addresses         = local.firewall_allowed_ip_addresses
   key_vault_id                          = module.synapse_data_lake.key_vault_id
