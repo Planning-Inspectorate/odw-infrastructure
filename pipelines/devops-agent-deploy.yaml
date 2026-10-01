@@ -46,6 +46,8 @@ variables:
     value: tfoutputs.json
   - name: planFileName
     value: tfplan
+  - name: terraformVersion
+    value: 1.16.4
 
 pr: none
 
@@ -94,6 +96,10 @@ stages:
 
       # Login to Azure using Terraform service principal
       - template: pipelines/steps/azure-login.yaml@odw-common
+
+      - template: steps/terraform-install.yaml
+        parameters:
+          terraformVersion: ${{ variables.terraformVersion }}
 
       # Run Terraform init
       - template: steps/terraform-init.yaml
@@ -148,6 +154,10 @@ stages:
 
             # Login to Azure using Terraform service principal
             - template: pipelines/steps/azure-login.yaml@odw-common
+
+            - template: steps/terraform-install.yaml
+              parameters:
+                terraformVersion: ${{ variables.terraformVersion }}
 
             - download: current
               artifact: terraform-plan-${{ lower(variables.environment) }}

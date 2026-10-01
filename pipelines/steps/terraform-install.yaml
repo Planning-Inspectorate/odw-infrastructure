@@ -1,0 +1,18 @@
+parameters:
+  - name: terraformVersion
+    type: string
+
+steps:
+  - script: |
+      set -euo pipefail
+      version="${{ parameters.terraformVersion }}"
+      dir="$(Agent.TempDirectory)/terraform-${version}"
+      mkdir -p "$dir"
+      cd "$dir"
+      curl -fsSLO "https://releases.hashicorp.com/terraform/${version}/terraform_${version}_linux_amd64.zip"
+      curl -fsSLO "https://releases.hashicorp.com/terraform/${version}/terraform_${version}_SHA256SUMS"
+      grep "terraform_${version}_linux_amd64.zip" "terraform_${version}_SHA256SUMS" | sha256sum -c -
+      unzip -o -q "terraform_${version}_linux_amd64.zip"
+      echo "##vso[task.prependpath]$dir"
+      ./terraform -version
+    displayName: 'Install Terraform ${{ parameters.terraformVersion }}'
