@@ -31,6 +31,12 @@ variable "storage_tier" {
   default     = "Standard"
 }
 
+variable "import_static_website" {
+  type        = bool
+  description = "Set to true to import the pre-existing (azurerm < v5) storage account's static website settings."
+  default     = false
+}
+
 variable "storage_replication" {
   type        = string
   description = "Type of replication. Accepts LRS, GRS, RAGRS and ZRS"

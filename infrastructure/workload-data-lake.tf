@@ -57,6 +57,11 @@ import {
   id       = "https://${module.synapse_data_lake.data_lake_account_name}.blob.core.windows.net/${each.key}"
 }
 
+import {
+  to = module.synapse_data_lake.azurerm_storage_account_queue_properties.synapse
+  id = module.synapse_data_lake.data_lake_account_id
+}
+
 data "azuread_group" "odw_read_only_prod" {
   display_name     = "pins-odw-read-only-prod"
   security_enabled = true

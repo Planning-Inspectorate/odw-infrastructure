@@ -57,129 +57,116 @@ resource "azurerm_private_dns_zone" "synapse" {
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "datalake" {
-  name                  = "dfs-${module.synapse_network.vnet_name}"
-  resource_group_name   = var.tooling_config.network_rg
-  private_dns_zone_name = data.azurerm_private_dns_zone.tooling_storage["dfs"].name
-  virtual_network_id    = module.synapse_network.vnet_id
-  provider              = azurerm.tooling
+  name                = "dfs-${module.synapse_network.vnet_name}"
+  private_dns_zone_id = data.azurerm_private_dns_zone.tooling_storage["dfs"].id
+  virtual_network_id  = module.synapse_network.vnet_id
+  provider            = azurerm.tooling
 
   tags = local.tags
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "storage_blob" {
-  name                  = "blob-${module.synapse_network.vnet_name}"
-  resource_group_name   = var.tooling_config.network_rg
-  private_dns_zone_name = data.azurerm_private_dns_zone.tooling_storage["blob"].name
-  virtual_network_id    = module.synapse_network.vnet_id
-  provider              = azurerm.tooling
+  name                = "blob-${module.synapse_network.vnet_name}"
+  private_dns_zone_id = data.azurerm_private_dns_zone.tooling_storage["blob"].id
+  virtual_network_id  = module.synapse_network.vnet_id
+  provider            = azurerm.tooling
 
   tags = local.tags
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "datalake_failover" {
-  name                  = "dfs-${module.synapse_network_failover.vnet_name}"
-  resource_group_name   = var.tooling_config.network_rg
-  private_dns_zone_name = data.azurerm_private_dns_zone.tooling_storage["dfs"].name
-  virtual_network_id    = module.synapse_network_failover.vnet_id
-  provider              = azurerm.tooling
+  name                = "dfs-${module.synapse_network_failover.vnet_name}"
+  private_dns_zone_id = data.azurerm_private_dns_zone.tooling_storage["dfs"].id
+  virtual_network_id  = module.synapse_network_failover.vnet_id
+  provider            = azurerm.tooling
 
   tags = local.tags
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "storage_blob_failover" {
-  name                  = "blob-${module.synapse_network_failover.vnet_name}"
-  resource_group_name   = var.tooling_config.network_rg
-  private_dns_zone_name = data.azurerm_private_dns_zone.tooling_storage["blob"].name
-  virtual_network_id    = module.synapse_network_failover.vnet_id
-  provider              = azurerm.tooling
+  name                = "blob-${module.synapse_network_failover.vnet_name}"
+  private_dns_zone_id = data.azurerm_private_dns_zone.tooling_storage["blob"].id
+  virtual_network_id  = module.synapse_network_failover.vnet_id
+  provider            = azurerm.tooling
 
   tags = local.tags
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "keyvault" {
-  name                  = "dfs-${module.synapse_network.vnet_name}"
-  resource_group_name   = var.tooling_config.network_rg
-  private_dns_zone_name = data.azurerm_private_dns_zone.tooling_key_vault.name
-  virtual_network_id    = module.synapse_network.vnet_id
-  provider              = azurerm.tooling
+  name                = "dfs-${module.synapse_network.vnet_name}"
+  private_dns_zone_id = data.azurerm_private_dns_zone.tooling_key_vault.id
+  virtual_network_id  = module.synapse_network.vnet_id
+  provider            = azurerm.tooling
 
   tags = local.tags
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "keyvault_failover" {
-  name                  = "dfs-${module.synapse_network_failover.vnet_name}"
-  resource_group_name   = var.tooling_config.network_rg
-  private_dns_zone_name = data.azurerm_private_dns_zone.tooling_key_vault.name
-  virtual_network_id    = module.synapse_network_failover.vnet_id
-  provider              = azurerm.tooling
+  name                = "dfs-${module.synapse_network_failover.vnet_name}"
+  private_dns_zone_id = data.azurerm_private_dns_zone.tooling_key_vault.id
+  virtual_network_id  = module.synapse_network_failover.vnet_id
+  provider            = azurerm.tooling
 
   tags = local.tags
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "synapse" {
-  name                  = "azuresynapse-${module.synapse_network.vnet_name}"
-  resource_group_name   = azurerm_resource_group.network_global.name
-  private_dns_zone_name = azurerm_private_dns_zone.synapse.name
-  virtual_network_id    = module.synapse_network.vnet_id
+  name                = "azuresynapse-${module.synapse_network.vnet_name}"
+  private_dns_zone_id = azurerm_private_dns_zone.synapse.id
+  virtual_network_id  = module.synapse_network.vnet_id
 
   tags = local.tags
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "synapse_failover" {
-  name                  = "azuresynapse-${module.synapse_network_failover.vnet_name}"
-  resource_group_name   = azurerm_resource_group.network_global.name
-  private_dns_zone_name = azurerm_private_dns_zone.synapse.name
-  virtual_network_id    = module.synapse_network_failover.vnet_id
+  name                = "azuresynapse-${module.synapse_network_failover.vnet_name}"
+  private_dns_zone_id = azurerm_private_dns_zone.synapse.id
+  virtual_network_id  = module.synapse_network_failover.vnet_id
 
   tags = local.tags
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "tooling_synapse_dev" {
-  name                  = "azuresynapse-${module.synapse_network.vnet_name}"
-  resource_group_name   = var.tooling_config.network_rg
-  private_dns_zone_name = data.azurerm_private_dns_zone.tooling_synapse_dev.name
-  virtual_network_id    = module.synapse_network.vnet_id
-  provider              = azurerm.tooling
+  name                = "azuresynapse-${module.synapse_network.vnet_name}"
+  private_dns_zone_id = data.azurerm_private_dns_zone.tooling_synapse_dev.id
+  virtual_network_id  = module.synapse_network.vnet_id
+  provider            = azurerm.tooling
 
   tags = local.tags
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "tooling_synapse_dev_failover" {
-  name                  = "azuresynapse-${module.synapse_network_failover.vnet_name}"
-  resource_group_name   = var.tooling_config.network_rg
-  private_dns_zone_name = data.azurerm_private_dns_zone.tooling_synapse_dev.name
-  virtual_network_id    = module.synapse_network_failover.vnet_id
-  provider              = azurerm.tooling
+  name                = "azuresynapse-${module.synapse_network_failover.vnet_name}"
+  private_dns_zone_id = data.azurerm_private_dns_zone.tooling_synapse_dev.id
+  virtual_network_id  = module.synapse_network_failover.vnet_id
+  provider            = azurerm.tooling
 
   tags = local.tags
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "tooling_synapse_sql" {
-  name                  = "azuresynapse-${module.synapse_network.vnet_name}"
-  resource_group_name   = var.tooling_config.network_rg
-  private_dns_zone_name = data.azurerm_private_dns_zone.tooling_synapse_sql.name
-  virtual_network_id    = module.synapse_network.vnet_id
-  provider              = azurerm.tooling
+  name                = "azuresynapse-${module.synapse_network.vnet_name}"
+  private_dns_zone_id = data.azurerm_private_dns_zone.tooling_synapse_sql.id
+  virtual_network_id  = module.synapse_network.vnet_id
+  provider            = azurerm.tooling
 
   tags = local.tags
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "tooling_synapse_sql_failover" {
-  name                  = "azuresynapse-${module.synapse_network_failover.vnet_name}"
-  resource_group_name   = var.tooling_config.network_rg
-  private_dns_zone_name = data.azurerm_private_dns_zone.tooling_synapse_sql.name
-  virtual_network_id    = module.synapse_network_failover.vnet_id
-  provider              = azurerm.tooling
+  name                = "azuresynapse-${module.synapse_network_failover.vnet_name}"
+  private_dns_zone_id = data.azurerm_private_dns_zone.tooling_synapse_sql.id
+  virtual_network_id  = module.synapse_network_failover.vnet_id
+  provider            = azurerm.tooling
 
   tags = local.tags
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "servicebus" {
-  name                  = "servicebus-${module.synapse_network.vnet_name}"
-  resource_group_name   = var.tooling_config.network_rg
-  private_dns_zone_name = data.azurerm_private_dns_zone.tooling_servicebus.name
-  virtual_network_id    = module.synapse_network.vnet_id
-  provider              = azurerm.tooling
+  name                = "servicebus-${module.synapse_network.vnet_name}"
+  private_dns_zone_id = data.azurerm_private_dns_zone.tooling_servicebus.id
+  virtual_network_id  = module.synapse_network.vnet_id
+  provider            = azurerm.tooling
 
   tags = local.tags
 }
@@ -335,4 +322,3 @@ data "azurerm_private_dns_zone" "tooling_servicebus" {
   resource_group_name = var.tooling_config.network_rg
   provider            = azurerm.tooling
 }
-
