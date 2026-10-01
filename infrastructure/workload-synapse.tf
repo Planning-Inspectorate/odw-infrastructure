@@ -7,10 +7,23 @@ module "synapse_workspace_private" {
   location            = module.azure_region.location_cli
   service_name        = local.service_name
 
-  data_lake_account_id                  = module.synapse_data_lake.data_lake_account_id
-  data_lake_account_id_failover         = module.synapse_data_lake.data_lake_account_id
-  data_lake_account_name                = module.synapse_data_lake.data_lake_account_name
-  data_lake_account_name_failover       = module.synapse_data_lake.data_lake_account_name
+  data_lake_account_id            = module.synapse_data_lake.data_lake_account_id
+  data_lake_account_id_failover   = module.synapse_data_lake.data_lake_account_id
+  data_lake_account_name          = module.synapse_data_lake.data_lake_account_name
+  data_lake_account_name_failover = module.synapse_data_lake.data_lake_account_name
+
+  s62a_storage_account_id = (
+    var.deploy_s62a_migration_storage
+    ? module.storage_account_s62a_migration[0].storage_id
+    : null
+  )
+
+  s62a_storage_account_name = (
+    var.deploy_s62a_migration_storage
+    ? module.storage_account_s62a_migration[0].storage_name
+    : null
+  )
+
   data_lake_filesystem_id               = module.synapse_data_lake.data_lake_filesystem_id
   firewall_allowed_ip_addresses         = local.firewall_allowed_ip_addresses
   key_vault_id                          = module.synapse_data_lake.key_vault_id
@@ -76,10 +89,23 @@ module "synapse_workspace_private_failover" {
   location            = module.azure_region.paired_location.location_cli
   service_name        = local.service_name
 
-  data_lake_account_id                  = module.synapse_data_lake.data_lake_account_id
-  data_lake_account_id_failover         = module.synapse_data_lake.data_lake_account_id
-  data_lake_account_name                = module.synapse_data_lake.data_lake_account_name
-  data_lake_account_name_failover       = module.synapse_data_lake.data_lake_account_name
+  data_lake_account_id            = module.synapse_data_lake.data_lake_account_id
+  data_lake_account_id_failover   = module.synapse_data_lake.data_lake_account_id
+  data_lake_account_name          = module.synapse_data_lake.data_lake_account_name
+  data_lake_account_name_failover = module.synapse_data_lake.data_lake_account_name
+
+  s62a_storage_account_id = (
+    var.deploy_s62a_migration_storage
+    ? module.storage_account_s62a_migration[0].storage_id
+    : null
+  )
+
+  s62a_storage_account_name = (
+    var.deploy_s62a_migration_storage
+    ? module.storage_account_s62a_migration[0].storage_name
+    : null
+  )
+
   data_lake_filesystem_id               = module.synapse_data_lake.data_lake_filesystem_id
   firewall_allowed_ip_addresses         = local.firewall_allowed_ip_addresses
   key_vault_id                          = module.synapse_data_lake.key_vault_id
