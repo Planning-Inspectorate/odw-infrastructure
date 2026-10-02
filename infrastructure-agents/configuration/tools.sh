@@ -51,9 +51,48 @@ sudo apt-get install -y --no-install-recommends \
   python3-distutils \
   python3-pip
 
+# Build dependencies required by pyenv to compile Python (https://github.com/pyenv/pyenv/wiki#suggested-build-environment)
+sudo apt-get install -y --no-install-recommends \
+  libbz2-dev \
+  libffi-dev \
+  liblzma-dev \
+  libncursesw5-dev \
+  libreadline-dev \
+  libsqlite3-dev \
+  libssl-dev \
+  libxml2-dev \
+  libxmlsec1-dev \
+  tk-dev \
+  xz-utils \
+  zlib1g-dev
+
+# Install pyenv using the official git-clone method from the pyenv docs.
+if [ ! -d /opt/pyenv ]; then
+  sudo git clone https://github.com/pyenv/pyenv.git /opt/pyenv
+else
+  sudo git -C /opt/pyenv pull --ff-only
+fi
+
+# Make pyenv available in the current shell session.
+export PYENV_ROOT="/opt/pyenv"
+export PATH="$PYENV_ROOT/bin:$PYENV_ROOT/shims:$PATH"
+eval "$(pyenv init - bash)"
+
+# Make pyenv available to all future login shells on the image.
+sudo tee /etc/profile.d/pyenv.sh > /dev/null <<'EOT'
+export PYENV_ROOT="/opt/pyenv"
+export PATH="$PYENV_ROOT/bin:$PYENV_ROOT/shims:$PATH"
+EOT
+sudo chmod 644 /etc/profile.d/pyenv.sh
+
+pyenv --version
+
+pyenv install -s 3.11
+pyenv global 3.11
+
 # Python dependencies
 ## Requirements for the tests
-sudo python3 -m pip install -r tests_requirements.txt
+python3 -m pip install -r tests_requirements.txt
 
 # Install Poetry
 python3 -m pip install -U poetry==2.1.3
@@ -70,6 +109,12 @@ python3 -m pip install -U checkov==3.2.529
 
 # ODW Common
 python3 -m pip install --force-reinstall "git+https://github.com/Planning-Inspectorate/odw-common.git@main"
+
+# The ADO agent runs steps with --noprofile, so expose pyenv shims via /usr/local/bin (ahead of /usr/bin on PATH)
+pyenv rehash
+for shim in "$PYENV_ROOT"/shims/*; do
+  ln -sf "$shim" "/usr/local/bin/$(basename "$shim")"
+done
 
 # TFLint (upstream removed the install_linux.sh auto-install script)
 curl -sSLO https://github.com/terraform-linters/tflint/releases/latest/download/tflint_linux_amd64.zip
@@ -106,6 +151,9 @@ sudo apt-get update; \
   sudo apt-get install -y aspnetcore-runtime-6.0 && \
   sudo apt-get install -y powershell
 
+## Keep waagent on the system Python used by walinuxagent
+sudo apt-get install -y walinuxagent
+
 # PowerShell Modules
 pwsh -c "& {Install-Module -Name Az -Scope AllUsers -Repository PSGallery -Force -Verbose}"
 pwsh -c "& {Get-Module -ListAvailable}"
@@ -124,5 +172,23 @@ sudo systemctl restart systemd-resolved
 
 echo "Azure DNS configured"
 
-# Sysprep
-/usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync
+echo "===== Installed Python version ====="
+echo "python3 path: $(command -v python3)"
+python3 --version
+python3 -m pip --version
+echo "pyenv global: $(pyenv global)"
+pyenv versions
+echo "System python3: $(/usr/bin/python3 --version)"
+echo "/usr/local/bin/python3: $(/usr/local/bin/python3 --version)"
+echo "checkov path: $(command -v checkov)"
+checkov --version
+echo "===================================="
+
+# Deprovision for image capture
+sudo env -i \
+  HOME="$HOME" \
+  PATH="/usr/sbin:/usr/bin:/sbin:/bin" \
+  /usr/sbin/waagent -force -deprovision+user
+
+export HISTSIZE=0
+sync
