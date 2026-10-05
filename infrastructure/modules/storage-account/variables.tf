@@ -61,18 +61,6 @@ variable "custom_domain" {
   default     = []
 }
 
-variable "static_website" {
-  type        = map(string)
-  description = <<-EOT
-  "A static website that should be hosting from this storage account. The amp format must be:
-  static_website = {
-    index_document     = "your_index.html"
-    error_404_document = "a_page_to_display_for_404"
-  }"
-  EOT
-  default     = {}
-}
-
 variable "network_rules_enabled" {
   type        = bool
   description = "Is network rules enabled for this storage account?"
