@@ -338,6 +338,26 @@ resource "azurerm_synapse_managed_private_endpoint" "crown_sql" {
   ]
 }
 
+#Managed private endpoint to Crown  training SQL server
+
+resource "azurerm_synapse_managed_private_endpoint" "crown_training_sql" {
+  count = var.environment == "prod" || var.environment == "test" ? 1 : 0
+
+  name                         = "synapse-sql-sqlServer--pins-sql-crown-primary-training"
+  synapse_workspace_id         = azurerm_synapse_workspace.synapse.id
+  target_resource_id           = data.azurerm_mssql_server.crown_training.id
+  subresource_name             = "sqlServer"
+
+  fully_qualified_domain_names = [
+    data.azurerm_mssql_server.crown_training.fully_qualified_domain_name
+  ]
+
+  depends_on = [
+    azurerm_synapse_workspace.synapse,
+    time_sleep.firewall_delay
+  ]
+}
+
 data "azurerm_servicebus_namespace" "odw" {
   count               = var.odw_service_bus_id != null ? 1 : 0
   name                = reverse(split("/", var.odw_service_bus_id))[0] # Last part of the id is the name of the service bus
