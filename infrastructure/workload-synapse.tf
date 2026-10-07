@@ -75,8 +75,8 @@ module "synapse_workspace_private" {
   tags = local.tags
 
   providers = {
-    azurerm          = azurerm
-    azurerm.odt      = azurerm.odt
+    azurerm     = azurerm
+    azurerm.odt = azurerm.odt
   }
 }
 
@@ -155,7 +155,7 @@ module "synapse_workspace_private_failover" {
   tags = local.tags
 
   providers = {
-    azurerm          = azurerm
-    azurerm.odt      = azurerm.odt
+    azurerm     = azurerm
+    azurerm.odt = azurerm.odt
   }
 }
