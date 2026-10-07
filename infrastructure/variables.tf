@@ -592,3 +592,8 @@ variable "sap_proxy_admin_username" {
   type        = string
   default     = "sapproxyadmin"
 }
+
+variable "training_subscription_id" {
+  description = "Training subscription ID"
+  type        = string
+}
