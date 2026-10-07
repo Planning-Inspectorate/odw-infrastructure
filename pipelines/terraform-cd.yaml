@@ -53,9 +53,6 @@ extends:
       - name: TF_VAR_odt_subscription_id
         value: $(ODT_SUBSCRIPTION_ID)
 
-      - name: TF_VAR_training_subscription_id
-        value: $(TRAINING_SUBSCRIPTION_ID)
-
       - name: TF_VAR_horizon_subscription_id
         value: $(HORIZON_SUBSCRIPTION_ID)
 

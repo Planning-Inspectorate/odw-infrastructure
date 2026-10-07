@@ -39,14 +39,6 @@ provider "azurerm" {
 }
 
 provider "azurerm" {
-  subscription_id                 = var.training_subscription_id
-  alias                           = "training"
-  resource_provider_registrations = "none"
-
-  features {}
-}
-
-provider "azurerm" {
   subscription_id                 = var.environment == "build" ? null : var.horizon_subscription_id
   alias                           = "horizon"
   resource_provider_registrations = "none"
