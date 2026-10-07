@@ -77,7 +77,6 @@ module "synapse_workspace_private" {
   providers = {
     azurerm          = azurerm
     azurerm.odt      = azurerm.odt
-    azurerm.training = azurerm.training
   }
 }
 
@@ -158,6 +157,5 @@ module "synapse_workspace_private_failover" {
   providers = {
     azurerm          = azurerm
     azurerm.odt      = azurerm.odt
-    azurerm.training = azurerm.training
   }
 }
