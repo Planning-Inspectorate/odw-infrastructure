@@ -343,10 +343,10 @@ resource "azurerm_synapse_managed_private_endpoint" "crown_sql" {
 resource "azurerm_synapse_managed_private_endpoint" "crown_training_sql" {
   count = var.environment == "prod" || var.environment == "test" ? 1 : 0
 
-  name                         = "synapse-sql-sqlServer--pins-sql-crown-primary-training"
-  synapse_workspace_id         = azurerm_synapse_workspace.synapse.id
-  target_resource_id           = data.azurerm_mssql_server.crown_training.id
-  subresource_name             = "sqlServer"
+  name                 = "synapse-sql-sqlServer--pins-sql-crown-primary-training"
+  synapse_workspace_id = azurerm_synapse_workspace.synapse.id
+  target_resource_id   = data.azurerm_mssql_server.crown_training.id
+  subresource_name     = "sqlServer"
 
   fully_qualified_domain_names = [
     data.azurerm_mssql_server.crown_training.fully_qualified_domain_name
