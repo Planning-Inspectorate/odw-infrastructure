@@ -37,7 +37,7 @@ build {
   }
 
   provisioner "file" {
-    source = "${path.cwd}/../../../tests/requirements.txt"
+    source = "${path.cwd}/../../tests/requirements.txt"
     destination = "tests_requirements.txt"
   }
 

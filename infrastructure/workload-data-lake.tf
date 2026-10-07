@@ -26,6 +26,7 @@ module "synapse_data_lake" {
   data_lake_retention_days             = var.data_lake_retention_days
   data_lake_role_assignments           = var.data_lake_role_assignments
   data_lake_storage_containers         = concat(var.data_lake_storage_containers, var.data_lake_storage_containers_to_import)
+  defender_private_link_access         = local.defender_private_link_access
   devops_agent_subnet_name             = module.synapse_network.devops_agent_subnet_name
   firewall_allowed_ip_addresses        = local.firewall_allowed_ip_addresses
   function_app_principal_ids           = local.function_app_identity
@@ -54,6 +55,11 @@ import {
   for_each = toset(var.data_lake_storage_containers_to_import)
   to       = module.synapse_data_lake.azurerm_storage_container.synapse[each.key]
   id       = "https://${module.synapse_data_lake.data_lake_account_name}.blob.core.windows.net/${each.key}"
+}
+
+import {
+  to = module.synapse_data_lake.azurerm_storage_account_queue_properties.synapse
+  id = module.synapse_data_lake.data_lake_account_id
 }
 
 data "azuread_group" "odw_read_only_prod" {

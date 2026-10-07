@@ -4,6 +4,15 @@ resource "azurerm_storage_account_network_rules" "synapse" {
   bypass                     = ["AzureServices", "Metrics", "Logging"]
   ip_rules                   = var.firewall_allowed_ip_addresses
   virtual_network_subnet_ids = local.azurerm_synapse_vnet_subnet_ids
+
+  dynamic "private_link_access" {
+    for_each = var.defender_private_link_access
+
+    content {
+      endpoint_resource_id = private_link_access.value.endpoint_resource_id
+      endpoint_tenant_id   = private_link_access.value.endpoint_tenant_id
+    }
+  }
 }
 
 # read Horizon Subnet Ids

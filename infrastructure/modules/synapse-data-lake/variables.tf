@@ -40,6 +40,15 @@ variable "devops_agent_subnet_name" {
   type        = string
 }
 
+variable "defender_private_link_access" {
+  description = "Microsoft Defender for Storage data scanner private link access configuration"
+  type = list(object({
+    endpoint_resource_id = string
+    endpoint_tenant_id   = string
+  }))
+  default = []
+}
+
 variable "environment" {
   description = "The name of the environment in which resources will be deployed"
   type        = string

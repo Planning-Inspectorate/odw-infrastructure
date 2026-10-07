@@ -61,24 +61,6 @@ variable "custom_domain" {
   default     = []
 }
 
-variable "static_website" {
-  type        = map(string)
-  description = <<-EOT
-  "A static website that should be hosting from this storage account. The amp format must be:
-  static_website = {
-    index_document     = "your_index.html"
-    error_404_document = "a_page_to_display_for_404"
-  }"
-  EOT
-  default     = {}
-}
-
-variable "network_default_action" {
-  type        = string
-  description = "If a source IPs fails to match a rule should it be allowed for denied"
-  default     = "Deny"
-}
-
 variable "network_rules_enabled" {
   type        = bool
   description = "Is network rules enabled for this storage account?"
@@ -101,6 +83,15 @@ variable "network_rule_bypass" {
   type        = list(string)
   description = "Specifies whether traffic is bypassed for Logging/Metrics/AzureServices. Valid options are any combination of Logging, Metrics, AzureServices, or None"
   default     = ["AzureServices", "Logging", "Metrics"]
+}
+
+variable "defender_private_link_access" {
+  description = "Microsoft Defender for Storage data scanner private link access configuration"
+  type = list(object({
+    endpoint_resource_id = string
+    endpoint_tenant_id   = string
+  }))
+  default = []
 }
 
 variable "container_name" {
