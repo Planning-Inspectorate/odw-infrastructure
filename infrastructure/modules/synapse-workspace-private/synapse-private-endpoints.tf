@@ -345,11 +345,11 @@ resource "azurerm_synapse_managed_private_endpoint" "crown_training_sql" {
 
   name                 = "synapse-sql-sqlServer--pins-sql-crown-primary-training"
   synapse_workspace_id = azurerm_synapse_workspace.synapse.id
-  target_resource_id   = data.azurerm_mssql_server.crown_training.id
+  target_resource_id   = data.azurerm_mssql_server.crown_training[0].id
   subresource_name     = "sqlServer"
 
   fully_qualified_domain_names = [
-    data.azurerm_mssql_server.crown_training.fully_qualified_domain_name
+    data.azurerm_mssql_server.crown_training[0].fully_qualified_domain_name
   ]
 
   depends_on = [
