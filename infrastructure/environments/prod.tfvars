@@ -19,6 +19,8 @@ data_lake_storage_containers_to_import = [
 
 environment = "prod"
 
+training_subscription_id = "dbfbfbbf-eb6f-457b-9c0c-fe3a071975bc"
+
 defender_for_storage_enabled = true
 
 checkmark_managed_identity_enabled = true
