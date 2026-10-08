@@ -54,7 +54,7 @@ extends:
         value: $(ODT_SUBSCRIPTION_ID)
 
       - name: TF_VAR_training_subscription_id
-        value: "dbfbfbbf-eb6f-457b-9c0c-fe3a071975bc"
+        value: $(TRAINING_SUBSCRIPTION_ID)
 
       - name: TF_VAR_horizon_subscription_id
         value: $(HORIZON_SUBSCRIPTION_ID)
