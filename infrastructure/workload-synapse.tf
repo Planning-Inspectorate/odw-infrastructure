@@ -3,6 +3,7 @@ module "synapse_workspace_private" {
 
   environment         = var.environment
   odt_subscription_id = var.odt_subscription_id
+
   resource_group_name = azurerm_resource_group.data.name
   location            = module.azure_region.location_cli
   service_name        = local.service_name
@@ -52,6 +53,7 @@ module "synapse_workspace_private" {
   synapse_sql_administrator_username    = var.synapse_sql_administrator_username
   synapse_role_assignments              = var.synapse_role_assignments
   tenant_id                             = var.tenant_id
+
   tooling_config = {
     synapse_private_dns_zone_id     = data.azurerm_private_dns_zone.tooling_synapse.id
     synapse_dev_private_dns_zone_id = data.azurerm_private_dns_zone.tooling_synapse_dev.id
@@ -73,8 +75,9 @@ module "synapse_workspace_private" {
   tags = local.tags
 
   providers = {
-    azurerm     = azurerm,
-    azurerm.odt = azurerm.odt
+    azurerm          = azurerm
+    azurerm.odt      = azurerm.odt
+    azurerm.training = azurerm.training
   }
 }
 
@@ -85,6 +88,7 @@ module "synapse_workspace_private_failover" {
 
   environment         = var.environment
   odt_subscription_id = var.odt_subscription_id
+
   resource_group_name = azurerm_resource_group.data_failover.name
   location            = module.azure_region.paired_location.location_cli
   service_name        = local.service_name
@@ -134,6 +138,7 @@ module "synapse_workspace_private_failover" {
   synapse_sql_administrator_username    = var.synapse_sql_administrator_username
   synapse_role_assignments              = var.synapse_role_assignments
   tenant_id                             = var.tenant_id
+
   tooling_config = {
     synapse_private_dns_zone_id     = data.azurerm_private_dns_zone.tooling_synapse.id
     synapse_dev_private_dns_zone_id = data.azurerm_private_dns_zone.tooling_synapse_dev.id
@@ -151,7 +156,8 @@ module "synapse_workspace_private_failover" {
   tags = local.tags
 
   providers = {
-    azurerm     = azurerm,
-    azurerm.odt = azurerm.odt
+    azurerm          = azurerm
+    azurerm.odt      = azurerm.odt
+    azurerm.training = azurerm.training
   }
 }

@@ -18,6 +18,8 @@ data_lake_storage_containers_to_import = [
 
 environment = "test"
 
+training_subscription_id = "dbfbfbbf-eb6f-457b-9c0c-fe3a071975bc"
+
 checkmark_managed_identity_enabled = true
 
 deploy_s62a_migration_storage = true

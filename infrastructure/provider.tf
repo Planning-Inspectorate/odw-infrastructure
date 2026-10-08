@@ -61,3 +61,12 @@ provider "azurerm" {
 
   features {}
 }
+
+provider "azurerm" {
+  subscription_id = var.training_subscription_id
+  alias           = "training"
+
+  resource_provider_registrations = "none"
+
+  features {}
+}

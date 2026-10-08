@@ -49,28 +49,40 @@ extends:
     planStageExtraEnvironmentVariables:
       - name: TF_VAR_failover_deployment
         value: 'false'
+
       - name: TF_VAR_odt_subscription_id
         value: $(ODT_SUBSCRIPTION_ID)
+
       - name: TF_VAR_horizon_subscription_id
         value: $(HORIZON_SUBSCRIPTION_ID)
+
       - name: TF_VAR_purview_id
         value: $(PURVIEW_ID)
+
       - name: TF_VAR_purview_account_fqdn
         value: $(PURVIEW_ACCOUNT_FQDN)
+
       - name: TF_VAR_purview_storage_id
         value: $(PURVIEW_STORAGE_ID)
+
       - name: TF_VAR_purview_storage_name
         value: $(PURVIEW_STORAGE_NAME)
+
       - name: TF_VAR_purview_event_hub_id
         value: $(PURVIEW_EVENT_HUB_ID)
+
       - name: TF_VAR_purview_event_hub_fqdn
         value: $(PURVIEW_EVENT_HUB_FQDN)
+
       - name: TF_VAR_purview_msi_id
         value: $(PURVIEW_MSI_ID)
+
       - name: TF_VAR_specialist_case_validation_check_recipients
         value: $(SPECIALIST_CASE_VALIDATION_CHECK_RECIPIENTS)
+
       - name: TF_VAR_system_asset_owner
         value: $(system_asset_owner)
+
     applyStageVariableGroupFormatString: Terraform {0}
     postApplySteps:
       - checkout: self

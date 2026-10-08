@@ -23,6 +23,7 @@ data_lake_storage_containers = [
 
 environment = "build"
 
+training_subscription_id = "dbfbfbbf-eb6f-457b-9c0c-fe3a071975bc"
 horizon_integration_config = {
   networking = {
     resource_group_name  = "PREHZN"
