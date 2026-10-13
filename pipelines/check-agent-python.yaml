@@ -1,0 +1,28 @@
+trigger: none
+pr: none
+
+parameters:
+  - name: env
+    default: build
+    values: [build, dev, test, prod]
+
+jobs:
+  - job: CheckPython
+    displayName: Check agent Python
+    pool: pins-agent-pool-odw-${{ parameters.env }}-uks
+    steps:
+      - checkout: none
+      - script: |
+          echo "Agent: $(Agent.Name)"
+          echo "PATH: $PATH"
+          echo "python3 path: $(command -v python3)"
+          python3 --version
+          python3 -m pip --version
+          echo "checkov path: $(command -v checkov)"
+          checkov --version || true
+          ls -l /usr/local/bin | grep -E 'checkov|poetry|python|pip' || true
+          ls /opt/pyenv/shims || true
+          echo "Image:"
+          curl -s -H Metadata:true "http://169.254.169.254/metadata/instance/compute/storageProfile/imageReference?api-version=2021-02-01"
+          echo
+        displayName: 'Print Python version'
