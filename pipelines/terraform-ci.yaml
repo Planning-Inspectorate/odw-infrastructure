@@ -2,6 +2,7 @@ trigger:
   branches:
     include:
       - main
+      - release/*
       # trigger for merge queue branches
       - gh-readonly-queue/*
   paths:
