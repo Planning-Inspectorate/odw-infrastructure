@@ -9,7 +9,7 @@ resources:
       trigger:
         branches:
           include:
-            - release/*
+            - main
   repositories:
     - repository: templates
       type: github
