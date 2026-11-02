@@ -43,7 +43,21 @@ service_bus_topics_and_subscriptions = [
       "applications-crowndev-application-odw-sub"      = {},
       "applications-crowndev-application-odw-wake-sub" = {}
     }
-  }
+  },
+  {
+    name = "plans-case" # For Local Plans
+    subscriptions = {
+      "plans-case-odw-sub"      = {},
+      "plans-case-odw-wake-sub" = {}
+    }
+  },
+  {
+    name = "plans-event" # For Local Plans
+    subscriptions = {
+      "plans-event-odw-sub"      = {},
+      "plans-event-odw-wake-sub" = {}
+    }
+  },
 ]
 
 tooling_config = {
