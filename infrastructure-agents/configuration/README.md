@@ -126,10 +126,55 @@ Re-run **devops-agent-deploy** from the previous commit for the affected environ
 
 ---
 
+## Azure PowerShell modules
+
+The image installs `Az` and explicitly installs `Az.Synapse` for the Synapse
+deployment pipeline's SQL pool check, resume, and pause steps. Both use `AllUsers`
+scope so the modules are available to the agent account, not just the image
+builder.
+
+Module installation uses `$ErrorActionPreference = "Stop"` so installation errors
+fail the Packer build. A separate `pwsh -NoProfile -NonInteractive` process imports
+`Az.Synapse` and checks that `Get-AzSynapseSqlPool`, `Resume-AzSynapseSqlPool`, and
+`Suspend-AzSynapseSqlPool` are available before image capture. Packer runs the
+provisioning script with `bash -e`, so a failed PowerShell check stops the build.
+
+Terraform version changes rebuild the entire image, including the unpinned
+PowerShell modules. A successful Terraform deployment does not by itself verify
+that a dependent pipeline's PowerShell commands are available.
+
+### Validating in Build
+
+1. Run **devops-agent-deploy** from the fix branch with `environment = Build` and
+   `failover_deployment = false`.
+2. Confirm **Image Build**, **Agent Pool Plan**, and **Agent Pool Apply** complete.
+   Review the plan before approving Apply. In the Packer log, check that the
+   module import succeeds and all three SQL pool commands are listed.
+3. Confirm the Build agents are using the new image.
+4. Rerun the Synapse pipeline against Build with its module diagnostic enabled.
+   Verify `Az.Synapse` is listed and its import and command checks succeed before
+   the SQL pool check. If successful, the pipeline continues with deployment.
+
+To check module availability on an agent without Azure authentication or changing
+SQL pool state, run:
+
+```powershell
+$ErrorActionPreference = 'Stop'
+Get-Module -ListAvailable Az, Az.Accounts, Az.Synapse |
+    Select-Object Name, Version, Path
+Import-Module Az.Synapse -ErrorAction Stop
+Get-Command Get-AzSynapseSqlPool, Resume-AzSynapseSqlPool, Suspend-AzSynapseSqlPool -Module Az.Synapse -ErrorAction Stop
+```
+
+If the module is listed but import fails, retain the import error to investigate
+dependency or runtime compatibility. If it is not listed, check the image build
+logs and module search paths on that agent.
+
 ## Troubleshooting
 
 | Symptom | Cause | Fix |
 | --- | --- | --- |
+| `Get-AzSynapseSqlPool` is not recognized | `Az.Synapse` is missing, not discoverable, or cannot load on the agent | Run the module diagnostic above; rebuild and deploy the image with explicit module installation and validation, then confirm the affected agents use the new image |
 | Pipelines still show the old Python version | Existing scale set instances are still on the old image | Temporarily set **Standby agents** to 0 on the agent pool, or reimage the VMSS instances in the Azure portal |
 | `checkov: command not found` (or `poetry`, etc.) | The tool isn't linked into `/usr/local/bin`, or the agent is on an old image | Make sure the shim-linking step in `tools.sh` runs after all `pip install` commands, then rebuild and redeploy |
 | `plan file was created by Terraform X, but this is Y` | Plan and Apply used agents with different Terraform versions | Keep Plan and Apply on the same stable, non-target pool. Check `terraform -version` in both jobs and regenerate the plan after correcting the pool/image mismatch |
