@@ -150,20 +150,6 @@ data "azurerm_servicebus_namespace" "appeals_bo" {
   provider            = azurerm.odt
 }
 
-resource "azurerm_synapse_managed_private_endpoint" "synapse_mpe_appeals_bo_sb" {
-  count = var.create_service_bus_resources && data.azurerm_servicebus_namespace.appeals_bo[0].sku == "Premium" ? 1 : 0
-
-  name                         = "synapse-mpe-appeals-bo--${local.resource_suffix}"
-  synapse_workspace_id         = azurerm_synapse_workspace.synapse.id
-  target_resource_id           = var.odt_appeals_back_office_service_bus_id
-  subresource_name             = "namespace"
-  fully_qualified_domain_names = var.appeals_bo_sb_fqdn != null ? [var.appeals_bo_sb_fqdn] : null
-
-  depends_on = [
-    azurerm_synapse_workspace.synapse,
-    time_sleep.firewall_delay
-  ]
-}
 
 # private endpoints in tooling
 
