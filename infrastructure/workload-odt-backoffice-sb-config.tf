@@ -65,7 +65,8 @@ locals {
       "appeal-event",
       "appeal-service-user",
       "appeal-representation",
-      "appeal-event-estimate"
+      "appeal-event-estimate",
+      "appeal-group-c"
     ]
   }
   odt_appeals_back_office_service_bus_id = join("/", [
