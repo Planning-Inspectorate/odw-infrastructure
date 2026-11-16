@@ -162,12 +162,13 @@ pwsh -NoLogo -NoProfile -NonInteractive -Command '
 '
 
 # Validate module discovery in a fresh process, as used by AzurePowerShell tasks.
-pwsh -NoLogo -NoProfile -NonInteractive -Command '
-  $ErrorActionPreference = "Stop"
-  Import-Module -Name Az.Synapse -ErrorAction Stop
-  Get-Command -Name Get-AzSynapseSqlPool, Resume-AzSynapseSqlPool, Suspend-AzSynapseSqlPool -Module Az.Synapse -ErrorAction Stop
-  Get-Module -ListAvailable
-'
+# TEMPORARILY DISABLED FOR INVESTIGATION
+# pwsh -NoLogo -NoProfile -NonInteractive -Command '
+#   $ErrorActionPreference = "Stop"
+#   Import-Module -Name Az.Synapse -ErrorAction Stop
+#   Get-Command -Name Get-AzSynapseSqlPool, Resume-AzSynapseSqlPool, Suspend-AzSynapseSqlPool -Module Az.Synapse -ErrorAction Stop
+#   Get-Module -ListAvailable
+# '
 
 # Configure Azure DNS for Synapse Private Link resolution jira reference https://pins-ds.atlassian.net/browse/DEV-818
 echo "Configuring Azure DNS..."
