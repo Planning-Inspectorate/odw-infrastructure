@@ -13,7 +13,7 @@ Param(
 
 # Download and install Java Development Kit & Runtime Environment
 $ParamInstallOpenJdk = @{
-  DownloadUri = 'https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u345-b01/OpenJDK8U-jdk_x64_windows_hotspot_8u345b01.msi'
+  DownloadUri = 'https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u512-b09/OpenJDK8U-jdk_x64_windows_hotspot_8u512b09.msi'
   Path        = 'C:\Temp\OpenJDK'
 }
 
